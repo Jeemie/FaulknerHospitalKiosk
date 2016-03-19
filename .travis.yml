@@ -1,0 +1,16 @@
+language: java
+sudo: false # Speeds up the build time
+
+## Simple java travis-ci setup
+
+## do the tests
+script: ant test-hard && cd HermiT && mvn test
+
+## I assume we are only targeting java 8
+jdk:
+  - oraclejdk8
+
+## I will need to set something up to catch these.
+# notifications:
+#   email:
+#     - travis@russet.org.uk
