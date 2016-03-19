@@ -5,14 +5,12 @@
     <!-- JUnit XML reports location -->
     <property name="test-results" location="${dependencies.basedir}/test-results"/>
 
-    <!-- All dist targets should put distributables somewhere within this directory -->
+    <!-- Distributable location -->
     <property name="dist" location="${dependencies.basedir}/dist"/>
 
     <!-- Project Dependencies -->
     <target name="depend.all"
             depends="">
     </target>
-
-
 
 </project>
