@@ -19,6 +19,12 @@ script:
   - ant test
   - ant clean
 
+before_script:
+  - pip install --user codecov # install codecov
+
+after_success:
+  - codecov # update the code coverage
+
 # Notifications
 notifications:
   slack:
