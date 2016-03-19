@@ -1,3 +1,32 @@
-<project>
+<?xml version="1.0"?>
+<project name="FaulknerHospitalKiosk" default="compile">
+    <import file="dependencies.xml"/>
 
+    <target name="clean" description="Removes old build files">
+        <delete dir="${test-results}"/>
+        <delete dir="${dist}"/>
+        <antcall target="depend.all">
+            <param name="dependency.target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="compile" description="Compile">
+        <antcall target="depend.all">
+            <param name="dependency.target" value="compile"/>
+        </antcall>
+    </target>
+
+    <target name="dist" description="Create dist">
+        <mkdir dir="${dist}"/>
+        <antcall target="depend.all">
+            <param name="dependency.target" value="dist"/>
+        </antcall>
+    </target>
+
+    <target name="test" description="Run JUnit tests">
+        <mkdir dir="${test-results}"/>
+        <antcall target="depend.all">
+            <param name="dependency.target" value="test"/>
+        </antcall>
+    </target>
 </project>
