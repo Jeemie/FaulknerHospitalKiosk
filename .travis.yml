@@ -3,12 +3,21 @@ language: java
 # Speeds up the build time
 sudo: false
 
-# Run the JUnit tests
-#script: ant test-hard && cd HermiT && mvn test
-
 # Java JDK versions
 jdk:
   - oraclejdk8
+
+# Libraries needed to run the application
+install:
+  - ant dependecies
+
+
+# Run the JUnit tests
+#script: ant test
+
+script:
+  - ant test
+  - ant clean
 
 # Notifications
 notifications:
