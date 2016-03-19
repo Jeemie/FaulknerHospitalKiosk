@@ -1,0 +1,18 @@
+<?xml version="1.0" author="Matthew LeMay"?>
+<project name="dependencies" default="depend.all">
+    <dirname property="dependencies.basedir" file="${ant.file.dependencies}"/>
+
+    <!-- JUnit XML reports location -->
+    <property name="test-results" location="${dependencies.basedir}/test-results"/>
+
+    <!-- All dist targets should put distributables somewhere within this directory -->
+    <property name="dist" location="${dependencies.basedir}/dist"/>
+
+    <!-- Project Dependencies -->
+    <target name="depend.all"
+            depends="">
+    </target>
+
+
+
+</project>
