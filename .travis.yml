@@ -3,8 +3,8 @@ sudo: false # Speeds up the build time
 
 ## Simple java travis-ci setup
 
-## do the tests
-script: ant test-hard && cd HermiT && mvn test
+# ## do the tests
+# script: ant test-hard && cd HermiT && mvn test
 
 ## I assume we are only targeting java 8
 jdk:
