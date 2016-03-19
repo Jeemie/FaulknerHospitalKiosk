@@ -1,16 +1,16 @@
 language: java
-sudo: false # Speeds up the build time
 
-## Simple java travis-ci setup
+# Speeds up the build time
+sudo: false
 
-# ## do the tests
-# script: ant test-hard && cd HermiT && mvn test
+# Run the JUnit tests
+#script: ant test-hard && cd HermiT && mvn test
 
-## I assume we are only targeting java 8
+# Java JDK versions
 jdk:
   - oraclejdk8
 
-## I will need to set something up to catch these.
-# notifications:
-#   email:
-#     - travis@russet.org.uk
+# Notifications
+notifications:
+  slack:
+    secure: NAqs3dG3Eldmli6iILvmZnkhHOM5Tdm8HEvR7wVSgY/bcNpy+xxC9C/lQE0lP4Cyl8SkVvZHc7MehEcvv7drBNouASv99rwK/JTV5R6JCyH8LQRmWICL/wA4cibiLtUkKZzJG9SNluu8T1KFkVh6r2cpyHCJHwgNE6UsBtxGTf/TWtTeg/w9HXOJAMiHHIwgOEHhqXY+i/2uIG6XnaMuYDUWmjeHfN1Smo99xOVrp1nyVTRf16m5wJGBJmyd0Xka6I29kx0tYyKGrD1nv78kujN1Os6yImZU7c+9BLscziws+47c6RWxC7nGNsvMQ0l5kqTY8lAVN1NQa6xT7L8fgdIAMNyn1WkRiIYZTuk3tr0En95Y8hZCCsPjphyzWzPZSYTP0soB6cA9pKBwOfPvA7cSYlVQq4MgzMxgDsqM3iYU8/6sI6iFy2PACpBdTfv9egDARALvPB9wM0CWew4IzqmLMKoTXeu4wYYulM41BKioT8K2aTJ3bl8qZ9U6vi+X33l/oiaG0fs7YjOCGz6tNOyjVuPlcrJY7kzW+imrDz73wp4ITRf1jbioaGk+e+FYmiTS3xoz2mQCOG5WZgjN40ET8LEkBkiHd7MqEjcpIDJov/lRdgYDSorB0+A80J5N6SbadYSkB5Qq7VMcLpWqFJKtLh+IJwlCciQgBwD4HFQ=
