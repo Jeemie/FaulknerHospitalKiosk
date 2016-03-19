@@ -1,4 +1,4 @@
-<?xml version="1.0" author="Matthew LeMay"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="dependencies" default="depend.all">
     <dirname property="dependencies.basedir" file="${ant.file.dependencies}"/>
 
