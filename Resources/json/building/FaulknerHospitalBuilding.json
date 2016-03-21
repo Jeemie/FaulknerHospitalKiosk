@@ -1,0 +1,7 @@
+{
+  "Levels": [
+    {"levelNumber": 1, "path": "/path/to/level/jsonfile"}
+    {"levelNumber": 2, "path": "/path/to/level/jsonfile"}
+  ]
+
+}
