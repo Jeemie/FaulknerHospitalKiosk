@@ -22,6 +22,7 @@ cache:
 
 before_script:
   - pip install --user codecov # install codecov
+  -- chmod +x ./gradlew
 
 after_success:
   - codecov # update the code coverage
