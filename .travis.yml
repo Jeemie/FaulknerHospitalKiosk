@@ -12,12 +12,13 @@ jdk:
 #  - ant dependecies
 
 
-# Run the JUnit tests
-#script: ant test
-
-script:
-  - ant test
-  - ant clean
+# cache the files to speed up the build time
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 before_script:
   - pip install --user codecov # install codecov
