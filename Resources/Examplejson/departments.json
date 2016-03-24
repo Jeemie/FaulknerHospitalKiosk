@@ -1,0 +1,14 @@
+{
+  "departments": [
+    {
+      "name": "Oncology",
+      "UUID": "RANDOMLY GENERATED UUID",
+      "locationUUID": "UUID OF LOCATION"
+    },
+    {
+      "name": "Radiology",
+      "UUID": "RANDOMLY GENERATED UUID",
+      "locationUUID": "UUID OF LOCATION"
+    }
+  ]
+}

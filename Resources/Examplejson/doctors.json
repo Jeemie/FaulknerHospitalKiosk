@@ -1,0 +1,14 @@
+{
+  "doctors": [
+    {
+      "name": "Dr. Johnson",
+      "UUID": "RANDOMLY GENERATED UUID",
+      "locationUUID": "UUID OF LOCATION",
+    },
+    {
+      "name": "Dr. Stevens",
+      "UUID": "RANDOMLY GENERATED UUID",
+      "locationUUID": "UUID OF LOCATION",
+    }
+  ]
+}

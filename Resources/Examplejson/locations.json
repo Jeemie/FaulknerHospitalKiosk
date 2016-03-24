@@ -1,0 +1,32 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "locations": [
+        {
+          "name": "Kiosk",
+          "UUID": "RANDOMLY GENERATED UUID",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "name": "Cafeteria",
+          "UUID": "RANDOMLY GENERATED UUID",
+          "x": 1,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "locations": [
+        {
+          "name": "Waiting Room",
+          "UUID": "RANDOMLY GENERATED UUID",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+}
