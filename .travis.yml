@@ -1,3 +1,4 @@
+
 language: java
 
 # Speeds up the build time
@@ -7,17 +8,12 @@ sudo: false
 jdk:
   - oraclejdk8
 
-# Libraries needed to run the application
-#install:
-#  - ant dependecies
-
-
-# Run the JUnit tests
-#script: ant test
-
-script:
-  - ant test
-  - ant clean
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 before_script:
   - pip install --user codecov # install codecov
