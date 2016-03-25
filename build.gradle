@@ -24,8 +24,4 @@ jacocoTestReport {
     }
 }
 
-task wrapper(type: Wrapper) {
-
-}
-
 check.dependsOn jacocoTestReport
