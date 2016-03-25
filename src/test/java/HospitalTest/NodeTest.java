@@ -15,7 +15,7 @@ public class NodeTest {
 
     @Test
     public void nodeInstantiated() {
-        assertEquals(testNode.getClass().toString(), "class Hospital.Building");
+        assertEquals(testNode.getClass().toString(), "class Hospital.Node");
     }
 }
 
