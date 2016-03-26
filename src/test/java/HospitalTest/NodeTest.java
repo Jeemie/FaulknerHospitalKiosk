@@ -9,12 +9,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class NodeTest {
 
-    private Node testNode = new Node();
-
-    @Test
-    public void nodeInstantiated() {
-        assertEquals(testNode.getClass().toString(), "class Hospital.Node");
-    }
+//    private Node testNode = new Node();
+//
+//    @Test
+//    public void nodeInstantiated() {
+//        assertEquals(testNode.getClass().toString(), "class Hospital.Node");
+//    }
 }
 
 
