@@ -1,6 +1,6 @@
 package Hospital;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * TODO
