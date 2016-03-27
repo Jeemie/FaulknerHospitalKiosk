@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Matt on 3/26/2016.
  */
-public class MapController implements Initializable {
+public class EdgeMapController implements Initializable {
 
     final Logger logger = LoggerFactory.getLogger(MapController.class);
 
@@ -42,34 +42,16 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        logger.info("Edge");
+
         mapImage.setFitWidth(Main.primaryStage.getWidth());
         mapImage.setFitHeight(Main.primaryStage.getHeight());
 
         Image image = new Image(getClass().getResource("f11.png").toString());
         mapImage.setImage(image);
-        anchor.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mapClicked(event.getX(), event.getY());
-            }
-        });
-
-//        anchor.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                mapClicked(event.getX(), event.getY());
-//
-//                try {
-//                    Main.map.saveGraph();
-//                } catch (IOException e) {
-//                    logger.error("Could not Save Graph", e);
-//                }
-//
-//            }
-//        });
 
 
-        ArrayList<Node>  nodes =  Main.map.getNodes();
+        ArrayList<Node> nodes = Main.map.getNodes();
 
         for (Node n : nodes) {
 
@@ -78,21 +60,9 @@ public class MapController implements Initializable {
 
     }
 
-    private void DrawMap(GraphicsContext graphicsContext) {
-
-//        mapCanvas.setWidth(Main.primaryStage.getWidth());
-//        mapCanvas.setHeight(Main.primaryStage.getHeight());
-
-
-        double canvasWidth = graphicsContext.getCanvas().getWidth();
-        double canvasHeight = graphicsContext.getCanvas().getHeight();
-
-        Image image = new Image(getClass().getResource("f11.png").toString());
-
-        graphicsContext.drawImage(image, 0, 0, canvasWidth, canvasHeight);
-    }
-
     private void dragged() {
+
+        logger.debug("dragged");
 
         assert startClicked != null;
         assert lastClicked != null;
@@ -102,7 +72,6 @@ public class MapController implements Initializable {
 
         logger.debug("l1 =  x: {} and y: {}", startClicked.getCenterX(), startClicked.getCenterY());
         logger.debug("l2 =  x: {} and y: {}", lastClicked.getCenterX(), lastClicked.getCenterY());
-
 
 
         Main.map.addEdge(l1, l2);
@@ -123,6 +92,21 @@ public class MapController implements Initializable {
         logger.debug("The map was clicked at the position x: {} and y: {}", x, y);
 
         Circle newNode = new Circle(x, y, 5);
+
+        newNode.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                startClicked = (Circle)event.getSource();
+            }
+        });
+
+        newNode.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                lastClicked = (Circle)event.getSource();
+                dragged();
+            }
+        });
 
         anchor.getChildren().add(newNode);
 

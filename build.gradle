@@ -17,7 +17,7 @@ sourceSets {
     main {
         resources {
             srcDirs = ["resources","src/main/java"]
-            includes = ["**/*.fxml", "**/*.png"]
+            includes = ["**/*.fxml", "**/*.png", "**/*.DGS"]
         }
     }
 }
@@ -30,6 +30,7 @@ dependencies {
     compile 'org.graphstream:gs-core:1.3'
     compile 'org.graphstream:gs-algo:1.3'
     compile 'org.slf4j:slf4j-api:1.7.19'
+    compile 'org.slf4j:slf4j-log4j12:1.7.19'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 

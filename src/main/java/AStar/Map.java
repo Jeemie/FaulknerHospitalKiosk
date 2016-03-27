@@ -1,6 +1,8 @@
 package AStar;
 
+import org.apache.log4j.BasicConfigurator;
 import org.graphstream.algorithm.AStar;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -21,14 +23,15 @@ import java.util.*;
 public class Map {
 
     private Graph graph;
-//    private final Logger log = LoggerFactory.getLogger(Map.class);
+    private final Logger log = LoggerFactory.getLogger(Map.class);
     private final String pathToGraph;
 
     public Map() {
+        BasicConfigurator.configure();
 
         this.pathToGraph = getClass().getResource("graph.DGS").toString();
 
-//        log.info("Creating a graph with the file " + pathToGraph);
+        log.info("Creating a graph with the file " + pathToGraph);
 
         graph = new SingleGraph("Faulkner Hospital");
         FileSource fileSource = new FileSourceDGS();
@@ -46,6 +49,7 @@ public class Map {
     }
 
     public Map(String pathToGraph) {
+        BasicConfigurator.configure();
 
         this.pathToGraph = pathToGraph;
 
@@ -107,6 +111,41 @@ public class Map {
         currentNode.addAttribute("y", location.getY());
 
         return currentNode;
+    }
+
+    public void addEdge(Node node1, Node node2) {
+
+        String suuid  = UUID.randomUUID().toString();
+
+        graph.addEdge(suuid, node1, node2);
+
+    }
+
+    public void addEdge(Location node1, Location node2) {
+
+        String suuid  = UUID.randomUUID().toString();
+
+        Node n1 = getNode(node1);
+        Node n2 = getNode(node2);
+
+
+        assert n1 != null;
+        assert n2 != null;
+
+        graph.addEdge(suuid, n1, n2);
+
+    }
+
+    public Node getNode(Location location) {
+
+        for (Node n : graph.getEachNode()) {
+
+            if (location.getX() == n.getAttribute("x", Integer.class) && location.getY() == n.getAttribute("y", Integer.class)) {
+                return n;
+            }
+        }
+
+        return null;
     }
 
     public Node addLocation(Location location, int level) {

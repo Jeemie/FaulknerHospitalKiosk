@@ -9,16 +9,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.BasicConfigurator;
 
 import java.io.IOException;
 
 public class Main extends Application {
 
     public static Stage primaryStage;
-    public static Map map = new Map("C:\\Users\\Matt\\Desktop\\graph.DGS");
+    public static Map map = new Map("graph.DGS");
     private Parent root;
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         launch(args);
     }
 
@@ -33,6 +35,7 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Main");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
 
     }

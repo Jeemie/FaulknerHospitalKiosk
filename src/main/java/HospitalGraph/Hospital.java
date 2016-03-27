@@ -59,7 +59,7 @@ public class Hospital {
         graph.addEdge(edges.get(edges.size() - 1), lastNode, graph.getNode(0));
 
         Dijkstra dijkstra = new Dijkstra();
-        
+
 
         AStar aStar = new AStar(graph);
 

@@ -34,6 +34,23 @@ public class DashboardController implements Initializable {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
+
+
+    }
+
+    @FXML
+    private void handleOpenEdgeMapButton(ActionEvent event) throws IOException {
+
+        Parent root;
+        Stage stage = Main.primaryStage;
+
+        root = FXMLLoader.load(getClass().getResource("EdgeMap.fxml"));
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
 
 
