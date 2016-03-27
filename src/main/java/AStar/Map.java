@@ -9,8 +9,8 @@ import org.graphstream.stream.file.FileSource;
 import org.graphstream.stream.file.FileSourceDGS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.security.krb5.internal.crypto.Des;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,6 +23,27 @@ public class Map {
     private Graph graph;
 //    private final Logger log = LoggerFactory.getLogger(Map.class);
     private final String pathToGraph;
+
+    public Map() {
+
+        this.pathToGraph = getClass().getResource("graph.DGS").toString();
+
+//        log.info("Creating a graph with the file " + pathToGraph);
+
+        graph = new SingleGraph("Faulkner Hospital");
+        FileSource fileSource = new FileSourceDGS();
+
+        fileSource.addSink(graph);
+
+        try {
+            fileSource.readAll(getClass().getResource("graph.DGS"));
+        } catch (IOException e) {
+//            log.error("could read from file " + pathToGraph, e);
+        } finally {
+            fileSource.removeSink(graph);
+        }
+
+    }
 
     public Map(String pathToGraph) {
 
@@ -100,9 +121,7 @@ public class Map {
 
         Node currentNode = addLocation(location);
 
-        String arr[] = {destination.toString()};
-
-        currentNode.addAttribute(destination.toString(), arr);
+        currentNode.addAttribute(destination.toString(), destination.getName());
 
         return currentNode;
 
@@ -138,14 +157,22 @@ public class Map {
                 String dest = n.getAttribute(destination.toString());
 
                 if (dest != null) {
-
-                    System.out.println(dest);
-
-//                    for (String d : dest) {
-//
-//                        System.out.println(d);
-//                    }
+                    nodes.add(n);
                 }
+
+//                try {
+//                    String dest[] = n.getAttribute(destination.toString());
+//
+//                    if (dest != null) {
+//                        nodes.add(n);
+//                    }
+//
+//                } catch (ClassCastException e) {
+//                    String dest = n.getAttribute(destination.toString());
+//
+//
+//                }
+
             }
         }
 
