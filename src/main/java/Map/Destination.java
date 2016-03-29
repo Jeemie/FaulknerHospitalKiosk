@@ -1,4 +1,4 @@
-package AStar;
+package Map;
 
 /**
  * Created by Matt on 3/26/2016.

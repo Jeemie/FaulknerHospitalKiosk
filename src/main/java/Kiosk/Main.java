@@ -2,8 +2,7 @@ package Kiosk;/**
  * Created by Matt on 3/26/2016.
  */
 
-import AStar.Map;
-import Hospital.Kiosk;
+import Map.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

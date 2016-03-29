@@ -7,6 +7,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.DashboardController" fx:id="root">
    <children>
       <Button layoutX="264.0" layoutY="188.0" mnemonicParsing="false" text="Open Map" onAction="#handleOpenMapButton" fx:id="openMapButton"/>
-      <Button layoutX="100" layoutY="100" mnemonicParsing="false" text="Open Map" onAction="#handleOpenEdgeMapButton" fx:id="openOpenEdgeMap"/>
+      <Button layoutX="100" layoutY="100" mnemonicParsing="false" text="Open 1 Map" onAction="#handleOpenEdgeMapButton" fx:id="openOpenEdgeMap"/>
    </children>
 </AnchorPane>

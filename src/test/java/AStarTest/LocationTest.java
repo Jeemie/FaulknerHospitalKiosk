@@ -1,6 +1,6 @@
 package AStarTest;
 
-import AStar.Location;
+import Map.Location;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class LocationTest {
     public void locationInitialized() {
         Location testLocation = new Location(1, 2);
 
-        assertEquals(testLocation.getClass().toString(), "class AStar.Location");
+        assertEquals(testLocation.getClass().toString(), "class Map.Location");
     }
 
     @Test

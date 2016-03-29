@@ -1,8 +1,6 @@
-package AStar;
+package Map;
 
 import org.apache.log4j.BasicConfigurator;
-import org.graphstream.algorithm.AStar;
-import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -12,7 +10,6 @@ import org.graphstream.stream.file.FileSourceDGS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -41,7 +38,7 @@ public class Map {
         try {
             fileSource.readAll(getClass().getResource("graph.DGS"));
         } catch (IOException e) {
-//            log.error("could read from file " + pathToGraph, e);
+            log.error("could read from file " + pathToGraph, e);
         } finally {
             fileSource.removeSink(graph);
         }
@@ -119,6 +116,8 @@ public class Map {
 
         graph.addEdge(suuid, node1, node2);
 
+        log.info("adding edge for node");
+
     }
 
     public void addEdge(Location node1, Location node2) {
@@ -133,6 +132,8 @@ public class Map {
         assert n2 != null;
 
         graph.addEdge(suuid, n1, n2);
+
+        log.info("adding edge");
 
     }
 
@@ -183,6 +184,24 @@ public class Map {
         }
 
         return nodes;
+    }
+
+    public ArrayList<Node> getEdges(Node node) {
+
+        ArrayList<Node> edgeNodes = new ArrayList<>();
+
+        while(node.getNeighborNodeIterator().hasNext()) {
+
+            Node n = node.getNeighborNodeIterator().next();
+
+            if (edgeNodes.contains(n)) {
+                return edgeNodes;
+            }
+
+            edgeNodes.add(node.getNeighborNodeIterator().next());
+        }
+
+        return edgeNodes;
     }
 
     public ArrayList<Node> getNodes(Destination destination) {
