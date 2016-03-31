@@ -20,4 +20,5 @@ public enum  Destination {
     public String getName() {
         return name;
     }
+
 }

@@ -1,6 +1,5 @@
 package AStarTest;
 
-import Map.Map;
 import org.junit.Test;
 
 /**

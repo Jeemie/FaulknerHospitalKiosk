@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="658.5" y="0.0">Map.Destination</node>
+    <node x="437.5" y="22.0">Map.Location</node>
+    <node x="277.25" y="756.0">Map.Floor</node>
+    <node x="401.0" y="279.0">Map.Node</node>
+    <node x="91.0" y="66.0">Map.AStar</node>
+    <node x="0.0" y="367.0">Map.Building</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Map.Building" target="Map.AStar">
+      <point x="-127.0" y="-125.5" />
+      <point x="63.5" y="254.0" />
+      <point x="124.16666666666669" y="254.0" />
+      <point x="-66.33333333333333" y="48.5" />
+    </edge>
+    <edge source="Map.Building" target="Map.Floor">
+      <point x="95.25" y="125.5" />
+      <point x="285.75" y="726.0" />
+      <point x="375.875" y="726.0" />
+      <point x="-32.875" y="-114.5" />
+    </edge>
+    <edge source="Map.Floor" target="Map.Building">
+      <point x="-98.625" y="-114.5" />
+      <point x="310.125" y="736.0" />
+      <point x="95.25" y="736.0" />
+      <point x="-95.25" y="125.5" />
+    </edge>
+    <edge source="Map.AStar" target="Map.Building">
+      <point x="66.33333333333331" y="48.5" />
+      <point x="256.8333333333333" y="254.0" />
+      <point x="317.5" y="254.0" />
+      <point x="127.0" y="-125.5" />
+    </edge>
+    <edge source="Map.Floor" target="Map.Node">
+      <point x="32.875" y="-114.5" />
+      <point x="441.625" y="726.0" />
+      <point x="531.75" y="726.0" />
+      <point x="-130.75" y="213.5" />
+    </edge>
+    <edge source="Map.Node" target="Map.Floor">
+      <point x="130.75" y="213.5" />
+      <point x="793.25" y="736.0" />
+      <point x="507.375" y="736.0" />
+      <point x="98.625" y="-114.5" />
+    </edge>
+    <edge source="Map.Node" target="Map.Destination">
+      <point x="130.75" y="-213.5" />
+      <point x="793.25" y="254.0" />
+      <point x="787.0" y="254.0" />
+      <point x="0.0" y="114.5" />
+    </edge>
+    <edge source="Map.Node" target="Map.Location">
+      <point x="-130.75" y="-213.5" />
+      <point x="531.75" y="254.0" />
+      <point x="538.0" y="254.0" />
+      <point x="0.0" y="92.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6736318407960199" x="462.0" y="492.5" />
+  <SelectedNodes>
+    <node>Map.Destination</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
