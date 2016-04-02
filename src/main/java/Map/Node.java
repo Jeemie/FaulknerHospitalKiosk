@@ -37,9 +37,33 @@ public class Node {
     }
 
     public void addDestination(Destination destination) {
+
+        ArrayList<String> temp;
+
+        if(destinations.containsKey(destination)){
+
+            temp = destinations.get(destination);
+            temp.add(destination.getName());
+
+        } else {
+
+            temp = new ArrayList<String>();
+            temp.add(destination.getName());
+
+            destinations.put(destination,temp);
+
+        }
+
     }
 
     public void removeDestination(Destination destination) {
+
+        //check if destination of current type exists
+        if(destinations.containsKey(destination)){
+            //remove destination from list
+            destinations.remove(destination);
+        }
+
     }
 
     public ArrayList<Destination> getDestinations(Destination destinationType) {
