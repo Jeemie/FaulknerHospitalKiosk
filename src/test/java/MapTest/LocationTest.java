@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Matt on 3/27/2016.
- */
 public class LocationTest {
 
 
