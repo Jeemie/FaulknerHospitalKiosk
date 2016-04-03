@@ -1,5 +1,7 @@
 package Map;
 
+import sun.security.krb5.internal.crypto.Des;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.UUID;
@@ -38,10 +40,13 @@ public class Node {
 
     public void addDestination(Destination destination) {
 
+        //temporary variable to hold values
         ArrayList<String> temp;
 
+        //check if the DestinationType exists already
         if(destinations.containsKey(destination)){
 
+            //sets temp equal to
             temp = destinations.get(destination);
             temp.add(destination.getName());
 
@@ -66,33 +71,119 @@ public class Node {
 
     }
 
-    public ArrayList<Destination> getDestinations(Destination destinationType) {
-        return null;
-    }
+    //changed from ArrayList<Destination> to ArrayList<String>
+    public ArrayList<String> getDestinations(Destination destinationType) {
 
-    public ArrayList<Destination> getDestinations() {
-        return null;
+        //checks if the key entered is a valid key
+        if (destinations.containsKey(destinationType)) {
+
+            //returns the ArrayList<String> associated with the entered key
+            return destinations.get(destinationType);
+
+        }else { //throw exception - tried to enter an invalid destinationType
+
+            //return empty ArrayList
+            return new ArrayList<>();
+        }
+    }
+    //changed from ArrayList<Destination> to ArrayList<String>
+    public ArrayList<String> getDestinations() {
+
+
+
+        //create temporary variable to hold values
+        ArrayList<String> temp= new ArrayList<>();
+
+        //iterate through Physicians
+        for(int i = 0; i < destinations.get("Physician").size(); i++){
+            temp.add(destinations.get("Physician").get(i));
+        }
+
+        //iterate through Departments
+        for(int i = 0; i < destinations.get("Department").size(); i++){
+            temp.add(destinations.get("Department").get(i));
+        }
+
+        //iterate through Bathrooms
+        for(int i = 0; i < destinations.get("Bathroom").size(); i++){
+            temp.add(destinations.get("Bathroom").get(i));
+        }
+
+        //iterate through Elevators
+        for(int i = 0; i < destinations.get("Elevator").size(); i++){
+            temp.add(destinations.get("Elevator").get(i));
+        }
+
+        //iterate through Stairs
+        for(int i = 0; i < destinations.get("Stairs").size(); i++){
+            temp.add(destinations.get("Stairs").get(i));
+        }
+
+        //returns the temporary array containing all the destination Strings in destinations
+        return temp;
+        
+
     }
 
     public void addAdjacentNode(Node adjacentNode) {
+
+        //if the list does not already contain the adjacentNode
+        if(adjacentNodes.contains(adjacentNode)!=true){
+
+            //add the Node
+            adjacentNodes.add(adjacentNode);
+        }
+
+        else{} //throw exception - tried to add a node that already exists in adjacentNodes
     }
 
     public double getDistanceBetweenNodes(Node destinationNode) {
-        return 0;
+
+        Location temp = destinationNode.getLocation();
+
+        //returns the distance between the destinationNode location and the current location
+        return getDistance(temp.getX(),temp.getY(), location.getX(), location.getY());
+
     }
 
     public double getHueristicCost() {
-        return 0;
+
+        return heuristicCost;
     }
 
     public Location getLocation() {
-        return null;
+
+        return location;
     }
 
     public void removeAdjacentNode(Node adjacentNode) {
+
+        //iterates through the list of adjacentNodes
+        for(int i = 0; i < adjacentNodes.size(); i++){
+
+            //if the node is found
+            if(adjacentNodes.get(i)==adjacentNode){
+
+                //removes the node at the current index
+                adjacentNodes.remove(i);
+                return;
+            }
+        }
+
+        //reached end of list and did not find adjacentNodes
+
     }
 
     public void setHeuristicCost(double heuristicCost) {
+
+        this.heuristicCost = heuristicCost;
+    }
+
+    //helper method for findDistanceBetweenNodes
+    private double getDistance(int x1, int y1, int x2, int y2){
+
+        //finds distance using Pythagorean Theorem
+        return Math.sqrt(Math.abs((x2-x1)^2)+Math.abs((y2-y1)^2));
     }
 
 }
