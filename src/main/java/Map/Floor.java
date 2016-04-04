@@ -134,7 +134,6 @@ public class Floor {
     public ArrayList<Node> getFloorNodes() {
 
         return this.nodes;
-
     }
 
 
