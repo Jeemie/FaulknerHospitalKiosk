@@ -70,23 +70,41 @@ public class Node {
     }
 
     // TODO
-    public ArrayList<Destination> getDestinations(Destination destinationType) {
+    public ArrayList<String> getDestinations(Destination destinationType) {
 
-        return null;
+        ArrayList<String> nodeDestinations = new ArrayList<>();
+
+        if (destinations.containsKey(destinationType)) {
+
+            nodeDestinations.addAll(destinations.get(destinationType));
+
+        }
+
+        return nodeDestinations;
     }
 
     // TODO
-    public ArrayList<Destination> getDestinations() {
+    public ArrayList<String> getDestinations() {
 
-//        Set<Destination> entries = destinations.keySet();
-//
-//        for (Destination d : entries) {
-//
-//        }
-        return null;
+        Set<Destination> entries = destinations.keySet();
+
+        ArrayList<String> nodeDestinations = new ArrayList<>();
+
+        for (Destination d : entries) {
+
+            nodeDestinations.addAll(destinations.get(d));
+
+        }
+
+        return nodeDestinations;
     }
 
     public void addAdjacentNode(Node adjacentNode) {
+
+        if (this.equals(adjacentNode)) {
+
+            return;
+        }
 
         if (!adjacentNodes.contains(adjacentNode)) {
 
@@ -109,7 +127,8 @@ public class Node {
     }
 
     public double getHueristicCost() {
-        return 0;
+
+        return heuristicCost;
     }
 
     public Location getLocation() {

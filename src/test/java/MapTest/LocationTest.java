@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test cases for the Map.Location class.
+ */
 public class LocationTest {
 
 
