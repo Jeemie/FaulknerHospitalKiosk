@@ -2,6 +2,7 @@ package Map;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Set;
 import java.util.UUID;
 
 public class Node {
@@ -37,24 +38,74 @@ public class Node {
     }
 
     public void addDestination(Destination destination) {
+
+        ArrayList<String> temp;
+
+        if(destinations.containsKey(destination)){
+
+            temp = destinations.get(destination);
+            temp.add(destination.getName());
+
+        } else {
+
+            temp = new ArrayList<String>();
+            temp.add(destination.getName());
+
+            destinations.put(destination,temp);
+
+        }
+
     }
 
     public void removeDestination(Destination destination) {
+
+        if (destinations.containsKey(destination)) {
+
+            ArrayList<String> temp = destinations.get(destination);
+
+            temp.remove(destination.getName());
+
+        }
+
     }
 
+    // TODO
     public ArrayList<Destination> getDestinations(Destination destinationType) {
+
         return null;
     }
 
+    // TODO
     public ArrayList<Destination> getDestinations() {
+
+//        Set<Destination> entries = destinations.keySet();
+//
+//        for (Destination d : entries) {
+//
+//        }
         return null;
     }
 
     public void addAdjacentNode(Node adjacentNode) {
+
+        if (!adjacentNodes.contains(adjacentNode)) {
+
+            adjacentNodes.add(adjacentNode);
+
+            adjacentNode.addAdjacentNode(this);
+
+        }
+
     }
 
     public double getDistanceBetweenNodes(Node destinationNode) {
-        return 0;
+
+        Location destinationLocation = destinationNode.getLocation();
+
+        double xDistance = Math.pow((this.location.getX() - destinationLocation.getX()), 2);
+        double yDistance = Math.pow((this.location.getY() - destinationLocation.getY()), 2);
+
+        return Math.sqrt(xDistance + yDistance);
     }
 
     public double getHueristicCost() {
@@ -62,13 +113,24 @@ public class Node {
     }
 
     public Location getLocation() {
-        return null;
+
+        return location;
     }
 
     public void removeAdjacentNode(Node adjacentNode) {
+
+        if (adjacentNodes.contains(adjacentNode)) {
+
+            adjacentNodes.remove(adjacentNode);
+            adjacentNode.removeAdjacentNode(this);
+
+        }
+
     }
 
     public void setHeuristicCost(double heuristicCost) {
+
+        this.heuristicCost = heuristicCost;
     }
 
 }
