@@ -5,15 +5,25 @@ import java.util.EnumMap;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * TODO
+ */
 public class Node {
 
-    private double heuristicCost;
-    private final UUID uniqueID;
-    private Location location;
-    private ArrayList<Node> adjacentNodes;
-    private EnumMap<Destination, ArrayList<String>> destinations;
-    private Floor currentFloor;
+    private double heuristicCost; // heuristic cost for AStar algorithm
+    private final UUID uniqueID; // A randomly generated UUID associated with the current node
+    private Location location; // TODO
+    private ArrayList<Node> adjacentNodes; // TODO
+    private EnumMap<Destination, ArrayList<String>> destinations; // TODO
+    private Floor currentFloor; // TODO
 
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     * @param location
+     * @param currentFloor
+     */
     public Node(double heuristicCost, Location location, Floor currentFloor) {
 
         this.heuristicCost = heuristicCost;
@@ -23,9 +33,17 @@ public class Node {
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
 
-
     }
 
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     * @param uniqueID
+     * @param location
+     * @param currentFloor
+     * @param destinations
+     */
     public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
 
         this.heuristicCost = heuristicCost;
@@ -37,19 +55,25 @@ public class Node {
 
     }
 
-    public void addDestination(Destination destination) {
+    /**
+     * TODO
+     *
+     * @param destination
+     * @param name
+     */
+    public void addDestination(Destination destination, String name) {
 
         ArrayList<String> temp;
 
         if(destinations.containsKey(destination)){
 
             temp = destinations.get(destination);
-            temp.add(destination.getName());
+            temp.add(name);
 
         } else {
 
             temp = new ArrayList<String>();
-            temp.add(destination.getName());
+            temp.add(name);
 
             destinations.put(destination,temp);
 
@@ -57,19 +81,29 @@ public class Node {
 
     }
 
-    public void removeDestination(Destination destination) {
+    /**
+     * TODO
+     *
+     * @param destination
+     */
+    public void removeDestination(Destination destination, String name) {
 
         if (destinations.containsKey(destination)) {
 
             ArrayList<String> temp = destinations.get(destination);
 
-            temp.remove(destination.getName());
+            temp.remove(name);
 
         }
 
     }
 
-    // TODO
+    /**
+     * TODO
+     *
+     * @param destinationType
+     * @return
+     */
     public ArrayList<String> getDestinations(Destination destinationType) {
 
         ArrayList<String> nodeDestinations = new ArrayList<>();
@@ -83,7 +117,11 @@ public class Node {
         return nodeDestinations;
     }
 
-    // TODO
+    /**
+     * TODO
+     *
+     * @return
+     */
     public ArrayList<String> getDestinations() {
 
         Set<Destination> entries = destinations.keySet();
@@ -99,6 +137,11 @@ public class Node {
         return nodeDestinations;
     }
 
+    /**
+     * TODO
+     *
+     * @param adjacentNode
+     */
     public void addAdjacentNode(Node adjacentNode) {
 
         if (this.equals(adjacentNode)) {
@@ -116,6 +159,12 @@ public class Node {
 
     }
 
+    /**
+     * TODO
+     *
+     * @param destinationNode
+     * @return
+     */
     public double getDistanceBetweenNodes(Node destinationNode) {
 
         Location destinationLocation = destinationNode.getLocation();
@@ -126,16 +175,31 @@ public class Node {
         return Math.sqrt(xDistance + yDistance);
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     public double getHueristicCost() {
 
         return heuristicCost;
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     public Location getLocation() {
 
         return location;
     }
 
+    /**
+     * TODO
+     *
+     * @param adjacentNode
+     */
     public void removeAdjacentNode(Node adjacentNode) {
 
         if (adjacentNodes.contains(adjacentNode)) {
@@ -147,6 +211,11 @@ public class Node {
 
     }
 
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     */
     public void setHeuristicCost(double heuristicCost) {
 
         this.heuristicCost = heuristicCost;

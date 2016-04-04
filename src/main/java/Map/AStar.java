@@ -3,18 +3,32 @@ package Map;
 import java.util.ArrayList;
 
 /**
- * Created by matthewlemay on 3/31/16.
+ * TODO
  */
 public class AStar {
 
-    private final Building building;
+    private final Building building; // The building that will be associated with the AStar search
 
+    /**
+     * TODO
+     *
+     * @param building
+     */
     public AStar(Building building) {
 
         this.building = building;
+
     }
 
+    /**
+     * TODO
+     *
+     * @param startNode
+     * @param destinationNode
+     * @return
+     */
     public ArrayList<Node> getPath(Node startNode, Node destinationNode) {
         return null;
     }
+
 }
