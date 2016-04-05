@@ -1,39 +1,58 @@
 package Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by mharris382 on 4/5/2016.
+ * A class that observes Floors.
  */
 public class FloorObserver implements Observer {
 
-    ArrayList<Floor> observed_floors = new ArrayList<>();
+    ArrayList<Floor> observedFloors; // List of observed Floors
+    private static Logger LOGGER = LoggerFactory.getLogger(FloorObserver.class); // Logger for this class
 
-    public FloorObserver(){ }
-
-    /** adds an observer to watch a specified floor
-     *
-     * @param f Floor to start observing
+    /**
+     * Default constructor for the FloorObserver class.
      */
-    public void observeFloor(Floor f){
-        System.out.println("Observing new floor");
+    public FloorObserver() {
 
-        //check that the floor is not already being observed
-        if(!observed_floors.contains(f)){
+        LOGGER.info("Creating new FloorObserver: " + this.toString());
 
-            //add an observer watching the floor
-            f.addObserver(f.getFloorObserver());
+        this.observedFloors = new ArrayList<>();
 
-            //add floor to the list of floors being observed
-            observed_floors.add(f);
+    }
+
+    /**
+     * Adds a floor you want to Observe to the FloorObserver instance.
+     *
+     * @param floor The Floor that you want to observe.
+     */
+    public void observeFloor(Floor floor) {
+
+        // check that the floor is not already being observed
+        if (!observedFloors.contains(floor)) {
+
+            LOGGER.info("Observing new Floor: " + floor.toString());
+
+            // add an observer watching the floor
+            floor.addObserver(floor.getFloorObserver());
+
+            // add floor to the list of floors being observed
+            observedFloors.add(floor);
 
         }
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
+        LOGGER.info("Updating Floor: " + o.toString());
+
     }
+
 }

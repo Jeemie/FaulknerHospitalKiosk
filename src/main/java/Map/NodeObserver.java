@@ -1,40 +1,58 @@
 package Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by mharris382 on 4/5/2016.
+ * A class that observes a Nodes.
  */
-public class NodeObserver implements Observer{
+public class NodeObserver implements Observer {
 
-    private ArrayList<Node> observed_nodes = new ArrayList<>();
+    private ArrayList<Node> observedNodes; // List of observed Nodes
+    private static Logger LOGGER = LoggerFactory.getLogger(NodeObserver.class); // Logger for this class
 
+    /**
+     * Default constructor for the NodeObserver Class.
+     */
+    public NodeObserver() {
 
-    public NodeObserver(){
-        this.observed_nodes = new ArrayList<>();
+        LOGGER.info("Creating new NodeObserver: " + this.toString());
+
+        this.observedNodes = new ArrayList<>();
+
     }
 
+    /**
+     * Adds a node you want to Observe to the NodeObserver instance.
+     *
+     * @param node The node you want to observe.
+     */
+    public void observeNode(Node node){
 
-    public void observeNode(Node n){
+        // check that the node is not already being observed
+        if (!observedNodes.contains(node)) {
 
-        //if not already watching this node
-        if(!observed_nodes.contains(n)){
+            LOGGER.info("Observing new Node: " + node.toString());
 
-            System.out.println("observing new node");
+            // add this node to list of watching nodes
+            observedNodes.add(node);
 
-            //add this node to list of watching nodes
-            observed_nodes.add(n);
+            // add an observer to watch the node
+            node.addObserver(node.getNodeObserver());
 
-            //add an observer to watch the node
-            n.addObserver(n.getNodeObserver());
         }
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("NodeObserver called update");
+
+        LOGGER.info("Updating Node: " + o.toString());
+
     }
 
 }

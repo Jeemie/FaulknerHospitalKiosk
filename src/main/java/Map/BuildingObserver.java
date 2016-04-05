@@ -1,42 +1,55 @@
 package Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by mharris382 on 4/5/2016.
+ * A class that observes Buildings.
  */
-public class BuildingObserver implements Observer{
+public class BuildingObserver implements Observer {
 
-    private ArrayList<Building> observed_buildings = new ArrayList<>();
+    private ArrayList<Building> observedBuildings; // List of observed Buildings
+    private static Logger LOGGER = LoggerFactory.getLogger(BuildingObserver.class); // Logger for this class
 
     
     public BuildingObserver(){
 
-        System.out.println("observing new building");
+        LOGGER.info("Creating new BuildingObserver: " + this.toString());
+
+        this.observedBuildings = new ArrayList<>();
+
     }
 
     /**
      *  called from Building constructor, makes an observer to watch building and adds the building to the list of observed buildings
      *
-     * @param b Building object to be observed
+     * @param building Building object to be observed
      */
-    public void observeBuilding(Building b){
+    public void observeBuilding(Building building) {
 
-        if(!observed_buildings.contains(b)){
+        // check that the building is not already being observed
+        if (!observedBuildings.contains(building)) {
 
-            //add observer to watch the building object b
-            b.addObserver(b.getBuildingObserver());
+            LOGGER.info("Observing new Building: " + building.toString());
 
-            //add building to the list of observed buildings
-            observed_buildings.add(b);
+            // add an observer watching the building
+            building.addObserver(building.getBuildingObserver());
+
+            // add building to the list of observed buildings
+            observedBuildings.add(building);
+
         }
 
     }
 
     @Override
     public void update(Observable o, Object arg) {
+
+        LOGGER.info("Updating Building: " + o.toString());
         
     }
 }
