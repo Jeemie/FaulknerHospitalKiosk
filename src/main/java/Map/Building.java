@@ -46,6 +46,7 @@ public class Building {
 
     }
 
+
     /**
      * TODO
      *
@@ -132,14 +133,21 @@ public class Building {
      */
     public Floor getFloor(int floor) {
 
-        //if floor is valid
-        if (floor < floors.size()) {
-
-            return floors.get(floor);
-
-        // floor is invalid
-        } else { return null; }
+        for(int i = 0; i < floors.size(); i++){
+            Floor temp = floors.get(i);
+            if(temp.getFloor()==floor) {
+                return temp;
+            }
+        }
+        return addFloor(floor);
     }
+
+    private Floor addFloor(int floor){
+        Floor temp = new Floor(floor, this);
+        floors.add(temp);
+        return temp;
+    }
+
 
 
 

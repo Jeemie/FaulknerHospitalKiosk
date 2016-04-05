@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.UUID;
 
+/**
+ * TODO
+ */
 public class Floor {
 
-    private final int floor; // the level number associated with the floor
+    private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
@@ -40,6 +43,10 @@ public class Floor {
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
+    }
+
+    public int getFloor(){
+        return this.floor;
     }
 
     /**
@@ -88,10 +95,10 @@ public class Floor {
      * @param destinationType Type of destination that you want to get.
      * @return A list of all of the destinations of the given type on the current floor.
      */
-    public ArrayList<Destination> getFloorDestinations(Destination destinationType) {
+    public ArrayList<String> getFloorDestinations(Destination destinationType) {
 
         // List of destinations of the given type on the current floor
-        ArrayList<Destination> floorDestinations = new ArrayList<>();
+        ArrayList<String> floorDestinations = new ArrayList<>();
 
         // Go through all of the nodes on the current floor and add destinations of the given type to the list
         for (Node n : nodes) {
@@ -110,10 +117,10 @@ public class Floor {
      *
      * @return A List of all the destinations on the current floor.
      */
-    public ArrayList<Destination> getFloorDestinations() {
+    public ArrayList<String> getFloorDestinations() {
 
         // List of all the destinations on the current floor
-        ArrayList<Destination> floorDestinations = new ArrayList<>();
+        ArrayList<String> floorDestinations = new ArrayList<>();
 
         for (Node n : nodes) {
 
@@ -134,7 +141,6 @@ public class Floor {
     public ArrayList<Node> getFloorNodes() {
 
         return this.nodes;
-
     }
 
 

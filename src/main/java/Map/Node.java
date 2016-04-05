@@ -1,32 +1,53 @@
 package Map;
 
-import sun.security.krb5.internal.crypto.Des;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.UUID;
+import static sun.misc.Version.print;
+import static sun.misc.Version.println;
 
-public class Node {
+/**
+ * TODO
+ */
+public class Node implements Observer{
 
-    private double heuristicCost;
-    private final UUID uniqueID;
-    private Location location;
-    private ArrayList<Node> adjacentNodes;
-    private EnumMap<Destination, ArrayList<String>> destinations;
-    private Floor currentFloor;
+    private double heuristicCost; // heuristic cost for AStar algorithm
+    private final UUID uniqueID; // A randomly generated UUID associated with the current node
+    private Location location; // TODO
+    private ArrayList<Node> adjacentNodes; // TODO
+    private EnumMap<Destination, ArrayList<String>> destinations; // TODO
+    private Floor currentFloor; // TODO
 
+    private NodeObserver observer;
+
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     * @param location
+     * @param currentFloor
+     */
     public Node(double heuristicCost, Location location, Floor currentFloor) {
 
         this.heuristicCost = heuristicCost;
+
         this.uniqueID = UUID.randomUUID();
         this.location = location;
         this.adjacentNodes = new ArrayList<>();
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
-
+        this.observer = new NodeObserver();
 
     }
 
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     * @param uniqueID
+     * @param location
+     * @param currentFloor
+     * @param destinations
+     */
     public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
 
         this.heuristicCost = heuristicCost;
@@ -38,152 +59,208 @@ public class Node {
 
     }
 
-    public void addDestination(Destination destination) {
+    /**
+     * TODO
+     *
+     * @param destination
+     * @param name
+     */
+    public void addDestination(Destination destination, String name) {
 
-        //temporary variable to hold values
         ArrayList<String> temp;
 
-        //check if the DestinationType exists already
         if(destinations.containsKey(destination)){
 
-            //sets temp equal to
             temp = destinations.get(destination);
-            temp.add(destination.getName());
+            temp.add(name);
 
         } else {
 
             temp = new ArrayList<String>();
-            temp.add(destination.getName());
+            temp.add(name);
 
             destinations.put(destination,temp);
 
         }
 
+        // call to observer checks if destinations have changed
+        observer.observeDestinations(getDestinations());
+
     }
 
-    public void removeDestination(Destination destination) {
+    /**
+     * TODO
+     *
+     * @param destination
+     */
+    public void removeDestination(Destination destination, String name) {
 
-        //check if destination of current type exists
-        if(destinations.containsKey(destination)){
-            //remove destination from list
-            destinations.remove(destination);
+        if (destinations.containsKey(destination)) {
+
+            ArrayList<String> temp = destinations.get(destination);
+
+            temp.remove(name);
+
         }
 
+        //call to observer checks if destinations have changed
+        observer.observeDestinations(getDestinations());
+
     }
 
-    //changed from ArrayList<Destination> to ArrayList<String>
+    /**
+     * TODO
+     *
+     * @param destinationType
+     * @return
+     */
     public ArrayList<String> getDestinations(Destination destinationType) {
 
-        //checks if the key entered is a valid key
+        ArrayList<String> nodeDestinations = new ArrayList<>();
+
         if (destinations.containsKey(destinationType)) {
 
-            //returns the ArrayList<String> associated with the entered key
-            return destinations.get(destinationType);
+            nodeDestinations.addAll(destinations.get(destinationType));
 
-        }else { //throw exception - tried to enter an invalid destinationType
-
-            //return empty ArrayList
-            return new ArrayList<>();
         }
+
+        return nodeDestinations;
     }
-    //changed from ArrayList<Destination> to ArrayList<String>
+
+    /**
+     * TODO
+     *
+     * @return
+     */
     public ArrayList<String> getDestinations() {
 
+        Set<Destination> entries = destinations.keySet();
 
+        ArrayList<String> nodeDestinations = new ArrayList<>();
 
-        //create temporary variable to hold values
-        ArrayList<String> temp= new ArrayList<>();
+        for (Destination d : entries) {
 
-        //iterate through Physicians
-        for(int i = 0; i < destinations.get("Physician").size(); i++){
-            temp.add(destinations.get("Physician").get(i));
+            nodeDestinations.addAll(destinations.get(d));
+
         }
 
-        //iterate through Departments
-        for(int i = 0; i < destinations.get("Department").size(); i++){
-            temp.add(destinations.get("Department").get(i));
-        }
-
-        //iterate through Bathrooms
-        for(int i = 0; i < destinations.get("Bathroom").size(); i++){
-            temp.add(destinations.get("Bathroom").get(i));
-        }
-
-        //iterate through Elevators
-        for(int i = 0; i < destinations.get("Elevator").size(); i++){
-            temp.add(destinations.get("Elevator").get(i));
-        }
-
-        //iterate through Stairs
-        for(int i = 0; i < destinations.get("Stairs").size(); i++){
-            temp.add(destinations.get("Stairs").get(i));
-        }
-
-        //returns the temporary array containing all the destination Strings in destinations
-        return temp;
-        
-
+        return nodeDestinations;
     }
 
+    /**
+     * TODO
+     *
+     * @param adjacentNode
+     */
     public void addAdjacentNode(Node adjacentNode) {
 
-        //if the list does not already contain the adjacentNode
-        if(adjacentNodes.contains(adjacentNode)!=true){
+        if (this.equals(adjacentNode)) {
 
-            //add the Node
-            adjacentNodes.add(adjacentNode);
+            return;
         }
 
-        else{} //throw exception - tried to add a node that already exists in adjacentNodes
+        if (!adjacentNodes.contains(adjacentNode)) {
+
+            adjacentNodes.add(adjacentNode);
+
+            adjacentNode.addAdjacentNode(this);
+
+
+        }
+        observer.observeAdjacentNodes(adjacentNodes);
+
     }
 
+    /**
+     * TODO
+     *
+     * @param destinationNode
+     * @return
+     */
     public double getDistanceBetweenNodes(Node destinationNode) {
 
-        Location temp = destinationNode.getLocation();
+        //temp value - location of destination node
+        Location destinationLocation = destinationNode.getLocation();
 
-        //returns the distance between the destinationNode location and the current location
-        return getDistance(temp.getX(),temp.getY(), location.getX(), location.getY());
-
+        //preform distance formula -> distance = sqrt((x1-x2)^2 + (y1 - y2)^2)
+        double xDistance = Math.pow((this.location.getX() - destinationLocation.getX()), 2);
+        double yDistance = Math.pow((this.location.getY() - destinationLocation.getY()), 2);
+        return Math.sqrt(xDistance + yDistance);
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     public double getHueristicCost() {
 
         return heuristicCost;
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     public Location getLocation() {
 
         return location;
     }
 
+    /**
+     * TODO
+     *
+     * @param adjacentNode
+     */
     public void removeAdjacentNode(Node adjacentNode) {
 
-        //iterates through the list of adjacentNodes
-        for(int i = 0; i < adjacentNodes.size(); i++){
+        //if the node exists
+        if (adjacentNodes.contains(adjacentNode)) {
 
-            //if the node is found
-            if(adjacentNodes.get(i)==adjacentNode){
+            //removes the node from list of adjacent Nodes
+            adjacentNodes.remove(adjacentNode);
 
-                //removes the node at the current index
-                adjacentNodes.remove(i);
-                return;
-            }
+            //removes this node from the other node's list of adjacent nodes
+            adjacentNode.removeAdjacentNode(this);
+
         }
 
-        //reached end of list and did not find adjacentNodes
+        //call to observer to check if AdjacentNodes has changed
+        observer.observeAdjacentNodes(adjacentNodes);
 
     }
 
+    /**
+     * TODO
+     *
+     * @param heuristicCost
+     */
     public void setHeuristicCost(double heuristicCost) {
 
+        //set heuristicCost
         this.heuristicCost = heuristicCost;
+
+        //call to observer that checks if heuristic cost has changed
+        this.observer.observeHeuristicCost(heuristicCost);
+
     }
 
-    //helper method for findDistanceBetweenNodes
-    private double getDistance(int x1, int y1, int x2, int y2){
-
-        //finds distance using Pythagorean Theorem
-        return Math.sqrt(Math.abs((x2-x1)^2)+Math.abs((y2-y1)^2));
+    /**
+     * TODO
+     *
+     */
+    public NodeObserver getObserver(){
+        return this.observer;
     }
 
+    /**
+     * TODO
+     *
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
+
