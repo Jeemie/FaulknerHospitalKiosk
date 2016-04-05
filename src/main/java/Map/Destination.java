@@ -4,12 +4,12 @@ package Map;
  * Created by Matt on 3/26/2016.
  */
 public enum  Destination {
-    Physician(""),
-    Department(""),
-    Kiosk(""),
-    Bathroom(""),
-    Elevator(""),
-    Stairs("");
+    PHYSICIAN(""),
+    DEPARTMENT(""),
+    KIOSK(""),
+    BATHROOM(""),
+    ELEVATOR(""),
+    STAIRS("");
 
     private String name;
 
