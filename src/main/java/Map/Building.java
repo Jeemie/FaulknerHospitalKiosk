@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Building extends Observable{
 
     private UUID uniqueID; // A randomly generated UUID associated with the current building
-    private ArrayList<Floor> floors; // TODO
+    private ArrayList<Floor> floors; // TODO aafeasreea
     private final AStar aStarSearch; // TODO
 
     private static BuildingObserver observer; //BuildingObserver observing all Building objects
@@ -25,7 +25,7 @@ public class Building extends Observable{
         this.uniqueID = UUID.randomUUID();
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
-        
+
         observer.observeBuilding(this); //start observing building
 
     }
