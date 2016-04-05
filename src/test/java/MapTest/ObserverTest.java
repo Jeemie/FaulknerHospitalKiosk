@@ -1,6 +1,7 @@
 package MapTest;
 
 import Map.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.UUID;
  * Created by mharris382 on 4/5/2016.
  */
 public class ObserverTest {
+
     private Building mMainHospital;
     private Floor mFloor;
     private Location mLocation1, mLocation2, mLocation3;
@@ -19,9 +21,11 @@ public class ObserverTest {
 
 
 
-    private EnumMap<Destination, ArrayList<String>> mDestinations;
-    @Test
-    public void initialize(){
+    private EnumMap<Destination, ArrayList<String>> mDestinations =
+            new EnumMap<Destination, ArrayList<String>>(Destination.class);
+
+    @Before
+    public void setUp(){
         mMainHospital = new Building();
 
         mFloor = mMainHospital.getFloor(0);
@@ -33,9 +37,6 @@ public class ObserverTest {
         mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations);
         mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations);
         mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations);
-
-
-
 
     }
 
@@ -55,20 +56,12 @@ public class ObserverTest {
     public void testAddDestination(){
         mTestNode.addDestination(Destination.PHYSICIAN, "Dr. Phil");
     }
-/*
-    @Test void testRemoveDestination(){
+
+    @Test
+    public void testRemoveDestination(){
         mTestNode.removeDestination(Destination.PHYSICIAN, "Dr. Phil");
 
 
     }
-*/
 
-    @Test
-    public void run(){
-        initialize();
-        testAddAdjacentNode();
-        testRemoveAdjacentNode();
-        //testAddDestination();
-
-    }
 }

@@ -15,7 +15,7 @@ public class Building extends Observable{
     private ArrayList<Floor> floors; // TODO aafeasreea
     private final AStar aStarSearch; // TODO
 
-    private static BuildingObserver observer; //BuildingObserver observing all Building objects
+    private static BuildingObserver observer = new BuildingObserver(); //BuildingObserver observing all Building objects
 
     /**
      * TODO
@@ -57,18 +57,17 @@ public class Building extends Observable{
      * @param location
      * @return
      */
-        public Node addNode(int floor, Location location) {
+    public Node addNode(int floor, Location location) {
+        //adds node to the specified floor
+        Node temp = getFloor(floor).addNode(location);
 
-            //adds node to the specified floor
-            Node temp = getFloor(floor).addNode(location);
+        //mark as value changed
+        hasChanged();
 
-            //mark as value changed
-            hasChanged();
+        //trigger notification
+        notifyObservers();
 
-            //trigger notification
-            notifyObservers();
-
-            return temp;
+        return temp;
     }
 
     //getter for observer

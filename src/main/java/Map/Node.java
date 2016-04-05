@@ -73,7 +73,7 @@ public class Node extends Observable{
 
         ArrayList<String> temp;
 
-        if(destinations.containsKey(destination)){
+        if(destinations.containsKey(destination)) {
 
             temp = destinations.get(destination);
             temp.add(name);

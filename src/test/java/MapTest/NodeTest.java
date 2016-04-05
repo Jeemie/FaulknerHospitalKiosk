@@ -33,6 +33,7 @@ public class NodeTest {
     //public Node(double heuristicCost, Location location, Floor currentFloor)
     @Before
     public void setUp() throws Exception {
+
         mMainHospital = new Building();
         mFloor3 = new Floor(3, mMainHospital);
         mLocation3B = new Location(10, 10);
@@ -54,9 +55,9 @@ public class NodeTest {
      */
     @Test
     public void testAddDestinationDepartment() {
-        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT);
-        ArrayList<Destination> destinations = mEyeCareSpecialists3B.getDestinations(Destination.DEPARTMENT);
-        Assert.assertEquals(destinations.contains(mEyeCareSpecialists3B), true);
+        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "Optometry");
+        ArrayList<String> destinations = mEyeCareSpecialists3B.getDestinations(Destination.DEPARTMENT);
+        Assert.assertEquals(destinations.contains("Optometry"), true);
     }
 
     /**
@@ -64,9 +65,9 @@ public class NodeTest {
      */
     @Test
     public void testAddDestinationPhysician() {
-        mGrossiLisaRN.addDestination(Destination.PHYSICIAN);
-        ArrayList<Destination> destinations = mGrossiLisaRN.getDestinations(Destination.PHYSICIAN);
-        Assert.assertEquals(destinations.contains(mGrossiLisaRN), true);
+        mGrossiLisaRN.addDestination(Destination.PHYSICIAN, "Dr. Lisa Grossi");
+        ArrayList<String> destinations = mGrossiLisaRN.getDestinations(Destination.PHYSICIAN);
+        Assert.assertEquals(destinations.contains("Dr. Lisa Grossi"), true);
     }
 
     /**
@@ -74,9 +75,9 @@ public class NodeTest {
      */
     @Test
     public void testAddDestinationElevator() {
-        mElevator3.addDestination(Destination.ELEVATOR);
-        ArrayList<Destination> destinations = mElevator3.getDestinations(Destination.ELEVATOR);
-        Assert.assertEquals(destinations.contains(mElevator3), true);
+        mElevator3.addDestination(Destination.ELEVATOR, "Elevator");
+        ArrayList<String> destinations = mElevator3.getDestinations(Destination.ELEVATOR);
+        Assert.assertEquals(destinations.contains("Elevator"), true);
     }
 
 

@@ -8,7 +8,8 @@ import java.util.Observer;
  * Created by mharris382 on 4/5/2016.
  */
 public class BuildingObserver implements Observer{
-    private ArrayList<Building> observed_buildings;
+
+    private ArrayList<Building> observed_buildings = new ArrayList<>();
 
     
     public BuildingObserver(){

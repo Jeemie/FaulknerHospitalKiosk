@@ -8,7 +8,8 @@ import java.util.Observer;
  * Created by mharris382 on 4/5/2016.
  */
 public class NodeObserver implements Observer{
-    private ArrayList<Node> observed_nodes;
+
+    private ArrayList<Node> observed_nodes = new ArrayList<>();
 
 
     public NodeObserver(){
