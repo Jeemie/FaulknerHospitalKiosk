@@ -5,11 +5,11 @@ package Map;
  */
 public enum  Destination {
 
-    Physician,
-    Department,
-    Kiosk,
-    Bathroom,
-    Elevator,
-    Stairs
+    PHYSICIAN,
+    DEPARTMENT,
+    KIOSK,
+    BATHROOM,
+    ELEVATOR,
+    STAIRS
 
 }
