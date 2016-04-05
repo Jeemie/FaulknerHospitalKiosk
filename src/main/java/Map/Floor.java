@@ -14,8 +14,7 @@ public class Floor extends Observable{
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
-    private FloorObserver observer = new FloorObserver(); //the FloorObserver observing all Floor objects
-
+    private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
 
 
     /**

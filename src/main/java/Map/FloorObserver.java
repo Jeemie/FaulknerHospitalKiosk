@@ -8,6 +8,7 @@ import java.util.Observer;
  * Created by mharris382 on 4/5/2016.
  */
 public class FloorObserver implements Observer {
+
     ArrayList<Floor> observed_floors = new ArrayList<>();
 
     public FloorObserver(){ }

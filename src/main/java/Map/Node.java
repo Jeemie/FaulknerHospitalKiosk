@@ -15,8 +15,7 @@ public class Node extends Observable{
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
-
-    NodeObserver observer = new NodeObserver(); //Observer Object watching all Node objects
+    private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
 
 
     /**

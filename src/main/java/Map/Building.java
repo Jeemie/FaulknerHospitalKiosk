@@ -15,7 +15,7 @@ public class Building extends Observable{
     private ArrayList<Floor> floors; // TODO
     private final AStar aStarSearch; // TODO
 
-    private BuildingObserver observer; //BuildingObserver observing all Building objects
+    private static BuildingObserver observer; //BuildingObserver observing all Building objects
 
     /**
      * TODO
@@ -25,6 +25,7 @@ public class Building extends Observable{
         this.uniqueID = UUID.randomUUID();
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
+        
         observer.observeBuilding(this); //start observing building
 
     }
