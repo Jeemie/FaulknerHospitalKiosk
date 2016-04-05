@@ -191,20 +191,18 @@ public class Node extends Observable{
     }
 
     /**
-     * TODO
+     * The straight line distance between two nodes, ignoring the floor they are on.
      *
-     * @param destinationNode
-     * @return
+     * @param destinationNode The node you want to get the distance to.
+     * @return The distance between two nodes.
      */
     public double getDistanceBetweenNodes(Node destinationNode) {
 
-        //temp value - location of destination node
+        // location of destination node
         Location destinationLocation = destinationNode.getLocation();
 
-        //preform distance formula -> distance = sqrt((x1-x2)^2 + (y1 - y2)^2)
-        double xDistance = Math.pow((this.location.getX() - destinationLocation.getX()), 2);
-        double yDistance = Math.pow((this.location.getY() - destinationLocation.getY()), 2);
-        return Math.sqrt(xDistance + yDistance);
+        // return the distance between the nodes
+        return this.location.getDistanceBetween(destinationLocation);
     }
 
     /**
