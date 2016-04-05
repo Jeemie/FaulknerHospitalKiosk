@@ -15,7 +15,8 @@ public class Node extends Observable{
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
-    NodeObserver observer = new NodeObserver();
+
+    NodeObserver observer = new NodeObserver(); //Observer Object watching all Node objects
 
 
     /**
@@ -35,7 +36,7 @@ public class Node extends Observable{
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
 
-        observer.observeNode(this, observer);
+        observer.observeNode(this);  //starts observing new Node object
 
     }
 
@@ -59,7 +60,7 @@ public class Node extends Observable{
         this.destinations = destinations;
         this.currentFloor = currentFloor;
 
-        observer.observeNode(this, observer);
+        observer.observeNode(this); //starts observing new Node object
 
     }
 
@@ -94,6 +95,10 @@ public class Node extends Observable{
         notifyObservers();
 
 
+    }
+
+    public NodeObserver getNodeObserver(){
+        return this.observer;
     }
 
     /**

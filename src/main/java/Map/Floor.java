@@ -14,7 +14,7 @@ public class Floor extends Observable{
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
-    private FloorObserver observer = new FloorObserver();
+    private FloorObserver observer = new FloorObserver(); //the FloorObserver observing all Floor objects
 
 
 
@@ -31,8 +31,8 @@ public class Floor extends Observable{
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
-        //adds an observer to this floor and add the floor to list of observed floors
-        observer.observeFloor(this, observer);
+        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
+        observer.observeFloor(this);
 
     }
 
@@ -49,7 +49,9 @@ public class Floor extends Observable{
         this.uniqueID = uniqueID;
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
-        observer.observeFloor(this, observer);
+
+        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
+        observer.observeFloor(this);
 
     }
 
@@ -156,6 +158,16 @@ public class Floor extends Observable{
     public ArrayList<Node> getFloorNodes() {
 
         return this.nodes;
+    }
+
+
+    /**
+     * Return a FloorObserver associated with Floor
+     *
+     * @return the FloorObserver called observer
+     */
+    public FloorObserver getFloorObserver(){
+        return this.observer;
     }
 
 

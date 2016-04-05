@@ -16,7 +16,7 @@ public class NodeObserver implements Observer{
     }
 
 
-    public void observeNode(Node n, NodeObserver o){
+    public void observeNode(Node n){
 
         //if not already watching this node
         if(!observed_nodes.contains(n)){
@@ -27,7 +27,7 @@ public class NodeObserver implements Observer{
             observed_nodes.add(n);
 
             //add an observer to watch the node
-            n.addObserver(o);
+            n.addObserver(n.getNodeObserver());
         }
     }
 

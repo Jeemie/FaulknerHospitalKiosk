@@ -10,23 +10,20 @@ import java.util.Observer;
 public class FloorObserver implements Observer {
     ArrayList<Floor> observed_floors = new ArrayList<>();
 
-    public FloorObserver(){
-
-    }
+    public FloorObserver(){ }
 
     /** adds an observer to watch a specified floor
      *
      * @param f Floor to start observing
-     * @param o FloorObserver stored in the Floor class
      */
-    public void observeFloor(Floor f, FloorObserver o){
+    public void observeFloor(Floor f){
         System.out.println("Observing new floor");
 
         //check that the floor is not already being observed
         if(!observed_floors.contains(f)){
 
             //add an observer watching the floor
-            f.addObserver(o);
+            f.addObserver(f.getFloorObserver());
 
             //add floor to the list of floors being observed
             observed_floors.add(f);
