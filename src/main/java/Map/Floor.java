@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * TODO
  */
-public class Floor {
+public class Floor{
 
     private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
@@ -74,13 +74,14 @@ public class Floor {
      * @param uniqueID An UUID that is associated with the node.
      * @param location The x and y coordinate in which the node was placed on the current floor.
      * @param destinations The destinations that are associated with the current node.
+     * @param observer The NodeObserver that watches this node
      * @return The newly created node
      */
     public Node addNode(double heuristicCost, UUID uniqueID, Location location,
-                        EnumMap<Destination, ArrayList<String>> destinations) {
+                        EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
 
         // Create a new node
-        Node newNode = new Node(heuristicCost, uniqueID, location, this, destinations);
+        Node newNode = new Node(heuristicCost, uniqueID, location, this, destinations, observer);
 
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
