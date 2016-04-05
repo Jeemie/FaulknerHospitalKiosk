@@ -4,6 +4,7 @@ import Map.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.UUID;
 
 /**
@@ -16,9 +17,9 @@ public class ObserverTest {
     private Node mTestNode;
     private Node mAdjNode1, mAdjNode2;
 
-    private ArrayList<NodeObserver> mNodeObservers = new ArrayList<>();
+    private NodeObserver mObserver = new NodeObserver();
 
-
+    private EnumMap<Destination, ArrayList<String>> mDestinations;
     @Test
     public void initialize(){
         mMainHospital = new Building();
@@ -29,13 +30,12 @@ public class ObserverTest {
         mLocation2 = new Location(23, 6);
         mLocation3 = new Location(8, 21);
 
-        mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, null);
-        mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, null);
-        mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, null);
+        mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations, mObserver);
+        mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations, mObserver);
+        mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations, mObserver);
 
-        mNodeObservers.add(mTestNode.getObserver());
-        mNodeObservers.add(mAdjNode1.getObserver());
-        mNodeObservers.add(mAdjNode2.getObserver());
+
+
 
     }
 
@@ -55,14 +55,16 @@ public class ObserverTest {
     public void testAddDestination(){
         mTestNode.addDestination(Destination.PHYSICIAN, "Dr. Phil");
     }
-
+/*
     @Test void testRemoveDestination(){
         mTestNode.removeDestination(Destination.PHYSICIAN, "Dr. Phil");
 
     }
+*/
 
     @Test
-    public void testSetHeuristicCost(){
-        mTestNode.setHeuristicCost(26.1234);
+    public void run(){
+        initialize();
+        testAddAdjacentNode();
     }
 }

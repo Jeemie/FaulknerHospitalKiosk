@@ -3,12 +3,11 @@ package Map;
 import java.util.*;
 
 import static sun.misc.Version.print;
-import static sun.misc.Version.println;
 
 /**
  * TODO
  */
-public class Node implements Observer{
+public class Node extends Observable{
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
@@ -17,7 +16,20 @@ public class Node implements Observer{
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
 
-    private NodeObserver observer;
+
+    public Node(double heuristicCost, Location location, Floor currentFloor, NodeObserver observer) {
+
+        this.heuristicCost = heuristicCost;
+
+        this.uniqueID = UUID.randomUUID();
+        this.location = location;
+        this.adjacentNodes = new ArrayList<>();
+        this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
+        this.currentFloor = currentFloor;
+        this.addObserver(observer);
+
+    }
+
 
     /**
      * TODO
@@ -35,20 +47,23 @@ public class Node implements Observer{
         this.adjacentNodes = new ArrayList<>();
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
-        this.observer = new NodeObserver();
+
 
     }
 
+
+
+
     /**
      * TODO
-     *
-     * @param heuristicCost
+     *  @param heuristicCost
      * @param uniqueID
      * @param location
      * @param currentFloor
      * @param destinations
+     * @param mObserver
      */
-    public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
+    public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations, NodeObserver mObserver) {
 
         this.heuristicCost = heuristicCost;
         this.uniqueID = uniqueID;
@@ -81,10 +96,14 @@ public class Node implements Observer{
 
             destinations.put(destination,temp);
 
+
+
         }
 
-        // call to observer checks if destinations have changed
-        observer.observeDestinations(getDestinations());
+        setChanged();
+
+        notifyObservers();
+
 
     }
 
@@ -100,11 +119,13 @@ public class Node implements Observer{
             ArrayList<String> temp = destinations.get(destination);
 
             temp.remove(name);
+            setChanged();
 
         }
 
-        //call to observer checks if destinations have changed
-        observer.observeDestinations(getDestinations());
+
+
+        notifyObservers();
 
     }
 
@@ -165,9 +186,13 @@ public class Node implements Observer{
 
             adjacentNode.addAdjacentNode(this);
 
+            setChanged();
+
+
 
         }
-        observer.observeAdjacentNodes(adjacentNodes);
+        notifyObservers();
+
 
     }
 
@@ -224,25 +249,27 @@ public class Node implements Observer{
             //removes this node from the other node's list of adjacent nodes
             adjacentNode.removeAdjacentNode(this);
 
+            setChanged();
+
         }
 
         //call to observer to check if AdjacentNodes has changed
-        observer.observeAdjacentNodes(adjacentNodes);
+        notifyObservers();
 
     }
 
     /**
      * TODO
      *
-     * @param heuristicCost
+     * @param cost
      */
-    public void setHeuristicCost(double heuristicCost) {
+    public void setHeuristicCost(double cost) {
+        if(heuristicCost!=cost){
+            this.heuristicCost = cost;
+            setChanged();
+        }
 
-        //set heuristicCost
-        this.heuristicCost = heuristicCost;
-
-        //call to observer that checks if heuristic cost has changed
-        this.observer.observeHeuristicCost(heuristicCost);
+        notifyObservers();
 
     }
 
@@ -250,17 +277,7 @@ public class Node implements Observer{
      * TODO
      *
      */
-    public NodeObserver getObserver(){
-        return this.observer;
-    }
 
-    /**
-     * TODO
-     *
-     */
-    @Override
-    public void update(Observable o, Object arg) {
 
-    }
 }
 
