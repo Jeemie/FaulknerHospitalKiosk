@@ -2,17 +2,20 @@ package Map;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Observable;
 import java.util.UUID;
 
 /**
  * TODO
  */
-public class Floor {
+public class Floor extends Observable{
 
     private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
+    private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
+
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.
@@ -26,6 +29,9 @@ public class Floor {
         this.uniqueID = UUID.randomUUID();
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
+
+        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
+        observer.observeFloor(this);
 
     }
 
@@ -43,6 +49,13 @@ public class Floor {
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
+        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
+        observer.observeFloor(this);
+
+    }
+
+    public int getFloor(){
+        return this.floor;
     }
 
     /**
@@ -59,6 +72,12 @@ public class Floor {
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
 
+        //mark as value changed
+        setChanged();
+
+        //trigger notification
+        notifyObservers();
+
         // Return the new Node
         return newNode;
     }
@@ -70,10 +89,11 @@ public class Floor {
      * @param uniqueID An UUID that is associated with the node.
      * @param location The x and y coordinate in which the node was placed on the current floor.
      * @param destinations The destinations that are associated with the current node.
+     * @param observer The NodeObserver that watches this node
      * @return The newly created node
      */
     public Node addNode(double heuristicCost, UUID uniqueID, Location location,
-                        EnumMap<Destination, ArrayList<String>> destinations) {
+                        EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
 
         // Create a new node
         Node newNode = new Node(heuristicCost, uniqueID, location, this, destinations);
@@ -137,6 +157,16 @@ public class Floor {
     public ArrayList<Node> getFloorNodes() {
 
         return this.nodes;
+    }
+
+
+    /**
+     * Return a FloorObserver associated with Floor
+     *
+     * @return the FloorObserver called observer
+     */
+    public FloorObserver getFloorObserver(){
+        return this.observer;
     }
 
 

@@ -1,18 +1,18 @@
 package Map;
 
 /**
- * TODO
+ * Class that contains the x and y coordinates of a arbitrary point.
  */
 public class Location {
 
-    private int x; // TODO
-    private int y; // TODO
+    private int x;
+    private int y;
 
     /**
-     * TODO
+     * Default constructor for Location Class
      *
-     * @param x
-     * @param y
+     * @param x x-coordinate
+     * @param y y-coordinate
      */
     public Location(int x, int y) {
 
@@ -22,31 +22,29 @@ public class Location {
     }
 
     /**
-     * TODO
+     * Getter for the x-coordinate
      *
-     * @return
+     * @return The location's x-coordinate
      */
     public int getX() {
 
         return x;
-
     }
 
     /**
-     * TODO
+     * Getter for the y-coordinate
      *
-     * @return
+     * @return The location's y-coordinate
      */
     public int getY() {
 
         return y;
-
     }
 
     /**
-     * TODO
+     * Setter for the x-coordinate
      *
-     * @param x
+     * @param x The new x-coordinate
      */
     public void setX(int x) {
 
@@ -55,14 +53,31 @@ public class Location {
     }
 
     /**
-     * TODO
+     * Setter for the y-coordinate
      *
-     * @param y
+     * @param y The new y-coordinate
      */
     public void setY(int y) {
 
         this.y = y;
 
+    }
+
+    /**
+     * Gets the straight line distance between two Locations using the Euclidean distance formula.
+     *
+     * @param secondLocation The location you want to get the distance to.
+     * @return The Euclidean distance between two locations.
+     */
+    public double getDistanceBetween(Location secondLocation) {
+
+        //perform distance formula -> distance = sqrt((x1-x2)^2 + (y1 - y2)^2)
+        double xDistance = Math.pow((this.x - secondLocation.getX()), 2);
+        double yDistance = Math.pow((this.y - secondLocation.getY()), 2);
+        double result = Math.sqrt(xDistance + yDistance);
+
+        // return the distance between two locations
+        return result;
     }
 
 }

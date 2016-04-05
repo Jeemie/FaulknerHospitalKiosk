@@ -1,14 +1,13 @@
 package Map;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
+import static sun.misc.Version.print;
 
 /**
  * TODO
  */
-public class Node {
+public class Node extends Observable{
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
@@ -16,6 +15,8 @@ public class Node {
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
+    private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
+
 
     /**
      * TODO
@@ -27,18 +28,23 @@ public class Node {
     public Node(double heuristicCost, Location location, Floor currentFloor) {
 
         this.heuristicCost = heuristicCost;
+
         this.uniqueID = UUID.randomUUID();
         this.location = location;
         this.adjacentNodes = new ArrayList<>();
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
 
+        observer.observeNode(this);  //starts observing new Node object
+
     }
+
+
+
 
     /**
      * TODO
-     *
-     * @param heuristicCost
+     *  @param heuristicCost
      * @param uniqueID
      * @param location
      * @param currentFloor
@@ -53,6 +59,8 @@ public class Node {
         this.destinations = destinations;
         this.currentFloor = currentFloor;
 
+        observer.observeNode(this); //starts observing new Node object
+
     }
 
     /**
@@ -65,7 +73,7 @@ public class Node {
 
         ArrayList<String> temp;
 
-        if(destinations.containsKey(destination)){
+        if(destinations.containsKey(destination)) {
 
             temp = destinations.get(destination);
             temp.add(name);
@@ -77,8 +85,19 @@ public class Node {
 
             destinations.put(destination,temp);
 
+
+
         }
 
+        setChanged();
+
+        notifyObservers();
+
+
+    }
+
+    public NodeObserver getNodeObserver(){
+        return this.observer;
     }
 
     /**
@@ -93,8 +112,13 @@ public class Node {
             ArrayList<String> temp = destinations.get(destination);
 
             temp.remove(name);
+            setChanged();
 
         }
+
+
+
+        notifyObservers();
 
     }
 
@@ -155,24 +179,29 @@ public class Node {
 
             adjacentNode.addAdjacentNode(this);
 
+            setChanged();
+
+
+
         }
+        notifyObservers();
+
 
     }
 
     /**
-     * TODO
+     * The straight line distance between two nodes, ignoring the floor they are on.
      *
-     * @param destinationNode
-     * @return
+     * @param destinationNode The node you want to get the distance to.
+     * @return The distance between two nodes.
      */
     public double getDistanceBetweenNodes(Node destinationNode) {
 
+        // location of destination node
         Location destinationLocation = destinationNode.getLocation();
 
-        double xDistance = Math.pow((this.location.getX() - destinationLocation.getX()), 2);
-        double yDistance = Math.pow((this.location.getY() - destinationLocation.getY()), 2);
-
-        return Math.sqrt(xDistance + yDistance);
+        // return the distance between the nodes
+        return this.location.getDistanceBetween(destinationLocation);
     }
 
     /**
@@ -202,23 +231,39 @@ public class Node {
      */
     public void removeAdjacentNode(Node adjacentNode) {
 
+        //if the node exists
         if (adjacentNodes.contains(adjacentNode)) {
 
+            //removes the node from list of adjacent Nodes
             adjacentNodes.remove(adjacentNode);
+
+            //removes this node from the other node's list of adjacent nodes
             adjacentNode.removeAdjacentNode(this);
 
+            setChanged();
+
         }
+
+        //call to observer to check if AdjacentNodes has changed
+        notifyObservers();
 
     }
 
     /**
      * TODO
      *
-     * @param heuristicCost
+     * @param cost
      */
-    public void setHeuristicCost(double heuristicCost) {
+    public void setHeuristicCost(double cost) {
+        if(heuristicCost!=cost){
+            this.heuristicCost = cost;
+            setChanged();
+        }
 
-        this.heuristicCost = heuristicCost;
+        notifyObservers();
+
     }
 
+
 }
+
