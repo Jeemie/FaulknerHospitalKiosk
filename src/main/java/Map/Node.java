@@ -15,20 +15,7 @@ public class Node extends Observable{
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
-
-
-    public Node(double heuristicCost, Location location, Floor currentFloor, NodeObserver observer) {
-
-        this.heuristicCost = heuristicCost;
-
-        this.uniqueID = UUID.randomUUID();
-        this.location = location;
-        this.adjacentNodes = new ArrayList<>();
-        this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
-        this.currentFloor = currentFloor;
-        this.addObserver(observer);
-
-    }
+    NodeObserver observer = new NodeObserver();
 
 
     /**
@@ -48,6 +35,7 @@ public class Node extends Observable{
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
 
+        observer.observeNode(this, observer);
 
     }
 
@@ -61,9 +49,8 @@ public class Node extends Observable{
      * @param location
      * @param currentFloor
      * @param destinations
-     * @param mObserver
      */
-    public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations, NodeObserver mObserver) {
+    public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
 
         this.heuristicCost = heuristicCost;
         this.uniqueID = uniqueID;
@@ -71,6 +58,8 @@ public class Node extends Observable{
         this.adjacentNodes = new ArrayList<>();
         this.destinations = destinations;
         this.currentFloor = currentFloor;
+
+        observer.observeNode(this, observer);
 
     }
 
@@ -272,11 +261,6 @@ public class Node extends Observable{
         notifyObservers();
 
     }
-
-    /**
-     * TODO
-     *
-     */
 
 
 }

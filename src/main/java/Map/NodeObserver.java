@@ -4,68 +4,36 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import static jdk.nashorn.internal.objects.Global.print;
-
 /**
  * Created by mharris382 on 4/5/2016.
  */
 public class NodeObserver implements Observer{
+    private ArrayList<Node> observed_nodes;
 
 
-    public NodeObserver(){}
+    public NodeObserver(){
+        this.observed_nodes = new ArrayList<>();
+    }
+
+
+    public void observeNode(Node n, NodeObserver o){
+
+        //if not already watching this node
+        if(!observed_nodes.contains(n)){
+
+            System.out.println("observing new node");
+
+            //add this node to list of watching nodes
+            observed_nodes.add(n);
+
+            //add an observer to watch the node
+            n.addObserver(o);
+        }
+    }
 
     @Override
     public void update(Observable o, Object arg) {
-
-    }
-/*
-    public void observeHeuristicCost(double value){
-
-        if(watchedHeuristicCost != value){
-
-            watchedHeuristicCost = value;
-
-            setChanged();
-
-            notifyObservers();
-        }
+        System.out.println("NodeObserver called update");
     }
 
-    public void observeAdjacentNodes(ArrayList<Node> nodes){
-
-
-        if(!nodes.equals(watchedAdjacentNodes)){
-            if(watchedAdjacentNodes.size() < nodes.size()){
-                System.out.println("Node was added");
-            }
-            else {
-                System.out.println("Node was removed");
-            }
-
-            watchedAdjacentNodes = nodes;
-
-            setChanged();
-        }
-        notifyObservers();
-    }
-
-    public void observeDestinations(ArrayList<String> destinations){
-
-        //checks if list of destinations is different from the observer's most up-to-date list of destinations
-        if(destinations != watchedDestinations){
-
-            //if the list is different, update watchedDestinations
-            watchedDestinations = destinations;
-
-            print("destination changed");
-
-            //set the observer to changed
-            setChanged();
-
-
-        }
-
-        notifyObservers();
-
-    }*/
 }

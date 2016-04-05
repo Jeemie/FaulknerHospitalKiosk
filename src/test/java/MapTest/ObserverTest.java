@@ -17,7 +17,7 @@ public class ObserverTest {
     private Node mTestNode;
     private Node mAdjNode1, mAdjNode2;
 
-    private NodeObserver mObserver = new NodeObserver();
+
 
     private EnumMap<Destination, ArrayList<String>> mDestinations;
     @Test
@@ -30,9 +30,9 @@ public class ObserverTest {
         mLocation2 = new Location(23, 6);
         mLocation3 = new Location(8, 21);
 
-        mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations, mObserver);
-        mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations, mObserver);
-        mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations, mObserver);
+        mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations);
+        mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations);
+        mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations);
 
 
 
@@ -59,6 +59,7 @@ public class ObserverTest {
     @Test void testRemoveDestination(){
         mTestNode.removeDestination(Destination.PHYSICIAN, "Dr. Phil");
 
+
     }
 */
 
@@ -66,5 +67,8 @@ public class ObserverTest {
     public void run(){
         initialize();
         testAddAdjacentNode();
+        testRemoveAdjacentNode();
+        //testAddDestination();
+
     }
 }
