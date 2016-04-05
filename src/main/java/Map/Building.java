@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.math.*;
 
 /**
  * TODO
@@ -133,16 +132,25 @@ public class Building {
      */
     public Floor getFloor(int floor) {
 
+        //iterate through array of floors and get each floor from the array
         for(int i = 0; i < floors.size(); i++){
+
             Floor temp = floors.get(i);
+
+            //if a floor exists with the specified floor number, return that floor
             if(temp.getFloor()==floor) {
                 return temp;
             }
         }
-        return addFloor(floor);
+
+        //if unable to find a floor with that floor number, create a new floor with specified number and return that floor
+        return addFloorHelper(floor);
     }
 
-    private Floor addFloor(int floor){
+    //used to add a floor
+    private Floor addFloorHelper(int floor){
+
+        //temp variable to hold Floor object with
         Floor temp = new Floor(floor, this);
         floors.add(temp);
         return temp;
