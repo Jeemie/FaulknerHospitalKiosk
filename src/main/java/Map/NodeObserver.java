@@ -13,7 +13,7 @@ import java.util.Observer;
 public class NodeObserver implements Observer {
 
     private ArrayList<Node> observedNodes; // List of observed Nodes
-    private static Logger LOGGER = LoggerFactory.getLogger(NodeObserver.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(NodeObserver.class); // Logger for this class
 
     /**
      * Default constructor for the NodeObserver Class.

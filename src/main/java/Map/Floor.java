@@ -18,7 +18,7 @@ public class Floor extends Observable{
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
-    private static Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.

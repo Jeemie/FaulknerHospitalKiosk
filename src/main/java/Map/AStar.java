@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class AStar {
 
     private final Building building; // The building that will be associated with the AStar search
-    private static Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
 
     /**
      * TODO

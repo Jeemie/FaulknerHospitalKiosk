@@ -19,7 +19,7 @@ public class Node extends Observable {
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
-    private static Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
 
 
     /**

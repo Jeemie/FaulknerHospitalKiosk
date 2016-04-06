@@ -21,7 +21,7 @@ public class Building extends Observable {
     private ArrayList<Floor> floors; // A list of all of the floors in the building
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
     private static BuildingObserver observer = new BuildingObserver(); // Observer for all of the buildings
-    private static Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
 
     /**
      * Default constructor for the building class.
@@ -154,8 +154,6 @@ public class Building extends Observable {
 
             //if a floorNumber exists with the specified floorNumber number, return that floorNumber
             if (currentFloor.getFloor() == floorNumber) {
-
-                System.out.println("floorNumber found - floorNumber number: " + currentFloor.getFloor());
 
                 //mark as value changed
                 setChanged();

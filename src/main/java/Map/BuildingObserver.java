@@ -13,7 +13,7 @@ import java.util.Observer;
 public class BuildingObserver implements Observer {
 
     private ArrayList<Building> observedBuildings; // List of observed Buildings
-    private static Logger LOGGER = LoggerFactory.getLogger(BuildingObserver.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuildingObserver.class); // Logger for this class
 
     
     public BuildingObserver(){

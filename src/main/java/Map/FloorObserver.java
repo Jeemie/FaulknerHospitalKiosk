@@ -13,7 +13,7 @@ import java.util.Observer;
 public class FloorObserver implements Observer {
 
     ArrayList<Floor> observedFloors; // List of observed Floors
-    private static Logger LOGGER = LoggerFactory.getLogger(FloorObserver.class); // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(FloorObserver.class); // Logger for this class
 
     /**
      * Default constructor for the FloorObserver class.
