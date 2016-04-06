@@ -9,14 +9,14 @@ import java.util.Observable;
 import java.util.UUID;
 
 /**
- * TODO
+ * A class that represents a floor in a building
  */
-public class Floor extends Observable{
+public class Floor extends Observable {
 
     private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    private ArrayList<Node> nodes; //
-    private final Building currentBuilding;
+    private ArrayList<Node> nodes; // The nodes that are attached to the current floor
+    private final Building currentBuilding; // The building that the floor is a part of
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
@@ -32,6 +32,8 @@ public class Floor extends Observable{
         this.uniqueID = UUID.randomUUID();
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
+
+        LOGGER.info("Created new Floor: " + this.toString());
 
         // adds an observer to this floor and add the floor to list of observed floors in the Observer object
         observer.observeFloor(this);
@@ -52,11 +54,18 @@ public class Floor extends Observable{
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
+        LOGGER.info("Created new Floor: " + this.toString());
+
         //adds an observer to this floor and add the floor to list of observed floors in the Observer object
         observer.observeFloor(this);
 
     }
 
+    /**
+     * Getter for the floor number.
+     *
+     * @return The current floor's number
+     */
     public int getFloor(){
         return this.floor;
     }
@@ -75,10 +84,10 @@ public class Floor extends Observable{
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
 
-        //mark as value changed
+        // mark the floor as changed
         setChanged();
 
-        //trigger notification
+        // trigger notification
         notifyObservers();
 
         // Return the new Node
@@ -103,6 +112,12 @@ public class Floor extends Observable{
 
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
+
+        // mark floor as changed
+        setChanged();
+
+        // trigger notification
+        notifyObservers();
 
         // Return the new Node
         return newNode;
@@ -162,13 +177,35 @@ public class Floor extends Observable{
         return this.nodes;
     }
 
+    /**
+     * Getter for the building's current state.
+     *
+     * @return The state of the building.
+     */
+    public BuildingState getState() {
+
+        return this.currentBuilding.getState();
+    }
+
+    /**
+     * Sets the state of the building
+     *
+     * @param state The state you want to set the building to
+     */
+    public void setState(BuildingState state) {
+
+        this.currentBuilding.setState(state);
+
+    }
+
 
     /**
      * Return a FloorObserver associated with Floor
      *
      * @return the FloorObserver called observer
      */
-    public FloorObserver getFloorObserver(){
+    public FloorObserver getFloorObserver() {
+
         return this.observer;
     }
 

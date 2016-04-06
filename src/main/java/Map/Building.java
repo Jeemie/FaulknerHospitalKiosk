@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
  */
 public class Building extends Observable {
 
+    private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
     private ArrayList<Floor> floors; // A list of all of the floors in the building
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
@@ -30,6 +31,7 @@ public class Building extends Observable {
      */
     public Building() {
 
+        this.state = BuildingState.NORMAL;
         this.uniqueID = UUID.randomUUID();
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
@@ -241,6 +243,27 @@ public class Building extends Observable {
     public BuildingObserver getBuildingObserver(){
 
         return this.observer;
+    }
+
+    /**
+     * Getter for the building's current state.
+     *
+     * @return The state of the building.
+     */
+    public BuildingState getState() {
+
+        return state;
+    }
+
+    /**
+     * Sets the state of the building
+     *
+     * @param state The state you want to set the building to
+     */
+    public void setState(BuildingState state) {
+
+        this.state = state;
+
     }
 
     @Override
