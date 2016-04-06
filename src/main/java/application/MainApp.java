@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -149,10 +148,10 @@ public class MainApp extends Application {
  // TODO: showSearch should have parameter for input
     public boolean showSearch() {
         try {
-            // Load userUI3
+            // Load SearchScreen
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/userUI2.fxml"));
-            Pane page = (Pane) loader.load();
+            loader.setLocation(MainApp.class.getResource("view/SearchScreen.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
@@ -179,10 +178,10 @@ public class MainApp extends Application {
  // TODO: showDirectory should have parameter for category
     public boolean showDirectory() {
         try {
-            // Load userUI3
+            // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/userUI3.fxml"));
-            Pane page = (Pane) loader.load();
+            loader.setLocation(MainApp.class.getResource("view/DirectoryScreen.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Directories");
@@ -209,10 +208,10 @@ public class MainApp extends Application {
     // TODO: showMap should have parameter for chosen destination from previous screen
     public boolean showMap() {
         try {
-            // Load userUI4
+            // Load MapView
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/userUI4.fxml"));
-            Pane page = (Pane) loader.load();
+            loader.setLocation(MainApp.class.getResource("view/MapView.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");

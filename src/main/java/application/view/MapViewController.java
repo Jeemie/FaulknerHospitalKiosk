@@ -56,5 +56,13 @@ public class MapViewController {
     private void handleCancel() {
     	mainApp.reset();
     }
+    
+    /**
+     * Called when the user clicks enter on the search bar.
+     */
+    @FXML
+    private void handleSearch() {
+    	mainApp.showSearch();
+    }
 
  }
