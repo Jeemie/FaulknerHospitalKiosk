@@ -60,19 +60,23 @@ public class Building extends Observable {
      * @throws IOException
      */
     public void saveToFile(URL filePath) throws IOException {
+        new Thread() {
+            @Override
+            public void run() {
 
-        try {
-            Writer writer = new FileWriter(filePath.toString());
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(floors, writer);
-            writer.close();
-        } catch(IOException e) {
-            // exception handler code here
-            // ...
-        }
+                try {
+                    Writer writer = new FileWriter(filePath.toString());
+                    Gson gson = new GsonBuilder().create();
+                    gson.toJson(floors, writer);
+                    writer.close();
+                } catch (IOException e) {
+                    // exception handler code here
+                    // ...
+                }
 
-        LOGGER.info("Saving the building to the file: " + filePath.toString());
-
+                LOGGER.info("Saving the building to the file: " + filePath.toString());
+            }
+        }.start();
     }
 
 
