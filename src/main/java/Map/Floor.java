@@ -1,5 +1,7 @@
 package Map;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ public class Floor extends Observable {
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; // The nodes that are attached to the current floor
     private final Building currentBuilding; // The building that the floor is a part of
+    private ImageView image;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
@@ -165,6 +168,27 @@ public class Floor extends Observable {
 
         // Return all of the destinations on the current floor
         return floorDestinations;
+    }
+
+
+
+    public void drawFloorAdmin() {
+
+        assert image != null;
+
+
+        for (Node node : this.nodes) {
+            
+        }
+
+
+    }
+
+
+    public void drawFloorNormal() {
+
+        assert image != null;
+
     }
 
     /**

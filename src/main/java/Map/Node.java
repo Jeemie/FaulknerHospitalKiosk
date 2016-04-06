@@ -1,11 +1,10 @@
 package Map;
 
+import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import static sun.misc.Version.print;
 
 /**
  * A class the represents node(point) on a floor
@@ -268,6 +267,18 @@ public class Node extends Observable {
         }
 
         notifyObservers();
+
+    }
+
+    public void drawAdmin(GraphicsContext context) {
+
+
+
+
+
+    }
+
+    public void drawNormal(GraphicsContext context) {
 
     }
 
