@@ -15,4 +15,5 @@ public class Kiosk extends Application {
     public void start(Stage primaryStage) {
 
     }
+
 }

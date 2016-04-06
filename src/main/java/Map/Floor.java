@@ -1,5 +1,8 @@
 package Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Observable;
@@ -15,7 +18,7 @@ public class Floor extends Observable{
     private ArrayList<Node> nodes; //
     private final Building currentBuilding;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
-
+    private static Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.
@@ -30,7 +33,7 @@ public class Floor extends Observable{
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
-        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
+        // adds an observer to this floor and add the floor to list of observed floors in the Observer object
         observer.observeFloor(this);
 
     }
@@ -169,5 +172,10 @@ public class Floor extends Observable{
         return this.observer;
     }
 
+    @Override
+    public String toString() {
+
+        return uniqueID.toString();
+    }
 
 }

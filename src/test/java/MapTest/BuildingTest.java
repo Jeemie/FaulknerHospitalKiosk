@@ -30,9 +30,9 @@ public class BuildingTest {
 
     @Test
     public void addFloor() {
-        mTestBuilding.getFloor(1);
-        mTestBuilding.getFloor(2);
-        mTestBuilding.getFloor(7);
+        mTestBuilding.addFloor(1);
+        mTestBuilding.addFloor(2);
+        mTestBuilding.addFloor(7);
     }
 
 

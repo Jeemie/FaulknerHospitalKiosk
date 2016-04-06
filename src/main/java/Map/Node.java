@@ -1,5 +1,8 @@
 package Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 import static sun.misc.Version.print;
@@ -7,7 +10,7 @@ import static sun.misc.Version.print;
 /**
  * TODO
  */
-public class Node extends Observable{
+public class Node extends Observable {
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
@@ -16,6 +19,7 @@ public class Node extends Observable{
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
+    private static Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
 
 
     /**
@@ -255,15 +259,23 @@ public class Node extends Observable{
      * @param cost
      */
     public void setHeuristicCost(double cost) {
-        if(heuristicCost!=cost){
+
+        if (this.heuristicCost != cost) {
+
             this.heuristicCost = cost;
             setChanged();
+
         }
 
         notifyObservers();
 
     }
 
+    @Override
+    public String toString() {
+
+        return uniqueID.toString();
+    }
 
 }
 

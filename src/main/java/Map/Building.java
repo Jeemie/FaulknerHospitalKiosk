@@ -1,5 +1,11 @@
 package Map;
 
+import Map.Exceptions.FloorDoesNotExistException;
+import Map.Exceptions.NoPathException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -7,18 +13,18 @@ import java.util.Observable;
 import java.util.UUID;
 
 /**
- * TODO
+ * A class the represents a building.
  */
-public class Building extends Observable{
+public class Building extends Observable {
 
     private UUID uniqueID; // A randomly generated UUID associated with the current building
-    private ArrayList<Floor> floors; // TODO aafeasreea
-    private final AStar aStarSearch; // TODO
-
-    private static BuildingObserver observer = new BuildingObserver(); //BuildingObserver observing all Building objects
+    private ArrayList<Floor> floors; // A list of all of the floors in the building
+    private final AStar aStarSearch; // The AStar algorithm associated with the current building
+    private static BuildingObserver observer = new BuildingObserver(); // Observer for all of the buildings
+    private static Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
 
     /**
-     * TODO
+     * Default constructor for the building class.
      */
     public Building() {
 
@@ -26,9 +32,13 @@ public class Building extends Observable{
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
 
-        observer.observeBuilding(this); //start observing building
+        LOGGER.info("Created new Building: " + this.toString());
+
+        // start observing the building
+        observer.observeBuilding(this);
 
     }
+
     /**
      * TODO
      *
@@ -36,6 +46,8 @@ public class Building extends Observable{
      * @throws IOException
      */
     public void loadFromFile(URL filePath) throws IOException {
+
+        LOGGER.info("Loading the building from the file: " + filePath.toString());
 
     }
 
@@ -47,6 +59,8 @@ public class Building extends Observable{
      */
     public void saveToFile(URL filePath) throws IOException {
 
+        LOGGER.info("Saving the building to the file: " + filePath.toString());
+
     }
 
 
@@ -57,22 +71,19 @@ public class Building extends Observable{
      * @param location
      * @return
      */
-    public Node addNode(int floor, Location location) {
-        //adds node to the specified floor
-        Node temp = getFloor(floor).addNode(location);
+    public Node addNode(int floor, Location location) throws FloorDoesNotExistException {
 
-        //mark as value changed
+        // Attempts to add a node to the specified floor
+        Floor currentFloor = getFloor(floor);
+        Node newNode = currentFloor.addNode(location);
+
+        // mark as value changed
         hasChanged();
 
-        //trigger notification
+        // trigger notification
         notifyObservers();
 
-        return temp;
-    }
-
-    //getter for observer
-    public BuildingObserver getBuildingObserver(){
-        return this.observer;
+        return newNode;
     }
 
     /**
@@ -84,28 +95,18 @@ public class Building extends Observable{
     public ArrayList<String> getBuildingDestinations(Destination destinationType) {
 
         //ArrayList to hold the entire list of destinations
-        ArrayList<String> dests = new ArrayList<>();
+        ArrayList<String> destinations = new ArrayList<>();
 
-        //temp variable that is used to hold return value of
-        ArrayList<String> temp;
+        // Iterate through each floor
+        for (Floor currentFloor : floors) {
 
-        //iterate through each floor
-        for(int i = 0; i < floors.size(); i++){
-
-            //get a list of destinations on current floor
-            temp = floors.get(i).getFloorDestinations(destinationType);
-
-            //iterate through the list of destinations
-            for (int j = 0; j < temp.size(); j++) {
-
-                //add each destination string to the list of destinations
-                dests.add(temp.get(j));
-            }
+            // Add the destinations of the current type at the current floor to the list of destinations
+            destinations.addAll(currentFloor.getFloorDestinations(destinationType));
 
         }
 
-        //return the entire list of destinations
-        return dests;
+        // Return the entire list of destinations of the given type
+        return destinations;
     }
 
     /**
@@ -143,41 +144,52 @@ public class Building extends Observable{
     /**
      * TODO
      *
-     * @param floor
+     * @param floorNumber
      * @return
      */
-    public Floor getFloor(int floor) {
+    public Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
 
-        //iterate through array of floors and get each floor from the array
-        for (int i = 0; i < floors.size(); i++) {
+        // iterate through array of floors and get each floorNumber from the array
+        for (Floor currentFloor : floors) {
 
-            //get current Floor
-            Floor temp = floors.get(i);
+            //if a floorNumber exists with the specified floorNumber number, return that floorNumber
+            if (currentFloor.getFloor() == floorNumber) {
 
-            //if a floor exists with the specified floor number, return that floor
-            if (temp.getFloor() == floor) {
-                System.out.println("floor found - floor number: " + temp.getFloor());
+                System.out.println("floorNumber found - floorNumber number: " + currentFloor.getFloor());
 
                 //mark as value changed
                 setChanged();
 
-                //return current floor
-                return temp;
+                //return current floorNumber
+                return currentFloor;
             }
-        }
-        System.out.println("floor not found - adding new floor: " + floor);
 
-        //trigger notifications
+        }
+
+        // floor does not exist
+        throw new FloorDoesNotExistException(floorNumber);
+    }
+
+    public void addFloor(int floorNumber) {
+
+
+        for (Floor currentFloor : floors) {
+
+            // if a floor exists with the specified floor number, don't add a new floor.
+            if (currentFloor.getFloor() == floorNumber) {
+
+                //return current floor
+                return;
+            }
+
+        }
+
+        Floor newFloor = new Floor(floorNumber, this);
+
+        floors.add(newFloor);
+
         notifyObservers();
 
-        //if unable to find a floor with that floor number, create a new floor with specified number and return that floor
-        Floor temp2 = new Floor(floor, this);
-
-        //add new floor to list of floors
-        floors.add(temp2);
-
-        //return new Floor
-        return temp2;
     }
 
 
@@ -188,10 +200,39 @@ public class Building extends Observable{
      * @param destinationNode
      * @return
      */
-    public ArrayList<Node> getShortestPath(Node startNode, Node destinationNode) {
+    public ArrayList<Node> getShortestPath(Node startNode, Node destinationNode) throws NoPathException {
 
-        //run aStar algorithm
-        return aStarSearch.getPath(startNode, destinationNode);
+        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
+
+        try {
+
+            // run aStar algorithm
+            return aStarSearch.getPath(startNode, destinationNode);
+
+        } catch (NoPathException e) {
+
+            LOGGER.error("NoPathException: ", e);
+
+            throw e;
+
+        }
+
+    }
+
+    /**
+     * Getter for the building's observer.
+     *
+     * @return The current building's observer.
+     */
+    public BuildingObserver getBuildingObserver(){
+
+        return this.observer;
+    }
+
+    @Override
+    public String toString() {
+
+        return this.uniqueID.toString();
     }
 
 }
