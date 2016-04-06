@@ -2,6 +2,7 @@ package MapTest;
 
 import Map.*;
 
+import Map.Exceptions.FloorDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,18 +11,33 @@ import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.UUID;
+
+
 /**
- * Test cases for the Map.Building class.
+ * Created by mharris382 on 4/4/2016.
  */
+
+
 public class BuildingTest {
 
     private Building mainBuilding;
-    private Floor floor1;
+    private Building mTestBuilding;
+    private Floor mFloor1, mFloor2, mFloor7;
+    private Node mOne, mTwo;
+    private Location mLocation1, mLocation;
 
     @Before
     public void setUp() {
         mainBuilding = new Building();
-        mainBuilding.addNode(3, new Location(100,100));
+        mainBuilding.addFloor(3);
+        try {
+            mainBuilding.addNode(3, new Location(100,100));
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
+        mTestBuilding = new Building();
 
     }
 
@@ -34,6 +50,13 @@ public class BuildingTest {
             // exception handler code here
             // ...
         }
+    }
+
+    @Test
+    public void addFloor() {
+        mTestBuilding.addFloor(1);
+        mTestBuilding.addFloor(2);
+        mTestBuilding.addFloor(7);
     }
 
 }

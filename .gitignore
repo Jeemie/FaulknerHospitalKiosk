@@ -1,6 +1,12 @@
 ### Simple gitignore ###
 ### created by Matthew LeMay ###
 
+#Ted put this here, shouldn't this be in the gitignore?
+#IntelliJ seems to think so
+filePath
+src/main/main1.iml
+src/test/test.iml
+
 ### OSX ###
 .DS_Store
 .AppleDouble

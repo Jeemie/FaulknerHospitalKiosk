@@ -3,66 +3,115 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="570.7708333333334" y="459.0">Map.Destination</node>
-    <node x="349.7708333333333" y="481.0">Map.Location</node>
-    <node x="95.375" y="749.0">Map.Node</node>
-    <node x="46.770833333333314" y="448.0">Map.Floor</node>
-    <node x="91.0" y="0.0">Map.AStar</node>
-    <node x="0.0" y="147.0">Map.Building</node>
+    <node x="1148.2500000000002" y="33.5">Map.Exceptions.FloorDoesNotExistException</node>
+    <node x="671.7500000000002" y="322.0">Map.FloorObserver</node>
+    <node x="362.00000000000006" y="722.0">Map.Location</node>
+    <node x="603.0" y="745.0">Map.Destination</node>
+    <node x="496.25000000000006" y="1652.0">Map.Exceptions.NoPathException</node>
+    <node x="287.75" y="1087.0">Map.Node</node>
+    <node x="829.0" y="634.0">Map.Floor</node>
+    <node x="1380.2500000000002" y="11.0">Map.AStar</node>
+    <node x="0.0" y="755.0">Map.NodeObserver</node>
+    <node x="750.2500000000002" y="0.0">Map.BuildingObserver</node>
+    <node x="1031.7500000000002" y="201.0">Map.Building</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="Map.Building" target="Map.AStar">
-      <point x="0.0" y="-125.5" />
-      <point x="0.0" y="48.5" />
+    <edge source="Map.Building" target="Map.BuildingObserver">
+      <point x="-190.71428571428578" y="-191.5" />
+      <point x="1063.5357142857144" y="181.0" />
+      <point x="813.2500000000002" y="181.0" />
+      <point x="-126.0" y="70.5" />
     </edge>
-    <edge source="Map.Building" target="Map.Floor">
-      <point x="95.25" y="125.5" />
-      <point x="285.75" y="423.0" />
-      <point x="259.0208333333333" y="423.0" />
-      <point x="70.75" y="-125.5" />
+    <edge source="Map.Exceptions.NoPathException" target="Map.Node">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="257.5" />
     </edge>
-    <edge source="Map.Floor" target="Map.Building">
-      <point x="-70.75" y="-125.5" />
-      <point x="117.52083333333331" y="423.0" />
-      <point x="95.25" y="423.0" />
-      <point x="-95.25" y="125.5" />
+    <edge source="Map.FloorObserver" target="Map.Floor">
+      <point x="113.33333333333326" y="70.5" />
+      <point x="955.0833333333335" y="614.0" />
+      <point x="996.9166666666667" y="614.0" />
+      <point x="-33.583333333333314" y="-191.5" />
     </edge>
-    <edge source="Map.AStar" target="Map.Building">
-      <point x="66.33333333333331" y="48.5" />
-      <point x="256.8333333333333" y="122.0" />
-      <point x="317.5" y="122.0" />
-      <point x="127.0" y="-125.5" />
+    <edge source="Map.NodeObserver" target="Map.Node">
+      <point x="114.0" y="70.5" />
+      <point x="285.0" y="1047.0" />
+      <point x="476.1875" y="1047.0" />
+      <point x="-113.0625" y="-257.5" />
     </edge>
-    <edge source="Map.Floor" target="Map.Node">
-      <point x="70.75" y="125.5" />
-      <point x="259.0208333333333" y="724.0" />
-      <point x="291.5" y="724.0" />
-      <point x="-65.375" y="-213.5" />
+    <edge source="Map.Node" target="Map.NodeObserver">
+      <point x="-263.8125" y="-257.5" />
+      <point x="325.4375" y="1067.0" />
+      <point x="57.0" y="1067.0" />
+      <point x="-114.0" y="70.5" />
+    </edge>
+    <edge source="Map.Building" target="Map.Exceptions.FloorDoesNotExistException">
+      <point x="0.0" y="-191.5" />
+      <point x="0.0" y="37.0" />
     </edge>
     <edge source="Map.Node" target="Map.Floor">
-      <point x="-196.125" y="-213.5" />
-      <point x="160.75" y="724.0" />
-      <point x="117.52083333333331" y="724.0" />
-      <point x="-70.75" y="125.5" />
+      <point x="113.0625" y="-257.5" />
+      <point x="702.3125" y="1047.0" />
+      <point x="896.1666666666667" y="1047.0" />
+      <point x="-134.33333333333334" y="191.5" />
+    </edge>
+    <edge source="Map.BuildingObserver" target="Map.Building">
+      <point x="126.0" y="70.5" />
+      <point x="1065.2500000000002" y="161.0" />
+      <point x="1190.6785714285716" y="161.0" />
+      <point x="-63.57142857142867" y="-191.5" />
+    </edge>
+    <edge source="Map.Floor" target="Map.FloorObserver">
+      <point x="-100.75" y="-191.5" />
+      <point x="929.75" y="604.0" />
+      <point x="841.7500000000002" y="604.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="Map.Building" target="Map.Floor">
+      <point x="0.0" y="191.5" />
+      <point x="1254.2500000000002" y="604.0" />
+      <point x="1131.25" y="604.0" />
+      <point x="100.75" y="-191.5" />
+    </edge>
+    <edge source="Map.Building" target="Map.AStar">
+      <point x="127.14285714285711" y="-191.5" />
+      <point x="1381.3928571428573" y="171.0" />
+      <point x="1489.7500000000002" y="171.0" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="Map.Floor" target="Map.Building">
+      <point x="33.58333333333334" y="-191.5" />
+      <point x="1064.0833333333335" y="614.0" />
+      <point x="1105.9166666666667" y="614.0" />
+      <point x="-148.33333333333337" y="191.5" />
+    </edge>
+    <edge source="Map.AStar" target="Map.Building">
+      <point x="73.0" y="59.5" />
+      <point x="1562.7500000000002" y="181.0" />
+      <point x="1444.964285714286" y="181.0" />
+      <point x="190.71428571428584" y="-191.5" />
+    </edge>
+    <edge source="Map.Floor" target="Map.Node">
+      <point x="134.33333333333337" y="191.5" />
+      <point x="1164.8333333333335" y="1067.0" />
+      <point x="853.0625" y="1067.0" />
+      <point x="263.8125" y="-257.5" />
     </edge>
     <edge source="Map.Node" target="Map.Location">
-      <point x="65.375" y="-213.5" />
-      <point x="422.25" y="724.0" />
-      <point x="450.2708333333333" y="724.0" />
-      <point x="0.0" y="92.5" />
+      <point x="-37.6875" y="-257.5" />
+      <point x="551.5625" y="1037.0" />
+      <point x="472.50000000000006" y="1037.0" />
+      <point x="0.0" y="103.5" />
     </edge>
     <edge source="Map.Node" target="Map.Destination">
-      <point x="196.125" y="-213.5" />
-      <point x="553.0" y="724.0" />
-      <point x="699.2708333333334" y="724.0" />
-      <point x="0.0" y="114.5" />
+      <point x="37.6875" y="-257.5" />
+      <point x="626.9375" y="1037.0" />
+      <point x="706.0" y="1037.0" />
+      <point x="0.0" y="80.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.5660535117056856" x="414.0" y="588.0" />
-  <SelectedNodes>
-    <node>Map.Building</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.38178733031674206" x="800.0" y="874.0" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Constructors</Category>
