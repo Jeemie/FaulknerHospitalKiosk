@@ -29,6 +29,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.3'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.19'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.19'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
     //compile group: '', name: '', version: ''
 
     testCompile group: 'junit', name: 'junit', version: '4.12'

@@ -1,9 +1,14 @@
 package Map;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sun.tools.javac.util.Context;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 /**
  * TODO
@@ -41,6 +46,15 @@ public class Building {
      * @throws IOException
      */
     public void saveToFile(URL filePath) throws IOException {
+        try {
+            Writer writer = new FileWriter(filePath.toString());
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(floors, writer);
+            writer.close();
+        } catch(IOException e) {
+            // exception handler code here
+            // ...
+        }
     }
 
     /**
