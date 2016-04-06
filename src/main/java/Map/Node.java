@@ -1,23 +1,22 @@
 package Map;
 
+import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static sun.misc.Version.print;
-
 /**
- * TODO
+ * A class the represents node(point) on a floor
  */
 public class Node extends Observable {
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
-    private Location location; // TODO
-    private ArrayList<Node> adjacentNodes; // TODO
-    private EnumMap<Destination, ArrayList<String>> destinations; // TODO
-    private Floor currentFloor; // TODO
+    private Location location; // The pixel location of the node on the map
+    private ArrayList<Node> adjacentNodes; // A list of nodes that are connected to the current node
+    private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
+    private Floor currentFloor; // The floor that the node is associated with
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
 
@@ -268,6 +267,39 @@ public class Node extends Observable {
         }
 
         notifyObservers();
+
+    }
+
+    public void drawAdmin(GraphicsContext context) {
+
+
+
+
+
+    }
+
+    public void drawNormal(GraphicsContext context) {
+
+    }
+
+    /**
+     * Getter for the building's current state.
+     *
+     * @return The state of the building.
+     */
+    public BuildingState getState() {
+
+        return this.currentFloor.getState();
+    }
+
+    /**
+     * Sets the state of the building
+     *
+     * @param state The state you want to set the building to
+     */
+    public void setState(BuildingState state) {
+
+        this.currentFloor.setState(state);
 
     }
 
