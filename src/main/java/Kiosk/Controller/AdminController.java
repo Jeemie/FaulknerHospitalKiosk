@@ -3,6 +3,8 @@ package Kiosk.Controller; /**
  */
 
 import Kiosk.Admin;
+import Map.Location;
+import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -97,6 +99,7 @@ public class AdminController implements Initializable {
     private Button back;
 
     ObservableList<Admin> observableStudentList = FXCollections.observableArrayList();
+    private LocationNode currentNode;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -189,21 +192,22 @@ public class AdminController implements Initializable {
                     student.setDept(deptBox.getValue());
                     observableStudentList.add(student);
                     System.out.print(deptTypeField.getText());
-                    try(  PrintWriter out = new PrintWriter( "getDeptname.txt" )  ){
-                    out.print( deptNameField.getText() );
-                }   catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try(  PrintWriter out = new PrintWriter( "getX.txt" )  ){
-                    out.print(xField .getText() );
-                }   catch (FileNotFoundException e) {
 
-                }
-                try(  PrintWriter out = new PrintWriter( "getY.txt" )  ){
-                    out.print(yField .getText() );
-                }   catch (FileNotFoundException e) {
-
-                }
+//                    try(  PrintWriter out = new PrintWriter( "getDeptname.txt" )  ){
+//                    out.print( deptNameField.getText() );
+//                }   catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                try(  PrintWriter out = new PrintWriter( "getX.txt" )  ){
+//                    out.print(xField .getText() );
+//                }   catch (FileNotFoundException e) {
+//
+//                }
+//                try(  PrintWriter out = new PrintWriter( "getY.txt" )  ){
+//                    out.print(yField .getText() );
+//                }   catch (FileNotFoundException e) {
+//
+//                }
                 deptTypeField.clear();
                     deptNameField.clear();
                     yField.clear();
@@ -470,6 +474,10 @@ public class AdminController implements Initializable {
         admin.setDeptName(deptNameField.getText());
         observableStudentList.add(admin);
         admin.printDept();
+    }
+
+    public void setNode(LocationNode node) {
+        this.currentNode = node;
     }
 }
 

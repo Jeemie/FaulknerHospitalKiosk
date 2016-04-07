@@ -71,11 +71,11 @@ public class Building extends Observable {
      * @param location
      * @return
      */
-    public Node addNode(int floor, Location location) throws FloorDoesNotExistException {
+    public LocationNode addNode(int floor, Location location) throws FloorDoesNotExistException {
 
         // Attempts to add a node to the specified floor
         Floor currentFloor = getFloor(floor);
-        Node newNode = currentFloor.addNode(location);
+        LocationNode newLocationNode = currentFloor.addNode(location);
 
         // mark as value changed
         hasChanged();
@@ -83,7 +83,7 @@ public class Building extends Observable {
         // trigger notification
         notifyObservers();
 
-        return newNode;
+        return newLocationNode;
     }
 
     /**
@@ -198,7 +198,7 @@ public class Building extends Observable {
      * @param destinationNode
      * @return
      */
-//    public ArrayList<MapNode> getShortestPath(MapNode startNode, MapNode destinationNode) throws NoPathException {
+//    public ArrayList<LocationNode> getShortestPath(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
 //
 //        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
 //

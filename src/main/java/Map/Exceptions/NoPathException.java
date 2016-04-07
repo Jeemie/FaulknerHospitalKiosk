@@ -1,19 +1,19 @@
 package Map.Exceptions;
 
-import Map.Node;
+import Map.LocationNode;
 
 /**
  * Created by matt on 4/5/16.
  */
 public class NoPathException extends Exception {
 
-    private final Node starNode;
-    private final Node destinatonNode;
+    private final LocationNode starLocationNode;
+    private final LocationNode destinatonLocationNode;
 
-    public NoPathException(Node starNode, Node destinatonNode) {
+    public NoPathException(LocationNode starLocationNode, LocationNode destinatonLocationNode) {
 
-        this.starNode = starNode;
-        this.destinatonNode = destinatonNode;
+        this.starLocationNode = starLocationNode;
+        this.destinatonLocationNode = destinatonLocationNode;
 
     }
 

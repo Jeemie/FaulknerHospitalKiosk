@@ -29,7 +29,7 @@ public class AStar {
      * @param destinationNode
      * @return
      */
-//    public ArrayList<Node> getPath(Node startNode, Node destinationNode) throws NoPathException {
+//    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
 //        return null;
 //    }
 

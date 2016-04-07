@@ -3,31 +3,22 @@ package Kiosk.Controller;
 
 import Kiosk.Admin;
 import Map.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
@@ -42,10 +33,10 @@ public class Controller implements Initializable {
     private ScrollPane map_scrollpane;
     @FXML
     private Slider zoom_slider;
-    @FXML
-    private MenuButton map_pin;
-    @FXML
-    private MenuItem pin_info;
+//    @FXML
+//    private MenuButton map_pin;
+//    @FXML
+//    private MenuItem pin_info;
     @FXML
     private ToggleButton contrast_togglebutton;
     @FXML
@@ -69,20 +60,21 @@ public class Controller implements Initializable {
     private Building mMainHospital;
     private Floor mFloor3;
     private Location mLocation3B;
-    private Node mEyeCareSpecialists3B;
-    private Node mSuburbanEyeSpecialists3B;
-    private Node mPattenJamesMd3B;
-    private Node mDannHarrietMd3B;
-    private Node mGrossiLisaRN;
-    private Node mPatientRelations3;
-    private Node mKiosk3;
-    private Node mElevator3;
-    private Node mStairs3;
-    private Node mErrorAddingPhysician;
+    private LocationNode mEyeCareSpecialists3B;
+    private LocationNode mSuburbanEyeSpecialists3B;
+    private LocationNode mPattenJamesMd3B;
+    private LocationNode mDannHarrietMd3B;
+    private LocationNode mGrossiLisaRN;
+    private LocationNode mPatientRelations3;
+    private LocationNode mKiosk3;
+    private LocationNode mElevator3;
+    private LocationNode mStairs3;
+    private LocationNode mErrorAddingPhysician;
 
     private Admin print;
 
     AdminController control = new AdminController();
+
 
 
     @FXML
@@ -92,16 +84,16 @@ public class Controller implements Initializable {
         mMainHospital = new Building();
         mFloor3 = new Floor(3, mMainHospital);
         mLocation3B = new Location(100.0, 100.0);
-        mEyeCareSpecialists3B = new Node(0, mLocation3B, mFloor3);
-        mSuburbanEyeSpecialists3B = new Node(0, mLocation3B, mFloor3);
-        mPattenJamesMd3B = new Node(0, mLocation3B, mFloor3);
-        mDannHarrietMd3B = new Node(0, mLocation3B, mFloor3);
-        mGrossiLisaRN = new Node(0, new Location(10, 15), mFloor3);
-        mPatientRelations3 = new Node(0, new Location(10, 20), mFloor3);
-        mKiosk3 = new Node(0, new Location(10, 30), mFloor3);
-        mElevator3 = new Node(0, new Location(10, 40), mFloor3);
-        mStairs3 = new Node(0, new Location(10, 50), mFloor3);
-        mErrorAddingPhysician = new Node(0, mLocation3B, mFloor3);
+        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
+        mSuburbanEyeSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
+        mPattenJamesMd3B = new LocationNode(0, mLocation3B, mFloor3);
+        mDannHarrietMd3B = new LocationNode(0, mLocation3B, mFloor3);
+        mGrossiLisaRN = new LocationNode(0, new Location(10, 15), mFloor3);
+        mPatientRelations3 = new LocationNode(0, new Location(10, 20), mFloor3);
+        mKiosk3 = new LocationNode(0, new Location(10, 30), mFloor3);
+        mElevator3 = new LocationNode(0, new Location(10, 40), mFloor3);
+        mStairs3 = new LocationNode(0, new Location(10, 50), mFloor3);
+        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
         mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "dr.haha");
 
        // String deptname = control.addTolist();
@@ -119,7 +111,7 @@ public class Controller implements Initializable {
         }
 
         map_listview.setItems(names);
-        map_pin.setVisible(false);
+//        map_pin.setVisible(false);
 
         zoom_slider.setMin(0.5);
         zoom_slider.setMax(1.5);
@@ -142,32 +134,39 @@ public class Controller implements Initializable {
             Rectangle2D bounds = screen.getVisualBounds();
             root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
         }
+
+
+
+
+        asdasdasd();
+
+
     }
 
     @FXML
     void listClicked(MouseEvent event) {
-        String item = map_listview.getSelectionModel().getSelectedItem();
-        List<Comparable<?>> list = hm.get(item);
+//        String item = map_listview.getSelectionModel().getSelectedItem();
+//        List<Comparable<?>> list = hm.get(item);
+//
+//        // animation scroll to new position
+//        double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
+//        double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
+//        double scrollH = (Double) list.get(0) / mapWidth;
+//        double scrollV = (Double) list.get(1) / mapHeight;
+//        final Timeline timeline = new Timeline();
+//        final KeyValue kv1 = new KeyValue(map_scrollpane.hvalueProperty(), scrollH);
+//        final KeyValue kv2 = new KeyValue(map_scrollpane.vvalueProperty(), scrollV);
+//        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv1, kv2);
+//        timeline.getKeyFrames().add(kf);
+//        timeline.play();
 
-        // animation scroll to new position
-        double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
-        double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
-        double scrollH = (Double) list.get(0) / mapWidth;
-        double scrollV = (Double) list.get(1) / mapHeight;
-        final Timeline timeline = new Timeline();
-        final KeyValue kv1 = new KeyValue(map_scrollpane.hvalueProperty(), scrollH);
-        final KeyValue kv2 = new KeyValue(map_scrollpane.vvalueProperty(), scrollV);
-        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv1, kv2);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-
-        // move the pin and set it's info
-        double pinW = map_pin.getBoundsInLocal().getWidth();
-        double pinH = map_pin.getBoundsInLocal().getHeight();
-        map_pin.setLayoutX((Double) list.get(0) - (pinW / 2));
-        map_pin.setLayoutY((Double) list.get(1) - (pinH));
-        pin_info.setText((String) list.get(2));
-        map_pin.setVisible(true);
+//        // move the pin and set it's info
+//        double pinW = map_pin.getBoundsInLocal().getWidth();
+//        double pinH = map_pin.getBoundsInLocal().getHeight();
+//        map_pin.setLayoutX((Double) list.get(0) - (pinW / 2));
+//        map_pin.setLayoutY((Double) list.get(1) - (pinH));
+//        pin_info.setText((String) list.get(2));
+//        map_pin.setVisible(true);
     }
 
     @FXML
@@ -194,19 +193,74 @@ public class Controller implements Initializable {
         map_scrollpane.setVvalue(scrollV);
     }
 
-    @FXML
-    private void adminSwitchMode(ActionEvent event) throws IOException {
-        Stage stage;
-        stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("../Design/Admin.fxml"));
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(btn1.getScene().getWindow());
-        stage.show();
-    }
+//    @FXML
+//    private void adminSwitchMode(ActionEvent event) throws IOException {
+//        Stage stage;
+//        stage = new Stage();
+//        Parent root = FXMLLoader.load(getClass().getResource("../Design/Admin.fxml"));
+//        stage.setScene(new Scene(root));
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.initOwner(btn1.getScene().getWindow());
+//        stage.show();
+//    }
 
     public void  print() {
         System.out.print(print.getDept());
 
     }
+
+
+
+
+    private void asdasdasd() {
+
+        mFloor3.setFloorImage(getClass().getResource("Floor 3 Clean.png"));
+        mFloor3.drawFloorAdmin(imageStackPane);
+
+
+
+        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mMainHospital.setState(BuildingState.ADDNODE);
+            }
+
+        });
+
+        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mMainHospital.setState(BuildingState.REMOVENODE);
+            }
+
+        });
+
+        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mMainHospital.setState(BuildingState.ADDADJACENTNODE);
+            }
+
+        });
+
+
+        btn1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mMainHospital.setState(BuildingState.MODIFYDESTINATIONS);
+            }
+
+        });
+
+
+
+    }
+
+
+
+
 }

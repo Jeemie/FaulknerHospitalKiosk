@@ -87,7 +87,7 @@
             <Pane>
                <children>
                   <Button layoutX="138.0" layoutY="79.0" mnemonicParsing="false" text="Add Location" fx:id="addLocationButton" />
-                  <Button fx:id="btn1" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" onAction="#adminSwitchMode" text="Modify Location" />
+                  <Button fx:id="btn1" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="Modify Location" />
                   <Button layoutX="138.0" layoutY="106.0" mnemonicParsing="false" text="Remove Location" fx:id="removeLocationButton" />
                   <Button layoutX="138.0" layoutY="133.0" mnemonicParsing="false" text="Add Connected Location" fx:id="addConnectedLocationButton" />
                </children></Pane>

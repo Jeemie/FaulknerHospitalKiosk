@@ -3,7 +3,7 @@ package MapTest;
 import Map.Building;
 import Map.Floor;
 import Map.Location;
-import Map.Node;
+import Node;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class BuildingTest {
 
     private Building mTestBuilding;
     private Floor mFloor1, mFloor2, mFloor7;
-    private Node mOne, mTwo;
+    private LocationNode mOne, mTwo;
     private Location mLocation1, mLocation;
 
 
