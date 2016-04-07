@@ -1,7 +1,5 @@
 package Map;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,15 +9,14 @@ import java.util.Observable;
 import java.util.UUID;
 
 /**
- * A class that represents a floor in a building
+ * TODO
  */
-public class Floor extends Observable {
+public class Floor extends Observable{
 
     private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    private ArrayList<Node> nodes; // The nodes that are attached to the current floor
-    private final Building currentBuilding; // The building that the floor is a part of
-    private ImageView image;
+    private ArrayList<MapNode> nodes; //
+    private final Building currentBuilding;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
@@ -35,8 +32,6 @@ public class Floor extends Observable {
         this.uniqueID = UUID.randomUUID();
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
-
-        LOGGER.info("Created new Floor: " + this.toString());
 
         // adds an observer to this floor and add the floor to list of observed floors in the Observer object
         observer.observeFloor(this);
@@ -57,18 +52,11 @@ public class Floor extends Observable {
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
-        LOGGER.info("Created new Floor: " + this.toString());
-
         //adds an observer to this floor and add the floor to list of observed floors in the Observer object
         observer.observeFloor(this);
 
     }
 
-    /**
-     * Getter for the floor number.
-     *
-     * @return The current floor's number
-     */
     public int getFloor(){
         return this.floor;
     }
@@ -79,21 +67,21 @@ public class Floor extends Observable {
      * @param location The x and y coordinate in which the node was placed on the current floor.
      * @return The newly created node
      */
-    public Node addNode(Location location) {
+    public MapNode addNode(Location location) {
 
         // Create a new node
-        Node newNode = new Node(0, location, this);
+        MapNode newNode = new MapNode(0, location, this);
 
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
 
-        // mark the floor as changed
+        //mark as value changed
         setChanged();
 
-        // trigger notification
+        //trigger notification
         notifyObservers();
 
-        // Return the new Node
+        // Return the new MapNode
         return newNode;
     }
 
@@ -107,22 +95,16 @@ public class Floor extends Observable {
      * @param observer The NodeObserver that watches this node
      * @return The newly created node
      */
-    public Node addNode(double heuristicCost, UUID uniqueID, Location location,
-                        EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
+    public MapNode addNode(double heuristicCost, UUID uniqueID, Location location,
+                           EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
 
         // Create a new node
-        Node newNode = new Node(heuristicCost, uniqueID, location, this, destinations);
+        MapNode newNode = new MapNode(heuristicCost, uniqueID, location, this, destinations);
 
         // Add the node to the list of nodes on the current floor
         this.nodes.add(newNode);
 
-        // mark floor as changed
-        setChanged();
-
-        // trigger notification
-        notifyObservers();
-
-        // Return the new Node
+        // Return the new MapNode
         return newNode;
     }
 
@@ -138,7 +120,7 @@ public class Floor extends Observable {
         ArrayList<String> floorDestinations = new ArrayList<>();
 
         // Go through all of the nodes on the current floor and add destinations of the given type to the list
-        for (Node n : nodes) {
+        for (MapNode n : nodes) {
 
             // add all of the destinations of the given type at the current node to the list
             floorDestinations.addAll(n.getDestinations(destinationType));
@@ -159,7 +141,7 @@ public class Floor extends Observable {
         // List of all the destinations on the current floor
         ArrayList<String> floorDestinations = new ArrayList<>();
 
-        for (Node n : nodes) {
+        for (MapNode n : nodes) {
 
             // add all of the destinations at the current node to the list
             floorDestinations.addAll(n.getDestinations());
@@ -170,56 +152,14 @@ public class Floor extends Observable {
         return floorDestinations;
     }
 
-
-
-    public void drawFloorAdmin() {
-
-        assert image != null;
-
-
-        for (Node node : this.nodes) {
-            
-        }
-
-
-    }
-
-
-    public void drawFloorNormal() {
-
-        assert image != null;
-
-    }
-
     /**
      * Get all of the nodes on the current floor.
      *
      * @return A list of all of the nodes on the current floor.
      */
-    public ArrayList<Node> getFloorNodes() {
+    public ArrayList<MapNode> getFloorNodes() {
 
         return this.nodes;
-    }
-
-    /**
-     * Getter for the building's current state.
-     *
-     * @return The state of the building.
-     */
-    public BuildingState getState() {
-
-        return this.currentBuilding.getState();
-    }
-
-    /**
-     * Sets the state of the building
-     *
-     * @param state The state you want to set the building to
-     */
-    public void setState(BuildingState state) {
-
-        this.currentBuilding.setState(state);
-
     }
 
 
@@ -228,8 +168,7 @@ public class Floor extends Observable {
      *
      * @return the FloorObserver called observer
      */
-    public FloorObserver getFloorObserver() {
-
+    public FloorObserver getFloorObserver(){
         return this.observer;
     }
 

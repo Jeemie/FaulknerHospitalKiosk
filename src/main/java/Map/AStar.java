@@ -1,10 +1,7 @@
 package Map;
 
-import Map.Exceptions.NoPathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 /**
  * TODO
@@ -32,8 +29,8 @@ public class AStar {
      * @param destinationNode
      * @return
      */
-    public ArrayList<Node> getPath(Node startNode, Node destinationNode) throws NoPathException {
-        return null;
-    }
+//    public ArrayList<Node> getPath(Node startNode, Node destinationNode) throws NoPathException {
+//        return null;
+//    }
 
 }

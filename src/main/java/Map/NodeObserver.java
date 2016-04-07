@@ -12,7 +12,7 @@ import java.util.Observer;
  */
 public class NodeObserver implements Observer {
 
-    private ArrayList<Node> observedNodes; // List of observed Nodes
+    private ArrayList<MapNode> observedNodes; // List of observed Nodes
     private static final Logger LOGGER = LoggerFactory.getLogger(NodeObserver.class); // Logger for this class
 
     /**
@@ -31,12 +31,12 @@ public class NodeObserver implements Observer {
      *
      * @param node The node you want to observe.
      */
-    public void observeNode(Node node){
+    public void observeNode(MapNode node){
 
         // check that the node is not already being observed
         if (!observedNodes.contains(node)) {
 
-            LOGGER.info("Observing new Node: " + node.toString());
+            LOGGER.info("Observing new MapNode: " + node.toString());
 
             // add this node to list of watching nodes
             observedNodes.add(node);
@@ -51,7 +51,7 @@ public class NodeObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        LOGGER.info("Updating Node: " + o.toString());
+        LOGGER.info("Updating MapNode: " + o.toString());
 
     }
 

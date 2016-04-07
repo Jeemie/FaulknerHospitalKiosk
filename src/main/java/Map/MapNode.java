@@ -1,24 +1,23 @@
 package Map;
 
-import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 /**
- * A class the represents node(point) on a floor
+ * TODO
  */
-public class Node extends Observable {
+public class MapNode extends Observable {
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
-    private Location location; // The pixel location of the node on the map
-    private ArrayList<Node> adjacentNodes; // A list of nodes that are connected to the current node
-    private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
-    private Floor currentFloor; // The floor that the node is associated with
-    private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
-    private static final Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
+    private Location location; // TODO
+    private ArrayList<MapNode> adjacentNodes; // TODO
+    private EnumMap<Destination, ArrayList<String>> destinations; // TODO
+    private Floor currentFloor; // TODO
+    private static NodeObserver observer = new NodeObserver(); // Observer Object watching all MapNode objects
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapNode.class); // Logger for this class
 
 
     /**
@@ -28,7 +27,7 @@ public class Node extends Observable {
      * @param location
      * @param currentFloor
      */
-    public Node(double heuristicCost, Location location, Floor currentFloor) {
+    public MapNode(double heuristicCost, Location location, Floor currentFloor) {
 
         this.heuristicCost = heuristicCost;
 
@@ -38,7 +37,7 @@ public class Node extends Observable {
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
         this.currentFloor = currentFloor;
 
-        observer.observeNode(this);  //starts observing new Node object
+        observer.observeNode(this);  //starts observing new MapNode object
 
     }
 
@@ -53,7 +52,7 @@ public class Node extends Observable {
      * @param currentFloor
      * @param destinations
      */
-    public Node(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
+    public MapNode(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
 
         this.heuristicCost = heuristicCost;
         this.uniqueID = uniqueID;
@@ -62,7 +61,7 @@ public class Node extends Observable {
         this.destinations = destinations;
         this.currentFloor = currentFloor;
 
-        observer.observeNode(this); //starts observing new Node object
+        observer.observeNode(this); //starts observing new MapNode object
 
     }
 
@@ -169,7 +168,7 @@ public class Node extends Observable {
      *
      * @param adjacentNode
      */
-    public void addAdjacentNode(Node adjacentNode) {
+    public void addAdjacentNode(MapNode adjacentNode) {
 
         if (this.equals(adjacentNode)) {
 
@@ -198,7 +197,7 @@ public class Node extends Observable {
      * @param destinationNode The node you want to get the distance to.
      * @return The distance between two nodes.
      */
-    public double getDistanceBetweenNodes(Node destinationNode) {
+    public double getDistanceBetweenNodes(MapNode destinationNode) {
 
         // location of destination node
         Location destinationLocation = destinationNode.getLocation();
@@ -232,7 +231,7 @@ public class Node extends Observable {
      *
      * @param adjacentNode
      */
-    public void removeAdjacentNode(Node adjacentNode) {
+    public void removeAdjacentNode(MapNode adjacentNode) {
 
         //if the node exists
         if (adjacentNodes.contains(adjacentNode)) {
@@ -267,39 +266,6 @@ public class Node extends Observable {
         }
 
         notifyObservers();
-
-    }
-
-    public void drawAdmin(GraphicsContext context) {
-
-
-
-
-
-    }
-
-    public void drawNormal(GraphicsContext context) {
-
-    }
-
-    /**
-     * Getter for the building's current state.
-     *
-     * @return The state of the building.
-     */
-    public BuildingState getState() {
-
-        return this.currentFloor.getState();
-    }
-
-    /**
-     * Sets the state of the building
-     *
-     * @param state The state you want to set the building to
-     */
-    public void setState(BuildingState state) {
-
-        this.currentFloor.setState(state);
 
     }
 

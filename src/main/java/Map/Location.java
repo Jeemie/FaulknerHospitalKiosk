@@ -5,16 +5,15 @@ package Map;
  */
 public class Location {
 
-    private int x;
-    private int y;
+    private double x;
+   private double y;
 
     /**
      * Default constructor for Location Class
-     *
-     * @param x x-coordinate
+     *  @param x x-coordinate
      * @param y y-coordinate
      */
-    public Location(int x, int y) {
+    public Location(double x, double y) {
 
         this.x = x;
         this.y = y;
@@ -26,7 +25,7 @@ public class Location {
      *
      * @return The location's x-coordinate
      */
-    public int getX() {
+    public double getX() {
 
         return x;
     }
@@ -36,7 +35,7 @@ public class Location {
      *
      * @return The location's y-coordinate
      */
-    public int getY() {
+    public double getY() {
 
         return y;
     }
