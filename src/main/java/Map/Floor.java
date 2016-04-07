@@ -1,5 +1,9 @@
 package Map;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +15,20 @@ import java.util.UUID;
 /**
  * TODO
  */
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
 public class Floor extends Observable{
 
+    @JsonProperty("floor")
     private final int floor; // The level number associated with the floor
+    @JsonProperty("floor UUID")
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    private ArrayList<Node> nodes; //
+    @JsonProperty("currentBuilding UUID")
     private final Building currentBuilding;
+    @JsonProperty("nodes")
+    private ArrayList<Node> nodes;
+    @JsonIgnore
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
 
     /**
@@ -57,6 +68,7 @@ public class Floor extends Observable{
 
     }
 
+    @JsonGetter
     public int getFloor(){
         return this.floor;
     }
@@ -136,6 +148,7 @@ public class Floor extends Observable{
      *
      * @return A List of all the destinations on the current floor.
      */
+    @JsonIgnore
     public ArrayList<String> getFloorDestinations() {
 
         // List of all the destinations on the current floor
@@ -157,6 +170,7 @@ public class Floor extends Observable{
      *
      * @return A list of all of the nodes on the current floor.
      */
+    @JsonIgnore
     public ArrayList<Node> getFloorNodes() {
 
         return this.nodes;
@@ -168,8 +182,9 @@ public class Floor extends Observable{
      *
      * @return the FloorObserver called observer
      */
+    @JsonIgnore
     public FloorObserver getFloorObserver(){
-        return this.observer;
+        return observer;
     }
 
     @Override
@@ -177,5 +192,16 @@ public class Floor extends Observable{
 
         return uniqueID.toString();
     }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public String getCurrentBuilding() {
+        return currentBuilding.toString();
+    }
+
 
 }

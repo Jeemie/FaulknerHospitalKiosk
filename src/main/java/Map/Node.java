@@ -1,5 +1,9 @@
 package Map;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +16,19 @@ import static sun.misc.Version.print;
  */
 public class Node extends Observable {
 
+    @JsonIgnore
     private double heuristicCost; // heuristic cost for AStar algorithm
+    @JsonProperty("node UUID")
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
+    @JsonProperty
     private Location location; // TODO
+    @JsonProperty
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
+    @JsonIgnore
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all Node objects
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Node.class); // Logger for this class
 
 
@@ -100,8 +110,9 @@ public class Node extends Observable {
 
     }
 
+    @JsonIgnore
     public NodeObserver getNodeObserver(){
-        return this.observer;
+        return observer;
     }
 
     /**
@@ -150,6 +161,7 @@ public class Node extends Observable {
      *
      * @return
      */
+    @JsonGetter
     public ArrayList<String> getDestinations() {
 
         Set<Destination> entries = destinations.keySet();
@@ -213,6 +225,7 @@ public class Node extends Observable {
      *
      * @return
      */
+    @JsonIgnore
     public double getHueristicCost() {
 
         return heuristicCost;
@@ -223,6 +236,7 @@ public class Node extends Observable {
      *
      * @return
      */
+
     public Location getLocation() {
 
         return location;
@@ -275,6 +289,11 @@ public class Node extends Observable {
     public String toString() {
 
         return uniqueID.toString();
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
     }
 
 }

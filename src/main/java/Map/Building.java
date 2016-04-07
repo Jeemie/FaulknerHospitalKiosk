@@ -1,12 +1,18 @@
 package Map;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Observable;
@@ -17,12 +23,18 @@ import com.google.gson.GsonBuilder;
 /**
  * A class the represents a building.
  */
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
 public class Building extends Observable {
 
+    @JsonProperty("UUID")
     private UUID uniqueID; // A randomly generated UUID associated with the current building
+    @JsonProperty("floors")
     private ArrayList<Floor> floors; // A list of all of the floors in the building
+    @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
+    @JsonIgnore
     private static BuildingObserver observer = new BuildingObserver(); // Observer for all of the buildings
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
 
     /**
@@ -59,26 +71,10 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void saveToFile(URL filePath) throws IOException {
-        new Thread() {
-            @Override
-            public void run() {
-
-                try {
-                    Writer writer = new FileWriter(filePath.toString());
-                    Gson gson = new GsonBuilder().create();
-                    gson.toJson(floors, writer);
-                    writer.close();
-                } catch (IOException e) {
-                    // exception handler code here
-                    // ...
-                }
-
-                LOGGER.info("Saving the building to the file: " + filePath.toString());
-            }
-        }.start();
+    public void saveToFile(String filePath) throws IOException, URISyntaxException {
+        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        BuildingToJson.saveToFile(file, this);
     }
-
 
     /**
      * TODO
@@ -130,6 +126,7 @@ public class Building extends Observable {
      *
      * @return
      */
+    @JsonIgnore
     public ArrayList<String> getBuildingDestinations() {
 
         //ArrayList to hold the entire list of destinations
@@ -238,15 +235,26 @@ public class Building extends Observable {
      *
      * @return The current building's observer.
      */
+    @JsonIgnore
     public BuildingObserver getBuildingObserver(){
 
-        return this.observer;
+        return observer;
     }
 
     @Override
     public String toString() {
 
         return this.uniqueID.toString();
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public ArrayList<Floor> getFloors() {
+        return floors;
     }
 
 }

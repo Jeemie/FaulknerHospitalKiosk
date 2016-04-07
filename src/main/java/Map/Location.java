@@ -1,10 +1,12 @@
 package Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Class that contains the x and y coordinates of a arbitrary point.
  */
-public class Location {
 
+public class Location {
     private int x;
     private int y;
 
