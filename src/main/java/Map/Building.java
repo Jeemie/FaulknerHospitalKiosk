@@ -1,18 +1,14 @@
 package Map;
 
-import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
-
 import Map.Exceptions.FloorDoesNotExistException;
-import Map.Exceptions.NoPathException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * A class the represents a building.
@@ -31,10 +27,10 @@ public class Building extends Observable {
      */
     public Building() {
 
-        this.state = BuildingState.NORMAL;
         this.uniqueID = UUID.randomUUID();
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
+        this.state = BuildingState.NORMAL;
 
         LOGGER.info("Created new Building: " + this.toString());
 
@@ -62,23 +58,9 @@ public class Building extends Observable {
      * @throws IOException
      */
     public void saveToFile(URL filePath) throws IOException {
-        new Thread() {
-            @Override
-            public void run() {
 
-                try {
-                    Writer writer = new FileWriter(filePath.toString());
-                    Gson gson = new GsonBuilder().create();
-                    gson.toJson(floors, writer);
-                    writer.close();
-                } catch (IOException e) {
-                    // exception handler code here
-                    // ...
-                }
+        LOGGER.info("Saving the building to the file: " + filePath.toString());
 
-                LOGGER.info("Saving the building to the file: " + filePath.toString());
-            }
-        }.start();
     }
 
 
@@ -216,24 +198,24 @@ public class Building extends Observable {
      * @param destinationNode
      * @return
      */
-    public ArrayList<Node> getShortestPath(Node startNode, Node destinationNode) throws NoPathException {
-
-        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
-
-        try {
-
-            // run aStar algorithm
-            return aStarSearch.getPath(startNode, destinationNode);
-
-        } catch (NoPathException e) {
-
-            LOGGER.error("NoPathException: ", e);
-
-            throw e;
-
-        }
-
-    }
+//    public ArrayList<MapNode> getShortestPath(MapNode startNode, MapNode destinationNode) throws NoPathException {
+//
+//        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
+//
+//        try {
+//
+//            // run aStar algorithm
+//          //  return aStarSearch.getPath(startNode, destinationNode);
+//
+//        } catch (NoPathException e) {
+//
+//            LOGGER.error("NoPathException: ", e);
+//
+//            throw e;
+//
+//        }
+//
+//    }
 
     /**
      * Getter for the building's observer.
@@ -245,31 +227,17 @@ public class Building extends Observable {
         return this.observer;
     }
 
-    /**
-     * Getter for the building's current state.
-     *
-     * @return The state of the building.
-     */
-    public BuildingState getState() {
-
-        return state;
-    }
-
-    /**
-     * Sets the state of the building
-     *
-     * @param state The state you want to set the building to
-     */
-    public void setState(BuildingState state) {
-
-        this.state = state;
-
-    }
-
     @Override
     public String toString() {
 
         return this.uniqueID.toString();
     }
 
+    public BuildingState getState() {
+        return state;
+    }
+
+    public void setState(BuildingState state) {
+        this.state = state;
+    }
 }
