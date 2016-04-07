@@ -16,6 +16,7 @@ public class ObserverTest {
     private Building mMainHospital;
     private Floor mFloor;
     private Location mLocation1, mLocation2, mLocation3;
+
     private LocationNode mTestNode;
     private LocationNode mAdjNode1, mAdjNode2;
 

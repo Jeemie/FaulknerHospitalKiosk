@@ -18,10 +18,12 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.StrictMath.abs;
+
 /**
  * A class the represents node(point) on a floor
  */
-public class LocationNode extends Observable {
+public class LocationNode extends Observable implements Comparable<LocationNode>{
 
     private double heuristicCost; // heuristic cost for AStar algorithm
     private final UUID uniqueID; // A randomly generated UUID associated with the current node
@@ -29,10 +31,14 @@ public class LocationNode extends Observable {
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
     private Floor currentFloor; // The floor that the node is associated with
+    public double minDistance = Double.POSITIVE_INFINITY;
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all LocationNode objects
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class); // Logger for this class
     private Circle nodeCircle;
     private ArrayList<Line> adjacentLines;
+    private Neighbors[] neighbors;
+    public LocationNode previous;
+
 
 
     /**
@@ -212,13 +218,18 @@ public class LocationNode extends Observable {
      * @param destinationLocationNode The node you want to get the distance to.
      * @return The distance between two nodes.
      */
-    public double getDistanceBetweenNodes(LocationNode destinationLocationNode) {
+    public double getDistanceBetweenNodes(LocationNode destinationLocationNode, Neighbors neighborsNode) {
 
-        // location of destination node
-        Location destinationLocation = destinationLocationNode.getLocation();
+//        // location of destination node
+//        Location destinationLocation = destinationLocationNode.getLocation();
+//
+//        // return the distance between the nodes
+//        return this.location.getDistanceBetween(destinationLocation);
 
-        // return the distance between the nodes
-        return this.location.getDistanceBetween(destinationLocation);
+        int x = (int)abs((destinationLocationNode.location.getX())-(neighborsNode.getTempGoal().location.getX()));
+        int y = (int)abs((destinationLocationNode.location.getY())-(neighborsNode.getTempGoal().location.getY()));
+        double distance =  Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+        return  distance;
     }
 
     /**
@@ -414,6 +425,23 @@ public class LocationNode extends Observable {
 
     public Floor getCurrentFloor() {
         return currentFloor;
+    }
+
+    @Override
+    public int compareTo(LocationNode o) {
+        return Double.compare(minDistance,o.minDistance);
+    }
+
+    public Neighbors[] getNeighbors() {
+        return neighbors;
+    }
+
+    public LocationNode getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(LocationNode previous) {
+        this.previous = previous;
     }
 }
 
