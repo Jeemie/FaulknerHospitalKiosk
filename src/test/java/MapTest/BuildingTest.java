@@ -3,7 +3,7 @@ package MapTest;
 import Map.Building;
 import Map.Floor;
 import Map.Location;
-import Node;
+import Map.LocationNode;
 import org.junit.Before;
 import org.junit.Test;
 

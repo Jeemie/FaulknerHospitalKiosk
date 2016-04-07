@@ -1,9 +1,8 @@
-package Kiosk.Controller; /**
+package Kiosk.Controllers; /**
  * Created by christopher on 11/26/15.
  */
 
 import Kiosk.Admin;
-import Map.Location;
 import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

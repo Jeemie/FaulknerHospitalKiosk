@@ -1,6 +1,6 @@
 package Map;
 
-import Kiosk.Controller.AdminController;
+import Kiosk.Controllers.AdminController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -295,7 +295,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     }
 
-    public void drawAdmin(Pane pane) {
+    public void drawNormalNode(Pane pane) {
 
         if (pane.getChildren().contains(nodeCircle)) {
             return;
@@ -303,6 +303,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         pane.getChildren().add(this.nodeCircle);
 
+    }
+
+    public void drawAdminNodes(Pane pane) {
 
         nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -337,33 +340,41 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     }
 
-
+    /**
+     *
+     *
+     * @param pane
+     */
     public void drawAdjacentNodes(Pane pane) {
 
         if (adjacentLines.size() != 0) {
+
+            for (Line line : adjacentLines) {
+
+                pane.getChildren().remove(line);
+
+            }
+
             adjacentLines.clear();
+
         }
 
         for (LocationNode locationNode : this.adjacentLocationNodes) {
 
-            Line newLine  = new Line(this.location.getX(), this.location.getY(),
-                    locationNode.getLocation().getX(), locationNode.getLocation().getY());
-
-            pane.getChildren().add(newLine);
-
-            this.adjacentLines.add(newLine);
-
+            drawAdjacentNode(pane, locationNode);
 
         }
 
-
-
     }
 
+    public void drawAdjacentNode(Pane pane, LocationNode adjacentNode) {
 
+        Line newLine  = new Line(this.location.getX(), this.location.getY(),
+                adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
+        pane.getChildren().add(newLine);
 
-    public void drawNormal(GraphicsContext context) {
+        this.adjacentLines.add(newLine);
 
     }
 
@@ -397,7 +408,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             stage = new Stage();
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Design/Admin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
             Parent root = (Parent)loader.load();
             AdminController controller = loader.<AdminController>getController();
             controller.setNode(this);
@@ -410,6 +421,27 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         } catch (IOException e) {
 
         }
+
+    }
+
+    public void deleteNode(Pane pane) {
+
+        if (pane.getChildren().contains(nodeCircle)) {
+
+            pane.getChildren().remove(nodeCircle);
+
+        }
+
+        for (Line line : adjacentLines) {
+
+            if (pane.getChildren().contains(line)) {
+
+                pane.getChildren().remove(line);
+
+            }
+
+        }
+
 
     }
 

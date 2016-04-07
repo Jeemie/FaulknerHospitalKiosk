@@ -1,4 +1,4 @@
-package Kiosk.Controller;
+package Kiosk.Controllers;
 
 
 import Kiosk.Admin;
@@ -98,7 +98,7 @@ public class Controller implements Initializable {
 
        // String deptname = control.addTolist();
         //System.out.println(deptname);
-        System.out.println("Controller.initialize");
+        System.out.println("Controllers.initialize");
 
         hm.put(mEyeCareSpecialists3B.getDestinations().get(0), new ArrayList<>(Arrays.asList(mLocation3B.getX(), mLocation3B.getY(), "mlkjklm")));
 
@@ -127,7 +127,7 @@ public class Controller implements Initializable {
 
         // Add large UI styling and make full screen if we are on device
         if (Platform.isSupported(ConditionalFeature.INPUT_TOUCH)) {
-            System.out.println("airportapp.Controller.initialize, device detected");
+            System.out.println("airportapp.Controllers.initialize, device detected");
             size_togglebutton.setSelected(true);
             root_vbox.getStyleClass().add("touch-sizes");
             Screen screen = Screen.getPrimary();
@@ -171,20 +171,20 @@ public class Controller implements Initializable {
 
     @FXML
     void zoomIn(ActionEvent event) {
-//    System.out.println("airportapp.Controller.zoomIn");
+//    System.out.println("airportapp.Controllers.zoomIn");
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal += 0.1);
     }
 
     @FXML
     void zoomOut(ActionEvent event) {
-//    System.out.println("airportapp.Controller.zoomOut");
+//    System.out.println("airportapp.Controllers.zoomOut");
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal + -0.1);
     }
 
     private void zoom(double scaleValue) {
-//    System.out.println("airportapp.Controller.zoom, scaleValue: " + scaleValue);
+//    System.out.println("airportapp.Controllers.zoom, scaleValue: " + scaleValue);
         double scrollH = map_scrollpane.getHvalue();
         double scrollV = map_scrollpane.getVvalue();
         zoomGroup.setScaleX(scaleValue);
@@ -197,7 +197,7 @@ public class Controller implements Initializable {
 //    private void adminSwitchMode(ActionEvent event) throws IOException {
 //        Stage stage;
 //        stage = new Stage();
-//        Parent root = FXMLLoader.load(getClass().getResource("../Design/Admin.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("../Views/AdminDepartmentPanel.fxml"));
 //        stage.setScene(new Scene(root));
 //        stage.initModality(Modality.APPLICATION_MODAL);
 //        stage.initOwner(btn1.getScene().getWindow());
