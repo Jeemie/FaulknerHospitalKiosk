@@ -51,7 +51,13 @@ public class NodeObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        LOGGER.info("Updating Node: " + o.toString());
+        Node currentNode = ((Node)o);
+
+        if (currentNode.getState() != BuildingState.NORMAL) {
+
+            currentNode.getCurrentFloor().updateFloorAdmin();
+
+        }
 
     }
 

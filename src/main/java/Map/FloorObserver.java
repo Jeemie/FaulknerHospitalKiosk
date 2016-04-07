@@ -53,6 +53,12 @@ public class FloorObserver implements Observer {
 
         LOGGER.info("Updating Floor: " + o.toString());
 
+        Floor currentFloor = ((Floor) o);
+
+        if (currentFloor.getState() == BuildingState.ADDADJACENTNODE) {
+            currentFloor.updateFloorAdmin();
+        }
+
     }
 
 }

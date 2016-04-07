@@ -9,4 +9,5 @@ public enum  BuildingState {
     REMOVENODE,
     ADDADJACENTNODE,
     MODIFYDESTINATIONS,
+    TEST
 }

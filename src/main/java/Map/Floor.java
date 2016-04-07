@@ -1,10 +1,17 @@
 package Map;
 
+import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Observable;
@@ -19,9 +26,11 @@ public class Floor extends Observable {
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
     private ArrayList<Node> nodes; // The nodes that are attached to the current floor
     private final Building currentBuilding; // The building that the floor is a part of
-    private ImageView image;
+    private ImageView floorImage;
+    private Pane nodePane;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
+    private Node otherNode;
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.
@@ -35,6 +44,8 @@ public class Floor extends Observable {
         this.uniqueID = UUID.randomUUID();
         this.nodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
+        this.floorImage = new ImageView();
+        this.nodePane = new Pane();
 
         LOGGER.info("Created new Floor: " + this.toString());
 
@@ -172,22 +183,65 @@ public class Floor extends Observable {
 
 
 
-    public void drawFloorAdmin() {
+    public void drawFloorAdmin(StackPane stackPane) {
 
-        assert image != null;
+        // clear the stackpane
+        stackPane.getChildren().removeAll();
 
+        this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (getState() == BuildingState.ADDNODE) {
+
+                    LOGGER.info("APPLESAUCE1");
+
+                    Location clickLocation = new Location(event.getX(), event.getY());
+
+                    Node newNode = addNode(clickLocation);
+
+                    newNode.drawAdmin(nodePane);
+
+                }
+
+            }
+
+        });
+
+        // add the current floor's canvas and imageview to the stackpane
+        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
+
+    }
+
+    public void updateFloorAdmin() {
 
         for (Node node : this.nodes) {
-            
+
+            node.drawAdmin(this.nodePane);
+            node.drawAdjacentNodes(this.nodePane);
+
         }
+
+    }
+
+
+    public void drawFloorNormal(StackPane stackPane) {
 
 
     }
 
 
-    public void drawFloorNormal() {
+    public void setFloorImage(URL imagePath) {
 
-        assert image != null;
+        Image image = new Image(imagePath.toString());
+
+        this.floorImage.setImage(image);
+        this.floorImage.setFitHeight(150);
+        this.floorImage.setFitWidth(200);
+
+        this.nodePane.setPrefHeight(150);
+        this.nodePane.setPrefWidth(200);
 
     }
 
@@ -239,4 +293,15 @@ public class Floor extends Observable {
         return uniqueID.toString();
     }
 
+    public void setOtherNode(Node otherNode) {
+        this.otherNode = otherNode;
+    }
+
+    public Node getOtherNode() {
+        return otherNode;
+    }
+
+    public Pane getNodePane() {
+        return nodePane;
+    }
 }
