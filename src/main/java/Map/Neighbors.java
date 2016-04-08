@@ -5,6 +5,8 @@ package Map;
  */
 public class Neighbors {
     private final LocationNode tempGoal;
+    private int x;
+    private int y;
     private final double cost = 0;
 
     public Neighbors(LocationNode tempGoal) {

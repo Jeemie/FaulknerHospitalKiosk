@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
-import static java.lang.StrictMath.abs;
-
 /**
  * A class the represents node(point) on a floor
  */
@@ -36,7 +34,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class); // Logger for this class
     private Circle nodeCircle;
     private ArrayList<Line> adjacentLines;
-    private Neighbors[] neighbors;
+    public Neighbors[] neighbors;
     public LocationNode previous;
 
 
@@ -218,18 +216,19 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      * @param destinationLocationNode The node you want to get the distance to.
      * @return The distance between two nodes.
      */
-    public double getDistanceBetweenNodes(LocationNode destinationLocationNode, Neighbors neighborsNode) {
+    public double getDistanceBetweenNodes(LocationNode destinationLocationNode) {
 
-//        // location of destination node
-//        Location destinationLocation = destinationLocationNode.getLocation();
-//
-//        // return the distance between the nodes
-//        return this.location.getDistanceBetween(destinationLocation);
+        // location of destination node
+        Location destinationLocation = destinationLocationNode.getLocation();
 
-        int x = (int)abs((destinationLocationNode.location.getX())-(neighborsNode.getTempGoal().location.getX()));
-        int y = (int)abs((destinationLocationNode.location.getY())-(neighborsNode.getTempGoal().location.getY()));
-        double distance =  Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-        return  distance;
+        // return the distance between the nodes
+        return this.location.getDistanceBetween(destinationLocation);
+
+
+//        int x = (int)abs((destinationLocationNode.location.getX())-(neighborsNode.getTempGoal().location.getX()));
+//        int y = (int)abs((destinationLocationNode.location.getY())-(neighborsNode.getTempGoal().location.getY()));
+//        double distance =  Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+//        return  distance;
     }
 
     /**
@@ -416,7 +415,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @Override
     public String toString() {
 
-        return uniqueID.toString();
+      //  return uniqueID.toString();
+        return "" + this.location.getX();
     }
 
     public LocationNode getCurrentNode() {

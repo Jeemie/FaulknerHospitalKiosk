@@ -3,10 +3,7 @@ package Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * TODO
@@ -28,22 +25,27 @@ public class AStar {
     }
 
     public static void constructPath(LocationNode node) {
+        //distance from start to start is 0
         node.minDistance = 0.;
+        //create node set nodeQueue
         PriorityQueue<LocationNode> nodeQueue = new PriorityQueue<>();
         nodeQueue.add(node);
-
+        //while nodeQueue is not empty
         while (!nodeQueue.isEmpty()) {
+            //start node will be selected first
             LocationNode u = nodeQueue.poll();
-
-            for (Neighbors e : u.getNeighbors()) {
-                LocationNode goal = e.getTempGoal();
+            //for each neighbor e of u
+            for (Neighbors e : u.neighbors) {
+                LocationNode v = e.getTempGoal();
                 double cost = e.getCost();
-                double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(u,e);
-                if (distanceThroughNeighbor < goal.minDistance) {
-                    nodeQueue.remove(goal);
-                    goal.minDistance = distanceThroughNeighbor;
-                    goal.previous = u;
-                    nodeQueue.add(goal);
+                //calculate the distance to that neighbor
+                double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(v);
+                if (distanceThroughNeighbor < v.minDistance) {
+                    //replace path with a shorter path and remove node u to the node set
+                    nodeQueue.remove(u);
+                    v.minDistance = distanceThroughNeighbor;
+                    v.previous = u;
+                    nodeQueue.add(v);
                 }
             }
 

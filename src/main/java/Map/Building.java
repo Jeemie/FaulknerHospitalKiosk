@@ -168,7 +168,7 @@ public class Building extends Observable {
         throw new FloorDoesNotExistException(floorNumber);
     }
 
-    public void addFloor(int floorNumber) {
+    public Floor addFloor(int floorNumber) {
 
 
         for (Floor currentFloor : floors) {
@@ -177,7 +177,7 @@ public class Building extends Observable {
             if (currentFloor.getFloor() == floorNumber) {
 
                 //return current floor
-                return;
+                return currentFloor;
             }
 
         }
@@ -187,6 +187,7 @@ public class Building extends Observable {
         floors.add(newFloor);
 
         notifyObservers();
+        return newFloor;
 
     }
 
