@@ -14,8 +14,13 @@ public class DirectoryController {
     // Reference to the main application.
     private KioskApp kioskApp;
 
+
+
     @FXML
     private ListView<String> listDirectory;
+
+    ObservableList<String> currentNames;
+
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -23,13 +28,6 @@ public class DirectoryController {
      */
     @FXML
     private void initialize() {
-
-        //.sort comparator figure it out form there
-        // comparator uses a generic class so you have to use <>
-
-        ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia", "Ian", "Sue", "Matthew", "Hannah", "Stephan", "Denise");
-        listDirectory.setItems(names);
 
 
     }
@@ -57,7 +55,6 @@ public class DirectoryController {
      */
     @FXML
     private void handleSearch() {
-    	// TODO: showSearch should have parameter for the input
     	kioskApp.showSearch();
     }
 
@@ -66,9 +63,31 @@ public class DirectoryController {
      */
     @FXML
     private void handlePhysicians() {
-    	// TODO: showDirectory should have parameter for category
-    	kioskApp.showDirectory();
-        //kioskApp.showDirectory("physicians");
+        System.out.println("physicians");
+
+        currentNames.setAll (
+                "Byrne, Jennifer, RN, CPNP",
+                "Dann, Harriet, MD",
+                "Frangieh, George, MD",
+                "Greenberg, James Adam, MD",
+                "Grossi, Lisa, RN, MS, CPNP",
+                "Keller, Elisabeth, MD",
+                "Malone, Linda, DNP, RN, CPNP",
+                "Micley, Bruce, MD",
+                "Miner, Julie, MD",
+                "Morrison, Beverly, MD",
+                "Nadarajah, Sarah, WHNP",
+                "O'Connor, Elizabeth, MD",
+                "Patten, James, MD",
+                "Saluti, Andrew, DO",
+                "Scheff, David, MD",
+                "Smith, Shannon, MD",
+                "Stacks, Robert, MD",
+                "Tunick, Mitchell, MD",
+                "Viola, Julianne, MD");
+
+        listDirectory.setItems(currentNames);
+
     }
 
     /**
@@ -76,9 +95,25 @@ public class DirectoryController {
      */
     @FXML
     private void handleDepartments() {
-        //kioskApp.showDirectory("departments");
-    	// TODO: showDirectory should have parameter for category
-    	kioskApp.showDirectory();
+        System.out.println("departments");
+
+        currentNames.setAll (
+                "Audiology ",
+                "Cardiac Rehabilitation",
+                "Center for Preoperative Evaluation",
+                "Emergency Department",
+                "Eye Care Specialists ",
+                "GI Endoscopy",
+                "Laboratory",
+                "Obstetrics and Gynecology Associates",
+                "Patient Financial Services",
+                "Radiology",
+                "Roslindale Pediatric Associates ",
+                "Suburban Eye Specialists ",
+                "Taiclet Family Center");
+
+        listDirectory.setItems(currentNames);
+
     }
 
     /**
@@ -86,9 +121,28 @@ public class DirectoryController {
      */
     @FXML
     private void handleServices() {
-        // kioskApp.showDirectory("services");
-    	// TODO: showDirectory should have parameter for category
-    	kioskApp.showDirectory();
+        System.out.println("services");
+
+        currentNames.setAll (
+                "Admitting/Registration",
+                "ATM",
+                "Atrium Café",
+                "Atrium Elevators",
+                "Atrium/Main Entrance",
+                "Cafeteria",
+                "Chapel and Chaplaincy Services",
+                "Day Surgery",
+                "Gift Shop",
+                "Hillside Elevators",
+                "Information",
+                "Kiosk Location",
+                "Patient Registration",
+                "Patient Relations",
+                "Starbucks",
+                "Valet Parking",
+                "Volunteer Services");
+
+        listDirectory.setItems(currentNames);
     }
 
     /**
@@ -118,6 +172,76 @@ public class DirectoryController {
         System.out.println(name);
 
         kioskApp.showMap();
+    }
+
+   public void setList(int flag) {
+
+        if(flag == 0) {
+            this.currentNames = FXCollections.observableArrayList(
+                    "Byrne, Jennifer, RN, CPNP",
+                    "Dann, Harriet, MD",
+                    "Frangieh, George, MD",
+                    "Greenberg, James Adam, MD",
+                    "Grossi, Lisa, RN, MS, CPNP",
+                    "Keller, Elisabeth, MD",
+                    "Malone, Linda, DNP, RN, CPNP",
+                    "Micley, Bruce, MD",
+                    "Miner, Julie, MD",
+                    "Morrison, Beverly, MD",
+                    "Nadarajah, Sarah, WHNP",
+                    "O'Connor, Elizabeth, MD",
+                    "Patten, James, MD",
+                    "Saluti, Andrew, DO",
+                    "Scheff, David, MD",
+                    "Smith, Shannon, MD",
+                    "Stacks, Robert, MD",
+                    "Tunick, Mitchell, MD",
+                    "Viola, Julianne, MD");
+
+            listDirectory.setItems(currentNames);
+        }
+
+       if(flag == 1) {
+           this.currentNames = FXCollections.observableArrayList(
+                   "Audiology ",
+                   "Cardiac Rehabilitation",
+                   "Center for Preoperative Evaluation",
+                   "Emergency Department",
+                   "Eye Care Specialists ",
+                   "GI Endoscopy",
+                   "Laboratory",
+                   "Obstetrics and Gynecology Associates",
+                   "Patient Financial Services",
+                   "Radiology",
+                   "Roslindale Pediatric Associates ",
+                   "Suburban Eye Specialists ",
+                   "Taiclet Family Center");
+
+           listDirectory.setItems(currentNames);
+       }
+
+       if(flag == 2) {
+           this.currentNames = FXCollections.observableArrayList(
+                   "Admitting/Registration",
+                   "ATM",
+                   "Atrium Café",
+                   "Atrium Elevators",
+                   "Atrium/Main Entrance",
+                   "Cafeteria",
+                   "Chapel and Chaplaincy Services",
+                   "Day Surgery",
+                   "Gift Shop",
+                   "Hillside Elevators",
+                   "Information",
+                   "Kiosk Location",
+                   "Patient Registration",
+                   "Patient Relations",
+                   "Starbucks",
+                   "Valet Parking",
+                   "Volunteer Services");
+
+           listDirectory.setItems(currentNames);
+       }
     }
 
 }

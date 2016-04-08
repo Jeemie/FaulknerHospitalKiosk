@@ -1,7 +1,7 @@
 package Kiosk.Controllers;
 
-import javafx.fxml.FXML;
 import Kiosk.KioskApp;
+import javafx.fxml.FXML;
 
 public class KioskOverviewController {
 
@@ -45,17 +45,18 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
-        //kioskApp.showDirectory("physicians");
-    	kioskApp.showDirectory();
+
+    	kioskApp.showDirectory(0);
     }
     
-    /** 
+
+    /**
      * Called when the user clicks the Departments button.
      */
     @FXML
     private void handleDepartments() {
-        //kioskApp.showDirectory("departments");
-    	kioskApp.showDirectory();
+
+    	kioskApp.showDirectory(1);
     }
     
     /**
@@ -63,9 +64,8 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-    	// TODO: showDirectory should have parameter for category
-        //kioskApp.showDirectory("services");
-    	kioskApp.showDirectory();
+
+    	kioskApp.showDirectory(2);
     }
     
     /**

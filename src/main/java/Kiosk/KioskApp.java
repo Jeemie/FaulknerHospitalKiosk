@@ -21,6 +21,7 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
 
+
     private ListView<String> listDirectory;
 
     @Override
@@ -188,10 +189,20 @@ public class KioskApp extends Application {
      * 
      */
  // TODO: showDirectory should have parameter for category
-    public boolean showDirectory( ) {
-        // to differentiate between directories
-  //public boolean showDirectory(String listDirectory){
+    public boolean showDirectory(int flag ) {
 
+
+               /* ObservableList<String> names = FXCollections.observableArrayList(
+                        "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
+                        "Dr. Denise", "Dr. Mathew", "Dr. Jesus", "Dr. Mrs. Vandertrampp", "Dr. Ann");
+
+                ObservableList<String> names2 = FXCollections.observableArrayList(
+                        "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
+
+                ObservableList<String> names3 = FXCollections.observableArrayList(
+                        "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
+                        "Hannah Banana Stand", "Stephan Frys", "Just Denise");
+*/
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
@@ -207,21 +218,8 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setList(flag);
 
-            /*
-            switch (listDirectory) {
-            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
-                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
-                     break; //Physicians
-            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
-                     break; //departments
-            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
-                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
-                     break; //Services
-            */
             return controller.isOkClicked();
             
         } catch (IOException e) {
@@ -230,21 +228,6 @@ public class KioskApp extends Application {
         }
     }
 
-    /*
-    public List chooseList()
-            switch (listDirectory) {
-            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
-                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
-                     break; //Physicians
-            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
-                     break; //departments
-            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
-                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
-                     break; //Services
-            */
     
     /**
      * Changes screen to allow users to view the map
