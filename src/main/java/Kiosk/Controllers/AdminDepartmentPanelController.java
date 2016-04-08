@@ -150,6 +150,8 @@ public class AdminDepartmentPanelController implements Initializable {
         });
     }//end initialize
 
+
+
     /*
     ----------------------------------------------Control handlers---------------------------------------------
      */
@@ -164,12 +166,8 @@ public class AdminDepartmentPanelController implements Initializable {
                 Admin student = new Admin();
                 AdminPanelController control = new AdminPanelController();
 
-            if (!(currentNode.getDestinations()).isEmpty()){
-                    System.out.println("node is alrady fucked");
-                    student.setDeptType(currentNode.getDestinations().get(0));
 
-                }
-            else if (isValidInput(event)) {
+             if (isValidInput(event)) {
                 System.out.println("node is not fucked");
                     student.setDeptType(deptTypeField.getText());
                     student.setFloor(Integer.parseInt(yField.getText()));
@@ -178,7 +176,7 @@ public class AdminDepartmentPanelController implements Initializable {
 
 
                     currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
-                    System.out.print(currentNode.getDestinations().get(0));
+
                 }
 
                 deptTypeField.clear();
@@ -313,9 +311,14 @@ public class AdminDepartmentPanelController implements Initializable {
         }
     }
     public void handleClearButtonClick(ActionEvent event) {
-        deptTypeField.clear();
-        yField.clear();
-        deptBox.setValue("Department");
+        Admin student = new Admin();
+        AdminPanelController control = new AdminPanelController();
+        if (!(currentNode.getDestinations().get(0)).isEmpty()){
+            System.out.println("node is alrady fucked");
+            student.setDeptType(currentNode.getDestinations().get(0));
+            observableStudentList.add(student);
+
+        }
     }
     //filter table by first or last name
     public void filterStudentList(String oldValue, String newValue) {
