@@ -45,13 +45,8 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
-    	// TODO: showDirectory should have parameter for category
-<<<<<<< HEAD:src/main/java/application/view/KioskOverviewController.java
-    	mainApp.showDirectory();
-        //mainApp.showDirectory("physicians");
-=======
+        //kioskApp.showDirectory("physicians");
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/KioskOverviewController.java
     }
     
     /** 
@@ -59,13 +54,8 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-    	// TODO: showDirectory should have parameter for category
-<<<<<<< HEAD:src/main/java/application/view/KioskOverviewController.java
-    	mainApp.showDirectory();
-        //mainApp.showDirectory("departments");
-=======
+        //kioskApp.showDirectory("departments");
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/KioskOverviewController.java
     }
     
     /**
@@ -74,12 +64,8 @@ public class KioskOverviewController {
     @FXML
     private void handleServices() {
     	// TODO: showDirectory should have parameter for category
-<<<<<<< HEAD:src/main/java/application/view/KioskOverviewController.java
-    	mainApp.showDirectory();
-        //mainApp.showDirectory("services");
-=======
+        //kioskApp.showDirectory("services");
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/KioskOverviewController.java
     }
     
     /**

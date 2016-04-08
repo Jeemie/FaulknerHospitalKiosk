@@ -113,7 +113,9 @@ public class DirectoryController {
     @FXML
     private void handleForward() {
 
-        //listDirectory.getSelectionModel().getSelectedItem();
+        String name;
+        name = listDirectory.getSelectionModel().getSelectedItem();
+        System.out.println(name);
 
         kioskApp.showMap();
     }
