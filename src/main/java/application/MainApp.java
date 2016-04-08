@@ -1,24 +1,22 @@
 package application;
 
-import java.io.IOException;
-
-import application.view.AdminControlsController;
-import application.view.AdminLoginController;
-import application.view.DirectoryController;
-import application.view.KioskOverviewController;
-import application.view.MapViewController;
-import application.view.SearchController;
+import application.view.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    private ListView<String> listDirectory;
 
     @Override
     public void start(Stage primaryStage) {
@@ -176,7 +174,10 @@ public class MainApp extends Application {
      * 
      */
  // TODO: showDirectory should have parameter for category
-    public boolean showDirectory() {
+    public boolean showDirectory( ) {
+        // to differentiate between directories
+  //public boolean showDirectory(String listDirectory){
+
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
@@ -193,6 +194,20 @@ public class MainApp extends Application {
             DirectoryController controller = loader.getController();
             controller.setMainApp(this);
 
+            /*
+            switch (listDirectory) {
+            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
+                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
+                     break; //Physicians
+            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
+                     break; //departments
+            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
+                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
+                     break; //Services
+            */
             return controller.isOkClicked();
             
         } catch (IOException e) {
@@ -200,6 +215,22 @@ public class MainApp extends Application {
             return false;
         }
     }
+
+    /*
+    public List chooseList()
+            switch (listDirectory) {
+            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
+                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
+                     break; //Physicians
+            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
+                     break; //departments
+            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
+                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
+                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
+                     break; //Services
+            */
     
     /**
      * Changes screen to allow users to view the map
@@ -222,6 +253,8 @@ public class MainApp extends Application {
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
             controller.setMainApp(this);
+
+
             
             return controller.isOkClicked();
             

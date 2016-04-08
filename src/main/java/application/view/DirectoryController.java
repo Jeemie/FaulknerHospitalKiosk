@@ -67,6 +67,7 @@ public class DirectoryController {
     private void handlePhysicians() {
         // TODO: showDirectory should have parameter for category
         mainApp.showDirectory();
+        //mainApp.showDirectory("physicians");
     }
 
     /**
@@ -76,6 +77,7 @@ public class DirectoryController {
     private void handleDepartments() {
         // TODO: showDirectory should have parameter for category
         mainApp.showDirectory();
+        //mainApp.showDirectory("departments");
     }
 
     /**
@@ -85,6 +87,7 @@ public class DirectoryController {
     private void handleServices() {
         // TODO: showDirectory should have parameter for category
         mainApp.showDirectory();
+        // mainApp.showDirectory("services");
     }
 
     /**

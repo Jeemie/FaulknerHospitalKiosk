@@ -47,6 +47,7 @@ public class KioskOverviewController {
     private void handlePhysicians() {
     	// TODO: showDirectory should have parameter for category
     	mainApp.showDirectory();
+        //mainApp.showDirectory("physicians");
     }
     
     /** 
@@ -56,6 +57,7 @@ public class KioskOverviewController {
     private void handleDepartments() {
     	// TODO: showDirectory should have parameter for category
     	mainApp.showDirectory();
+        //mainApp.showDirectory("departments");
     }
     
     /**
@@ -65,6 +67,7 @@ public class KioskOverviewController {
     private void handleServices() {
     	// TODO: showDirectory should have parameter for category
     	mainApp.showDirectory();
+        //mainApp.showDirectory("services");
     }
     
     /**
