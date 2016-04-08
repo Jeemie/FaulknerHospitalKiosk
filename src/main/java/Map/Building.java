@@ -187,6 +187,7 @@ public class Building extends Observable {
         floors.add(newFloor);
 
         notifyObservers();
+
         return newFloor;
 
     }
@@ -241,4 +242,5 @@ public class Building extends Observable {
     public void setState(BuildingState state) {
         this.state = state;
     }
+
 }

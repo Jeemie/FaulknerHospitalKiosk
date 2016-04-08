@@ -2,6 +2,7 @@ package Kiosk.Controllers;
 
 
 import Kiosk.Admin;
+import Kiosk.KioskApp;
 import Map.*;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -18,12 +19,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 
 public class AdminPanelController implements Initializable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPanelController.class);
 
     @FXML
     VBox root_vbox;
@@ -57,8 +62,8 @@ public class AdminPanelController implements Initializable {
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
 
-
-    private Building hospitalBuilding = new Building();
+    private boolean okClicked = false;
+    private KioskApp kioskApp;
 
     private Building mMainHospital;
     private Floor mFloor3;
@@ -101,47 +106,42 @@ public class AdminPanelController implements Initializable {
 
        // String deptname = control.addTolist();
         //System.out.println(deptname);
-        System.out.println("Controllers.initialize");
-
-        hm.put(mEyeCareSpecialists3B.getDestinations().get(0), new ArrayList<>(Arrays.asList(mLocation3B.getX(), mLocation3B.getY(), "mlkjklm")));
-
-        ObservableList<String> names = FXCollections.observableArrayList();
-        Set<Entry<String, ArrayList<Comparable<?>>>> set = hm.entrySet();
-        Iterator<Entry<String, ArrayList<Comparable<?>>>> i = set.iterator();
-        while (i.hasNext()) {
-            Map.Entry<String, ArrayList<Comparable<?>>> me = i.next();
-            names.addAll(me.getKey());
-        }
-
-        map_listview.setItems(names);
-//        map_pin.setVisible(false);
-
-        zoom_slider.setMin(0.5);
-        zoom_slider.setMax(1.5);
-        zoom_slider.setValue(1.0);
-        zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
-
-        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
-        Group contentGroup = new Group();
-        zoomGroup = new Group();
-        contentGroup.getChildren().add(zoomGroup);
-        zoomGroup.getChildren().add(map_scrollpane.getContent());
-        map_scrollpane.setContent(contentGroup);
-
-        // Add large UI styling and make full screen if we are on device
-        if (Platform.isSupported(ConditionalFeature.INPUT_TOUCH)) {
-            System.out.println("airportapp.Controllers.initialize, device detected");
-            size_togglebutton.setSelected(true);
-            root_vbox.getStyleClass().add("touch-sizes");
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
-        }
-
-
-
-
-        asdasdasd();
+//        System.out.println("Controllers.initialize");
+//
+//        hm.put(mEyeCareSpecialists3B.getDestinations().get(0), new ArrayList<>(Arrays.asList(mLocation3B.getX(), mLocation3B.getY(), "mlkjklm")));
+//
+//        ObservableList<String> names = FXCollections.observableArrayList();
+//        Set<Entry<String, ArrayList<Comparable<?>>>> set = hm.entrySet();
+//        Iterator<Entry<String, ArrayList<Comparable<?>>>> i = set.iterator();
+//        while (i.hasNext()) {
+//            Map.Entry<String, ArrayList<Comparable<?>>> me = i.next();
+//            names.addAll(me.getKey());
+//        }
+//
+//        map_listview.setItems(names);
+////        map_pin.setVisible(false);
+//
+//        zoom_slider.setMin(0.5);
+//        zoom_slider.setMax(1.5);
+//        zoom_slider.setValue(1.0);
+//        zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
+//
+//        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
+//        Group contentGroup = new Group();
+//        zoomGroup = new Group();
+//        contentGroup.getChildren().add(zoomGroup);
+//        zoomGroup.getChildren().add(map_scrollpane.getContent());
+//        map_scrollpane.setContent(contentGroup);
+//
+//        // Add large UI styling and make full screen if we are on device
+//        if (Platform.isSupported(ConditionalFeature.INPUT_TOUCH)) {
+//            System.out.println("airportapp.Controllers.initialize, device detected");
+//            size_togglebutton.setSelected(true);
+//            root_vbox.getStyleClass().add("touch-sizes");
+//            Screen screen = Screen.getPrimary();
+//            Rectangle2D bounds = screen.getVisualBounds();
+//            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
+//        }
 
 
     }
@@ -212,24 +212,27 @@ public class AdminPanelController implements Initializable {
 
     }
 
-    public void setmMainHospital(Building mMainHospital) {
+    public void setBuilding(Building mMainHospital) {
 
         this.mMainHospital = mMainHospital;
+
+        asdasdasd();
 
     }
 
     private void asdasdasd() {
 
+        mFloor3 = mMainHospital.addFloor(3);
+
         mFloor3.setFloorImage(getClass().getResource("Floor 3 Clean.png"));
         mFloor3.drawFloorAdmin(imageStackPane);
-
-
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.ADDNODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
             }
 
         });
@@ -239,6 +242,7 @@ public class AdminPanelController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.REMOVENODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
             }
 
         });
@@ -248,6 +252,7 @@ public class AdminPanelController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.ADDADJACENTNODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
             }
 
         });
@@ -258,12 +263,21 @@ public class AdminPanelController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.MODIFYDESTINATIONS);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
             }
 
         });
 
 
 
+    }
+
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+
+    public void setKioskApp(KioskApp kioskApp) {
+        this.kioskApp = kioskApp;
     }
 
 

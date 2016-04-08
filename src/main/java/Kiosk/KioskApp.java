@@ -138,31 +138,13 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
             Parent root = (Parent)loader.load();
             AdminPanelController controller = loader.<AdminPanelController>getController();
-            controller.setBuilding(this.hospitalBuilding);
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
 
-
-            Parent root = FXMLLoader.load(getClass().getResource("Views/AdminPanel.fxml"));
-            primaryStage.setTitle("Admin Panel");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
-            // Load AdminControls
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/AdminPanel.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            // Replace AdminLogin with AdminControls
-            primaryStage.setTitle("Admin Panel");
-            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-            // Give controller access to Main App.
-            AdminControlsController controller = loader.getController();
+            controller.setBuilding(this.hospitalBuilding);
             controller.setKioskApp(this);
 
             return controller.isOkClicked();

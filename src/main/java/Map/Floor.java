@@ -191,7 +191,7 @@ public class Floor extends Observable {
             @Override
             public void handle(MouseEvent event) {
 
-                if (getState() == BuildingState.ADDNODE) {
+                if (currentBuilding.getState() == BuildingState.ADDNODE) {
 
                     LOGGER.info("APPLESAUCE1");
 
