@@ -202,7 +202,7 @@ public class Floor extends Observable{
     public void drawFloorAdmin(StackPane stackPane) {
 
         // clear the stackpane
-        stackPane.getChildren().removeAll();
+        stackPane.getChildren().clear();
 
         this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

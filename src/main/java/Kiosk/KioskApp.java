@@ -2,6 +2,7 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Exceptions.FloorDoesNotExistException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class KioskApp extends Application {
 
@@ -27,6 +29,21 @@ public class KioskApp extends Application {
 
         this.primaryStage = primaryStage;
         this.hospitalBuilding = new Building();
+
+//        try {
+////            Building temp = new Building();
+////            temp.loadFromFile("Kiosk/Controllers/mapdata.json");
+////            this.hospitalBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
+//
+//        } catch (IOException e) {
+//            System.out.println("Loaded from file e1");
+//        } catch (URISyntaxException e) {
+//            System.out.println("Loaded from file e2");
+//
+//        } catch (FloorDoesNotExistException e) {
+//            System.out.println("Loaded from file e3");
+//        }
+
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();

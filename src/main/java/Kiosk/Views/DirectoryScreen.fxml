@@ -9,12 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD:src/main/java/application/view/DirectoryScreen.fxml
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.DirectoryController">
-=======
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="Kiosk.Controllers.DirectoryController">
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Views/DirectoryScreen.fxml
    <children>
       <TextField layoutX="52.0" layoutY="14.0" onAction="#handleSearch" prefHeight="25.0" prefWidth="462.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0" />
       <ButtonBar layoutX="197.0" layoutY="296.0" prefHeight="40.0" prefWidth="160.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="197.0" AnchorPane.rightAnchor="223.0">

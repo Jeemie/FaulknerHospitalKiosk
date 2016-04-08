@@ -55,7 +55,7 @@ public class Building extends Observable {
     public void loadFromFile(String filePath) throws IOException, URISyntaxException, FloorDoesNotExistException {
         File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
         ObjectToJsonToJava.loadFromFile(file, this);
-        LOGGER.info("Loading the building from the file: " + filePath.toString());
+        LOGGER.info("Loading the building from the file: " + filePath);
     }
 
     /**
