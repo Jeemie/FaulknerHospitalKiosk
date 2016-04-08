@@ -3,7 +3,6 @@ package Kiosk.Controller; /**
  */
 
 import Kiosk.Admin;
-import Map.Location;
 import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -22,7 +21,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
-import java.io.*;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,15 +41,6 @@ public class AdminController implements Initializable {
     @FXML // fx:id="deptName"
     private TableColumn<Admin, String> deptName;
 
-    @FXML // fx:id="name"
-    private TableColumn<Admin, String> name;
-
-
-    @FXML // fx:id="floor"
-    private TableColumn<Admin, Number> floor;
-
-    @FXML // fx:id="xcoord"
-    private TableColumn<Admin, Number> xcoord;
 
     @FXML // fx:id="ycoord"
     private TableColumn<Admin, Number> ycoord;
@@ -58,14 +52,6 @@ public class AdminController implements Initializable {
     @FXML // fx:id="deptTypeField"
     private TextField deptTypeField;
 
-    @FXML // fx:id="deptNameField"
-    private TextField deptNameField;
-
-    @FXML // fx:id="floorField"
-    private TextField floorField;
-
-    @FXML // fx:id="xField"
-    private TextField xField;
 
     @FXML // fx:id="yField"
     private TextField yField;
@@ -113,27 +99,18 @@ public class AdminController implements Initializable {
         //initialize editable attributes
         nodeTable.setEditable(true);
         deptName.setOnEditCommit(e -> firstNameCol_OnEditCommit(e));
-        name.setOnEditCommit(e -> lastNameCol_OnEditCommit(e));
         ycoord.setOnEditCommit(e -> majorCol_OnEditCommit(e));
-        floor.setOnEditCommit(e -> ageCol_OnEditCommit(e));
-        xcoord.setOnEditCommit(e -> genderCol_OnEditCommit(e));
         deptType.setOnEditCommit(e -> genderCol_OnEditCommit(e));
 
         nodeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         deptName.setCellFactory(TextFieldTableCell.forTableColumn());
-        name.setCellFactory(TextFieldTableCell.forTableColumn());
         ycoord.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
-        floor.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
-        xcoord.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
         deptType.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
         deptName.setCellValueFactory(cellData -> cellData.getValue().deptTypeProperty());
-        name.setCellValueFactory(cellData -> cellData.getValue().deptNameProperty());
         ycoord.setCellValueFactory(cellData -> cellData.getValue().floorProperty());
-        xcoord.setCellValueFactory(cellData -> cellData.getValue().gradepointProperty());
-        floor.setCellValueFactory(cellData -> cellData.getValue().yCoordinateProperty());
         deptType.setCellValueFactory(cellData -> cellData.getValue().deptProperty());
 
 
@@ -185,10 +162,7 @@ public class AdminController implements Initializable {
                     Admin student = new Admin();
                     Controller controll = new Controller();
                     student.setDeptType(deptTypeField.getText());
-                    student.setDeptName(deptNameField.getText());
-                    student.setyCoordinate(Double.parseDouble(floorField.getText()));
                     student.setFloor(Integer.parseInt( yField.getText()));
-                    student.setGradepoint(Double.parseDouble(xField.getText()));
                     student.setDept(deptBox.getValue());
                     observableStudentList.add(student);
                     System.out.print(deptTypeField.getText());
@@ -209,10 +183,7 @@ public class AdminController implements Initializable {
 //
 //                }
                 deptTypeField.clear();
-                    deptNameField.clear();
                     yField.clear();
-                    floorField.clear();
-                    xField.clear();
                     deptBox.setValue("Dept");
                 }
 
@@ -226,10 +197,7 @@ public class AdminController implements Initializable {
             if (sizeAlert.getResult() == ButtonType.OK) {
                 sizeAlert.close();
                 deptTypeField.clear();
-                deptNameField.clear();
                 yField.clear();
-                floorField.clear();
-                xField.clear();
                 deptBox.setValue("Dept");
             }
         }
@@ -254,19 +222,7 @@ public class AdminController implements Initializable {
                 deptTypeField.requestFocus();
             }
         }
-        if(deptNameField == null || deptNameField.getText().trim().isEmpty()) {
-            validInput = false;
-            Alert emptyLastName = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyLastName.setContentText("Dept type is EMPTY");
-            emptyLastName.initModality(Modality.APPLICATION_MODAL);
-            emptyLastName.initOwner(owner);
-            emptyLastName.showAndWait();
-            if (emptyLastName.getResult() == ButtonType.OK) {
-                emptyLastName.close();
-                deptNameField.requestFocus();
-            }
-        }
+
         if(yField == null || yField.getText().trim().isEmpty()) {
             validInput = false;
             Alert emptyMajor = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
@@ -280,32 +236,8 @@ public class AdminController implements Initializable {
                 yField.requestFocus();
             }
         }
-        if(floorField == null || floorField.getText().trim().isEmpty()) {
-            validInput = false;
-            Alert emptyAge = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyAge.setContentText("x is EMPTY");
-            emptyAge.initModality(Modality.APPLICATION_MODAL);
-            emptyAge.initOwner(owner);
-            emptyAge.showAndWait();
-            if (emptyAge.getResult() == ButtonType.OK) {
-                emptyAge.close();
-                floorField.requestFocus();
-            }
-        }
-        if(xField == null || xField.getText().trim().isEmpty()) {
-            validInput = false;
-            Alert emptyGPA = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyGPA.setContentText("y is EMPTY");
-            emptyGPA.initModality(Modality.APPLICATION_MODAL);
-            emptyGPA.initOwner(owner);
-            emptyGPA.showAndWait();
-            if (emptyGPA.getResult() == ButtonType.OK) {
-                emptyGPA.close();
-                xField.requestFocus();
-            }
-        }
+
+
         if(deptBox == null || deptBox.getValue().isEmpty()) {
             validInput = false;
             Alert emptyGender = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
@@ -382,10 +314,7 @@ public class AdminController implements Initializable {
     }
     public void handleClearButtonClick(ActionEvent event) {
         deptTypeField.clear();
-        deptNameField.clear();
         yField.clear();
-        floorField.clear();
-        xField.clear();
         deptBox.setValue("Department");
     }
     //filter table by first or last name
@@ -471,7 +400,6 @@ public class AdminController implements Initializable {
     public void addTolist() {
         System.out.println("haha");
         Admin admin = new Admin();
-        admin.setDeptName(deptNameField.getText());
         observableStudentList.add(admin);
         admin.printDept();
     }

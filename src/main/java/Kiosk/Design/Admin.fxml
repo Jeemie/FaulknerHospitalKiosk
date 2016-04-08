@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controller.AdminController">
+<SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controller.AdminController">
     <items>
     <AnchorPane>
          <children>
@@ -14,10 +14,7 @@
             <TableView fx:id="nodeTable" layoutX="1.0" layoutY="30.0" prefHeight="596.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                   <TableColumn fx:id="deptName" onEditCommit="#firstNameCol_OnEditCommit" prefWidth="124.0" text="Department Type" />
-                  <TableColumn fx:id="name" onEditCommit="#lastNameCol_OnEditCommit" prefWidth="131.0" text="Name" />
                   <TableColumn fx:id="ycoord" onEditCommit="#majorCol_OnEditCommit" prefWidth="170.0" text="Floor" />
-                  <TableColumn onEditCommit="#ageCol_OnEditCommit" prefWidth="76.0" text="xCoord" fx:id="xcoord" />
-                  <TableColumn fx:id="floor" onEditCommit="#gpaCol_OnEditCommit" prefWidth="70.0" text="yCoord" />
                   <TableColumn fx:id="deptType" onEditCommit="#genderCol_OnEditCommit" prefWidth="155.0" text="Department" />
               </columns>
             </TableView>
@@ -26,17 +23,13 @@
          <children>
             <HBox />
             <TextField fx:id="deptTypeField" layoutX="14.0" layoutY="14.0" promptText="Department Name..." />
-            <TextField fx:id="deptNameField" layoutX="14.0" layoutY="54.0" promptText="Name..." />
-            <TextField fx:id="yField" layoutX="189.0" layoutY="99.0" promptText="Floor..." />
-            <TextField fx:id="floorField" layoutX="189.0" layoutY="54.0" prefHeight="27.0" prefWidth="167.0" promptText="yCoor" />
-            <TextField fx:id="xField" layoutX="189.0" layoutY="14.0" prefHeight="27.0" prefWidth="167.0" promptText="xCoor" />
+            <TextField fx:id="yField" layoutX="193.0" layoutY="14.0" promptText="Floor..." />
             <ComboBox fx:id="deptBox" layoutX="389.0" layoutY="14.0" prefWidth="150.0" promptText="Department" />
             <Button fx:id="addBtn" layoutX="573.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddButtonClick" text="Add" />
             <Button fx:id="deleteBtn" layoutX="654.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteButtonClick" text="Delete" />
             <TextField fx:id="filterInput" layoutX="573.0" layoutY="85.0" promptText="Filter Table..." />
             <Button layoutX="744.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear " />
             <Button fx:id="back" layoutX="828.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="Back" />
-            <Button fx:id="addToList" layoutX="907.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTolist" text="Update" />
          </children></AnchorPane>
       <MenuBar fx:id="fileMenu" prefHeight="0.0" prefWidth="1000.0">
         <menus>
