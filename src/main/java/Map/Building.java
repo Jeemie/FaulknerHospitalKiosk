@@ -1,35 +1,25 @@
 package Map;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
-
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
-
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Observable;
 import java.util.UUID;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * A class the represents a building.
  */
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class Building extends Observable {
 
-    @JsonProperty("UUID")
     private UUID uniqueID; // A randomly generated UUID associated with the current building
-    @JsonProperty("floors")
-    private ArrayList<Floor> floors; // A list of all of the floors in the building
+    public ArrayList<Floor> floors; // A list of all of the floors in the building
     @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
     @JsonIgnore
@@ -59,10 +49,10 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void loadFromFile(URL filePath) throws IOException {
-
+    public void loadFromFile(String filePath) throws IOException, URISyntaxException, FloorDoesNotExistException {
+        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        ObjectToJsonToJava.loadFromFile(file, this);
         LOGGER.info("Loading the building from the file: " + filePath.toString());
-
     }
 
     /**
@@ -73,7 +63,7 @@ public class Building extends Observable {
      */
     public void saveToFile(String filePath) throws IOException, URISyntaxException {
         File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
-        BuildingToJson.saveToFile(file, this);
+        ObjectToJsonToJava.saveToFile(file, this);
     }
 
     /**
@@ -104,6 +94,7 @@ public class Building extends Observable {
      * @param destinationType
      * @return
      */
+    @JsonIgnore
     public ArrayList<String> getBuildingDestinations(Destination destinationType) {
 
         //ArrayList to hold the entire list of destinations
@@ -211,6 +202,7 @@ public class Building extends Observable {
      * @param destinationNode
      * @return
      */
+    @JsonIgnore
     public ArrayList<Node> getShortestPath(Node startNode, Node destinationNode) throws NoPathException {
 
         LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());

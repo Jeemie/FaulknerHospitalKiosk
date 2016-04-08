@@ -1,9 +1,6 @@
 package Map;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,21 +12,26 @@ import java.util.UUID;
 /**
  * TODO
  */
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class Floor extends Observable{
 
-    @JsonProperty("floor")
-    private final int floor; // The level number associated with the floor
-    @JsonProperty("floor UUID")
-    private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    @JsonProperty("currentBuilding UUID")
-    private final Building currentBuilding;
-    @JsonProperty("nodes")
+    private int floor; // The level number associated with the floor
+    private UUID uniqueID; // A randomly generated UUID associated with the current floor
+    private Building currentBuilding;
     private ArrayList<Node> nodes;
     @JsonIgnore
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
+
+
+    /**
+     *  Default constructor for a new floor
+     *  Required by ObjectToJsonToJava.loadFromFile()
+     */
+    public Floor() {
+        super();
+    }
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.
@@ -199,9 +201,10 @@ public class Floor extends Observable{
     }
 
     @JsonGetter
-    public String getCurrentBuilding() {
-        return currentBuilding.toString();
+    public Building getCurrentBuilding() {
+        return currentBuilding;
     }
+
 
 
 }

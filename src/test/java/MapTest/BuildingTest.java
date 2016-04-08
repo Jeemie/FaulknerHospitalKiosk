@@ -64,4 +64,22 @@ public class BuildingTest {
         mTestBuilding.addFloor(7);
     }
 
+    @Test
+    public void testLoadFromFile() throws URISyntaxException,FloorDoesNotExistException {
+        try {
+            mFloor1 = new Floor(1, mTestBuilding);
+            mFloor2 = new Floor(2, mTestBuilding);
+            mTestBuilding.addFloor(1);
+            mTestBuilding.addFloor(2);
+            mTwo.addAdjacentNode(mThree);
+            mTestBuilding.addNode(1, new Location(100, 100));
+            mTestBuilding.addNode(2, new Location(100, 200));
+
+            mTestBuilding.saveToFile("mapdata.json");
+            mTestBuilding.loadFromFile("mapdata.json");
+        }
+        catch(java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

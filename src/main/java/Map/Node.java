@@ -1,9 +1,6 @@
 package Map;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,15 +11,12 @@ import static sun.misc.Version.print;
 /**
  * TODO
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class Node extends Observable {
 
-    @JsonIgnore
     private double heuristicCost; // heuristic cost for AStar algorithm
-    @JsonProperty("node UUID")
-    private final UUID uniqueID; // A randomly generated UUID associated with the current node
-    @JsonProperty
+    private UUID uniqueID; // A randomly generated UUID associated with the current node
     private Location location; // TODO
-    @JsonProperty
     private ArrayList<Node> adjacentNodes; // TODO
     private EnumMap<Destination, ArrayList<String>> destinations; // TODO
     private Floor currentFloor; // TODO
