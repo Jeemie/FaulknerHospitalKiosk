@@ -37,17 +37,16 @@ public class AStar {
             //start node will be selected first
             LocationNode u = nodeQueue.poll();
             //for each neighbor e of u
-            for (Neighbors e : u.neighbors) {
-                LocationNode v = e.getTempGoal();
-                double cost = e.getCost();
+            for (LocationNode e : u.getAdjacentLocationNodes()) {
+                double cost = e.getHueristicCost();
                 //calculate the distance to that neighbor
-                double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(v);
-                if (distanceThroughNeighbor < v.minDistance) {
+                double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(e);
+                if (distanceThroughNeighbor < e.minDistance) {
                     //replace path with a shorter path and remove node u to the node set
                     nodeQueue.remove(u);
-                    v.minDistance = distanceThroughNeighbor;
-                    v.previous = u;
-                    nodeQueue.add(v);
+                    e.minDistance = distanceThroughNeighbor;
+                    e.previous = u;
+                    nodeQueue.add(e);
                 }
             }
 

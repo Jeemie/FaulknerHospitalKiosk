@@ -8,8 +8,12 @@ import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
+import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
+
+import static Map.AStar.constructPath;
+import static Map.AStar.getShortestPathTo;
 
 /**
  * A class the represents a building.
@@ -55,7 +59,7 @@ public class Building extends Observable {
     public void loadFromFile(String filePath) throws IOException, URISyntaxException, FloorDoesNotExistException {
         File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
         ObjectToJsonToJava.loadFromFile(file, this);
-        LOGGER.info("Loading the building from the file: " + filePath.toString());
+        LOGGER.info("Loading the building from the file: " + filePath);
     }
 
     /**
@@ -72,7 +76,44 @@ public class Building extends Observable {
         LOGGER.info("Saving the building to the file: " + filePath);
     }
 
+
+    //    }
+
     /**
+     * TODO
+     *
+     * @param startNode
+     * @param destinationNode
+     */
+    public void drawShortestPath(LocationNode startNode, LocationNode destinationNode) {
+
+        for (Floor currentFloor : floors) {
+
+            currentFloor.getNodePane().getChildren().clear();
+
+        }
+
+        constructPath(startNode); // run Dijkstra
+        System.out.println("Distance to " + destinationNode + ": " + destinationNode.minDistance);
+
+        ArrayList<LocationNode> path = new ArrayList<>();
+        path.addAll(getShortestPathTo(destinationNode));
+        System.out.println("Path: " + path);
+
+        LOGGER.info("Drawing Shortest Path");
+
+        for (int i = 0; i < path.size() - 1; i++) {
+
+            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+
+        }
+
+    }
+
+    /**
+
+
+     /**
      * TODO
      *
      * @param floor
@@ -216,7 +257,7 @@ public class Building extends Observable {
 //
 //        try {
 //
-//            // run aStar algorithm
+//          // run aStar algorithm
 //          //  return aStarSearch.getPath(startNode, destinationNode);
 //
 //        } catch (NoPathException e) {

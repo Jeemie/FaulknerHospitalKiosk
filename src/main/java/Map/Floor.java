@@ -36,6 +36,8 @@ public class Floor extends Observable{
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
     @JsonIgnore
     private LocationNode otherLocationNode; // TODO move to observer
+    @JsonIgnore
+    private LocationNode startNode;
 
 
     /**
@@ -202,7 +204,12 @@ public class Floor extends Observable{
     public void drawFloorAdmin(StackPane stackPane) {
 
         // clear the stackpane
-        stackPane.getChildren().removeAll();
+        stackPane.getChildren().clear();
+
+        this.nodePane.getChildren().clear();
+        this.nodePane = new Pane();
+        this.nodePane.setPrefHeight(floorImage.getX());
+        this.nodePane.setPrefWidth(floorImage.getY());
 
         this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -228,6 +235,8 @@ public class Floor extends Observable{
         // add the current floor's canvas and imageview to the stackpane
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
+        updateFloorAdmin();
+
     }
 
     public void updateFloorAdmin() {
@@ -244,9 +253,15 @@ public class Floor extends Observable{
 
     public void drawFloorNormal(StackPane stackPane) {
 
+        // clear the stackpane
+        stackPane.getChildren().clear();
+        this.nodePane.getChildren().clear();
+        this.nodePane = new Pane();
+        this.nodePane.setPrefHeight(floorImage.getX());
+        this.nodePane.setPrefWidth(floorImage.getY());
+        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
     }
-
 
     public void setFloorImage(URL imagePath) {
 
@@ -327,6 +342,7 @@ public class Floor extends Observable{
     public Pane getNodePane() {
         return nodePane;
     }
+
     @JsonGetter
     public UUID getUniqueID() {
         return uniqueID;
@@ -340,5 +356,13 @@ public class Floor extends Observable{
     @JsonGetter
     public ArrayList<LocationNode> getLocationNodes(){
         return locationNodes;
+    }
+
+    public void setStartNode(LocationNode startNode) {
+        this.startNode = startNode;
+    }
+
+    public LocationNode getStartNode() {
+        return startNode;
     }
 }

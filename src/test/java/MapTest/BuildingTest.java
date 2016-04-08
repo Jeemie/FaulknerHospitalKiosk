@@ -5,13 +5,9 @@ import Map.Exceptions.FloorDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.UUID;
 
 
 /**
@@ -54,7 +50,7 @@ public class BuildingTest {
             mTestBuilding.addNode(1, new Location(100, 100));
             mTestBuilding.addNode(2, new Location(100, 200));
             mTwo.addAdjacentNode(mThree);
-            mTestBuilding.saveToFile("mapdata.json");
+            mTestBuilding.saveToFile("Kiosk/Controllers/mapdata.json");
         }
         catch(java.io.IOException e) {
             e.printStackTrace();
@@ -88,8 +84,8 @@ public class BuildingTest {
             mOne.addDestination(Destination.KIOSK, "Kiosk");
 
 
-            mTestBuilding.saveToFile("mapdata.json");
-            mTestBuilding.loadFromFile("mapdata.json");
+            mTestBuilding.saveToFile("Kiosk/Controllers/mapdata.json");
+            mTestBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
         }
         catch(java.io.IOException e) {
             e.printStackTrace();

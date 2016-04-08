@@ -13,41 +13,20 @@ import java.util.ArrayList;
 public class LocationNodeTest {
 
     /**
-     * placeholder
+     * LocationNodes for testing
      */
-    private Building mMainHospital;
-    private Floor mFloor3;
-    private Location mLocation3B;
-    private LocationNode mEyeCareSpecialists3B;
-    private LocationNode mSuburbanEyeSpecialists3B;
-    private LocationNode mPattenJamesMd3B;
-    private LocationNode mDannHarrietMd3B;
-    private LocationNode mGrossiLisaRN;
-    private LocationNode mPatientRelations3;
-    private LocationNode mKiosk3;
-    private LocationNode mElevator3;
-    private LocationNode mStairs3;
-    private LocationNode mErrorAddingPhysician;
+    private LocationNode mNode3A, mNode3B, mNode3C, mNode3D;
 
-    //rename Floor objectFloor
-    //public LocationNode(double heuristicCost, Location location, Floor currentFloor)
     @Before
     public void setUp() throws Exception {
 
-        mMainHospital = new Building();
-        mFloor3 = new Floor(3, mMainHospital);
-        mLocation3B = new Location(10, 10);
-        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
-        mSuburbanEyeSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
-        mPattenJamesMd3B = new LocationNode(0, mLocation3B, mFloor3);
-        mDannHarrietMd3B = new LocationNode(0, mLocation3B, mFloor3);
-        mGrossiLisaRN = new LocationNode(0, new Location (10, 15), mFloor3);
-        mPatientRelations3 = new LocationNode(0, new Location(10, 20), mFloor3);
-        mKiosk3 = new LocationNode(0, new Location(10, 30), mFloor3);
-        mElevator3 = new LocationNode(0, new Location(10, 40), mFloor3);
-        mStairs3 = new LocationNode(0, new Location(10, 50), mFloor3);
-        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
-
+        Building mMainHospital = new Building();
+        Floor mFloor3 = new Floor(3, mMainHospital);
+        Location mLocation3B = new Location(10, 10);
+        mNode3A = new LocationNode(0, mLocation3B, mFloor3);
+        mNode3B = new LocationNode(0, new Location (10, 15), mFloor3);
+        mNode3C = new LocationNode(0, new Location(10, 30), mFloor3);
+        mNode3D = new LocationNode(0, new Location(10, 40), mFloor3);
     }
 
     /**
@@ -55,8 +34,8 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationDepartment() {
-        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "Optometry");
-        ArrayList<String> destinations = mEyeCareSpecialists3B.getDestinations(Destination.DEPARTMENT);
+        mNode3A.addDestination(Destination.DEPARTMENT, "Optometry");
+        ArrayList<String> destinations = mNode3A.getDestinations(Destination.DEPARTMENT);
         Assert.assertEquals(destinations.contains("Optometry"), true);
     }
 
@@ -65,8 +44,8 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationPhysician() {
-        mGrossiLisaRN.addDestination(Destination.PHYSICIAN, "Dr. Lisa Grossi");
-        ArrayList<String> destinations = mGrossiLisaRN.getDestinations(Destination.PHYSICIAN);
+        mNode3B.addDestination(Destination.PHYSICIAN, "Dr. Lisa Grossi");
+        ArrayList<String> destinations = mNode3B.getDestinations(Destination.PHYSICIAN);
         Assert.assertEquals(destinations.contains("Dr. Lisa Grossi"), true);
     }
 
@@ -75,10 +54,65 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationElevator() {
-        mElevator3.addDestination(Destination.ELEVATOR, "Elevator");
-        ArrayList<String> destinations = mElevator3.getDestinations(Destination.ELEVATOR);
+        mNode3C.addDestination(Destination.ELEVATOR, "Elevator");
+        ArrayList<String> destinations = mNode3C.getDestinations(Destination.ELEVATOR);
         Assert.assertEquals(destinations.contains("Elevator"), true);
     }
 
+    /**
+     * Add new kiosk destination to specified location, then remove kiosk destination
+     */
+    @Test
+    public void testAddRemoveDestinationKiosk() {
+        mNode3D.addDestination(Destination.KIOSK, "Kiosk");
+        ArrayList<String> destinations = mNode3D.getDestinations(Destination.KIOSK);
+        Assert.assertEquals(destinations.contains("Kiosk"), true);
+        mNode3D.removeDestination(Destination.KIOSK, "Kiosk");
+        destinations = mNode3D.getDestinations(Destination.KIOSK);
+        Assert.assertEquals(destinations.contains("Kiosk"), false);
+    }
 
+    /**
+     * Add adjacent nodes
+     */
+    @Test
+    public void testAddAdjacentNodes() {
+        mNode3A.addAdjacentNode(mNode3B);
+        mNode3A.addAdjacentNode(mNode3C);
+        mNode3A.addAdjacentNode(mNode3D);
+        ArrayList<LocationNode> adjEyeCareNodes = mNode3A.getAdjacentLocationNodes();
+        ArrayList<LocationNode> expectedVals = new ArrayList<>();
+        expectedVals.add(mNode3B);
+        expectedVals.add(mNode3C);
+        expectedVals.add(mNode3D);
+        Assert.assertEquals(expectedVals, adjEyeCareNodes);
+    }
+
+    /**
+     * Remove an adjacent node
+     */
+    @Test
+    public void testRemoveAdjacentNode() {
+        mNode3A.addAdjacentNode(mNode3B);
+        mNode3A.addAdjacentNode(mNode3C);
+        mNode3A.addAdjacentNode(mNode3D);
+        ArrayList<LocationNode> adjEyeCareNodes = mNode3A.getAdjacentLocationNodes();
+        ArrayList<LocationNode> expectedVals = new ArrayList<>();
+        expectedVals.add(mNode3B);
+        expectedVals.add(mNode3C);
+        expectedVals.add(mNode3D);
+        Assert.assertEquals(expectedVals, adjEyeCareNodes);
+        mNode3A.removeAdjacentNode(mNode3C);
+        expectedVals.remove(mNode3C);
+        Assert.assertEquals(expectedVals, adjEyeCareNodes);
+    }
+
+    /**
+     * Get distance between two nodes
+     */
+    @Test
+    public void testGetDistanceBetween() {
+        double distance = mNode3A.getDistanceBetweenNodes(mNode3B);
+        Assert.assertEquals(distance, 5.0, 0.001);
+    }
 }

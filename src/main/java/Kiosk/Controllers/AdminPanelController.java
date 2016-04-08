@@ -4,27 +4,23 @@ package Kiosk.Controllers;
 import Kiosk.Admin;
 import Kiosk.KioskApp;
 import Map.*;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import Map.Exceptions.FloorDoesNotExistException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class AdminPanelController implements Initializable {
 
@@ -56,6 +52,14 @@ public class AdminPanelController implements Initializable {
     private Button addConnectedLocationButton;
     @FXML
     private StackPane imageStackPane;
+    @FXML
+    private Button saveToFileButton;
+    @FXML
+    private Button changeFloorButton;
+    @FXML
+    private Button changeFloorButton1;
+    @FXML
+    private Button setStartLocationButton;
 
 
 
@@ -66,6 +70,7 @@ public class AdminPanelController implements Initializable {
     private KioskApp kioskApp;
 
     private Building mMainHospital;
+    private Floor mFloor1;
     private Floor mFloor3;
     private Location mLocation3B;
     private LocationNode mEyeCareSpecialists3B;
@@ -86,10 +91,8 @@ public class AdminPanelController implements Initializable {
 
 
     @FXML
-    public void initialize(URL location, ResourceBundle resources)
-
-    {
-        mMainHospital = new Building();
+    public void initialize(URL location, ResourceBundle resources) {
+//        mMainHospital = new Building();
 //        mFloor3 = new Floor(3, mMainHospital);
 //        mLocation3B = new Location(100.0, 100.0);
 //        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
@@ -142,6 +145,11 @@ public class AdminPanelController implements Initializable {
 //            Rectangle2D bounds = screen.getVisualBounds();
 //            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
 //        }
+
+
+        if (mMainHospital != null) {
+            setupListeners();
+        }
 
 
     }
@@ -212,20 +220,40 @@ public class AdminPanelController implements Initializable {
 
     }
 
-    public void setBuilding(Building mMainHospital) {
+    public void setBuilding(Building building) {
 
-        this.mMainHospital = mMainHospital;
+        this.mMainHospital = building;
 
-        asdasdasd();
+        try {
+
+            this.mMainHospital.loadFromFile("Kiosk/Controllers/mapdata.json");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (URISyntaxException e) {
+            System.out.println("Loaded from file e2");
+
+        } catch (FloorDoesNotExistException e) {
+            System.out.println("Loaded from file e3");
+        }
+
+        setupListeners();
 
     }
 
-    private void asdasdasd() {
+    private void setupListeners() {
 
         mFloor3 = mMainHospital.addFloor(3);
 
         mFloor3.setFloorImage(getClass().getResource("Floor 3 Clean.png"));
-        mFloor3.drawFloorAdmin(imageStackPane);
+//        mFloor3.drawFloorAdmin(imageStackPane);
+
+
+        mFloor1 = mMainHospital.addFloor(1);
+
+        mFloor1.setFloorImage(getClass().getResource("Floor 1 Clean.png"));
+        mFloor1.drawFloorAdmin(imageStackPane);
+
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -264,6 +292,59 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.MODIFYDESTINATIONS);
                 LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
+            }
+
+        });
+
+        saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+
+                    mMainHospital.saveToFile("Kiosk/Controllers/mapdata.json");
+
+                } catch (IOException e) {
+
+                } catch (URISyntaxException e) {
+
+                }
+
+            }
+
+        });
+
+        changeFloorButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                mFloor3.drawFloorAdmin(imageStackPane);
+
+            }
+
+        });
+
+        changeFloorButton1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                mFloor1.drawFloorAdmin(imageStackPane);
+
+            }
+
+        });
+
+        setStartLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
+
             }
 
         });

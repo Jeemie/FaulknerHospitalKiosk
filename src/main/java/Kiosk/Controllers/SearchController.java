@@ -68,7 +68,7 @@ public class SearchController {
      */
     @FXML
     private void handleForward() {
-    	kioskApp.showMap();
+//    	kioskApp.showMap();
     }
     
  }
