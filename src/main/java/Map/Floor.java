@@ -252,7 +252,6 @@ public class Floor extends Observable{
 
     }
 
-
     public void setFloorImage(URL imagePath) {
 
         Image image = new Image(imagePath.toString());

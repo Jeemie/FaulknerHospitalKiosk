@@ -28,7 +28,7 @@ public class DirectoryController {
     @FXML
     private ListView<String> listDirectory;
 
-    private ObservableList<String> currentNames;
+    private ObservableList<String> currentNames = FXCollections.observableArrayList();
 
     private Building building;
 //    private LocationNode startNode;
@@ -209,70 +209,24 @@ public class DirectoryController {
 //        kioskApp.showMap(startNode, destinationNode);
     }
 
-   public void setList(int flag) {
+   public void setList(Destination destinationType) {
 
-        if(flag == 0) {
-            this.currentNames = FXCollections.observableArrayList(
-                    "Byrne, Jennifer, RN, CPNP",
-                    "Dann, Harriet, MD",
-                    "Frangieh, George, MD",
-                    "Greenberg, James Adam, MD",
-                    "Grossi, Lisa, RN, MS, CPNP",
-                    "Keller, Elisabeth, MD",
-                    "Malone, Linda, DNP, RN, CPNP",
-                    "Micley, Bruce, MD",
-                    "Miner, Julie, MD",
-                    "Morrison, Beverly, MD",
-                    "Nadarajah, Sarah, WHNP",
-                    "O'Connor, Elizabeth, MD",
-                    "Patten, James, MD",
-                    "Saluti, Andrew, DO",
-                    "Scheff, David, MD",
-                    "Smith, Shannon, MD",
-                    "Stacks, Robert, MD",
-                    "Tunick, Mitchell, MD",
-                    "Viola, Julianne, MD");
+        switch (destinationType) {
+
+            case PHYSICIAN:
+                currentNames.setAll(building.getBuildingDestinations(Destination.DEPARTMENT));
+                listDirectory.setItems(currentNames);
+
+            case DEPARTMENT:
+                currentNames.setAll(building.getBuildingDestinations(Destination.DEPARTMENT));
+                listDirectory.setItems(currentNames);
+
+            default:
+                currentNames.setAll(building.getBuildingDestinations());
+                listDirectory.setItems(currentNames);
+
         }
 
-       if(flag == 1) {
-           this.currentNames = FXCollections.observableArrayList(
-                   "Audiology ",
-                   "Cardiac Rehabilitation",
-                   "Center for Preoperative Evaluation",
-                   "Emergency Department",
-                   "Eye Care Specialists ",
-                   "GI Endoscopy",
-                   "Laboratory",
-                   "Obstetrics and Gynecology Associates",
-                   "Patient Financial Services",
-                   "Radiology",
-                   "Roslindale Pediatric Associates ",
-                   "Suburban Eye Specialists ",
-                   "Taiclet Family Center");
-       }
-
-       if(flag == 2) {
-           this.currentNames = FXCollections.observableArrayList(
-                   "Admitting/Registration",
-                   "ATM",
-                   "Atrium Café",
-                   "Atrium Elevators",
-                   "Atrium/Main Entrance",
-                   "Cafeteria",
-                   "Chapel and Chaplaincy Services",
-                   "Day Surgery",
-                   "Gift Shop",
-                   "Hillside Elevators",
-                   "Information",
-                   "Kiosk Location",
-                   "Patient Registration",
-                   "Patient Relations",
-                   "Starbucks",
-                   "Valet Parking",
-                   "Volunteer Services");
-       }
-
-       listDirectory.setItems(currentNames);
     }
 
     public void setBuilding(Building building) {

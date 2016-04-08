@@ -1,10 +1,7 @@
 package Kiosk;
 
 import Kiosk.Controllers.*;
-import Map.Building;
-import Map.Floor;
-import Map.Location;
-import Map.LocationNode;
+import Map.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -192,7 +189,7 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      * 
      */
-    public boolean showDirectory(int flag) {
+    public boolean showDirectory(Destination destinationType) {
 
         try {
             // Load DirectoryScreen
@@ -213,7 +210,7 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 
             //set the selected directory view to appear
-            controller.setList(flag);
+            controller.setList(destinationType);
 
             return controller.isOkClicked();
             
