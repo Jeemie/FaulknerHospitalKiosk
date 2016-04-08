@@ -42,29 +42,29 @@ public class KioskOverviewController {
     
     /**
      * Called when the user clicks the Physicians button.
+     * The flag is set to 0 to show the physician list
      */
     @FXML
     private void handlePhysicians() {
-
     	kioskApp.showDirectory(0);
     }
     
 
     /**
      * Called when the user clicks the Departments button.
+     * The flag is set to 1 to show the department list
      */
     @FXML
     private void handleDepartments() {
-
     	kioskApp.showDirectory(1);
     }
     
     /**
      * Called when the user clicks the Services button.
+     * The flag is set to 2 to show the services list
      */
     @FXML
     private void handleServices() {
-
     	kioskApp.showDirectory(2);
     }
     

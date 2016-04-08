@@ -23,7 +23,7 @@
       <TextField layoutX="55.0" layoutY="14.0" onAction="#handleSearch" prefHeight="25.0" prefWidth="450.0" promptText="Search..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="10.0" />
       <ButtonBar layoutX="121.0" layoutY="174.0" prefHeight="40.0" prefWidth="358.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="165.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="31.0" prefWidth="142.0" text="Physicians">
+          <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="31.0" prefWidth="142.0" text="Staff">
                <font>
                   <Font size="15.0" />
                </font>

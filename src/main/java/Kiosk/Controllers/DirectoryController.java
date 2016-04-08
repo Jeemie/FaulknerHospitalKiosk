@@ -11,11 +11,13 @@ import javafx.scene.control.ListView;
 public class DirectoryController {
 
     private boolean okClicked = false;
+
     // Reference to the main application.
     private KioskApp kioskApp;
 
-
-
+    /**
+     * Initialize the ListView and the list that fills it
+     */
     @FXML
     private ListView<String> listDirectory;
 
@@ -28,8 +30,6 @@ public class DirectoryController {
      */
     @FXML
     private void initialize() {
-
-
     }
 
     /**
@@ -60,11 +60,10 @@ public class DirectoryController {
 
     /**
      * Called when the user clicks the Physicians button.
+     * Displays the Staff Directory
      */
     @FXML
     private void handlePhysicians() {
-        System.out.println("physicians");
-
         currentNames.setAll (
                 "Byrne, Jennifer, RN, CPNP",
                 "Dann, Harriet, MD",
@@ -85,18 +84,16 @@ public class DirectoryController {
                 "Stacks, Robert, MD",
                 "Tunick, Mitchell, MD",
                 "Viola, Julianne, MD");
-
         listDirectory.setItems(currentNames);
 
     }
 
     /**
      * Called when the user clicks the Departments button.
+     * Displays the Departments
      */
     @FXML
     private void handleDepartments() {
-        System.out.println("departments");
-
         currentNames.setAll (
                 "Audiology ",
                 "Cardiac Rehabilitation",
@@ -111,18 +108,16 @@ public class DirectoryController {
                 "Roslindale Pediatric Associates ",
                 "Suburban Eye Specialists ",
                 "Taiclet Family Center");
-
         listDirectory.setItems(currentNames);
 
     }
 
     /**
      * Called when the user clicks the Services button.
+     * Displays the Services
      */
     @FXML
     private void handleServices() {
-        System.out.println("services");
-
         currentNames.setAll (
                 "Admitting/Registration",
                 "ATM",
@@ -141,7 +136,6 @@ public class DirectoryController {
                 "Starbucks",
                 "Valet Parking",
                 "Volunteer Services");
-
         listDirectory.setItems(currentNames);
     }
 
@@ -197,8 +191,6 @@ public class DirectoryController {
                     "Stacks, Robert, MD",
                     "Tunick, Mitchell, MD",
                     "Viola, Julianne, MD");
-
-            listDirectory.setItems(currentNames);
         }
 
        if(flag == 1) {
@@ -216,8 +208,6 @@ public class DirectoryController {
                    "Roslindale Pediatric Associates ",
                    "Suburban Eye Specialists ",
                    "Taiclet Family Center");
-
-           listDirectory.setItems(currentNames);
        }
 
        if(flag == 2) {
@@ -239,9 +229,9 @@ public class DirectoryController {
                    "Starbucks",
                    "Valet Parking",
                    "Volunteer Services");
-
-           listDirectory.setItems(currentNames);
        }
+
+       listDirectory.setItems(currentNames);
     }
 
 }

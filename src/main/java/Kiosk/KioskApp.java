@@ -188,21 +188,7 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      * 
      */
- // TODO: showDirectory should have parameter for category
-    public boolean showDirectory(int flag ) {
-
-
-               /* ObservableList<String> names = FXCollections.observableArrayList(
-                        "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
-                        "Dr. Denise", "Dr. Mathew", "Dr. Jesus", "Dr. Mrs. Vandertrampp", "Dr. Ann");
-
-                ObservableList<String> names2 = FXCollections.observableArrayList(
-                        "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
-
-                ObservableList<String> names3 = FXCollections.observableArrayList(
-                        "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
-                        "Hannah Banana Stand", "Stephan Frys", "Just Denise");
-*/
+    public boolean showDirectory(int flag) {
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
@@ -218,6 +204,8 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
+
+            //set the selected directory view to appear
             controller.setList(flag);
 
             return controller.isOkClicked();
