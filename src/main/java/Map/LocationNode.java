@@ -1,11 +1,10 @@
 package Map;
 
-import Kiosk.Controllers.AdminController;
+import Kiosk.Controllers.AdminDepartmentPanelController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -262,11 +261,13 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         //if the node exists
         if (adjacentLocationNodes.contains(adjacentLocationNode)) {
 
+            LOGGER.info("Deleting adjacent LocationNode: " + adjacentLocationNode.toString());
+
             //removes the node from list of adjacent Nodes
             adjacentLocationNodes.remove(adjacentLocationNode);
 
-            //removes this node from the other node's list of adjacent nodes
-            adjacentLocationNode.removeAdjacentNode(this);
+//            //removes this node from the other node's list of adjacent nodes
+//            adjacentLocationNode.removeAdjacentNode(this);
 
             setChanged();
 
@@ -305,7 +306,13 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     }
 
-    public void drawAdminNodes(Pane pane) {
+    public void drawAdminNode(Pane pane) {
+
+        if (pane.getChildren().contains(nodeCircle)) {
+            return;
+        }
+
+        pane.getChildren().add(this.nodeCircle);
 
         nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -326,12 +333,17 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
                         currentFloor.setOtherLocationNode(null);
 
-
                     }
 
                 } else if (getState() == BuildingState.MODIFYDESTINATIONS) {
 
                     modifyNodeView();
+
+                } else if (getState() == BuildingState.REMOVENODE) {
+
+                    LOGGER.info("Deleting Node: " + toString());
+
+                    deleteNode(pane);
 
                 }
 
@@ -347,6 +359,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      */
     public void drawAdjacentNodes(Pane pane) {
 
+        LOGGER.info("Drawing Adjacent Nodes");
+
         if (adjacentLines.size() != 0) {
 
             for (Line line : adjacentLines) {
@@ -355,7 +369,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
             }
 
-            adjacentLines.clear();
+            this.adjacentLines = new ArrayList<>();
 
         }
 
@@ -410,7 +424,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
             Parent root = (Parent)loader.load();
-            AdminController controller = loader.<AdminController>getController();
+            AdminDepartmentPanelController controller = loader.<AdminDepartmentPanelController>getController();
             controller.setNode(this);
 
             Scene scene = new Scene(root);
@@ -426,12 +440,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     public void deleteNode(Pane pane) {
 
-        if (pane.getChildren().contains(nodeCircle)) {
-
-            pane.getChildren().remove(nodeCircle);
-
-        }
-
         for (Line line : adjacentLines) {
 
             if (pane.getChildren().contains(line)) {
@@ -442,6 +450,22 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
+        for (LocationNode node : this.adjacentLocationNodes) {
+
+            node.removeAdjacentNode(getCurrentNode());
+
+        }
+
+        if (pane.getChildren().contains(nodeCircle)) {
+
+            pane.getChildren().remove(nodeCircle);
+
+        }
+
+        notifyObservers();
+        setChanged();
+
+        this.currentFloor.removeLocationNode(this);
 
     }
 
@@ -449,6 +473,15 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     public String toString() {
 
         return uniqueID.toString();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+
+        LOGGER.info("Deleting Node: " + toString());
+        getCurrentFloor().getNodePane().getChildren().remove(this.nodeCircle);
+
+        super.finalize();
     }
 
     public LocationNode getCurrentNode() {

@@ -199,7 +199,7 @@ public class Floor extends Observable {
 
                     LocationNode newLocationNode = addNode(clickLocation);
 
-                    newLocationNode.drawAdminNodes(nodePane);
+                    newLocationNode.drawAdminNode(nodePane);
 
                 }
 
@@ -216,7 +216,7 @@ public class Floor extends Observable {
 
         for (LocationNode locationNode : this.locationNodes) {
 
-            locationNode.drawAdminNodes(this.nodePane);
+            locationNode.drawAdminNode(this.nodePane);
             locationNode.drawAdjacentNodes(this.nodePane);
 
         }
@@ -273,7 +273,7 @@ public class Floor extends Observable {
 
     public void removeLocationNode(LocationNode node) {
 
-//        if ()
+        this.locationNodes.remove(node);
 
     }
 
