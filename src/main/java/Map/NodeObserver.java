@@ -12,7 +12,7 @@ import java.util.Observer;
  */
 public class NodeObserver implements Observer {
 
-    private ArrayList<Node> observedNodes; // List of observed Nodes
+    private ArrayList<LocationNode> observedLocationNodes; // List of observed Nodes
     private static final Logger LOGGER = LoggerFactory.getLogger(NodeObserver.class); // Logger for this class
 
     /**
@@ -22,27 +22,27 @@ public class NodeObserver implements Observer {
 
         LOGGER.info("Creating new NodeObserver: " + this.toString());
 
-        this.observedNodes = new ArrayList<>();
+        this.observedLocationNodes = new ArrayList<>();
 
     }
 
     /**
-     * Adds a node you want to Observe to the NodeObserver instance.
+     * Adds a locationNode you want to Observe to the NodeObserver instance.
      *
-     * @param node The node you want to observe.
+     * @param locationNode The locationNode you want to observe.
      */
-    public void observeNode(Node node){
+    public void observeNode(LocationNode locationNode){
 
-        // check that the node is not already being observed
-        if (!observedNodes.contains(node)) {
+        // check that the locationNode is not already being observed
+        if (!observedLocationNodes.contains(locationNode)) {
 
-            LOGGER.info("Observing new Node: " + node.toString());
+            LOGGER.info("Observing new LocationNode: " + locationNode.toString());
 
-            // add this node to list of watching nodes
-            observedNodes.add(node);
+            // add this locationNode to list of watching nodes
+            observedLocationNodes.add(locationNode);
 
-            // add an observer to watch the node
-            node.addObserver(node.getNodeObserver());
+            // add an observer to watch the locationNode
+            locationNode.addObserver(locationNode.getNodeObserver());
 
         }
 
@@ -51,7 +51,16 @@ public class NodeObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        LOGGER.info("Updating Node: " + o.toString());
+        LOGGER.info("Updating LocationNode: " + o.toString());
+
+        LocationNode currentLocationNode = ((LocationNode)o);
+
+        if (currentLocationNode.getState() != BuildingState.NORMAL) {
+
+            currentLocationNode.drawAdminNode(currentLocationNode.getCurrentFloor().getNodePane());
+            currentLocationNode.drawAdjacentNodes(currentLocationNode.getCurrentFloor().getNodePane());
+
+        }
 
     }
 

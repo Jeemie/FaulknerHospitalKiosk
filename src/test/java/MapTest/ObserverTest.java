@@ -1,8 +1,6 @@
 package MapTest;
 
 import Map.*;
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,8 +16,9 @@ public class ObserverTest {
     private Building mMainHospital;
     private Floor mFloor;
     private Location mLocation1, mLocation2, mLocation3;
-    private Node mTestNode;
-    private Node mAdjNode1, mAdjNode2;
+
+    private LocationNode mTestNode;
+    private LocationNode mAdjNode1, mAdjNode2;
 
 
 
@@ -40,9 +39,9 @@ public class ObserverTest {
             mLocation2 = new Location(23, 6);
             mLocation3 = new Location(8, 21);
 
-            mTestNode = new Node(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations);
-            mAdjNode1 = new Node(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations);
-            mAdjNode2 = new Node(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations);
+            mTestNode = new LocationNode(420.69, UUID.randomUUID(), mLocation1, mFloor, mDestinations);
+            mAdjNode1 = new LocationNode(10.25, UUID.randomUUID(), mLocation2, mFloor, mDestinations);
+            mAdjNode2 = new LocationNode(12.32, UUID.randomUUID(), mLocation3, mFloor, mDestinations);
 
         } catch (Exception e) {
 
