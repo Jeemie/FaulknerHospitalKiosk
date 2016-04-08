@@ -230,6 +230,32 @@ public class Building extends Observable {
 //    }
 
     /**
+     * TODO
+     *
+     * @param startNode
+     * @param destinationNode
+     */
+    /*public void drawShortestPath(LocationNode startNode, LocationNode destinationNode) {
+
+        for (Floor currentFloor : floors) {
+
+            currentFloor.getFloor().stackPane.getChildren().removeAll();
+
+        }
+
+        ArrayList<LocationNode> path = LocationNode.getShortestPath(startNode, destinationNode);
+
+        LOGGER.info("Drawing Shortest Path");
+
+        for (int i = 0; i < path.size() - 1; i++) {
+
+            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+
+        }
+
+    }*/
+
+    /**
      * Getter for the building's observer.
      *
      * @return The current building's observer.

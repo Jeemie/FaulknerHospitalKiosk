@@ -1,9 +1,11 @@
 package Map;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * TODO
@@ -11,7 +13,7 @@ import java.util.*;
 public class AStar {
 
     private final Building building; // The building that will be associated with the AStar search
-    private static final Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
 
     /**
      * TODO

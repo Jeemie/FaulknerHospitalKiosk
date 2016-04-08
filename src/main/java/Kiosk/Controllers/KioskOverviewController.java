@@ -46,7 +46,9 @@ public class KioskOverviewController {
     @FXML
     private void handlePhysicians() {
     	// TODO: showDirectory should have parameter for category
+
     	kioskApp.showDirectory();
+
     }
     
     /** 
@@ -55,7 +57,9 @@ public class KioskOverviewController {
     @FXML
     private void handleDepartments() {
     	// TODO: showDirectory should have parameter for category
+
     	kioskApp.showDirectory();
+
     }
     
     /**
@@ -64,7 +68,9 @@ public class KioskOverviewController {
     @FXML
     private void handleServices() {
     	// TODO: showDirectory should have parameter for category
+
     	kioskApp.showDirectory();
+
     }
     
     /**
