@@ -4,14 +4,10 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import Map.Exceptions.FloorDoesNotExistException;
-import Map.Exceptions.NoPathException;
 import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
 
@@ -25,8 +21,7 @@ public class Building extends Observable {
     @JsonIgnore
     private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
-    //TODO check if this needs to be public - changed for JSON
-    public ArrayList<Floor> floors; // A list of all of the floors in the building
+    private ArrayList<Floor> floors; // A list of all of the floors in the building
     @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
     @JsonIgnore
@@ -159,7 +154,7 @@ public class Building extends Observable {
     /**
      * TODO
      *
-     * @param floorNumber
+     * @param
      * @return
      */
     public Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
@@ -242,7 +237,7 @@ public class Building extends Observable {
     @JsonIgnore
     public BuildingObserver getBuildingObserver(){
 
-        return this.observer;
+        return observer;
     }
 
     @Override
@@ -251,6 +246,7 @@ public class Building extends Observable {
         return this.uniqueID.toString();
     }
 
+    @JsonIgnore
     public BuildingState getState() {
         return state;
     }

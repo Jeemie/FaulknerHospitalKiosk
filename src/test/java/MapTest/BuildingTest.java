@@ -1,9 +1,7 @@
 package MapTest;
 
-import Map.Building;
-import Map.Floor;
-import Map.Location;
-import Map.LocationNode;
+import Map.*;
+import Map.Exceptions.FloorDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,13 +38,13 @@ public class BuildingTest {
         }
 
         mTestBuilding = new Building();
-        mFloor1 = new Floor(1, mTestBuilding);
-        mFloor2 = new Floor(2, mTestBuilding);
-        mTestBuilding.addFloor(1);
-        mTestBuilding.addFloor(2);
-        mOne = new Node(0, new Location(100, 100), mFloor1);
-        mTwo = new Node(0, new Location(100, 200), mFloor2);
-        mThree = new Node(0, new Location(100, 250), mFloor2);
+        mFloor1 = mTestBuilding.addFloor(1);
+        mFloor2 = mTestBuilding.addFloor(2);
+        mOne = mFloor1.addNode(new Location(123, 546));
+        mTwo = mFloor1.addNode(new Location(100, 200));
+        mThree = mFloor2.addNode(new Location(100, 250));
+
+
 
     }
 
@@ -76,13 +74,19 @@ public class BuildingTest {
     @Test
     public void testLoadFromFile() throws URISyntaxException,FloorDoesNotExistException {
         try {
-            mFloor1 = new Floor(1, mTestBuilding);
+           /* mFloor1 = new Floor(1, mTestBuilding);
             mFloor2 = new Floor(2, mTestBuilding);
             mTestBuilding.addFloor(1);
             mTestBuilding.addFloor(2);
+            mOne.addAdjacentNode(mTwo);
             mTwo.addAdjacentNode(mThree);
             mTestBuilding.addNode(1, new Location(100, 100));
             mTestBuilding.addNode(2, new Location(100, 200));
+            mFloor1.addNode(new Location(100, 100));*/
+            mTwo.addDestination(Destination.DEPARTMENT, "ER");
+            mTwo.addDestination(Destination.PHYSICIAN, "Dr. Binam");
+            mOne.addDestination(Destination.KIOSK, "Kiosk");
+
 
             mTestBuilding.saveToFile("mapdata.json");
             mTestBuilding.loadFromFile("mapdata.json");

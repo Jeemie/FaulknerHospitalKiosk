@@ -1,6 +1,10 @@
 package Map;
 
 import Kiosk.Controllers.AdminDepartmentPanelController;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,27 +17,35 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.*;
 
 /**
  * A class the represents node(point) on a floor
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class LocationNode extends Observable implements Comparable<LocationNode>{
 
-    private double heuristicCost; // heuristic cost for AStar algorithm
-    private final UUID uniqueID; // A randomly generated UUID associated with the current node
+    @JsonIgnore
+    private double heuristicCost; // heuristic cost for AStar algorithm; used for stairs and elevator nodes
+    private UUID uniqueID; // A randomly generated UUID associated with the current node
     private Location location; // The pixel location of the node on the map
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
     private Floor currentFloor; // The floor that the node is associated with
+    @JsonIgnore
     public double minDistance = Double.POSITIVE_INFINITY;
+    @JsonIgnore
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all LocationNode objects
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class); // Logger for this class
+    @JsonIgnore
     private Circle nodeCircle;
+    @JsonIgnore
     private ArrayList<Line> adjacentLines;
+    @JsonIgnore
     public Neighbors[] neighbors;
+    @JsonIgnore
     public LocationNode previous;
 
 
@@ -59,9 +71,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         observer.observeNode(this);  //starts observing new LocationNode object
 
     }
-
-
-
 
     /**
      * TODO
@@ -119,8 +128,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     }
 
+    @JsonIgnore
     public NodeObserver getNodeObserver(){
-        return this.observer;
+        return observer;
     }
 
     /**
@@ -151,6 +161,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      * @param destinationType
      * @return
      */
+    @JsonGetter
     public ArrayList<String> getDestinations(Destination destinationType) {
 
         ArrayList<String> nodeDestinations = new ArrayList<>();
@@ -169,6 +180,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      *
      * @return
      */
+    @JsonGetter
     public ArrayList<String> getDestinations() {
 
         Set<Destination> entries = destinations.keySet();
@@ -237,6 +249,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      *
      * @return
      */
+    @JsonIgnore
     public double getHueristicCost() {
 
         return heuristicCost;
@@ -398,6 +411,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      *
      * @return The state of the building.
      */
+    @JsonIgnore
     public BuildingState getState() {
 
         return this.currentFloor.getState();
@@ -424,8 +438,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-            Parent root = (Parent)loader.load();
-            AdminDepartmentPanelController controller = loader.<AdminDepartmentPanelController>getController();
+            Parent root = loader.load();
+            AdminDepartmentPanelController controller = loader.getController();
             controller.setNode(this);
 
             Scene scene = new Scene(root);
@@ -509,5 +523,17 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     public void setPrevious(LocationNode previous) {
         this.previous = previous;
     }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return this.uniqueID;
+    }
+
+    @JsonGetter
+    public ArrayList<LocationNode> getAdjacentLocationNodes() {
+        return this.adjacentLocationNodes;
+    }
+
 }
+
 

@@ -25,7 +25,7 @@ public class Floor extends Observable{
     private int floor; // The level number associated with the floor
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
-    private ArrayList<Node> nodes;
+    private ArrayList<LocationNode> locationNodes;
     @JsonIgnore
     private ImageView floorImage;
     @JsonIgnore
@@ -180,6 +180,7 @@ public class Floor extends Observable{
      *
      * @return A List of all the destinations on the current floor.
      */
+    @JsonIgnore
     public ArrayList<String> getFloorDestinations() {
 
         // List of all the destinations on the current floor
@@ -262,6 +263,7 @@ public class Floor extends Observable{
      *
      * @return A list of all of the locationNodes on the current floor.
      */
+    @JsonIgnore
     public ArrayList<LocationNode> getFloorNodes() {
 
         return this.locationNodes;
@@ -272,6 +274,7 @@ public class Floor extends Observable{
      *
      * @return The state of the building.
      */
+    @JsonIgnore
     public BuildingState getState() {
 
         return this.currentBuilding.getState();
@@ -303,7 +306,8 @@ public class Floor extends Observable{
     @JsonIgnore
     public FloorObserver getFloorObserver() {
 
-        return this.observer;
+        return observer;
+    }
 
     @Override
     public String toString() {
@@ -333,6 +337,8 @@ public class Floor extends Observable{
         return currentBuilding;
     }
 
-
-
+    @JsonGetter
+    public ArrayList<LocationNode> getLocationNodes(){
+        return locationNodes;
+    }
 }
