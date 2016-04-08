@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.KioskOverviewController">
+<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
    <children>
       <Button layoutX="519.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleAdmin" text="Admin" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Label alignment="CENTER" layoutX="93.0" layoutY="59.0" prefHeight="45.0" prefWidth="414.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="60.0">
@@ -20,20 +20,20 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="55.0" layoutY="14.0" prefHeight="25.0" prefWidth="450.0" promptText="Search..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="10.0" />
+      <TextField layoutX="55.0" layoutY="14.0" onAction="#handleSearch" prefHeight="25.0" prefWidth="450.0" promptText="Search..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="10.0" />
       <ButtonBar layoutX="121.0" layoutY="174.0" prefHeight="40.0" prefWidth="358.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="165.0">
         <buttons>
-          <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="142.0" text="Physicians">
+          <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="31.0" prefWidth="142.0" text="Physicians">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="31.0" text="Departments">
+            <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="31.0" text="Departments">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" text="Services">
+            <Button mnemonicParsing="false" onAction="#handleServices" text="Services">
                <font>
                   <Font size="15.0" />
                </font>

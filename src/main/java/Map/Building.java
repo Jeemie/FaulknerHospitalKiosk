@@ -8,6 +8,10 @@ import Map.Exceptions.NoPathException;
 import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
 
@@ -18,7 +22,10 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class Building extends Observable {
 
+    @JsonIgnore
+    private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
+    //TODO check if this needs to be public - changed for JSON
     public ArrayList<Floor> floors; // A list of all of the floors in the building
     @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
@@ -35,6 +42,7 @@ public class Building extends Observable {
         this.uniqueID = UUID.randomUUID();
         this.floors = new ArrayList<>();
         this.aStarSearch = new AStar(this);
+        this.state = BuildingState.NORMAL;
 
         LOGGER.info("Created new Building: " + this.toString());
 
@@ -62,8 +70,11 @@ public class Building extends Observable {
      * @throws IOException
      */
     public void saveToFile(String filePath) throws IOException, URISyntaxException {
+
         File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
         ObjectToJsonToJava.saveToFile(file, this);
+
+        LOGGER.info("Saving the building to the file: " + filePath);
     }
 
     /**
@@ -73,11 +84,11 @@ public class Building extends Observable {
      * @param location
      * @return
      */
-    public Node addNode(int floor, Location location) throws FloorDoesNotExistException {
+    public LocationNode addNode(int floor, Location location) throws FloorDoesNotExistException {
 
         // Attempts to add a node to the specified floor
         Floor currentFloor = getFloor(floor);
-        Node newNode = currentFloor.addNode(location);
+        LocationNode newLocationNode = currentFloor.addNode(location);
 
         // mark as value changed
         hasChanged();
@@ -85,7 +96,7 @@ public class Building extends Observable {
         // trigger notification
         notifyObservers();
 
-        return newNode;
+        return newLocationNode;
     }
 
     /**
@@ -172,7 +183,7 @@ public class Building extends Observable {
         throw new FloorDoesNotExistException(floorNumber);
     }
 
-    public void addFloor(int floorNumber) {
+    public Floor addFloor(int floorNumber) {
 
 
         for (Floor currentFloor : floors) {
@@ -181,7 +192,7 @@ public class Building extends Observable {
             if (currentFloor.getFloor() == floorNumber) {
 
                 //return current floor
-                return;
+                return currentFloor;
             }
 
         }
@@ -191,6 +202,8 @@ public class Building extends Observable {
         floors.add(newFloor);
 
         notifyObservers();
+
+        return newFloor;
 
     }
 
@@ -202,25 +215,24 @@ public class Building extends Observable {
      * @param destinationNode
      * @return
      */
-    @JsonIgnore
-    public ArrayList<Node> getShortestPath(Node startNode, Node destinationNode) throws NoPathException {
-
-        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
-
-        try {
-
-            // run aStar algorithm
-            return aStarSearch.getPath(startNode, destinationNode);
-
-        } catch (NoPathException e) {
-
-            LOGGER.error("NoPathException: ", e);
-
-            throw e;
-
-        }
-
-    }
+//    public ArrayList<LocationNode> getShortestPath(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+//
+//        LOGGER.info("Getting the shortest path between " + startNode.toString() + " and " + destinationNode.toString());
+//
+//        try {
+//
+//            // run aStar algorithm
+//          //  return aStarSearch.getPath(startNode, destinationNode);
+//
+//        } catch (NoPathException e) {
+//
+//            LOGGER.error("NoPathException: ", e);
+//
+//            throw e;
+//
+//        }
+//
+//    }
 
     /**
      * Getter for the building's observer.
@@ -230,13 +242,21 @@ public class Building extends Observable {
     @JsonIgnore
     public BuildingObserver getBuildingObserver(){
 
-        return observer;
+        return this.observer;
     }
 
     @Override
     public String toString() {
 
         return this.uniqueID.toString();
+    }
+
+    public BuildingState getState() {
+        return state;
+    }
+
+    public void setState(BuildingState state) {
+        this.state = state;
     }
 
     @JsonGetter

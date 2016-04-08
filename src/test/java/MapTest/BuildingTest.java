@@ -1,8 +1,9 @@
 package MapTest;
 
-import Map.*;
-
-import Map.Exceptions.FloorDoesNotExistException;
+import Map.Building;
+import Map.Floor;
+import Map.Location;
+import Map.LocationNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,11 +26,19 @@ public class BuildingTest {
     private Building mainBuilding;
     private Building mTestBuilding;
     private Floor mFloor1, mFloor2, mFloor7;
-    private Node mOne, mTwo, mThree;
+    private LocationNode mOne, mTwo, mThree;
     private Location mLocation1, mLocation;
 
     @Before
     public void setUp() {
+        mainBuilding = new Building();
+        mainBuilding.addFloor(3);
+        try {
+            mainBuilding.addNode(3, new Location(100,100));
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
         mTestBuilding = new Building();
         mFloor1 = new Floor(1, mTestBuilding);
         mFloor2 = new Floor(2, mTestBuilding);
