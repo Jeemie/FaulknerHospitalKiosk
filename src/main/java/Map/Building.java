@@ -216,7 +216,7 @@ public class Building extends Observable {
 //
 //        try {
 //
-//            // run aStar algorithm
+//          // run aStar algorithm
 //          //  return aStarSearch.getPath(startNode, destinationNode);
 //
 //        } catch (NoPathException e) {

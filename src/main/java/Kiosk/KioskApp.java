@@ -2,7 +2,6 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
-import Map.Exceptions.FloorDoesNotExistException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,13 +13,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+
 
 public class KioskApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Building hospitalBuilding;
+
 
     private ListView<String> listDirectory;
 
@@ -29,21 +29,6 @@ public class KioskApp extends Application {
 
         this.primaryStage = primaryStage;
         this.hospitalBuilding = new Building();
-
-//        try {
-////            Building temp = new Building();
-////            temp.loadFromFile("Kiosk/Controllers/mapdata.json");
-////            this.hospitalBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
-//
-//        } catch (IOException e) {
-//            System.out.println("Loaded from file e1");
-//        } catch (URISyntaxException e) {
-//            System.out.println("Loaded from file e2");
-//
-//        } catch (FloorDoesNotExistException e) {
-//            System.out.println("Loaded from file e3");
-//        }
-
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();
@@ -203,11 +188,7 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      * 
      */
- // TODO: showDirectory should have parameter for category
-    public boolean showDirectory( ) {
-        // to differentiate between directories
-  //public boolean showDirectory(String listDirectory){
-
+    public boolean showDirectory(int flag) {
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
@@ -224,20 +205,9 @@ public class KioskApp extends Application {
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
 
-            /*
-            switch (listDirectory) {
-            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
-                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
-                     break; //Physicians
-            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
-                     break; //departments
-            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
-                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
-                     break; //Services
-            */
+            //set the selected directory view to appear
+            controller.setList(flag);
+
             return controller.isOkClicked();
             
         } catch (IOException e) {
@@ -246,21 +216,6 @@ public class KioskApp extends Application {
         }
     }
 
-    /*
-    public List chooseList()
-            switch (listDirectory) {
-            case "physicians":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Dr. Julia", "Dr. Ian", "Dr. Sue", "Dr. Matthew", "Dr. Hannah", "Dr. Stephan",
-                      "Dr. Denise, "Dr. Mathew", "Dr. Jesus", Dr. Mrs. Vandertrampp", "Dr. Ann");
-                     break; //Physicians
-            case "departments":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Dpt. ", "Ian Dpt.", "Sue Dpt.", "Matthew Dpt.", "Hannah Dpt.", "Stephan Dpt.", "Denise Dpt.");
-                     break; //departments
-            case "services":  ObservableList<String> names = FXCollections.observableArrayList(
-                      "Julia Station", "Ian Center", "Sue Conference room ", "Matthew Services",
-                      "Hannah Banana Stand", "Stephan Frys", "Just Denise");
-                     break; //Services
-            */
     
     /**
      * Changes screen to allow users to view the map
@@ -282,9 +237,9 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
+
             controller.setKioskApp(this);
 
-            
             return controller.isOkClicked();
             
         } catch (IOException e) {
