@@ -3,6 +3,7 @@ package Kiosk.Controllers; /**
  */
 
 import Kiosk.Admin;
+import Map.Destination;
 import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -157,35 +158,25 @@ public class AdminDepartmentPanelController implements Initializable {
         Get input from user and add to Table
          */
         if (observableStudentList.size() < 10) {
+
             if (isValidInput(event)) {
 
-                    Admin student = new Admin();
-                    AdminPanelController controll = new AdminPanelController();
-                    student.setDeptType(deptTypeField.getText());
-                    student.setFloor(Integer.parseInt( yField.getText()));
-                    student.setDept(deptBox.getValue());
-                    observableStudentList.add(student);
-                    System.out.print(deptTypeField.getText());
+                Admin student = new Admin();
+                AdminPanelController control = new AdminPanelController();
+                student.setDeptType(deptTypeField.getText());
+                student.setFloor(Integer.parseInt( yField.getText()));
+                student.setDept(deptBox.getValue());
+                observableStudentList.add(student);
+                System.out.print(deptTypeField.getText());
 
-//                    try(  PrintWriter out = new PrintWriter( "getDeptname.txt" )  ){
-//                    out.print( deptNameField.getText() );
-//                }   catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                try(  PrintWriter out = new PrintWriter( "getX.txt" )  ){
-//                    out.print(xField .getText() );
-//                }   catch (FileNotFoundException e) {
-//
-//                }
-//                try(  PrintWriter out = new PrintWriter( "getY.txt" )  ){
-//                    out.print(yField .getText() );
-//                }   catch (FileNotFoundException e) {
-//
-//                }
+
+                currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
+
                 deptTypeField.clear();
-                    yField.clear();
-                    deptBox.setValue("Dept");
-                }
+                yField.clear();
+                deptBox.setValue("Dept");
+
+            }
 
         } else {
             Alert sizeAlert = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);

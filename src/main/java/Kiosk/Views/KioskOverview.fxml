@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.KioskOverviewController">
+<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
    <children>
       <Button layoutX="519.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleAdmin" text="Admin" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Label alignment="CENTER" layoutX="93.0" layoutY="59.0" prefHeight="45.0" prefWidth="414.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="60.0">

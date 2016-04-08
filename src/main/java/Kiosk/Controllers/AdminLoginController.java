@@ -1,4 +1,4 @@
-package application.view;
+package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import javafx.fxml.FXML;

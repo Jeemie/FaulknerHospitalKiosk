@@ -2,15 +2,13 @@ package Kiosk;
 
 import java.io.IOException;
 
-import Kiosk.Controllers.AdminDepartmentPanelController;
 import Kiosk.Controllers.AdminPanelController;
 import Map.Building;
-import application.view.AdminControlsController;
-import application.view.AdminLoginController;
-import application.view.DirectoryController;
-import application.view.KioskOverviewController;
-import application.view.MapViewController;
-import application.view.SearchController;
+import Kiosk.Controllers.AdminLoginController;
+import Kiosk.Controllers.DirectoryController;
+import Kiosk.Controllers.KioskOverviewController;
+import Kiosk.Controllers.MapViewController;
+import Kiosk.Controllers.SearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

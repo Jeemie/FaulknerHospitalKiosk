@@ -94,6 +94,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      */
     public void addDestination(Destination destination, String name) {
 
+        LOGGER.info("Adding the destination: " + destination.toString() + " " + name);
+
         ArrayList<String> temp;
 
         if(destinations.containsKey(destination)) {
@@ -471,8 +473,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @Override
     public String toString() {
 
-      //  return uniqueID.toString();
-        return "" + this.location.getX();
+        return uniqueID.toString();
     }
 
     @Override

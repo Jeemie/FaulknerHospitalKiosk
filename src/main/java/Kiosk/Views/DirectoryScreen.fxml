@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="application.view.DirectoryController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="Kiosk.Controllers.DirectoryController">
    <children>
       <TextField layoutX="52.0" layoutY="14.0" onAction="#handleSearch" prefHeight="25.0" prefWidth="462.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0" />
       <TableView layoutX="64.0" layoutY="86.0" prefHeight="200.0" prefWidth="480.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="130.0">

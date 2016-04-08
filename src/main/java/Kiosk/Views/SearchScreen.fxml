@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="application.view.SearchController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="Kiosk.Controllers.SearchController">
    <children>
       <TextField layoutX="70.0" layoutY="2.0" onAction="#handleSearch" prefHeight="25.0" prefWidth="454.0" promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="10.0" />
       <TableView layoutX="75.0" layoutY="56.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="60.0">

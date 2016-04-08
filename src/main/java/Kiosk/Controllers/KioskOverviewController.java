@@ -1,14 +1,19 @@
-package application.view;
+package Kiosk.Controllers;
 
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
 
+public class KioskOverviewController {
 
-public class DirectoryController {
-
-    private boolean okClicked = false;
     // Reference to the main application.
     private KioskApp kioskApp;
+
+    /**
+     * The constructor.
+     * The constructor is called before the initialize() method.
+     */
+    public KioskOverviewController() {
+    }
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -17,7 +22,7 @@ public class DirectoryController {
     @FXML
     private void initialize() {
     }
-    
+
     /**
      * Is called by the main application to give a reference back to itself.
      * 
@@ -28,21 +33,11 @@ public class DirectoryController {
     }
     
     /**
-     * Returns true if the user clicked OK, false otherwise.
-     * 
-     * @return
-     */
-    public boolean isOkClicked() {
-        return okClicked;
-    }
-    
-    /**
-     * Called when the user clicks enter in the search bar.
+     * Called when the user clicks the admin button.
      */
     @FXML
-    private void handleSearch() {
-    	// TODO: showSearch should have parameter for the input
-    	kioskApp.showSearch();
+    private void handleAdmin() {
+        kioskApp.showAdminLogin();
     }
     
     /**
@@ -73,27 +68,11 @@ public class DirectoryController {
     }
     
     /**
-     * Called when the user clicks back.
+     * Called when the user clicks enter in the search bar.
      */
     @FXML
-    private void handleBack() {
-    	kioskApp.reset();
+    private void handleSearch() {
+    	// TODO: showSearch should have parameter for the input
+    	kioskApp.showSearch();
     }
-    
-    /**
-     * Called when the user clicks cancel.
-     */
-    @FXML
-    private void handleCancel() {
-    	this.handleBack();
-    }
-    
-    /**
-     * Called when the user clicks Forward.
-     */
-    @FXML
-    private void handleForward() {
-    	kioskApp.showMap();
-    }
-
- }
+}
