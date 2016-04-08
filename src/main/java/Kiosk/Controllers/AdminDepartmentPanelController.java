@@ -157,20 +157,29 @@ public class AdminDepartmentPanelController implements Initializable {
         /*
         Get input from user and add to Table
          */
-        if (observableStudentList.size() < 10) {
 
-            if (isValidInput(event)) {
+
+        if (observableStudentList.size() < 10) {
 
                 Admin student = new Admin();
                 AdminPanelController control = new AdminPanelController();
-                student.setDeptType(deptTypeField.getText());
-                student.setFloor(Integer.parseInt( yField.getText()));
-                student.setDept(deptBox.getValue());
-                observableStudentList.add(student);
-                System.out.print(deptTypeField.getText());
+
+            if (!(currentNode.getDestinations()).isEmpty()){
+                    System.out.println("node is alrady fucked");
+                    student.setDeptType(currentNode.getDestinations().get(0));
+
+                }
+            else if (isValidInput(event)) {
+                System.out.println("node is not fucked");
+                    student.setDeptType(deptTypeField.getText());
+                    student.setFloor(Integer.parseInt(yField.getText()));
+                    student.setDept(deptBox.getValue());
+                    observableStudentList.add(student);
 
 
-                currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
+                    currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
+                    System.out.print(currentNode.getDestinations().get(0));
+                }
 
                 deptTypeField.clear();
                 yField.clear();
@@ -178,7 +187,7 @@ public class AdminDepartmentPanelController implements Initializable {
 
             }
 
-        } else {
+        else {
             Alert sizeAlert = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
             Window owner = ((Node) event.getTarget()).getScene().getWindow();
             sizeAlert.setContentText("You may only hold 10 Nodes at this time");
