@@ -1,4 +1,4 @@
-package Kiosk.Controller; /**
+package Kiosk.Controllers; /**
  * Created by christopher on 11/26/15.
  */
 

@@ -28,7 +28,7 @@ public class Floor extends Observable {
     private Pane nodePane;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
-    private LocationNode otherLocationNode;
+    private LocationNode otherLocationNode; // TODO move to observer
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of locationNodes on the current floor.
@@ -199,7 +199,7 @@ public class Floor extends Observable {
 
                     LocationNode newLocationNode = addNode(clickLocation);
 
-                    newLocationNode.drawAdmin(nodePane);
+                    newLocationNode.drawAdminNodes(nodePane);
 
                 }
 
@@ -216,7 +216,7 @@ public class Floor extends Observable {
 
         for (LocationNode locationNode : this.locationNodes) {
 
-            locationNode.drawAdmin(this.nodePane);
+            locationNode.drawAdminNodes(this.nodePane);
             locationNode.drawAdjacentNodes(this.nodePane);
 
         }
@@ -268,6 +268,12 @@ public class Floor extends Observable {
     public void setState(BuildingState state) {
 
         this.currentBuilding.setState(state);
+
+    }
+
+    public void removeLocationNode(LocationNode node) {
+
+//        if ()
 
     }
 
