@@ -1,10 +1,15 @@
 package Map;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Observable;
@@ -17,14 +22,16 @@ public class Floor extends Observable {
 
     private final int floor; // The level number associated with the floor
     private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    private ArrayList<Node> nodes; // The nodes that are attached to the current floor
+    private ArrayList<LocationNode> locationNodes; // The locationNodes that are attached to the current floor
     private final Building currentBuilding; // The building that the floor is a part of
-    private ImageView image;
+    private ImageView floorImage;
+    private Pane nodePane;
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
+    private LocationNode otherLocationNode; // TODO move to observer
 
     /**
-     * Constructor for a new floor with a new randomly generated UUID and an empty list of nodes on the current floor.
+     * Constructor for a new floor with a new randomly generated UUID and an empty list of locationNodes on the current floor.
      *
      * @param floor           The number that is associated with the current floor.
      * @param currentBuilding The building that the floor is located in.
@@ -33,8 +40,10 @@ public class Floor extends Observable {
 
         this.floor = floor;
         this.uniqueID = UUID.randomUUID();
-        this.nodes = new ArrayList<>();
+        this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
+        this.floorImage = new ImageView();
+        this.nodePane = new Pane();
 
         LOGGER.info("Created new Floor: " + this.toString());
 
@@ -54,7 +63,7 @@ public class Floor extends Observable {
 
         this.floor = floor;
         this.uniqueID = uniqueID;
-        this.nodes = new ArrayList<>();
+        this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
 
         LOGGER.info("Created new Floor: " + this.toString());
@@ -79,13 +88,13 @@ public class Floor extends Observable {
      * @param location The x and y coordinate in which the node was placed on the current floor.
      * @return The newly created node
      */
-    public Node addNode(Location location) {
+    public LocationNode addNode(Location location) {
 
         // Create a new node
-        Node newNode = new Node(0, location, this);
+        LocationNode newLocationNode = new LocationNode(0, location, this);
 
-        // Add the node to the list of nodes on the current floor
-        this.nodes.add(newNode);
+        // Add the node to the list of locationNodes on the current floor
+        this.locationNodes.add(newLocationNode);
 
         // mark the floor as changed
         setChanged();
@@ -93,8 +102,8 @@ public class Floor extends Observable {
         // trigger notification
         notifyObservers();
 
-        // Return the new Node
-        return newNode;
+        // Return the new LocationNode
+        return newLocationNode;
     }
 
     /**
@@ -107,14 +116,14 @@ public class Floor extends Observable {
      * @param observer The NodeObserver that watches this node
      * @return The newly created node
      */
-    public Node addNode(double heuristicCost, UUID uniqueID, Location location,
-                        EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
+    public LocationNode addNode(double heuristicCost, UUID uniqueID, Location location,
+                                EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
 
         // Create a new node
-        Node newNode = new Node(heuristicCost, uniqueID, location, this, destinations);
+        LocationNode newLocationNode = new LocationNode(heuristicCost, uniqueID, location, this, destinations);
 
-        // Add the node to the list of nodes on the current floor
-        this.nodes.add(newNode);
+        // Add the node to the list of locationNodes on the current floor
+        this.locationNodes.add(newLocationNode);
 
         // mark floor as changed
         setChanged();
@@ -122,8 +131,8 @@ public class Floor extends Observable {
         // trigger notification
         notifyObservers();
 
-        // Return the new Node
-        return newNode;
+        // Return the new LocationNode
+        return newLocationNode;
     }
 
     /**
@@ -137,8 +146,8 @@ public class Floor extends Observable {
         // List of destinations of the given type on the current floor
         ArrayList<String> floorDestinations = new ArrayList<>();
 
-        // Go through all of the nodes on the current floor and add destinations of the given type to the list
-        for (Node n : nodes) {
+        // Go through all of the locationNodes on the current floor and add destinations of the given type to the list
+        for (LocationNode n : locationNodes) {
 
             // add all of the destinations of the given type at the current node to the list
             floorDestinations.addAll(n.getDestinations(destinationType));
@@ -159,7 +168,7 @@ public class Floor extends Observable {
         // List of all the destinations on the current floor
         ArrayList<String> floorDestinations = new ArrayList<>();
 
-        for (Node n : nodes) {
+        for (LocationNode n : locationNodes) {
 
             // add all of the destinations at the current node to the list
             floorDestinations.addAll(n.getDestinations());
@@ -172,33 +181,73 @@ public class Floor extends Observable {
 
 
 
-    public void drawFloorAdmin() {
+    public void drawFloorAdmin(StackPane stackPane) {
 
-        assert image != null;
+        // clear the stackpane
+        stackPane.getChildren().removeAll();
 
+        this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-        for (Node node : this.nodes) {
-            
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentBuilding.getState() == BuildingState.ADDNODE) {
+
+                    LOGGER.info("APPLESAUCE1");
+
+                    Location clickLocation = new Location(event.getX(), event.getY());
+
+                    LocationNode newLocationNode = addNode(clickLocation);
+
+                    newLocationNode.drawAdminNode(nodePane);
+
+                }
+
+            }
+
+        });
+
+        // add the current floor's canvas and imageview to the stackpane
+        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
+
+    }
+
+    public void updateFloorAdmin() {
+
+        for (LocationNode locationNode : this.locationNodes) {
+
+            locationNode.drawAdminNode(this.nodePane);
+            locationNode.drawAdjacentNodes(this.nodePane);
+
         }
+
+    }
+
+
+    public void drawFloorNormal(StackPane stackPane) {
 
 
     }
 
 
-    public void drawFloorNormal() {
+    public void setFloorImage(URL imagePath) {
 
-        assert image != null;
+        Image image = new Image(imagePath.toString());
+
+        this.floorImage.setImage(image);
+        this.nodePane.setPrefHeight(floorImage.getX());
+        this.nodePane.setPrefWidth(floorImage.getY());
 
     }
 
     /**
-     * Get all of the nodes on the current floor.
+     * Get all of the locationNodes on the current floor.
      *
-     * @return A list of all of the nodes on the current floor.
+     * @return A list of all of the locationNodes on the current floor.
      */
-    public ArrayList<Node> getFloorNodes() {
+    public ArrayList<LocationNode> getFloorNodes() {
 
-        return this.nodes;
+        return this.locationNodes;
     }
 
     /**
@@ -222,6 +271,12 @@ public class Floor extends Observable {
 
     }
 
+    public void removeLocationNode(LocationNode node) {
+
+        this.locationNodes.remove(node);
+
+    }
+
 
     /**
      * Return a FloorObserver associated with Floor
@@ -239,4 +294,15 @@ public class Floor extends Observable {
         return uniqueID.toString();
     }
 
+    public void setOtherLocationNode(LocationNode otherLocationNode) {
+        this.otherLocationNode = otherLocationNode;
+    }
+
+    public LocationNode getOtherLocationNode() {
+        return otherLocationNode;
+    }
+
+    public Pane getNodePane() {
+        return nodePane;
+    }
 }
