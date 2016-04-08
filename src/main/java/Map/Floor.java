@@ -1,5 +1,6 @@
 package Map;
 
+import com.fasterxml.jackson.annotation.*;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,17 +19,32 @@ import java.util.UUID;
 /**
  * A class that represents a floor in a building
  */
-public class Floor extends Observable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
+public class Floor extends Observable{
 
-    private final int floor; // The level number associated with the floor
-    private final UUID uniqueID; // A randomly generated UUID associated with the current floor
-    private ArrayList<LocationNode> locationNodes; // The locationNodes that are attached to the current floor
-    private final Building currentBuilding; // The building that the floor is a part of
+    private int floor; // The level number associated with the floor
+    private UUID uniqueID; // A randomly generated UUID associated with the current floor
+    private Building currentBuilding;
+    private ArrayList<LocationNode> locationNodes;
+    @JsonIgnore
     private ImageView floorImage;
+    @JsonIgnore
     private Pane nodePane;
+    @JsonIgnore
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
+    @JsonIgnore
     private LocationNode otherLocationNode; // TODO move to observer
+
+
+    /**
+     *  Default constructor for a new floor
+     *  Required by ObjectToJsonToJava.loadFromFile()
+     */
+    public Floor() {
+        super();
+    }
 
     /**
      * Constructor for a new floor with a new randomly generated UUID and an empty list of locationNodes on the current floor.
@@ -78,6 +94,7 @@ public class Floor extends Observable {
      *
      * @return The current floor's number
      */
+    @JsonGetter
     public int getFloor(){
         return this.floor;
     }
@@ -163,6 +180,7 @@ public class Floor extends Observable {
      *
      * @return A List of all the destinations on the current floor.
      */
+    @JsonIgnore
     public ArrayList<String> getFloorDestinations() {
 
         // List of all the destinations on the current floor
@@ -245,6 +263,7 @@ public class Floor extends Observable {
      *
      * @return A list of all of the locationNodes on the current floor.
      */
+    @JsonIgnore
     public ArrayList<LocationNode> getFloorNodes() {
 
         return this.locationNodes;
@@ -255,6 +274,7 @@ public class Floor extends Observable {
      *
      * @return The state of the building.
      */
+    @JsonIgnore
     public BuildingState getState() {
 
         return this.currentBuilding.getState();
@@ -283,9 +303,10 @@ public class Floor extends Observable {
      *
      * @return the FloorObserver called observer
      */
+    @JsonIgnore
     public FloorObserver getFloorObserver() {
 
-        return this.observer;
+        return observer;
     }
 
     @Override
@@ -302,7 +323,22 @@ public class Floor extends Observable {
         return otherLocationNode;
     }
 
+    @JsonIgnore
     public Pane getNodePane() {
         return nodePane;
+    }
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public Building getCurrentBuilding() {
+        return currentBuilding;
+    }
+
+    @JsonGetter
+    public ArrayList<LocationNode> getLocationNodes(){
+        return locationNodes;
     }
 }

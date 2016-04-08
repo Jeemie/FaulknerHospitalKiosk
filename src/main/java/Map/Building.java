@@ -1,25 +1,32 @@
 package Map;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import Map.Exceptions.FloorDoesNotExistException;
+import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
 
 /**
  * A class the represents a building.
  */
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
 public class Building extends Observable {
 
+    @JsonIgnore
     private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
     private ArrayList<Floor> floors; // A list of all of the floors in the building
+    @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
+    @JsonIgnore
     private static BuildingObserver observer = new BuildingObserver(); // Observer for all of the buildings
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
 
     /**
@@ -45,10 +52,10 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void loadFromFile(URL filePath) throws IOException {
-
+    public void loadFromFile(String filePath) throws IOException, URISyntaxException, FloorDoesNotExistException {
+        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        ObjectToJsonToJava.loadFromFile(file, this);
         LOGGER.info("Loading the building from the file: " + filePath.toString());
-
     }
 
     /**
@@ -57,12 +64,13 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void saveToFile(URL filePath) throws IOException {
+    public void saveToFile(String filePath) throws IOException, URISyntaxException {
 
-        LOGGER.info("Saving the building to the file: " + filePath.toString());
+        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        ObjectToJsonToJava.saveToFile(file, this);
 
+        LOGGER.info("Saving the building to the file: " + filePath);
     }
-
 
     /**
      * TODO
@@ -92,6 +100,7 @@ public class Building extends Observable {
      * @param destinationType
      * @return
      */
+    @JsonIgnore
     public ArrayList<String> getBuildingDestinations(Destination destinationType) {
 
         //ArrayList to hold the entire list of destinations
@@ -114,6 +123,7 @@ public class Building extends Observable {
      *
      * @return
      */
+    @JsonIgnore
     public ArrayList<String> getBuildingDestinations() {
 
         //ArrayList to hold the entire list of destinations
@@ -144,7 +154,7 @@ public class Building extends Observable {
     /**
      * TODO
      *
-     * @param floorNumber
+     * @param
      * @return
      */
     public Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
@@ -250,9 +260,10 @@ public class Building extends Observable {
      *
      * @return The current building's observer.
      */
+    @JsonIgnore
     public BuildingObserver getBuildingObserver(){
 
-        return this.observer;
+        return observer;
     }
 
     @Override
@@ -261,12 +272,23 @@ public class Building extends Observable {
         return this.uniqueID.toString();
     }
 
+    @JsonIgnore
     public BuildingState getState() {
         return state;
     }
 
     public void setState(BuildingState state) {
         this.state = state;
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public ArrayList<Floor> getFloors() {
+        return floors;
     }
 
 }

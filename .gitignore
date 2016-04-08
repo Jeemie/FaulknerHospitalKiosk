@@ -1,6 +1,11 @@
 ### Simple gitignore ###
 ### created by Matthew LeMay ###
 
+#
+filePath
+src/main/main1.iml
+src/test/test.iml
+
 ### OSX ###
 .DS_Store
 .AppleDouble
