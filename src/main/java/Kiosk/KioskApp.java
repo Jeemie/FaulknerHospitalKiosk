@@ -1,18 +1,7 @@
 package Kiosk;
 
-<<<<<<< HEAD:src/main/java/application/MainApp.java
-import application.view.*;
-=======
-import java.io.IOException;
-
-import Kiosk.Controllers.AdminPanelController;
+import Kiosk.Controllers.*;
 import Map.Building;
-import Kiosk.Controllers.AdminLoginController;
-import Kiosk.Controllers.DirectoryController;
-import Kiosk.Controllers.KioskOverviewController;
-import Kiosk.Controllers.MapViewController;
-import Kiosk.Controllers.SearchController;
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/KioskApp.java
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,13 +12,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-<<<<<<< HEAD:src/main/java/application/MainApp.java
 import java.io.IOException;
 
-public class MainApp extends Application {
-=======
+
 public class KioskApp extends Application {
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/KioskApp.java
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -280,14 +266,9 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
-<<<<<<< HEAD:src/main/java/application/MainApp.java
-            controller.setMainApp(this);
 
-
-=======
             controller.setKioskApp(this);
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/KioskApp.java
-            
+
             return controller.isOkClicked();
             
         } catch (IOException e) {

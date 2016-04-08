@@ -1,15 +1,11 @@
 package Kiosk.Controllers;
 
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-import application.MainApp;
+import Kiosk.KioskApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-=======
-import javafx.fxml.FXML;
-import Kiosk.KioskApp;
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
+
 
 
 public class DirectoryController {
@@ -40,13 +36,8 @@ public class DirectoryController {
 
     /**
      * Is called by the main application to give a reference back to itself.
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
      *
-     * @param mainApp
-=======
-     * 
      * @param kioskApp
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
      */
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
@@ -66,13 +57,8 @@ public class DirectoryController {
      */
     @FXML
     private void handleSearch() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-        // TODO: showSearch should have parameter for the input
-        mainApp.showSearch();
-=======
     	// TODO: showSearch should have parameter for the input
     	kioskApp.showSearch();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
     }
 
     /**
@@ -80,14 +66,9 @@ public class DirectoryController {
      */
     @FXML
     private void handlePhysicians() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-        // TODO: showDirectory should have parameter for category
-        mainApp.showDirectory();
-        //mainApp.showDirectory("physicians");
-=======
     	// TODO: showDirectory should have parameter for category
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
+        //kioskApp.showDirectory("physicians");
     }
 
     /**
@@ -95,14 +76,9 @@ public class DirectoryController {
      */
     @FXML
     private void handleDepartments() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-        // TODO: showDirectory should have parameter for category
-        mainApp.showDirectory();
-        //mainApp.showDirectory("departments");
-=======
+        //kioskApp.showDirectory("departments");
     	// TODO: showDirectory should have parameter for category
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
     }
 
     /**
@@ -110,14 +86,9 @@ public class DirectoryController {
      */
     @FXML
     private void handleServices() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-        // TODO: showDirectory should have parameter for category
-        mainApp.showDirectory();
-        // mainApp.showDirectory("services");
-=======
+        // kioskApp.showDirectory("services");
     	// TODO: showDirectory should have parameter for category
     	kioskApp.showDirectory();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
     }
 
     /**
@@ -125,11 +96,7 @@ public class DirectoryController {
      */
     @FXML
     private void handleBack() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
-        mainApp.reset();
-=======
     	kioskApp.reset();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
     }
 
     /**
@@ -145,14 +112,10 @@ public class DirectoryController {
      */
     @FXML
     private void handleForward() {
-<<<<<<< HEAD:src/main/java/application/view/DirectoryController.java
+
         //listDirectory.getSelectionModel().getSelectedItem();
-        mainApp.showMap();
-=======
-    	kioskApp.showMap();
->>>>>>> 8644737955f8082fc87e0d9e2c499d7a927ba83c:src/main/java/Kiosk/Controllers/DirectoryController.java
+
+        kioskApp.showMap();
     }
-
-
 
 }
