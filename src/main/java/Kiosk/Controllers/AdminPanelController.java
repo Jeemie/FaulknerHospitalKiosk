@@ -246,7 +246,7 @@ public class AdminPanelController implements Initializable {
         mFloor3 = mMainHospital.addFloor(3);
 
         mFloor3.setFloorImage(getClass().getResource("Floor 3 Clean.png"));
-        mFloor3.drawFloorAdmin(imageStackPane);
+//        mFloor3.drawFloorAdmin(imageStackPane);
 
 
         mFloor1 = mMainHospital.addFloor(1);

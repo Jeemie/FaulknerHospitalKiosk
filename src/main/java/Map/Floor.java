@@ -206,6 +206,11 @@ public class Floor extends Observable{
         // clear the stackpane
         stackPane.getChildren().clear();
 
+        this.nodePane.getChildren().clear();
+        this.nodePane = new Pane();
+        this.nodePane.setPrefHeight(floorImage.getX());
+        this.nodePane.setPrefWidth(floorImage.getY());
+
         this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -230,6 +235,8 @@ public class Floor extends Observable{
         // add the current floor's canvas and imageview to the stackpane
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
+        updateFloorAdmin();
+
     }
 
     public void updateFloorAdmin() {
@@ -248,6 +255,10 @@ public class Floor extends Observable{
 
         // clear the stackpane
         stackPane.getChildren().clear();
+        this.nodePane.getChildren().clear();
+        this.nodePane = new Pane();
+        this.nodePane.setPrefHeight(floorImage.getX());
+        this.nodePane.setPrefWidth(floorImage.getY());
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
     }
