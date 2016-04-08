@@ -36,6 +36,8 @@ public class Floor extends Observable{
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
     @JsonIgnore
     private LocationNode otherLocationNode; // TODO move to observer
+    @JsonIgnore
+    private LocationNode startNode;
 
 
     /**
@@ -244,6 +246,9 @@ public class Floor extends Observable{
 
     public void drawFloorNormal(StackPane stackPane) {
 
+        // clear the stackpane
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
     }
 
@@ -327,6 +332,7 @@ public class Floor extends Observable{
     public Pane getNodePane() {
         return nodePane;
     }
+
     @JsonGetter
     public UUID getUniqueID() {
         return uniqueID;
@@ -340,5 +346,13 @@ public class Floor extends Observable{
     @JsonGetter
     public ArrayList<LocationNode> getLocationNodes(){
         return locationNodes;
+    }
+
+    public void setStartNode(LocationNode startNode) {
+        this.startNode = startNode;
+    }
+
+    public LocationNode getStartNode() {
+        return startNode;
     }
 }

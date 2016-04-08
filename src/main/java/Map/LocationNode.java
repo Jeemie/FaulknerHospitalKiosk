@@ -30,6 +30,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     private double heuristicCost; // heuristic cost for AStar algorithm; used for stairs and elevator nodes
     private UUID uniqueID; // A randomly generated UUID associated with the current node
     private Location location; // The pixel location of the node on the map
+    @JsonIgnore
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
     private Floor currentFloor; // The floor that the node is associated with
@@ -48,7 +49,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @JsonIgnore
     public LocationNode previous;
 
-
+    public LocationNode() {
+        super();
+    }
 
     /**
      * TODO
@@ -359,6 +362,10 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
                     deleteNode(pane);
 
+                } else if (getState() == BuildingState.SETFLOORSTARTNODE) {
+
+                    setAsFloorStartNode();
+
                 }
 
             }
@@ -532,6 +539,12 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @JsonGetter
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
         return this.adjacentLocationNodes;
+    }
+
+    public void setAsFloorStartNode() {
+
+        this.currentFloor.setStartNode(this);
+
     }
 
 }

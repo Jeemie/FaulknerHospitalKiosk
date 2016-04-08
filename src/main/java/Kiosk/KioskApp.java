@@ -2,6 +2,9 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Floor;
+import Map.Location;
+import Map.LocationNode;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +23,7 @@ public class KioskApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Building hospitalBuilding;
+    private LocationNode startNode;
 
 
     private ListView<String> listDirectory;
@@ -189,6 +193,7 @@ public class KioskApp extends Application {
      * 
      */
     public boolean showDirectory(int flag) {
+
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
@@ -204,6 +209,8 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setBuilding(hospitalBuilding);
+//            controller.setStartNode(startNode);
 
             //set the selected directory view to appear
             controller.setList(flag);
@@ -214,6 +221,7 @@ public class KioskApp extends Application {
             e.printStackTrace();
             return false;
         }
+
     }
 
     
@@ -222,7 +230,8 @@ public class KioskApp extends Application {
      * 
      */
     // TODO: showMap should have parameter for chosen destination from previous screen
-    public boolean showMap() {
+    public boolean showMap(LocationNode startNode, LocationNode destinationNode) {
+
         try {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
@@ -237,8 +246,11 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
+            controller.setStartNode(startNode);
+            controller.setDestinationNode(destinationNode);
 
             controller.setKioskApp(this);
+            controller.setBuilding(this.hospitalBuilding);
 
             return controller.isOkClicked();
             
@@ -272,6 +284,12 @@ public class KioskApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void setStartNode(LocationNode startNode) {
+
+        this.startNode = startNode;
 
     }
 

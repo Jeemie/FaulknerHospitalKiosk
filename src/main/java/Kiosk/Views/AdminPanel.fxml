@@ -70,6 +70,7 @@
             </ScrollPane>
             <Pane>
                <children>
+                  <Button mnemonicParsing="false" text="Set start Location" fx:id="setStartLocationButton"/>
                   <Button fx:id="saveToFileButton" layoutX="124.0" layoutY="160.0" mnemonicParsing="false" text="Save to file" />
                   <Button fx:id="addLocationButton" layoutX="138.0" layoutY="79.0" mnemonicParsing="false" text="Add Location" />
                   <Button fx:id="btn1" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="Modify Location" />

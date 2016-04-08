@@ -1,7 +1,13 @@
 package Kiosk.Controllers;
 
+import Map.Building;
+import Map.LocationNode;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 
 public class MapViewController {
@@ -10,6 +16,15 @@ public class MapViewController {
 
     private boolean okClicked = false;
     private KioskApp kioskApp;
+    private Building building;
+    private LocationNode startNode;
+    private LocationNode destinationNode;
+
+    @FXML
+    private StackPane imageStackPane;
+
+    @FXML
+    private Button confirmButton;
 
 
     /**
@@ -18,6 +33,20 @@ public class MapViewController {
      */
     @FXML
     private void initialize() {
+
+
+        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                building.drawShortestPath(startNode, destinationNode);
+
+            }
+
+        });
+
+
     }
 
     /**
@@ -63,6 +92,19 @@ public class MapViewController {
     @FXML
     private void handleSearch() {
     	kioskApp.showSearch();
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public void setDestinationNode(LocationNode destinationNode) {
+        this.destinationNode = destinationNode;
+        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+    }
+
+    public void setStartNode(LocationNode startNode) {
+        this.startNode = startNode;
     }
 
  }

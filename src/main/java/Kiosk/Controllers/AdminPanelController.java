@@ -58,6 +58,8 @@ public class AdminPanelController implements Initializable {
     private Button changeFloorButton;
     @FXML
     private Button changeFloorButton1;
+    @FXML
+    private Button setStartLocationButton;
 
 
 
@@ -89,10 +91,8 @@ public class AdminPanelController implements Initializable {
 
 
     @FXML
-    public void initialize(URL location, ResourceBundle resources)
-
-    {
-        mMainHospital = new Building();
+    public void initialize(URL location, ResourceBundle resources) {
+//        mMainHospital = new Building();
 //        mFloor3 = new Floor(3, mMainHospital);
 //        mLocation3B = new Location(100.0, 100.0);
 //        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
@@ -145,6 +145,11 @@ public class AdminPanelController implements Initializable {
 //            Rectangle2D bounds = screen.getVisualBounds();
 //            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
 //        }
+
+
+        if (mMainHospital != null) {
+            setupListeners();
+        }
 
 
     }
@@ -215,16 +220,16 @@ public class AdminPanelController implements Initializable {
 
     }
 
-    public void setBuilding(Building mMainHospital) {
+    public void setBuilding(Building building) {
 
-        this.mMainHospital = mMainHospital;
+        this.mMainHospital = building;
 
-                try {
+        try {
 
             this.mMainHospital.loadFromFile("Kiosk/Controllers/mapdata.json");
 
         } catch (IOException e) {
-            System.out.println("Loaded from file e1");
+            System.out.println(e.getMessage());
         } catch (URISyntaxException e) {
             System.out.println("Loaded from file e2");
 
@@ -327,6 +332,18 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
 
                 mFloor1.drawFloorAdmin(imageStackPane);
+
+            }
+
+        });
+
+        setStartLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
 
             }
 

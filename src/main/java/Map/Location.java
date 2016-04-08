@@ -8,6 +8,10 @@ public class Location {
     private double x;
     private double y;
 
+    public Location() {
+        super();
+    }
+
     /**
      * Default constructor for Location Class
      *
