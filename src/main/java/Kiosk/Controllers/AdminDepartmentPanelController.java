@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class AdminController implements Initializable {
+public class AdminDepartmentPanelController implements Initializable {
 
     @FXML
     private ResourceBundle resources;
@@ -57,7 +57,7 @@ public class AdminController implements Initializable {
     private TextField yField;
 
 
-    private Controller control;
+    private AdminPanelController control;
     @FXML
     private Button addToList;
 
@@ -160,7 +160,7 @@ public class AdminController implements Initializable {
             if (isValidInput(event)) {
 
                     Admin student = new Admin();
-                    Controller controll = new Controller();
+                    AdminPanelController controll = new AdminPanelController();
                     student.setDeptType(deptTypeField.getText());
                     student.setFloor(Integer.parseInt( yField.getText()));
                     student.setDept(deptBox.getValue());
@@ -407,6 +407,7 @@ public class AdminController implements Initializable {
     public void setNode(LocationNode node) {
         this.currentNode = node;
     }
+
 }
 
 

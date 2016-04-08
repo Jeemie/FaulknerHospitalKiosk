@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Controller implements Initializable {
+public class AdminPanelController implements Initializable {
 
     @FXML
     VBox root_vbox;
@@ -57,6 +57,9 @@ public class Controller implements Initializable {
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
 
+
+    private Building hospitalBuilding = new Building();
+
     private Building mMainHospital;
     private Floor mFloor3;
     private Location mLocation3B;
@@ -73,7 +76,7 @@ public class Controller implements Initializable {
 
     private Admin print;
 
-    AdminController control = new AdminController();
+    AdminDepartmentPanelController control = new AdminDepartmentPanelController();
 
 
 
@@ -82,19 +85,19 @@ public class Controller implements Initializable {
 
     {
         mMainHospital = new Building();
-        mFloor3 = new Floor(3, mMainHospital);
-        mLocation3B = new Location(100.0, 100.0);
-        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
-        mSuburbanEyeSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
-        mPattenJamesMd3B = new LocationNode(0, mLocation3B, mFloor3);
-        mDannHarrietMd3B = new LocationNode(0, mLocation3B, mFloor3);
-        mGrossiLisaRN = new LocationNode(0, new Location(10, 15), mFloor3);
-        mPatientRelations3 = new LocationNode(0, new Location(10, 20), mFloor3);
-        mKiosk3 = new LocationNode(0, new Location(10, 30), mFloor3);
-        mElevator3 = new LocationNode(0, new Location(10, 40), mFloor3);
-        mStairs3 = new LocationNode(0, new Location(10, 50), mFloor3);
-        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
-        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "dr.haha");
+//        mFloor3 = new Floor(3, mMainHospital);
+//        mLocation3B = new Location(100.0, 100.0);
+//        mEyeCareSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
+//        mSuburbanEyeSpecialists3B = new LocationNode(0, mLocation3B, mFloor3);
+//        mPattenJamesMd3B = new LocationNode(0, mLocation3B, mFloor3);
+//        mDannHarrietMd3B = new LocationNode(0, mLocation3B, mFloor3);
+//        mGrossiLisaRN = new LocationNode(0, new Location(10, 15), mFloor3);
+//        mPatientRelations3 = new LocationNode(0, new Location(10, 20), mFloor3);
+//        mKiosk3 = new LocationNode(0, new Location(10, 30), mFloor3);
+//        mElevator3 = new LocationNode(0, new Location(10, 40), mFloor3);
+//        mStairs3 = new LocationNode(0, new Location(10, 50), mFloor3);
+//        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
+//        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "dr.haha");
 
        // String deptname = control.addTolist();
         //System.out.println(deptname);
@@ -209,8 +212,11 @@ public class Controller implements Initializable {
 
     }
 
+    public void setmMainHospital(Building mMainHospital) {
 
+        this.mMainHospital = mMainHospital;
 
+    }
 
     private void asdasdasd() {
 

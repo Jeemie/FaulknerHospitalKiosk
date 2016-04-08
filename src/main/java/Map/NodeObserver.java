@@ -51,11 +51,14 @@ public class NodeObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
+        LOGGER.info("Updating LocationNode: " + o.toString());
+
         LocationNode currentLocationNode = ((LocationNode)o);
 
         if (currentLocationNode.getState() != BuildingState.NORMAL) {
 
-            currentLocationNode.getCurrentFloor().updateFloorAdmin();
+            currentLocationNode.drawAdminNode(currentLocationNode.getCurrentFloor().getNodePane());
+            currentLocationNode.drawAdjacentNodes(currentLocationNode.getCurrentFloor().getNodePane());
 
         }
 

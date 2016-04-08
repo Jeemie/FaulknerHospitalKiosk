@@ -6,10 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< HEAD
 <SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controller.AdminController">
 =======
 <SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminController">
 >>>>>>> origin/MapDraw:src/main/java/Kiosk/Views/AdminDepartmentPanel.fxml
+=======
+<SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDepartmentPanelController">
+>>>>>>> origin/MapDraw
     <items>
     <AnchorPane>
          <children>
