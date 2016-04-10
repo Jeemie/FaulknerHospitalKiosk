@@ -1,6 +1,8 @@
 package Kiosk;
 
 import Kiosk.Controllers.*;
+import Map.Building;
+import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,11 +48,12 @@ public class KioskApp extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            scene.getStylesheets().add(KioskApp.class.getResource("stylesheet.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,8 +130,6 @@ public class KioskApp extends Application {
     public boolean showAdminControls() {
 
         try {
-
-
 
             Stage stage;
             stage = new Stage();

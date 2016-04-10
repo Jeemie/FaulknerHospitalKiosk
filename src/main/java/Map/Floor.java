@@ -19,13 +19,16 @@ import java.util.UUID;
 /**
  * A class that represents a floor in a building
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
 public class Floor extends Observable{
 
     private int floor; // The level number associated with the floor
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
     private ArrayList<LocationNode> locationNodes;
+    // Maryann added this
+    private String imagePath;
     @JsonIgnore
     private ImageView floorImage;
     @JsonIgnore
@@ -53,13 +56,15 @@ public class Floor extends Observable{
      *
      * @param floor           The number that is associated with the current floor.
      * @param currentBuilding The building that the floor is located in.
+     * @param imagePath       The relative path of the floor image
      */
-    public Floor(int floor, Building currentBuilding) {
+    public Floor(int floor, Building currentBuilding, String imagePath) {
 
         this.floor = floor;
         this.uniqueID = UUID.randomUUID();
         this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
+        this.imagePath = imagePath;
         this.floorImage = new ImageView();
         this.nodePane = new Pane();
 
@@ -177,6 +182,7 @@ public class Floor extends Observable{
         return floorDestinations;
     }
 
+
     /**
      * Gets a list of all of the destinations on the current floor.
      *
@@ -191,7 +197,7 @@ public class Floor extends Observable{
         for (LocationNode n : locationNodes) {
 
             // add all of the destinations at the current node to the list
-            floorDestinations.addAll(n.getDestinations());
+            floorDestinations.addAll(n.getBuildingDestinations());
 
         }
 
@@ -266,6 +272,12 @@ public class Floor extends Observable{
     public void setFloorImage(URL imagePath) {
 
         Image image = new Image(imagePath.toString());
+        if(this.floorImage == null) {
+            this.floorImage = new ImageView();
+        }
+        if(this.nodePane == null) {
+            this.nodePane = new Pane();
+        }
 
         this.floorImage.setImage(image);
         this.nodePane.setPrefHeight(floorImage.getX());
@@ -338,7 +350,6 @@ public class Floor extends Observable{
         return otherLocationNode;
     }
 
-    @JsonIgnore
     public Pane getNodePane() {
         return nodePane;
     }
@@ -353,7 +364,6 @@ public class Floor extends Observable{
         return currentBuilding;
     }
 
-    @JsonGetter
     public ArrayList<LocationNode> getLocationNodes(){
         return locationNodes;
     }
@@ -364,5 +374,15 @@ public class Floor extends Observable{
 
     public LocationNode getStartNode() {
         return startNode;
+    }
+
+    public ImageView getFloorImage() {
+        return floorImage;
+    }
+
+    @JsonGetter
+    //Maryann is adding this
+    public String getImagePath() {
+        return imagePath;
     }
 }

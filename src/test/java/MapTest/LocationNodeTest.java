@@ -21,7 +21,7 @@ public class LocationNodeTest {
     public void setUp() throws Exception {
 
         Building mMainHospital = new Building();
-        Floor mFloor3 = new Floor(3, mMainHospital);
+        Floor mFloor3 = new Floor(3, mMainHospital, "Floor3_Final.png");
         Location mLocation3B = new Location(10, 10);
         mNode3A = new LocationNode(0, mLocation3B, mFloor3);
         mNode3B = new LocationNode(0, new Location (10, 15), mFloor3);

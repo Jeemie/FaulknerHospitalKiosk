@@ -13,7 +13,7 @@ public class testAstar {
     public static void main(String[] args) {
         Building Am = new Building();
 
-        Floor floor = Am.addFloor(3);
+        Floor floor = Am.addFloor(3, "Floor1_Final.png");
 
         //floor.addNode(new Location());
 

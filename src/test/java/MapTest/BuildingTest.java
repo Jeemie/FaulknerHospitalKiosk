@@ -26,7 +26,7 @@ public class BuildingTest {
     @Before
     public void setUp() {
         mainBuilding = new Building();
-        mainBuilding.addFloor(3);
+        Floor mFloor3 = new Floor(3, mainBuilding, "Floor3_Final.png");
         try {
             mainBuilding.addNode(3, new Location(100,100));
         } catch (FloorDoesNotExistException e) {
@@ -34,8 +34,8 @@ public class BuildingTest {
         }
 
         mTestBuilding = new Building();
-        mFloor1 = mTestBuilding.addFloor(1);
-        mFloor2 = mTestBuilding.addFloor(2);
+        mFloor1 = mTestBuilding.addFloor(1, "Floor1_Final.png");
+        mFloor2 = mTestBuilding.addFloor(2, "Floor3_Final.png");
         mOne = mFloor1.addNode(new Location(123, 546));
         mTwo = mFloor1.addNode(new Location(100, 200));
         mThree = mFloor2.addNode(new Location(100, 250));
@@ -62,9 +62,9 @@ public class BuildingTest {
 
     @Test
     public void addFloor() {
-        mTestBuilding.addFloor(1);
-        mTestBuilding.addFloor(2);
-        mTestBuilding.addFloor(7);
+       // mTestBuilding.addFloor(1);
+       // mTestBuilding.addFloor(2);
+       // mTestBuilding.addFloor(7);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class BuildingTest {
 
 
             mTestBuilding.saveToFile("Kiosk/Controllers/mapdata.json");
-            mTestBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
+            //mTestBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
         }
         catch(java.io.IOException e) {
             e.printStackTrace();

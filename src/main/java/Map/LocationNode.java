@@ -23,14 +23,13 @@ import java.util.*;
 /**
  * A class the represents node(point) on a floor
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=LocationNode.class)
 public class LocationNode extends Observable implements Comparable<LocationNode>{
 
-    @JsonIgnore
     private double heuristicCost; // heuristic cost for AStar algorithm; used for stairs and elevator nodes
     private UUID uniqueID; // A randomly generated UUID associated with the current node
     private Location location; // The pixel location of the node on the map
-    @JsonIgnore
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
     private Floor currentFloor; // The floor that the node is associated with
@@ -77,7 +76,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     /**
      * TODO
-     *  @param heuristicCost
+     * @param heuristicCost
      * @param uniqueID
      * @param location
      * @param currentFloor
@@ -164,7 +163,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      * @param destinationType
      * @return
      */
-    @JsonGetter
+    //@JsonGetter
+    @JsonIgnore
     public ArrayList<String> getDestinations(Destination destinationType) {
 
         ArrayList<String> nodeDestinations = new ArrayList<>();
@@ -184,7 +184,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      * @return
      */
     @JsonGetter
-    public ArrayList<String> getDestinations() {
+    public ArrayList<String> getBuildingDestinations() {
 
         Set<Destination> entries = destinations.keySet();
 
@@ -197,6 +197,11 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         }
 
         return nodeDestinations;
+    }
+
+    @JsonGetter
+    public EnumMap<Destination, ArrayList<String>> getDestinations() {
+        return destinations;
     }
 
     /**
@@ -252,8 +257,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      *
      * @return
      */
-    @JsonIgnore
-    public double getHueristicCost() {
+    @JsonGetter
+    public double getHeuristicCost() {
 
         return heuristicCost;
     }
@@ -506,6 +511,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         super.finalize();
     }
 
+    @JsonIgnore
     public LocationNode getCurrentNode() {
         return this;
     }
