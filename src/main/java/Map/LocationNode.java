@@ -550,9 +550,19 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     public void setAsFloorStartNode() {
 
         this.currentFloor.setStartNode(this);
-
     }
 
+    public void setNodeCircle(Circle nodeCircle) { // Used to set node circle after loading from JSON file
+        this.nodeCircle = nodeCircle;
+    }
+
+    public void initObserver() { // Used to initialize observer after loading from JSON file
+        observer.observeNode(this); //starts observing new LocationNode object
+    }
+
+    public void initAdjacentLines() { // Used to initialize adjacent lines list after loading from JSON file
+        this.adjacentLines = new ArrayList<>();
+    }
 }
 
 
