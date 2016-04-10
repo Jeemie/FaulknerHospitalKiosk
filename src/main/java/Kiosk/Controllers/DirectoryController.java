@@ -56,7 +56,7 @@ public class DirectoryController {
 
                     for (LocationNode n : nodes) {
 
-                        if (n.getDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+                        if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
                             kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
 
@@ -122,7 +122,7 @@ public class DirectoryController {
 //                "Stacks, Robert, MD",
 //                "Tunick, Mitchell, MD",
 //                "Viola, Julianne, MD");
-        currentNames.setAll(building.getBuildingDestinations(Destination.PHYSICIAN));
+        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
         listDirectory.setItems(currentNames);
 
     }
@@ -147,7 +147,7 @@ public class DirectoryController {
 //                "Roslindale Pediatric Associates ",
 //                "Suburban Eye Specialists ",
 //                "Taiclet Family Center");
-        currentNames.setAll(building.getBuildingDestinations(Destination.DEPARTMENT));
+        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
         listDirectory.setItems(currentNames);
 
     }
@@ -176,7 +176,7 @@ public class DirectoryController {
 //                "Starbucks",
 //                "Valet Parking",
 //                "Volunteer Services");
-        currentNames.addAll(building.getBuildingDestinations());
+        currentNames.addAll(building.getDestinations());
         listDirectory.setItems(currentNames);
     }
 

@@ -29,12 +29,12 @@ public class ObjectToJsonToJava {
      * @param file
      * @throws IOException
      */
-    public static void loadFromFile(File file, Building building) throws IOException, FloorDoesNotExistException {
+    public static Building loadFromFile(File file) throws IOException, FloorDoesNotExistException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        building = (objectMapper.readValue(file, Building.class));
         LOGGER.info("Loading the building from the file: " + file.toString());
+        return objectMapper.readValue(file, Building.class);
     }
 }
 

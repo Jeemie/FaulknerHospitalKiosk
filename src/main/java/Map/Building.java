@@ -19,7 +19,7 @@ import static Map.AStar.getShortestPathTo;
  * A class the represents a building.
  */
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uniqueID")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Building.class)
 public class Building extends Observable {
 
     @JsonIgnore
@@ -56,18 +56,6 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void loadFromFile(String filePath) throws IOException, URISyntaxException, FloorDoesNotExistException {
-        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
-        ObjectToJsonToJava.loadFromFile(file, this);
-        LOGGER.info("Loading the building from the file: " + filePath);
-    }
-
-    /**
-     * TODO
-     *
-     * @param filePath
-     * @throws IOException
-     */
     public void saveToFile(String filePath) throws IOException, URISyntaxException {
 
         File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
@@ -75,9 +63,6 @@ public class Building extends Observable {
 
         LOGGER.info("Saving the building to the file: " + filePath);
     }
-
-
-    //    }
 
     /**
      * TODO
@@ -141,8 +126,7 @@ public class Building extends Observable {
      * @param destinationType
      * @return
      */
-    @JsonIgnore
-    public ArrayList<String> getBuildingDestinations(Destination destinationType) {
+    public ArrayList<String> getDestinations(Destination destinationType) {
 
         //ArrayList to hold the entire list of destinations
         ArrayList<String> destinations = new ArrayList<>();
@@ -164,8 +148,8 @@ public class Building extends Observable {
      *
      * @return
      */
-    @JsonIgnore
-    public ArrayList<String> getBuildingDestinations() {
+    @JsonGetter
+    public ArrayList<String> getDestinations() {
 
         //ArrayList to hold the entire list of destinations
         ArrayList<String> dests = new ArrayList<>();
@@ -198,6 +182,7 @@ public class Building extends Observable {
      * @param
      * @return
      */
+    @JsonIgnore
     public Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
 
         // iterate through array of floors and get each floorNumber from the array
@@ -219,7 +204,7 @@ public class Building extends Observable {
         throw new FloorDoesNotExistException(floorNumber);
     }
 
-    public Floor addFloor(int floorNumber) {
+    public Floor addFloor(int floorNumber, String imagePath) {
 
 
         for (Floor currentFloor : floors) {
@@ -233,7 +218,7 @@ public class Building extends Observable {
 
         }
 
-        Floor newFloor = new Floor(floorNumber, this);
+        Floor newFloor = new Floor(floorNumber, this, imagePath);
 
         floors.add(newFloor);
 

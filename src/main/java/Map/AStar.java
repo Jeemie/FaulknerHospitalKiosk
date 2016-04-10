@@ -38,7 +38,7 @@ public class AStar {
             LocationNode u = nodeQueue.poll();
             //for each neighbor e of u
             for (LocationNode e : u.getAdjacentLocationNodes()) {
-                double cost = e.getHueristicCost();
+                double cost = e.getHeuristicCost();
                 //calculate the distance to that neighbor
                 double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(e);
                 if (distanceThroughNeighbor < e.minDistance) {

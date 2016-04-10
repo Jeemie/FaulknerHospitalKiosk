@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -17,10 +18,13 @@ import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+
+import static Map.ObjectToJsonToJava.loadFromFile;
 
 public class AdminPanelController implements Initializable {
 
@@ -55,13 +59,23 @@ public class AdminPanelController implements Initializable {
     @FXML
     private Button saveToFileButton;
     @FXML
-    private Button changeFloorButton;
-    @FXML
     private Button changeFloorButton1;
     @FXML
+    private Button changeFloorButton2;
+    @FXML
+    private Button changeFloorButton3;
+    @FXML
+    private Button changeFloorButton4;
+    @FXML
+    private Button changeFloorButton5;
+    @FXML
+    private Button changeFloorButton6;
+    @FXML
+    private Button changeFloorButton7;
+    @FXML
     private Button setStartLocationButton;
-
-
+    @FXML
+    private ArrayList<Button> floorButtons;
 
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
@@ -70,19 +84,6 @@ public class AdminPanelController implements Initializable {
     private KioskApp kioskApp;
 
     private Building mMainHospital;
-    private Floor mFloor1;
-    private Floor mFloor3;
-    private Location mLocation3B;
-    private LocationNode mEyeCareSpecialists3B;
-    private LocationNode mSuburbanEyeSpecialists3B;
-    private LocationNode mPattenJamesMd3B;
-    private LocationNode mDannHarrietMd3B;
-    private LocationNode mGrossiLisaRN;
-    private LocationNode mPatientRelations3;
-    private LocationNode mKiosk3;
-    private LocationNode mElevator3;
-    private LocationNode mStairs3;
-    private LocationNode mErrorAddingPhysician;
 
     private Admin print;
 
@@ -223,10 +224,11 @@ public class AdminPanelController implements Initializable {
     public void setBuilding(Building building) {
 
         this.mMainHospital = building;
-
+        System.out.println();
         try {
-
-            this.mMainHospital.loadFromFile("Kiosk/Controllers/mapdata.json");
+            File file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/mapdata.json").toURI());
+            this.mMainHospital = loadFromFile(file);
+            System.out.println();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -243,17 +245,10 @@ public class AdminPanelController implements Initializable {
 
     private void setupListeners() {
 
-        mFloor3 = mMainHospital.addFloor(3);
-
-        mFloor3.setFloorImage(getClass().getResource("Floor 3 Clean.png"));
-        mFloor3.drawFloorAdmin(imageStackPane);
-
-
-        mFloor1 = mMainHospital.addFloor(1);
-
-        mFloor1.setFloorImage(getClass().getResource("Floor 1 Clean.png"));
-        mFloor1.drawFloorAdmin(imageStackPane);
-
+        for (Floor floor: mMainHospital.getFloors()) {
+            floor.setFloorImage(getClass().getResource(floor.getImagePath()));
+            floor.drawFloorAdmin(imageStackPane);
+        }
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -305,6 +300,7 @@ public class AdminPanelController implements Initializable {
 
                     mMainHospital.saveToFile("Kiosk/Controllers/mapdata.json");
 
+
                 } catch (IOException e) {
 
                 } catch (URISyntaxException e) {
@@ -315,23 +311,61 @@ public class AdminPanelController implements Initializable {
 
         });
 
-        changeFloorButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                mFloor3.drawFloorAdmin(imageStackPane);
-
-            }
-
-        });
-
         changeFloorButton1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
-                mFloor1.drawFloorAdmin(imageStackPane);
+                try {
+                    mMainHospital.getFloor(1).drawFloorAdmin(imageStackPane);
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        changeFloorButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    mMainHospital.getFloor(2).drawFloorAdmin(imageStackPane);
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        changeFloorButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    mMainHospital.getFloor(3).drawFloorAdmin(imageStackPane);
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        changeFloorButton4.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    mMainHospital.getFloor(4).drawFloorAdmin(imageStackPane);
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
 
             }
 

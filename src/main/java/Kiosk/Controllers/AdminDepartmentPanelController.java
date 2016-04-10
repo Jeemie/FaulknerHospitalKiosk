@@ -315,7 +315,7 @@ public class AdminDepartmentPanelController implements Initializable {
         AdminPanelController control = new AdminPanelController();
         if (!(currentNode.getDestinations().get(0)).isEmpty()){
             System.out.println("node is alrady fucked");
-            student.setDeptType(currentNode.getDestinations().get(0));
+            student.setDeptType(currentNode.getBuildingDestinations().get(0));
             observableStudentList.add(student);
 
         }
