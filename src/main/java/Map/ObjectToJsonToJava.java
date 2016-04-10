@@ -22,7 +22,7 @@ public class ObjectToJsonToJava {
     public static void saveToFile(File file, Building building) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(file, building);
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, building);
     }
 
     /**

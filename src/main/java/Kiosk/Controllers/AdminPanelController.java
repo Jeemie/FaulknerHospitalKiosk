@@ -251,12 +251,12 @@ public class AdminPanelController implements Initializable {
 
     private void setupListeners() {
 
-/*
+
         mMainHospital.addFloor(1, "Floor1_Final.png");
         mMainHospital.addFloor(2, "Floor2_Draft.png");
         mMainHospital.addFloor(3, "Floor3_Final.png");
         mMainHospital.addFloor(4, "Floor4_Draft.png");
-*/
+
         try {
             LocationNode node3A = new LocationNode(0, new Location(100, 100), mMainHospital.getFloor(3));
             node3A.addDestination(Destination.KIOSK, "Kiosk3");
