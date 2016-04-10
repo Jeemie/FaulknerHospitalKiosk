@@ -59,8 +59,6 @@ public class AdminPanelController implements Initializable {
     @FXML
     private Button saveToFileButton;
     @FXML
-    private Button changeFloorButton;
-    @FXML
     private Button changeFloorButton1;
     @FXML
     private Button changeFloorButton2;
@@ -86,19 +84,6 @@ public class AdminPanelController implements Initializable {
     private KioskApp kioskApp;
 
     private Building mMainHospital;
-    private Floor mFloor1;
-    private Floor mFloor3;
-    private Location mLocation3B;
-    private LocationNode mEyeCareSpecialists3B;
-    private LocationNode mSuburbanEyeSpecialists3B;
-    private LocationNode mPattenJamesMd3B;
-    private LocationNode mDannHarrietMd3B;
-    private LocationNode mGrossiLisaRN;
-    private LocationNode mPatientRelations3;
-    private LocationNode mKiosk3;
-    private LocationNode mElevator3;
-    private LocationNode mStairs3;
-    private LocationNode mErrorAddingPhysician;
 
     private Admin print;
 
@@ -258,6 +243,20 @@ public class AdminPanelController implements Initializable {
     }
 
     private void setupListeners() {
+
+
+       /* mMainHospital.addFloor(1, "Floor1_Final.png");
+        mMainHospital.addFloor(2, "Floor2_Draft.png");
+        mMainHospital.addFloor(3, "Floor3_Final.png");
+        mMainHospital.addFloor(4, "Floor4_Draft.png");
+
+        try {
+            LocationNode node3A = new LocationNode(0, new Location(100, 100), mMainHospital.getFloor(3));
+            node3A.addDestination(Destination.KIOSK, "Kiosk3");
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+*/
 
         for (Floor floor: mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
