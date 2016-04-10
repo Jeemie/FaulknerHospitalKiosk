@@ -59,6 +59,8 @@ public class AdminPanelController implements Initializable {
     @FXML
     private Button saveToFileButton;
     @FXML
+    private Button changeFloorButton;
+    @FXML
     private Button changeFloorButton1;
     @FXML
     private Button changeFloorButton2;
@@ -74,8 +76,8 @@ public class AdminPanelController implements Initializable {
     private Button changeFloorButton7;
     @FXML
     private Button setStartLocationButton;
-    @FXML
-    private ArrayList<Button> floorButtons;
+
+
 
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
@@ -84,6 +86,19 @@ public class AdminPanelController implements Initializable {
     private KioskApp kioskApp;
 
     private Building mMainHospital;
+    private Floor mFloor1;
+    private Floor mFloor3;
+    private Location mLocation3B;
+    private LocationNode mEyeCareSpecialists3B;
+    private LocationNode mSuburbanEyeSpecialists3B;
+    private LocationNode mPattenJamesMd3B;
+    private LocationNode mDannHarrietMd3B;
+    private LocationNode mGrossiLisaRN;
+    private LocationNode mPatientRelations3;
+    private LocationNode mKiosk3;
+    private LocationNode mElevator3;
+    private LocationNode mStairs3;
+    private LocationNode mErrorAddingPhysician;
 
     private Admin print;
 
@@ -224,11 +239,10 @@ public class AdminPanelController implements Initializable {
     public void setBuilding(Building building) {
 
         this.mMainHospital = building;
-        System.out.println();
+
         try {
             File file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/mapdata.json").toURI());
             this.mMainHospital = loadFromFile(file);
-            System.out.println();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -299,7 +313,6 @@ public class AdminPanelController implements Initializable {
                 try {
 
                     mMainHospital.saveToFile("Kiosk/Controllers/mapdata.json");
-
 
                 } catch (IOException e) {
 

@@ -1,6 +1,7 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
+import Map.Destination;
 import javafx.fxml.FXML;
 
 public class KioskOverviewController {
@@ -46,7 +47,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
-    	kioskApp.showDirectory(0);
+    	kioskApp.showDirectory(Destination.PHYSICIAN);
     }
     
 
@@ -56,7 +57,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-    	kioskApp.showDirectory(1);
+    	kioskApp.showDirectory(Destination.DEPARTMENT);
     }
     
     /**
@@ -65,7 +66,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-    	kioskApp.showDirectory(2);
+    	kioskApp.showDirectory(null);
     }
     
     /**

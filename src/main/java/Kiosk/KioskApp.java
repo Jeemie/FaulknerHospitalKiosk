@@ -3,6 +3,7 @@ package Kiosk;
 import Kiosk.Controllers.*;
 import Map.Building;
 import Map.LocationNode;
+import Map.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -54,7 +55,6 @@ public class KioskApp extends Application {
             primaryStage.setScene(scene);
             scene.getStylesheets().add(KioskApp.class.getResource("stylesheet.css").toExternalForm());
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class KioskApp extends Application {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane kioskOverview = loader.load();
+            AnchorPane kioskOverview = (AnchorPane) loader.load();
 
             // Set kiosk overview into the center of root layout.
             rootLayout.setCenter(kioskOverview);
@@ -103,7 +103,7 @@ public class KioskApp extends Application {
             // Load AdminLogin
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AdminLoginAdam.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Admin Login");
@@ -130,13 +130,14 @@ public class KioskApp extends Application {
     public boolean showAdminControls() {
 
         try {
+
             Stage stage;
             stage = new Stage();
 
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
-            Parent root = loader.load();
-            AdminPanelController controller = loader.getController();
+            Parent root = (Parent)loader.load();
+            AdminPanelController controller = loader.<AdminPanelController>getController();
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -165,7 +166,7 @@ public class KioskApp extends Application {
             // Load SearchScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
@@ -189,13 +190,13 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      * 
      */
-    public boolean showDirectory(int flag) {
+    public boolean showDirectory(Destination destinationType) {
 
         try {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Directories");
@@ -210,7 +211,7 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 
             //set the selected directory view to appear
-            controller.setList(flag);
+            controller.setList(destinationType);
 
             return controller.isOkClicked();
             
@@ -233,7 +234,7 @@ public class KioskApp extends Application {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
@@ -266,7 +267,7 @@ public class KioskApp extends Application {
             // Load KioskOverview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
