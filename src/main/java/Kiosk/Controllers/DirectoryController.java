@@ -214,15 +214,15 @@ public class DirectoryController {
         switch (destinationType) {
 
             case PHYSICIAN:
-                currentNames.setAll(building.getBuildingDestinations(Destination.DEPARTMENT));
+                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
                 listDirectory.setItems(currentNames);
 
             case DEPARTMENT:
-                currentNames.setAll(building.getBuildingDestinations(Destination.DEPARTMENT));
+                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
                 listDirectory.setItems(currentNames);
 
             default:
-                currentNames.setAll(building.getBuildingDestinations());
+                currentNames.setAll(building.getDestinations());
                 listDirectory.setItems(currentNames);
 
         }
