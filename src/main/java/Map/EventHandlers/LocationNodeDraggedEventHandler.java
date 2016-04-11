@@ -1,5 +1,8 @@
-package Map;
+package Map.EventHandlers;
 
+import Map.BuildingState;
+import Map.Location;
+import Map.LocationNode;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -25,9 +28,9 @@ public class LocationNodeDraggedEventHandler implements EventHandler<MouseEvent>
      */
     public LocationNodeDraggedEventHandler(LocationNode locationNode) {
 
-        LOGGER.info("Created new LocationNodeDraggedHandler for the Node: " + this.toString());
-
         this.locationNode = locationNode;
+
+        LOGGER.info("Created new LocationNodeDraggedHandler for the Node: " + this.locationNode.toString());
 
     }
 

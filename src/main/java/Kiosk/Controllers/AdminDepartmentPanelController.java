@@ -19,7 +19,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.scene.control.Alert;
 import javafx.util.converter.NumberStringConverter;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -165,17 +164,17 @@ public class AdminDepartmentPanelController implements Initializable {
                 AdminPanelController control = new AdminPanelController();
 
 
-             if (isValidInput(event)) {
-                System.out.println("node is not fucked");
-                    student.setDeptType(deptTypeField.getText());
-                    student.setFloor(Integer.parseInt(yField.getText()));
-                    student.setDept(deptBox.getValue());
-                    observableStudentList.add(student);
+//             if (isValidInput(event)) {
+            if (true) {
+                student.setDeptType(deptTypeField.getText());
+                student.setFloor(Integer.parseInt(yField.getText()));
+                student.setDept(deptBox.getValue());
+                observableStudentList.add(student);
 
 
-                    currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
+                currentNode.addDestination(Destination.valueOf(deptBox.getValue()), deptTypeField.getText());
 
-                }
+            }
 
                 deptTypeField.clear();
                 yField.clear();
@@ -184,71 +183,71 @@ public class AdminDepartmentPanelController implements Initializable {
             }
 
         else {
-            Alert sizeAlert = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            sizeAlert.setContentText("You may only hold 10 Nodes at this time");
-            sizeAlert.initModality(Modality.APPLICATION_MODAL);
-            sizeAlert.initOwner(owner);
-            sizeAlert.showAndWait();
-            if (sizeAlert.getResult() == ButtonType.OK) {
-                sizeAlert.close();
-                deptTypeField.clear();
-                yField.clear();
-                deptBox.setValue("Dept");
-            }
+//            Alert sizeAlert = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
+//            Window owner = ((Node) event.getTarget()).getScene().getWindow();
+//            sizeAlert.setContentText("You may only hold 10 Nodes at this time");
+//            sizeAlert.initModality(Modality.APPLICATION_MODAL);
+//            sizeAlert.initOwner(owner);
+//            sizeAlert.showAndWait();
+//            if (sizeAlert.getResult() == ButtonType.OK) {
+//                sizeAlert.close();
+//                deptTypeField.clear();
+//                yField.clear();
+//                deptBox.setValue("Dept");
+//            }
         }
     }
     /*
     In case of empty fields. Gives alert for respective empty field and requests focus on that field.
      */
-    private boolean isValidInput(ActionEvent event) {
-
-        Boolean validInput = true;
-
-        if(deptTypeField == null || deptTypeField.getText().trim().isEmpty()) {
-            validInput = false;
-            Alert emptyFirstName = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyFirstName.setContentText("Dept type is EMPTY");
-            emptyFirstName.initModality(Modality.APPLICATION_MODAL);
-            emptyFirstName.initOwner(owner);
-            emptyFirstName.showAndWait();
-            if(emptyFirstName.getResult() == ButtonType.OK) {
-                emptyFirstName.close();
-                deptTypeField.requestFocus();
-            }
-        }
-
-        if(yField == null || yField.getText().trim().isEmpty()) {
-            validInput = false;
-            Alert emptyMajor = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyMajor.setContentText("Floor is EMPTY");
-            emptyMajor.initModality(Modality.APPLICATION_MODAL);
-            emptyMajor.initOwner(owner);
-            emptyMajor.showAndWait();
-            if (emptyMajor.getResult() == ButtonType.OK) {
-                emptyMajor.close();
-                yField.requestFocus();
-            }
-        }
-
-
-        if(deptBox == null || deptBox.getValue().isEmpty()) {
-            validInput = false;
-            Alert emptyGender = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            emptyGender.setContentText("Dept is EMPTY");
-            emptyGender.initModality(Modality.APPLICATION_MODAL);
-            emptyGender.initOwner(owner);
-            emptyGender.showAndWait();
-            if (emptyGender.getResult() == ButtonType.OK) {
-                emptyGender.close();
-                deptBox.requestFocus();
-            }
-        }
-        return validInput;
-    }
+//    private boolean isValidInput(ActionEvent event) {
+//
+//        Boolean validInput = true;
+//
+//        if(deptTypeField == null || deptTypeField.getText().trim().isEmpty()) {
+//            validInput = false;
+//            Alert emptyFirstName = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
+//            Window owner = ((Node) event.getTarget()).getScene().getWindow();
+//            emptyFirstName.setContentText("Dept type is EMPTY");
+//            emptyFirstName.initModality(Modality.APPLICATION_MODAL);
+//            emptyFirstName.initOwner(owner);
+//            emptyFirstName.showAndWait();
+//            if(emptyFirstName.getResult() == ButtonType.OK) {
+//                emptyFirstName.close();
+//                deptTypeField.requestFocus();
+//            }
+//        }
+//
+//        if(yField == null || yField.getText().trim().isEmpty()) {
+//            validInput = false;
+//            Alert emptyMajor = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
+//            Window owner = ((Node) event.getTarget()).getScene().getWindow();
+//            emptyMajor.setContentText("Floor is EMPTY");
+//            emptyMajor.initModality(Modality.APPLICATION_MODAL);
+//            emptyMajor.initOwner(owner);
+//            emptyMajor.showAndWait();
+//            if (emptyMajor.getResult() == ButtonType.OK) {
+//                emptyMajor.close();
+//                yField.requestFocus();
+//            }
+//        }
+//
+//
+//        if(deptBox == null || deptBox.getValue().isEmpty()) {
+//            validInput = false;
+//            Alert emptyGender = new Alert(Alert.AlertType.WARNING, "Warning", ButtonType.OK);
+//            Window owner = ((Node) event.getTarget()).getScene().getWindow();
+//            emptyGender.setContentText("Dept is EMPTY");
+//            emptyGender.initModality(Modality.APPLICATION_MODAL);
+//            emptyGender.initOwner(owner);
+//            emptyGender.showAndWait();
+//            if (emptyGender.getResult() == ButtonType.OK) {
+//                emptyGender.close();
+//                deptBox.requestFocus();
+//            }
+//        }
+//        return validInput;
+//    }
     /*
     handle column edits
      */
@@ -292,27 +291,26 @@ public class AdminDepartmentPanelController implements Initializable {
     }
     public void handleDeleteButtonClick(ActionEvent event) {
         if(!observableStudentList.isEmpty()) {
-            System.out.println("Delete button clicked");
-            Alert deleteAlert = new Alert(Alert.AlertType.WARNING, "Confirm", ButtonType.OK, ButtonType.CANCEL);
-            Window owner = ((Node) event.getTarget()).getScene().getWindow();
-            deleteAlert.setContentText("Are you sure you want to delete this?\n\nTHIS CANNOT BE UNDONE.");
-            deleteAlert.initModality(Modality.APPLICATION_MODAL);
-            deleteAlert.initOwner(owner);
-            deleteAlert.showAndWait();
-            if(deleteAlert.getResult() == ButtonType.OK) {
-                observableStudentList.removeAll(nodeTable.getSelectionModel().getSelectedItems());
-                nodeTable.getSelectionModel().clearSelection();
-            }
-            else {
-                deleteAlert.close();
-            }
+//            System.out.println("Delete button clicked");
+//            Alert deleteAlert = new Alert(Alert.AlertType.WARNING, "Confirm", ButtonType.OK, ButtonType.CANCEL);
+//            Window owner = ((Node) event.getTarget()).getScene().getWindow();
+//            deleteAlert.setContentText("Are you sure you want to delete this?\n\nTHIS CANNOT BE UNDONE.");
+//            deleteAlert.initModality(Modality.APPLICATION_MODAL);
+//            deleteAlert.initOwner(owner);
+//            deleteAlert.showAndWait();
+//            if(deleteAlert.getResult() == ButtonType.OK) {
+//                observableStudentList.removeAll(nodeTable.getSelectionModel().getSelectedItems());
+//                nodeTable.getSelectionModel().clearSelection();
+//            }
+//            else {
+//                deleteAlert.close();
+//            }
         }
     }
     public void handleClearButtonClick(ActionEvent event) {
         Admin student = new Admin();
         AdminPanelController control = new AdminPanelController();
         if (!(currentNode.getDestinations().get(0)).isEmpty()){
-            System.out.println("node is alrady fucked");
             student.setDeptType(currentNode.getBuildingDestinations().get(0));
             observableStudentList.add(student);
 
@@ -342,15 +340,15 @@ public class AdminDepartmentPanelController implements Initializable {
         fileChooser.setTitle("Save Kiosk.Kiosk.Kiosk.Admin Table");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         if(observableStudentList.isEmpty()) {
-            secondaryStage.initOwner(this.fileMenu.getScene().getWindow());
-            Alert emptyTableAlert = new Alert(Alert.AlertType.ERROR, "EMPTY TABLE", ButtonType.OK);
-            emptyTableAlert.setContentText("You have nothing to save");
-            emptyTableAlert.initModality(Modality.APPLICATION_MODAL);
-            emptyTableAlert.initOwner(this.fileMenu.getScene().getWindow());
-            emptyTableAlert.showAndWait();
-            if(emptyTableAlert.getResult() == ButtonType.OK) {
-                emptyTableAlert.close();
-            }
+//            secondaryStage.initOwner(this.fileMenu.getScene().getWindow());
+//            Alert emptyTableAlert = new Alert(Alert.AlertType.ERROR, "EMPTY TABLE", ButtonType.OK);
+//            emptyTableAlert.setContentText("You have nothing to save");
+//            emptyTableAlert.initModality(Modality.APPLICATION_MODAL);
+//            emptyTableAlert.initOwner(this.fileMenu.getScene().getWindow());
+//            emptyTableAlert.showAndWait();
+//            if(emptyTableAlert.getResult() == ButtonType.OK) {
+//                emptyTableAlert.close();
+//            }
         }
         else {
             File file = fileChooser.showSaveDialog(secondaryStage);
@@ -359,6 +357,7 @@ public class AdminDepartmentPanelController implements Initializable {
             }
         }
     }
+
     public void saveFile(ObservableList<Admin> observableStudentList, File file) {
         try {
             BufferedWriter outWriter = new BufferedWriter(new FileWriter(file));
@@ -370,28 +369,28 @@ public class AdminDepartmentPanelController implements Initializable {
             System.out.println(observableStudentList.toString());
             outWriter.close();
         } catch (IOException e) {
-            Alert ioAlert = new Alert(Alert.AlertType.ERROR, "OOPS!", ButtonType.OK);
-            ioAlert.setContentText("Sorry. An error has occurred.");
-            ioAlert.showAndWait();
-            if(ioAlert.getResult() == ButtonType.OK) {
-                ioAlert.close();
-            }
+//            Alert ioAlert = new Alert(Alert.AlertType.ERROR, "OOPS!", ButtonType.OK);
+//            ioAlert.setContentText("Sorry. An error has occurred.");
+//            ioAlert.showAndWait();
+//            if(ioAlert.getResult() == ButtonType.OK) {
+//                ioAlert.close();
+//            }
         }
     }
     public void closeApp(ActionEvent event) {
-        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.OK, ButtonType.CANCEL);
-        Stage stage = (Stage) fileMenu.getScene().getWindow();
-        exitAlert.setContentText("Are you sure you want to exit?");
-        exitAlert.initModality(Modality.APPLICATION_MODAL);
-        exitAlert.initOwner(stage);
-        exitAlert.showAndWait();
-
-        if(exitAlert.getResult() == ButtonType.OK) {
-            Platform.exit();
-        }
-        else {
-            exitAlert.close();
-        }
+//        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.OK, ButtonType.CANCEL);
+//        Stage stage = (Stage) fileMenu.getScene().getWindow();
+//        exitAlert.setContentText("Are you sure you want to exit?");
+//        exitAlert.initModality(Modality.APPLICATION_MODAL);
+//        exitAlert.initOwner(stage);
+//        exitAlert.showAndWait();
+//
+//        if(exitAlert.getResult() == ButtonType.OK) {
+//            Platform.exit();
+//        }
+//        else {
+//            exitAlert.close();
+//        }
     }
 
     public void back(){
@@ -399,7 +398,6 @@ public class AdminDepartmentPanelController implements Initializable {
         stage.close();
     }
     public void addTolist() {
-        System.out.println("haha");
         Admin admin = new Admin();
         observableStudentList.add(admin);
         admin.printDept();

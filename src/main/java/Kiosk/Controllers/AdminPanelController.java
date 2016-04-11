@@ -2,6 +2,7 @@ package Kiosk.Controllers;
 
 
 import Kiosk.Admin;
+import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
@@ -10,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -48,13 +48,17 @@ public class AdminPanelController implements Initializable {
     @FXML
     private ToggleButton size_togglebutton;
     @FXML
-    private  Button btn1;
+    private  Button modifyLocationButton;
     @FXML
     private Button addLocationButton;
     @FXML
     private Button removeLocationButton;
     @FXML
     private Button addConnectedLocationButton;
+    @FXML
+    private Button setStartLocationButton;
+    @FXML
+    private Button moveLocationButton;
     @FXML
     private StackPane imageStackPane;
     @FXML
@@ -73,10 +77,6 @@ public class AdminPanelController implements Initializable {
     private Button changeFloorButton6;
     @FXML
     private Button changeFloorButton7;
-    @FXML
-    private Button setStartLocationButton;
-    @FXML
-    private Button moveLocationButton;
 
 
 
@@ -215,7 +215,7 @@ public class AdminPanelController implements Initializable {
 //        Parent root = FXMLLoader.load(getClass().getResource("../Views/AdminDepartmentPanel.fxml"));
 //        stage.setScene(new Scene(root));
 //        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.initOwner(btn1.getScene().getWindow());
+//        stage.initOwner(modifyLocationButton.getScene().getWindow());
 //        stage.show();
 //    }
 
@@ -280,58 +280,21 @@ public class AdminPanelController implements Initializable {
         }
 
 
-        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
 
-            @Override
-            public void handle(MouseEvent event) {
-                mMainHospital.setState(BuildingState.ADDNODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-            }
+        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
 
-        });
+        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
 
-        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
 
-            @Override
-            public void handle(MouseEvent event) {
-                mMainHospital.setState(BuildingState.REMOVENODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-            }
+        modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
 
-        });
-
-        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                mMainHospital.setState(BuildingState.ADDADJACENTNODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-            }
-
-        });
-
-        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                mMainHospital.setState(BuildingState.MOVENODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-
-            }
-
-        });
-
-
-        btn1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                mMainHospital.setState(BuildingState.MODIFYDESTINATIONS);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-            }
-
-        });
 
         saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

@@ -1,7 +1,9 @@
-package Map;
+package Map.EventHandlers;
 
 import Kiosk.Controllers.AdminDepartmentPanelController;
 import Utils.FixedSizedStack;
+import Map.LocationNode;
+import Map.BuildingState;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,9 +39,9 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
      */
     public LocationNodeClickedEventHandler(LocationNode locationNode) {
 
-        LOGGER.info("Created new LocationNodeClickedHandler for the Node: " + this.toString());
-
         this.locationNode = locationNode;
+
+        LOGGER.info("Created new LocationNodeClickedHandler for the Node: " + this.locationNode.toString());
 
     }
 
@@ -127,7 +129,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
         }
 
         // Add current action
-        Map.Entry<LocationNode,BuildingState> entry =
+        Map.Entry<LocationNode, BuildingState> entry =
                 new AbstractMap.SimpleEntry<LocationNode, BuildingState>(this.locationNode, this.locationNode.getState());
         previousActions.push(entry);
 
@@ -140,27 +142,29 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         LOGGER.info("Opening Admin department Editor");
 
-        try {
+        // TODO change the AdminDepartmentPanel to an inline editor in the admin panel (Left listview spot)
 
-            Stage stage;
-            stage = new Stage();
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-            Parent root = loader.load();
-            AdminDepartmentPanelController controller = loader.getController();
-            controller.setNode(this.locationNode);
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-        } catch (IOException e) {
-
-            LOGGER.info("Unable to open the modify node view ", e);
-
-        }
+//        try {
+//
+//            Stage stage;
+//            stage = new Stage();
+//
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
+//            Parent root = loader.load();
+//            AdminDepartmentPanelController controller = loader.getController();
+//            controller.setNode(this.locationNode);
+//
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.show();
+//
+//        } catch (IOException e) {
+//
+//            LOGGER.info("Unable to open the modify node view ", e);
+//
+//        }
 
     }
 

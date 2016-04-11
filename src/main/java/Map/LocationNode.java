@@ -1,5 +1,7 @@
 package Map;
 
+import Map.EventHandlers.LocationNodeClickedEventHandler;
+import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -63,30 +65,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
 
         observer.observeNode(this);  //starts observing new LocationNode object
-
-    }
-
-    /**
-     * TODO
-     *
-     * @param heuristicCost
-     * @param uniqueID
-     * @param location
-     * @param currentFloor
-     * @param destinations
-     */
-    public LocationNode(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
-
-        this.heuristicCost = heuristicCost;
-        this.uniqueID = uniqueID;
-        this.location = location;
-        this.adjacentLocationNodes = new ArrayList<>();
-        this.destinations = destinations;
-        this.currentFloor = currentFloor;
-        this.adjacentLines = new ArrayList<>();
-        this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
-
-        observer.observeNode(this); //starts observing new LocationNode object
 
     }
 
