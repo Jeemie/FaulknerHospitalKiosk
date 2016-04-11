@@ -68,6 +68,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     /**
      * TODO
+     *
      * @param heuristicCost
      * @param uniqueID
      * @param location

@@ -1,6 +1,4 @@
-package Kiosk.Controllers; /**
- * Created by christopher on 11/26/15.
- */
+package Kiosk.Controllers;
 
 import Kiosk.Admin;
 import Map.Destination;
@@ -21,8 +19,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.scene.control.Alert;
 import javafx.util.converter.NumberStringConverter;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
