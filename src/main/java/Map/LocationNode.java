@@ -1,23 +1,15 @@
 package Map;
 
-import Kiosk.Controllers.AdminDepartmentPanelController;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -44,9 +36,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @JsonIgnore
     private ArrayList<Line> adjacentLines;
     @JsonIgnore
-    public Neighbors[] neighbors;
-    @JsonIgnore
     public LocationNode previous;
+    @JsonIgnore
+    private Pane associatedPane;
 
     public LocationNode() {
         super();
@@ -225,8 +217,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             setChanged();
             notifyObservers();
 
-
-
         }
 
     }
@@ -336,45 +326,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         pane.getChildren().add(this.nodeCircle);
 
-        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                if (getState() == BuildingState.ADDADJACENTNODE) {
-
-                    if (currentFloor.getOtherLocationNode() == null) {
-
-                        currentFloor.setOtherLocationNode(getCurrentNode());
-                        LOGGER.info("NULLLSLDASDASDASD");
-
-                    } else {
-
-                        LOGGER.info("Adding adjacent node");
-
-                        currentFloor.getOtherLocationNode().addAdjacentNode(getCurrentNode());
-
-                        currentFloor.setOtherLocationNode(null);
-
-                    }
-
-                } else if (getState() == BuildingState.MODIFYDESTINATIONS) {
-
-                    modifyNodeView();
-
-                } else if (getState() == BuildingState.REMOVENODE) {
-
-                    LOGGER.info("Deleting Node: " + toString());
-
-                    deleteNode(pane);
-
-                } else if (getState() == BuildingState.SETFLOORSTARTNODE) {
-
-                    setAsFloorStartNode();
-
-                }
-
-            }
-        });
+        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeCircleEventHandler(this));
 
     }
 
@@ -440,38 +392,13 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     }
 
-
-    public void modifyNodeView() {
-
-        try {
-
-            Stage stage;
-            stage = new Stage();
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-            Parent root = loader.load();
-            AdminDepartmentPanelController controller = loader.getController();
-            controller.setNode(this);
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-        } catch (IOException e) {
-
-        }
-
-    }
-
-    public void deleteNode(Pane pane) {
+    public void deleteNode() {
 
         for (Line line : adjacentLines) {
 
-            if (pane.getChildren().contains(line)) {
+            if (this.associatedPane.getChildren().contains(line)) {
 
-                pane.getChildren().remove(line);
+                this.associatedPane.getChildren().remove(line);
 
             }
 
@@ -483,9 +410,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
-        if (pane.getChildren().contains(nodeCircle)) {
+        if (this.associatedPane.getChildren().contains(nodeCircle)) {
 
-            pane.getChildren().remove(nodeCircle);
+            this.associatedPane.getChildren().remove(nodeCircle);
 
         }
 
@@ -525,10 +452,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         return Double.compare(minDistance,o.minDistance);
     }
 
-    public Neighbors[] getNeighbors() {
-        return neighbors;
-    }
-
     public LocationNode getPrevious() {
         return previous;
     }
@@ -550,6 +473,14 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     public void setAsFloorStartNode() {
 
         this.currentFloor.setStartNode(this);
+    }
+
+    public Pane getAssociatedPane() {
+        return associatedPane;
+    }
+
+    public void setAssociatedPane(Pane associatedPane) {
+        this.associatedPane = associatedPane;
     }
 
     public void setNodeCircle(Circle nodeCircle) { // Used to set node circle after loading from JSON file

@@ -38,8 +38,6 @@ public class Floor extends Observable{
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
     @JsonIgnore
-    private LocationNode otherLocationNode; // TODO move to observer
-    @JsonIgnore
     private LocationNode startNode;
 
 
@@ -251,6 +249,7 @@ public class Floor extends Observable{
 
             locationNode.drawAdminNode(this.nodePane);
             locationNode.drawAdjacentNodes(this.nodePane);
+            locationNode.setAssociatedPane(this.nodePane);
 
         }
 
@@ -340,14 +339,6 @@ public class Floor extends Observable{
     public String toString() {
 
         return uniqueID.toString();
-    }
-
-    public void setOtherLocationNode(LocationNode otherLocationNode) {
-        this.otherLocationNode = otherLocationNode;
-    }
-
-    public LocationNode getOtherLocationNode() {
-        return otherLocationNode;
     }
 
     public Pane getNodePane() {

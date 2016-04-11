@@ -1,8 +1,0 @@
-Index: src/main/java/Kiosk/Main.java
-IDEA additional info:
-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
-<+>UTF-8
-===================================================================
---- src/main/java/Kiosk/Main.java	(revision )
-+++ src/main/java/Kiosk/Main.java	(revision )
-@@ -1,0 +1,0 @@
