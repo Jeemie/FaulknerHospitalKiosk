@@ -29,7 +29,7 @@ public class ObserverTest {
     public void setUp() {
         mMainHospital = new Building();
 
-        mMainHospital.addFloor(0);
+        mMainHospital.addFloor(1, "Floor1_Final.png");
 
         try {
 

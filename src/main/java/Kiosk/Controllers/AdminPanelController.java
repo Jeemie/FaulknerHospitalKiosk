@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -227,25 +228,31 @@ public class AdminPanelController implements Initializable {
 
         try {
             File file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/mapdata.json").toURI());
-            this.mMainHospital = loadFromFile(file);
-
+            if (file.exists() && file.length() > 0) { // Check if file exists and is not empty
+                this.mMainHospital = loadFromFile(file); // Load mapdata.json
+            } else
+                file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/default.json").toURI());
+            if (file.exists() && file.length() > 0) { // Check that default file exists and is not empty
+                this.mMainHospital = loadFromFile(file); // Load default.json
+            } else {
+                LOGGER.info("Cannot load " + file.toString() + ". File does not exist or is empty.");
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         } catch (URISyntaxException e) {
             System.out.println("Loaded from file e2");
-
         } catch (FloorDoesNotExistException e) {
             System.out.println("Loaded from file e3");
         }
 
         setupListeners();
-
     }
+
 
     private void setupListeners() {
 
 
-       /* mMainHospital.addFloor(1, "Floor1_Final.png");
+        mMainHospital.addFloor(1, "Floor1_Final.png");
         mMainHospital.addFloor(2, "Floor2_Draft.png");
         mMainHospital.addFloor(3, "Floor3_Final.png");
         mMainHospital.addFloor(4, "Floor4_Draft.png");
@@ -256,12 +263,20 @@ public class AdminPanelController implements Initializable {
         } catch (FloorDoesNotExistException e) {
             e.printStackTrace();
         }
-*/
+
 
         for (Floor floor: mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
+            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
+                for (LocationNode node : floor.getFloorNodes()) {
+                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
+                    node.initObserver();
+                    node.initAdjacentLines();
+                }
+            }
             floor.drawFloorAdmin(imageStackPane);
         }
+
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

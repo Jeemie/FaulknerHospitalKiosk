@@ -13,9 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-
 
 public class KioskApp extends Application {
 
@@ -53,7 +51,8 @@ public class KioskApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            scene.getStylesheets().add(KioskApp.class.getResource("stylesheet.css").toExternalForm());
+//            System.out.println(getClass().getResource("stylesheet.css"));
+//            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
