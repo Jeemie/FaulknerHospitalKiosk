@@ -16,26 +16,45 @@ import java.util.AbstractMap;
 import java.util.Map;
 
 /**
- * Created by matt on 4/10/16.
+ * An event handler for the Location Node when it has been clicked in the Admin Panel.
  */
-public class LocationNodeCircleEventHandler implements EventHandler<MouseEvent> {
+public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent> {
 
+    // Location Node associated with the circle event handler
     private final LocationNode locationNode;
-    private static FixedSizedStack<Map.Entry<LocationNode, BuildingState>> previousActions = new FixedSizedStack<>(10);
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeCircleEventHandler.class);
 
-    public LocationNodeCircleEventHandler(LocationNode locationNode) {
+    // Stack of the past 10 node click actions
+    private static FixedSizedStack<Map.Entry<LocationNode, BuildingState>> previousActions = new FixedSizedStack<>(10);
+
+    // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeClickedEventHandler.class);
+
+
+    /**
+     * Default constructor for this class.
+     *
+     * @param locationNode The location Node that is associated with the circle.
+     */
+    public LocationNodeClickedEventHandler(LocationNode locationNode) {
+
+        LOGGER.info("Created new LocationNodeClickedHandler for the Node: " + this.toString());
 
         this.locationNode = locationNode;
 
     }
 
+    /**
+     * Handler for when the node's circle is clicked.
+     *
+     * @param event Event that describes the scenario in which the circle was clicked.
+     */
     @Override
     public void handle(MouseEvent event) {
 
         LOGGER.info("Node " + this.locationNode.toString() + " was clicked with the state " +
                 this.locationNode.getState().toString());
 
+        // Switch statement that is dependant of the state of the node
         switch(locationNode.getState()) {
 
             case NORMAL:
@@ -46,7 +65,6 @@ public class LocationNodeCircleEventHandler implements EventHandler<MouseEvent> 
             case ADDNODE:
 
                 break;
-
 
 
             case REMOVENODE:

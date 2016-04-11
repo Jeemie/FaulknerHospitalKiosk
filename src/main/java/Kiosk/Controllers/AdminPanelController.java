@@ -75,6 +75,8 @@ public class AdminPanelController implements Initializable {
     private Button changeFloorButton7;
     @FXML
     private Button setStartLocationButton;
+    @FXML
+    private Button moveLocationButton;
 
 
 
@@ -304,6 +306,18 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
                 mMainHospital.setState(BuildingState.ADDADJACENTNODE);
                 LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
+            }
+
+        });
+
+        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                mMainHospital.setState(BuildingState.MOVENODE);
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
+
             }
 
         });
