@@ -1,5 +1,7 @@
 package Map;
 
+import Map.EventHandlers.LocationNodeClickedEventHandler;
+import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -69,30 +71,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     /**
      * TODO
      *
-     * @param heuristicCost
-     * @param uniqueID
-     * @param location
-     * @param currentFloor
-     * @param destinations
-     */
-    public LocationNode(double heuristicCost, UUID uniqueID, Location location, Floor currentFloor, EnumMap<Destination, ArrayList<String>> destinations) {
-
-        this.heuristicCost = heuristicCost;
-        this.uniqueID = uniqueID;
-        this.location = location;
-        this.adjacentLocationNodes = new ArrayList<>();
-        this.destinations = destinations;
-        this.currentFloor = currentFloor;
-        this.adjacentLines = new ArrayList<>();
-        this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
-
-        observer.observeNode(this); //starts observing new LocationNode object
-
-    }
-
-    /**
-     * TODO
-     *
      * @param destination
      * @param name
      */
@@ -143,8 +121,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             setChanged();
 
         }
-
-
 
         notifyObservers();
 
@@ -235,12 +211,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         // return the distance between the nodes
         return this.location.getDistanceBetween(destinationLocation);
-
-
-//        int x = (int)abs((destinationLocationNode.location.getX())-(neighborsNode.getTempGoal().location.getX()));
-//        int y = (int)abs((destinationLocationNode.location.getY())-(neighborsNode.getTempGoal().location.getY()));
-//        double distance =  Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-//        return  distance;
     }
 
     /**
@@ -317,6 +287,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         pane.getChildren().add(this.nodeCircle);
 
+        setAssociatedPane(pane);
+
     }
 
     public void drawAdminNode(Pane pane) {
@@ -325,9 +297,12 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             return;
         }
 
+        setAssociatedPane(pane);
+
         pane.getChildren().add(this.nodeCircle);
 
-        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeCircleEventHandler(this));
+        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
+        nodeCircle.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
 
     }
 
@@ -338,7 +313,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      */
     public void drawAdjacentNodes(Pane pane) {
 
-        LOGGER.info("Drawing Adjacent Nodes");
+        LOGGER.info("Drawing Adjacent Nodes for the Node: " + this.toString());
 
         if (adjacentLines.size() != 0) {
 
@@ -358,6 +333,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
+        setAssociatedPane(pane);
+
     }
 
     public void drawAdjacentNode(Pane pane, LocationNode adjacentNode) {
@@ -368,6 +345,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         pane.getChildren().add(newLine);
 
         this.adjacentLines.add(newLine);
+
+        setAssociatedPane(pane);
 
     }
 
@@ -421,6 +400,18 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         setChanged();
 
         this.currentFloor.removeLocationNode(this);
+
+    }
+
+
+    public void notifyAdjacentNode() {
+
+        for (LocationNode n : adjacentLocationNodes) {
+
+            n.notifyObservers();
+
+        }
+
 
     }
 
@@ -494,6 +485,15 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     public void initAdjacentLines() { // Used to initialize adjacent lines list after loading from JSON file
         this.adjacentLines = new ArrayList<>();
+    }
+
+    public void setLocation(Location location) {
+
+        this.location = location;
+
+        setChanged();
+        notifyObservers();
+
     }
 }
 

@@ -7,7 +7,7 @@ import java.util.Stack;
  */
 public class FixedSizedStack<T> extends Stack<T> {
 
-    private final int maxSize;
+    private final int maxSize; // The maximum number of elements allowed in the stack
 
     public FixedSizedStack(int maxSize) {
 

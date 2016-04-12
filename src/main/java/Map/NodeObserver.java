@@ -61,6 +61,12 @@ public class NodeObserver implements Observer {
             currentLocationNode.drawAdminNode(currentLocationNode.getCurrentFloor().getNodePane());
             currentLocationNode.drawAdjacentNodes(currentLocationNode.getCurrentFloor().getNodePane());
 
+            for (LocationNode n : currentLocationNode.getAdjacentLocationNodes()) {
+
+                n.drawAdjacentNodes(currentLocationNode.getCurrentFloor().getNodePane());
+
+            }
+
         }
 
     }

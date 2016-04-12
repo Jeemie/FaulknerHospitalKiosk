@@ -129,35 +129,6 @@ public class Floor extends Observable{
     }
 
     /**
-     * Adds a previously generated node to the current floor.
-     *
-     * @param heuristicCost Cost of the current node.
-     * @param uniqueID An UUID that is associated with the node.
-     * @param location The x and y coordinate in which the node was placed on the current floor.
-     * @param destinations The destinations that are associated with the current node.
-     * @param observer The NodeObserver that watches this node
-     * @return The newly created node
-     */
-    public LocationNode addNode(double heuristicCost, UUID uniqueID, Location location,
-                                EnumMap<Destination, ArrayList<String>> destinations, NodeObserver observer) { //added NodeObserver pa
-
-        // Create a new node
-        LocationNode newLocationNode = new LocationNode(heuristicCost, uniqueID, location, this, destinations);
-
-        // Add the node to the list of locationNodes on the current floor
-        this.locationNodes.add(newLocationNode);
-
-        // mark floor as changed
-        setChanged();
-
-        // trigger notification
-        notifyObservers();
-
-        // Return the new LocationNode
-        return newLocationNode;
-    }
-
-    /**
      * Gets a list of all of the destinations of the given type located on this floor.
      *
      * @param destinationType Type of destination that you want to get.
