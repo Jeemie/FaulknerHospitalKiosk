@@ -4,6 +4,7 @@ package Kiosk.Controllers;
 import Kiosk.Admin;
 import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
+import Map.Map;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.event.ActionEvent;
@@ -228,25 +229,6 @@ public class AdminPanelController implements Initializable {
 
         this.mMainHospital = building;
 
-        try {
-            File file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/mapdata.json").toURI());
-            if (file.exists() && file.length() > 0) { // Check if file exists and is not empty
-                this.mMainHospital = loadFromFile(file); // Load mapdata.json
-            } else
-                file = new File(getClass().getClassLoader().getResource("Kiosk/Controllers/default.json").toURI());
-            if (file.exists() && file.length() > 0) { // Check that default file exists and is not empty
-                this.mMainHospital = loadFromFile(file); // Load default.json
-            } else {
-                LOGGER.info("Cannot load " + file.toString() + ". File does not exist or is empty.");
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (URISyntaxException e) {
-            System.out.println("Loaded from file e2");
-        } catch (FloorDoesNotExistException e) {
-            System.out.println("Loaded from file e3");
-        }
-
         setupListeners();
     }
 
@@ -254,19 +236,18 @@ public class AdminPanelController implements Initializable {
     private void setupListeners() {
 
 
-        mMainHospital.addFloor(1, "Floor1_Final.png");
+        // "Hardcoded" floor objects
+        // Can comment out/removed when floors are available in JSON file
+        // Can be removed entirely when an add floor functionality is added to the Admin Control Panel
+        /*  mMainHospital.addFloor(1, "Floor1_Final.png");
         mMainHospital.addFloor(2, "Floor2_Draft.png");
         mMainHospital.addFloor(3, "Floor3_Final.png");
         mMainHospital.addFloor(4, "Floor4_Draft.png");
+        */
 
-        try {
-            LocationNode node3A = new LocationNode(0, new Location(100, 100), mMainHospital.getFloor(3));
-            node3A.addDestination(Destination.KIOSK, "Kiosk3");
-        } catch (FloorDoesNotExistException e) {
-            e.printStackTrace();
-        }
-
-
+        // Initialize fields of existing Map components - Buildings, Floors, and Nodes - after loading from a JSON file.
+        // Fields associated with JavaFX require initialization after loading object data from JSON file.
+       //TODO Abstract this for use by all controllers
         for (Floor floor: mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
             if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
@@ -278,6 +259,10 @@ public class AdminPanelController implements Initializable {
             }
             floor.drawFloorAdmin(imageStackPane);
         }
+
+       // for (Floor floor: mMainHospital.getFloors()) {
+         //   floor.drawFloorAdmin(imageStackPane);
+        //}
 
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,

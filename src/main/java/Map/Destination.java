@@ -13,6 +13,7 @@ public enum  Destination {
     KIOSK,
     BATHROOM,
     ELEVATOR,
-    STAIR
+    STAIR,
+    SERVICE
 
 }

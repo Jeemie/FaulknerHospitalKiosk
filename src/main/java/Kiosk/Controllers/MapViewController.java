@@ -1,6 +1,7 @@
 package Kiosk.Controllers;
 
 import Map.Building;
+import Map.Floor;
 import Map.LocationNode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import Kiosk.KioskApp;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 
 
 public class MapViewController {
@@ -33,7 +35,6 @@ public class MapViewController {
      */
     @FXML
     private void initialize() {
-
 
         confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

@@ -27,7 +27,6 @@ public class Floor extends Observable{
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
     private ArrayList<LocationNode> locationNodes;
-    // Maryann added this
     private String imagePath;
     @JsonIgnore
     private ImageView floorImage;
@@ -241,7 +240,6 @@ public class Floor extends Observable{
 
     public void setFloorImage(URL imagePath) {
 
-        Image image = new Image(imagePath.toString());
         if(this.floorImage == null) {
             this.floorImage = new ImageView();
         }
@@ -249,6 +247,7 @@ public class Floor extends Observable{
             this.nodePane = new Pane();
         }
 
+        Image image = new Image(String.valueOf(imagePath));
         this.floorImage.setImage(image);
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
@@ -293,7 +292,6 @@ public class Floor extends Observable{
         this.locationNodes.remove(node);
 
     }
-
 
     /**
      * Return a FloorObserver associated with Floor
