@@ -65,9 +65,7 @@ public class KioskOverviewController {
      * The flag is set to 2 to show the services list
      */
     @FXML
-    private void handleServices() {
-    	kioskApp.showDirectory(null);
-    }
+    private void handleServices() { kioskApp.showDirectory(Destination.SERVICE); }
     
     /**
      * Called when the user clicks enter in the search bar.

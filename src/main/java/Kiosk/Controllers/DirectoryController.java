@@ -1,10 +1,7 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Building;
-import Map.Destination;
-import Map.Floor;
-import Map.LocationNode;
+import Map.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -214,11 +211,15 @@ public class DirectoryController {
         switch (destinationType) {
 
             case PHYSICIAN:
-                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
                 listDirectory.setItems(currentNames);
 
             case DEPARTMENT:
                 currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+                listDirectory.setItems(currentNames);
+
+            case SERVICE:
+                currentNames.setAll(building.getDestinations(Destination.SERVICE));
                 listDirectory.setItems(currentNames);
 
             default:
