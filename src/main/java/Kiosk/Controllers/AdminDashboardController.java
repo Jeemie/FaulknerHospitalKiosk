@@ -1,23 +1,36 @@
 package Kiosk.Controllers;
 
-import Map.Building;
+import Kiosk.KioskApp;
+import Map.*;
+import Map.Exceptions.FloorDoesNotExistException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Created by matt on 4/12/16.
  */
 public class AdminDashboardController {
 
-
     private Building building;
+    private KioskApp kioskApp;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
+    @FXML
+    private ScrollPane mapScrollPane;
 
     @FXML
     private StackPane mapStackPane;
@@ -144,19 +157,252 @@ public class AdminDashboardController {
 
     // Destinations Titled Pane //
     @FXML
-    private TitledPane
+    private TitledPane locationDestinationsTitledPane;
 
     @FXML
-    private
+    private ListView locationDestinationsListView;
 
     @FXML
-    private
+    private Button locationDestinationsAddButton;
 
     @FXML
-    private
+    private Button locationDestinationsModifyButton;
 
     @FXML
-    private
+    private Button locationDestinationsDeleteButton;
+
+
+    // Information Titled Pane //
+    @FXML
+    private TitledPane locationInformationTitledPane;
+
+
+
+    @FXML
+    private Button discardChangesButton;
+
+    @FXML
+    private Button saveChangesButton;
+
+    @FXML
+    private Button logoutButton;
+
+
+
+
+
+    public void setListeners() {
+
+        deleteThis();
+
+        // Setup Listeners
+        setCoreFunctionalityListeners();
+        setBuildingTabListeners();
+        setFloorTabListeners();
+        setLocationTabListeners();
+
+    }
+
+    // TODO PLEASE DELETE THIS
+    private void deleteThis() {
+
+
+        this.building.addFloor(2, "Floor2_Draft.png");
+        this.building.addFloor(3, "Floor3_Final.png");
+        this.building.addFloor(4, "Floor4_Draft.png");
+
+        try {
+            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
+            node3A.addDestination(Destination.KIOSK, "Kiosk3");
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
+
+        for (Floor floor: this.building.getFloors()) {
+            floor.setFloorImage(getClass().getResource(floor.getImagePath()));
+            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
+                for (LocationNode node : floor.getFloorNodes()) {
+                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
+                    node.initObserver();
+                    node.initAdjacentLines();
+                }
+            }
+            floor.drawFloorAdmin(this.mapStackPane);
+        }
+
+
+    }
+
+
+    private void setCoreFunctionalityListeners() {
+
+        // Setup Logout Button
+        this.logoutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                // TODO Add saving prompt if changes have been made
+
+                LOGGER.info("Logging out of the Admin Dashboard");
+
+                kioskApp.reset();
+
+            }
+
+        });
+
+        // Setup Discard Changes Button
+        this.discardChangesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                // TODO Reload building from file
+
+                LOGGER.info("Discarding changes to the map");
+
+            }
+
+        });
+
+        // Setup Save Changes Button
+        this.saveChangesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                // TODO Fix saving so that is saves to a different location
+
+                LOGGER.info("Attempting to save changes to the map");
+
+                try {
+
+                    building.saveToFile("Kiosk/Controllers/mapdata.json");
+
+                    LOGGER.info("Changes were saved");
+
+                } catch (IOException e) {
+
+                    LOGGER.error("An error occurred while saving changes to the map", e);
+
+                } catch (URISyntaxException e) {
+
+                    LOGGER.error("An error occurred while saving changes to the map", e);
+
+                }
+
+            }
+
+        });
+
+        // Setup Zoom Slider
+        this.zoomSlider.setMax(1.5);
+        this.zoomSlider.setMin(0.5);
+        this.zoomSlider.setValue(1.0);
+        this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+                LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
+
+                // TODO fix zooming
+
+//                double scrollH = mapScrollPane.getHvalue();
+//                double scrollV = mapScrollPane.getVvalue();
+//
+//                LOGGER.info("" + scrollH);
+//                LOGGER.info("" + scrollV);
+//                zoomSlider.setScaleX(newValue.doubleValue());
+//                zoomSlider.setScaleY(newValue.doubleValue());
+//                mapScrollPane.setHvalue(scrollH);
+//                mapScrollPane.setVvalue(scrollV);
+
+            }
+
+        });
+
+
+
+        // Setup Zoom In Button
+        this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Zooming In");
+
+                zoomSlider.setValue(zoomSlider.getValue() + 0.1);
+
+            }
+
+        });
+
+        // Setup Zoom Out Button
+        this.zoomOutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Zooming out");
+
+                zoomSlider.setValue(zoomSlider.getValue() - 0.1);
+
+            }
+
+        });
+
+
+        // Setup Tab Pane
+        this.mapTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+
+                LOGGER.info("The selected tab is currently " + newValue.getText());
+
+            }
+
+        });
+
+    }
+
+    private void setBuildingTabListeners() {
+
+        // TODO do something with the building tab
+
+
+        // Setup Building Accordion
+        this.buildingAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
+
+            @Override
+            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
+
+                if (newValue != null) {
+
+                    LOGGER.info("In the building tab the " + newValue.getText() + " Titled Pane has been expanded");
+
+                } else {
+
+                    LOGGER.info("In the building tab the " + oldValue.getText() + " Titled Pane has been closed");
+
+                }
+
+            }
+
+        });
+
+
+
+//        this.buildingFloorsTitledPane.isExpanded().add
+
+    }
+
+    private void setFloorTabListeners() {}
+
+    private void setLocationTabListeners() {}
 
 
 
@@ -164,5 +410,18 @@ public class AdminDashboardController {
 
 
 
+
+
+    public void setBuilding(Building building) {
+
+        this.building = building;
+
+    }
+
+    public void setKioskApp(KioskApp kioskApp) {
+
+        this.kioskApp = kioskApp;
+
+    }
 
 }

@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -128,26 +129,55 @@ public class KioskApp extends Application {
      */
     public boolean showAdminControls() {
 
+//        try {
+//
+//            Stage stage;
+//            stage = new Stage();
+//
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
+//            Parent root = (Parent)loader.load();
+//            AdminPanelController controller = loader.<AdminPanelController>getController();
+//
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.show();
+//
+//            controller.setBuilding(this.hospitalBuilding);
+//            controller.setKioskApp(this);
+//
+//            return controller.isOkClicked();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+
+
         try {
+            // Load AdminDashboard
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AdminDashboard.fxml"));
+            SplitPane page = (SplitPane) loader.load();
 
-            Stage stage;
-            stage = new Stage();
+            // Replace KioskOverview with AdminLogin
+            primaryStage.setTitle("Administrator Dashboard");
+            Scene scene = new Scene(page);
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
 
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
-            Parent root = (Parent)loader.load();
-            AdminPanelController controller = loader.<AdminPanelController>getController();
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            controller.setBuilding(this.hospitalBuilding);
+            // Give controller access to Main App
+            AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setBuilding(this.hospitalBuilding);
+            controller.setListeners();
 
-            return controller.isOkClicked();
-            
+//            return controller.isOkClicked();
+            return false;
+
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
