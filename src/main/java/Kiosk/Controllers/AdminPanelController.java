@@ -249,17 +249,7 @@ public class AdminPanelController implements Initializable {
         // Fields associated with JavaFX require initialization after loading object data from JSON file.
        //TODO Abstract this for use by all controllers
 
-        Floor f1 = mMainHospital.addFloor(1, "Floor1_Final.png");
 
-        mMainHospital.addFloor(1, "Floor1_Final.png");
-        mMainHospital.addFloor(2, "Floor2_Draft.png");
-        mMainHospital.addFloor(3, "Floor3_Final.png");
-        mMainHospital.addFloor(4, "Floor4_Draft.png");
-
-        f1.addNode(new Location(0,0));
-        LocationNode n1 = f1.addNode(new Location(0,0));
-
-        n1.addDestination(Destination.DEPARTMENT, "Hello");
         for (Floor floor: mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
             if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes

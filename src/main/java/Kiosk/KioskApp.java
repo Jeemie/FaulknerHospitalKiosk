@@ -40,7 +40,6 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
     private LocationNode startNode;
-    private SearchController searchingThing = new SearchController();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
     @FXML
@@ -205,6 +204,7 @@ public class KioskApp extends Application {
             controller.setKioskApp(this);
             controller.setBuilding(hospitalBuilding);
 
+            System.out.println(value);
             controller.displayResult(value);
 
 

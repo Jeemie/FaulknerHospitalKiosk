@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,12 +27,15 @@ public class SearchController {
     private boolean okClicked = false;
     private KioskApp kioskApp;
     private Building building;
+    private String inValue;
+    List<String> searchResult;
 
     ObservableList<String> destinations = FXCollections.observableArrayList();
-    ObservableList<String> searchresults = FXCollections.observableArrayList();
+    ObservableList<String> searchResults = FXCollections.observableArrayList();
 
     @FXML
     private ListView<String> listDirectory;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
     @FXML
@@ -85,6 +89,9 @@ public class SearchController {
             }
 
         });
+
+
+
     }
 
     /**
@@ -148,14 +155,95 @@ public class SearchController {
         building = Map.storeMapData();
         destinations.setAll(building.getDestinations());
 
-        //System.out.println("Hello");
-        List<String> searchresult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
+        System.out.println("Hello");
+        searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
+
+        inValue = value;
+
+        searchResults.setAll(searchResult);
+
+        listDirectory.setItems(searchResults);
 
 
-        searchresults.setAll(searchresult);
-
-        listDirectory.setItems(searchresults);
 
     }
 
+    @FXML
+    public void sortResult(Destination destinationType){
+
+        /*switch (destinationType) {
+
+            case PHYSICIAN:
+
+                destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
+                searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+                searchResults.setAll(searchResult);
+                listDirectory.setItems(searchResults);
+
+            case DEPARTMENT:
+                destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
+                searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+                searchResults.setAll(searchResult);
+                listDirectory.setItems(searchResults);
+
+            case SERVICE:
+
+                System.out.println("HELLO THERE " + inValue);
+                destinations.setAll(building.getDestinations(Destination.SERVICE));
+                searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+                searchResults.setAll(searchResult);
+                listDirectory.setItems(searchResults);
+
+        }*/
+
+        if(destinationType == Destination.PHYSICIAN){
+
+            System.out.println("HEE " + inValue);
+            destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
+            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResults.setAll(searchResult);
+            listDirectory.setItems(searchResults);
+
+        }
+
+        if(destinationType == Destination.DEPARTMENT){
+            System.out.println("GRR " + inValue);
+            destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
+            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResults.setAll(searchResult);
+            listDirectory.setItems(searchResults);
+
+        }
+
+        if(destinationType == Destination.SERVICE){
+
+            System.out.println("HELLO THERE " + inValue);
+            destinations.setAll(building.getDestinations(Destination.SERVICE));
+            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResults.setAll(searchResult);
+            listDirectory.setItems(searchResults);
+
+        }
+
+    }
+
+    @FXML
+    private void sortPhysicians(){
+
+        sortResult(Destination.PHYSICIAN);
+
+    }
+
+    @FXML
+    private void sortDepartments(){
+
+        sortResult(Destination.DEPARTMENT);
+
+    }
+    @FXML
+    private void sortServices(){
+
+        sortResult(Destination.SERVICE);
+
+    }
 }

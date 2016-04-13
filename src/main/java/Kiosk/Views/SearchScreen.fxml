@@ -8,29 +8,31 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="70.0" layoutY="2.0" prefHeight="25.0" prefWidth="454.0"
-                   promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0"
-                   AnchorPane.topAnchor="10.0"/>
-        <TableView layoutX="-132.0" layoutY="-206.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.leftAnchor="-132.0"
-                   AnchorPane.rightAnchor="278.0" AnchorPane.topAnchor="-206.0">
+        <TextField fx:id="searchTextBox" layoutX="70.0" layoutY="2.0" prefHeight="25.0" prefWidth="454.0" promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="10.0" />
+        <TableView layoutX="-132.0" layoutY="-206.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.leftAnchor="-132.0" AnchorPane.rightAnchor="278.0" AnchorPane.topAnchor="-206.0">
             <columns>
-                <TableColumn prefWidth="453.0" text="Search Results"/>
+                <TableColumn prefWidth="453.0" text="Search Results" />
             </columns>
         </TableView>
-        <ButtonBar layoutX="200.0" layoutY="260.0" prefHeight="40.0" prefWidth="159.0" AnchorPane.leftAnchor="200.0"
-                   AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="260.0">
-            <buttons>
-                <Button mnemonicParsing="false" onAction="#handleForward" text="OK"/>
-                <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel"/>
-            </buttons>
-        </ButtonBar>
-        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0"
-                  AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="50.0"/>
-        <Label layoutX="73.0" layoutY="50.0" prefHeight="21.0" prefWidth="454.0"
-               text="                                            Search Results" textAlignment="CENTER"/>
+        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="125.0" prefHeight="175.0" prefWidth="454.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="125.0" />
+        <Label layoutX="73.0" layoutY="96.0" prefHeight="21.0" prefWidth="454.0" text="                                            Search Results" textAlignment="CENTER" />
+          <Button layoutX="539.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleForward" text="OK" />
+          <Button layoutX="527.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" />
+      <ButtonBar layoutX="168.0" layoutY="51.0" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="31.0" prefWidth="109.0" text="Physicians">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#sortDepartments" text="Departments" />
+            <Button mnemonicParsing="false" onAction="#sortServices" text="Services" />
+        </buttons>
+      </ButtonBar>
     </children>
 </AnchorPane>
