@@ -9,32 +9,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.DirectoryController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.DirectoryController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="52.0" layoutY="14.0" prefHeight="25.0" prefWidth="462.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0" />
-        <ButtonBar layoutX="197.0" layoutY="296.0" prefHeight="40.0" prefWidth="160.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="197.0" AnchorPane.rightAnchor="223.0">
+        <TextField fx:id="searchTextBox" layoutX="52.0" layoutY="14.0" prefHeight="51.0" prefWidth="1160.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
+        <ButtonBar layoutX="197.0" layoutY="296.0" prefHeight="74.0" prefWidth="860.0" AnchorPane.leftAnchor="197.0" AnchorPane.rightAnchor="223.0" AnchorPane.topAnchor="700.0">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#handleForward" text="OK" />
-                <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+                <Button mnemonicParsing="false" onAction="#handleForward" prefHeight="45.0" prefWidth="458.0" text="OK">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
+                <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="45.0" text="Cancel">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
             </buttons>
         </ButtonBar>
-        <ButtonBar layoutX="152.0" layoutY="80.0" prefHeight="40.0" prefWidth="296.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="80.0">
+        <ButtonBar layoutX="152.0" layoutY="132.0" prefHeight="58.0" prefWidth="976.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="132.0">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#handlePhysicians" text="Staff" translateX="-10.0" />
-                <Button mnemonicParsing="false" onAction="#handleDepartments" text="Departments" translateX="-10.0" />
-                <Button mnemonicParsing="false" onAction="#handleServices" text="Services" translateX="-10.0" />
+                <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="25.0" prefWidth="335.0" text="Care Provider" translateX="-10.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
+                <Button mnemonicParsing="false" onAction="#handleDepartments" text="Departments" translateX="-10.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
+                <Button mnemonicParsing="false" onAction="#handleServices" text="Services" translateX="-10.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
             </buttons>
         </ButtonBar>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="201.0" layoutY="48.0" prefHeight="25.0" prefWidth="180.0" text="Switch Directories" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="210.0">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="69.0" prefHeight="25.0" prefWidth="180.0" text="Switch Directories" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="69.0">
             <font>
-                <Font size="18.0" />
+                <Font size="36.0" />
             </font>
         </Label>
-        <SplitPane dividerPositions="0.1414141414141414" layoutX="248.0" layoutY="136.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="130.0">
+        <SplitPane dividerPositions="0.1414141414141414" layoutX="248.0" layoutY="231.0" orientation="VERTICAL" prefHeight="435.0" prefWidth="1252.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="231.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
-                        <Label layoutX="241.0" layoutY="6.0" prefHeight="23.0" prefWidth="64.0" scaleX="1.5" scaleY="1.5" scaleZ="1.5" text="Directory" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="2.0" />
+                        <Label alignment="CENTER" layoutX="241.0" layoutY="6.0" prefHeight="23.0" prefWidth="64.0" scaleX="1.5" scaleY="1.5" scaleZ="1.5" text="Directory" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="2.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<SplitPane dividerPositions="0.7506265664160401, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDepartmentPanelController">
+<SplitPane dividerPositions="0.7506265664160401" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDepartmentPanelController">
     <items>
     <AnchorPane>
          <children>
             <HBox minWidth="-Infinity" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <TableView fx:id="nodeTable" layoutX="1.0" layoutY="30.0" prefHeight="596.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="nodeTable" layoutY="27.0" prefHeight="596.0" prefWidth="1280.0" AnchorPane.bottomAnchor="-27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
               <columns>
-                  <TableColumn fx:id="deptName" onEditCommit="#firstNameCol_OnEditCommit" prefWidth="124.0" text="Department Type" />
-                  <TableColumn fx:id="ycoord" onEditCommit="#majorCol_OnEditCommit" prefWidth="170.0" text="Floor" />
-                  <TableColumn fx:id="deptType" onEditCommit="#genderCol_OnEditCommit" prefWidth="155.0" text="Department" />
+                  <TableColumn fx:id="deptName" onEditCommit="#firstNameCol_OnEditCommit" prefWidth="426.0" text="Department Type" />
+                  <TableColumn fx:id="ycoord" onEditCommit="#majorCol_OnEditCommit" prefWidth="426.0" text="Floor" />
+                  <TableColumn fx:id="deptType" onEditCommit="#genderCol_OnEditCommit" prefWidth="426.0" text="Department" />
               </columns>
             </TableView>
+            <MenuBar fx:id="fileMenu" layoutY="2.0" prefHeight="0.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Exit" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="1000.0" prefHeight="100.0" prefWidth="1000.0">
          <children>
             <HBox />
-            <TextField fx:id="deptTypeField" layoutX="14.0" layoutY="14.0" promptText="Department Name..." />
-            <TextField fx:id="yField" layoutX="193.0" layoutY="14.0" promptText="Floor..." />
-            <ComboBox fx:id="deptBox" layoutX="389.0" layoutY="14.0" prefWidth="150.0" promptText="Department" />
-            <Button fx:id="addBtn" layoutX="573.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddButtonClick" text="Add" />
-            <Button fx:id="deleteBtn" layoutX="654.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteButtonClick" text="Delete" />
-            <TextField fx:id="filterInput" layoutX="573.0" layoutY="85.0" promptText="Filter Table..." />
-            <Button layoutX="744.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear " />
-            <Button fx:id="back" layoutX="828.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="Back" />
+            <TextField fx:id="deptTypeField" layoutX="14.0" layoutY="14.0" promptText="Department Name..." AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="1000.0" AnchorPane.topAnchor="14.0" />
+            <TextField fx:id="yField" layoutX="386.0" layoutY="14.0" promptText="Floor..." AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="14.0" />
+            <ComboBox fx:id="deptBox" layoutX="606.0" layoutY="14.0" prefWidth="150.0" promptText="Department" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="addBtn" layoutX="573.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddButtonClick" text="Add" AnchorPane.leftAnchor="800.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="deleteBtn" layoutX="908.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteButtonClick" text="Delete" AnchorPane.leftAnchor="900.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="14.0" />
+            <TextField fx:id="filterInput" layoutX="573.0" layoutY="85.0" promptText="Filter Table..." AnchorPane.leftAnchor="573.0" AnchorPane.rightAnchor="556.0" AnchorPane.topAnchor="85.0" />
+            <Button layoutX="1026.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear " AnchorPane.leftAnchor="1000.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="back" layoutX="1100.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="78.0" text="Back" AnchorPane.leftAnchor="1100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="14.0" />
          </children></AnchorPane>
-      <MenuBar fx:id="fileMenu" prefHeight="0.0" prefWidth="1000.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Exit" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
   </items>
 </SplitPane>

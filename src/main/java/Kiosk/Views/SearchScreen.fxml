@@ -10,30 +10,50 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="70.0" layoutY="2.0" prefHeight="25.0" prefWidth="454.0" promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="10.0" />
+        <TextField fx:id="searchTextBox" layoutX="73.0" layoutY="50.0" prefHeight="51.0" prefWidth="1134.0" promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
         <TableView layoutX="-132.0" layoutY="-206.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.leftAnchor="-132.0" AnchorPane.rightAnchor="278.0" AnchorPane.topAnchor="-206.0">
             <columns>
                 <TableColumn prefWidth="453.0" text="Search Results" />
             </columns>
         </TableView>
-        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="125.0" prefHeight="175.0" prefWidth="454.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="125.0" />
-        <Label layoutX="73.0" layoutY="96.0" prefHeight="21.0" prefWidth="454.0" text="                                            Search Results" textAlignment="CENTER" />
-          <Button layoutX="539.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleForward" text="OK" />
-          <Button layoutX="527.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" />
-      <ButtonBar layoutX="300.0" layoutY="52.0" prefHeight="40.0" prefWidth="200.0" />
-      <ButtonBar layoutX="161.0" layoutY="41.0" prefHeight="40.0" prefWidth="200.0">
+        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="371.0" prefHeight="340.0" prefWidth="1134.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="300.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="226.0" prefHeight="51.0" prefWidth="1134.0" text="Search Results" textAlignment="CENTER" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="226.0">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+          <Button layoutX="284.0" layoutY="696.0" mnemonicParsing="false" onAction="#handleForward" prefHeight="51.0" prefWidth="190.0" text="OK" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="806.0" AnchorPane.topAnchor="696.0">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+          <Button layoutX="806.0" layoutY="696.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="51.0" prefWidth="190.0" text="Cancel" AnchorPane.leftAnchor="806.0" AnchorPane.rightAnchor="284.0" AnchorPane.topAnchor="696.0">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <ButtonBar layoutX="276.0" layoutY="160.0" prefHeight="51.0" prefWidth="733.0" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="271.0" AnchorPane.topAnchor="160.0">
         <buttons>
-            <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" text="Services">
+            <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="40.0" text="Care Provider">
+               <font>
+                  <Font size="24.0" />
+               </font>
                <toggleGroup>
                   <ToggleGroup fx:id="Sorting" />
-               </toggleGroup>
+               </toggleGroup></ToggleButton>
+            <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" prefHeight="40.0" text="Departments" toggleGroup="$Sorting">
+               <font>
+                  <Font size="24.0" />
+               </font></ToggleButton>
+            <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" prefHeight="40.0" prefWidth="273.0" text="Services" toggleGroup="$Sorting">
+               <font>
+                  <Font size="24.0" />
+               </font>
             </ToggleButton>
-            <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" text="Departments" toggleGroup="$Sorting" />
-            <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" text="Physician" toggleGroup="$Sorting" />
         </buttons>
       </ButtonBar>
     </children>

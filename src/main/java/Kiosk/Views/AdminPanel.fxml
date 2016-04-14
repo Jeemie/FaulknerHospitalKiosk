@@ -75,17 +75,17 @@
             </ScrollPane>
             <Pane>
                <children>
-                  <Button fx:id="setStartLocationButton" layoutX="98.0" layoutY="25.0" mnemonicParsing="false" text="Set start Location" />
-                  <Button fx:id="saveToFileButton" layoutX="124.0" layoutY="160.0" mnemonicParsing="false" text="Save to file" />
-                  <Button fx:id="addLocationButton" layoutX="138.0" layoutY="79.0" mnemonicParsing="false" text="Add Location" />
-                  <Button fx:id="modifyLocationButton" layoutX="103.0" layoutY="52.0" mnemonicParsing="false" text="Modify Location" />
-                  <Button fx:id="removeLocationButton" layoutX="138.0" layoutY="106.0" mnemonicParsing="false" text="Remove Location" />
-                  <Button fx:id="addConnectedLocationButton" layoutX="138.0" layoutY="133.0" mnemonicParsing="false" text="Add Connected Location" />
-                  <Button fx:id="changeFloorButton4" layoutX="124.0" layoutY="187.0" mnemonicParsing="false" text="Floor 4" />
-                  <Button fx:id="changeFloorButton3" layoutX="124.0" layoutY="214.0" mnemonicParsing="false" text="Floor 3" />
-                  <Button fx:id="changeFloorButton2" layoutX="124.0" layoutY="241.0" mnemonicParsing="false" text="Floor 2" />
-                  <Button fx:id="changeFloorButton1" layoutX="124.0" layoutY="269.0" mnemonicParsing="false" text="Floor 1" />
-                  <Button fx:id="moveLocationButton" layoutX="125.0" layoutY="296.0" mnemonicParsing="false" text="Move Location" />
+                  <Button fx:id="setStartLocationButton" layoutX="97.0" layoutY="58.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Set start Location" />
+                  <Button fx:id="saveToFileButton" layoutX="93.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Save to file" />
+                  <Button fx:id="addLocationButton" layoutX="95.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Add Location" />
+                  <Button fx:id="modifyLocationButton" layoutX="96.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Modify Location" />
+                  <Button fx:id="removeLocationButton" layoutX="96.0" layoutY="168.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Remove Location" />
+                  <Button fx:id="addConnectedLocationButton" layoutX="95.0" layoutY="203.0" mnemonicParsing="false" text="Add Connected Location" />
+                  <Button fx:id="changeFloorButton4" layoutX="95.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Floor 4" />
+                  <Button fx:id="changeFloorButton3" layoutX="93.0" layoutY="320.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Floor 3" />
+                  <Button fx:id="changeFloorButton2" layoutX="92.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Floor 2" />
+                  <Button fx:id="changeFloorButton1" layoutX="92.0" layoutY="397.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Floor 1" />
+                  <Button fx:id="moveLocationButton" layoutX="93.0" layoutY="434.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Move Location" />
                </children></Pane>
          </items>
       </SplitPane>

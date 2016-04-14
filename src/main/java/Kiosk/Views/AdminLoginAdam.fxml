@@ -8,20 +8,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminLoginController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminLoginController">
    <children>
-      <Label alignment="CENTER" layoutX="169.0" layoutY="48.0" prefHeight="35.0" prefWidth="263.0" text="Authorized Access Only" AnchorPane.leftAnchor="169.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="20.0">
+      <Label alignment="CENTER" layoutX="169.0" layoutY="130.0" prefHeight="75.0" prefWidth="943.0" text="Authorized Access Only" AnchorPane.leftAnchor="169.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="130.0">
          <font>
-            <Font size="24.0" />
+            <Font size="48.0" />
          </font>
       </Label>
-      <TextField layoutX="226.0" layoutY="99.0" promptText="Username" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="55.0" />
-      <ButtonBar layoutX="202.0" layoutY="130.0" prefHeight="40.0" prefWidth="149.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="218.0" AnchorPane.topAnchor="130.0">
+      <TextField layoutX="226.0" layoutY="300.0" prefHeight="51.0" prefWidth="829.0" promptText="Username" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="300.0">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
+      <ButtonBar layoutX="195.0" layoutY="631.0" prefHeight="75.0" prefWidth="860.0" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="631.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-            <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+          <Button mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="459.0" text="Login">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
         </buttons>
       </ButtonBar>
-      <PasswordField layoutX="226.0" layoutY="88.0" promptText="Password" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="88.0" />
+      <PasswordField layoutX="226.0" layoutY="400.0" prefHeight="51.0" prefWidth="829.0" promptText="Password" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="400.0">
+         <font>
+            <Font size="24.0" />
+         </font></PasswordField>
    </children>
 </AnchorPane>

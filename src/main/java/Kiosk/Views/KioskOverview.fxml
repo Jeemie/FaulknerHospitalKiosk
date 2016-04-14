@@ -7,35 +7,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
    <children>
-      <Button layoutX="519.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleAdmin" text="Admin" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Label alignment="CENTER" layoutX="93.0" layoutY="59.0" prefHeight="45.0" prefWidth="414.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="60.0">
+      <Button layoutX="1187.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleAdmin" prefHeight="52.0" prefWidth="138.0" text="Admin" AnchorPane.leftAnchor="1100.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="32.0">
          <font>
-            <Font size="30.0" />
+            <Font size="24.0" />
+         </font></Button>
+      <Label alignment="CENTER" layoutX="93.0" layoutY="238.0" prefHeight="107.0" prefWidth="1094.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="238.0">
+         <font>
+            <Font size="60.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="201.0" layoutY="117.0" prefHeight="27.0" prefWidth="198.0" text="Select a directory below" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="117.0">
+      <Label alignment="CENTER" layoutX="201.0" layoutY="387.0" prefHeight="70.0" prefWidth="878.0" text="Select a directory below" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="387.0">
          <font>
-            <Font size="18.0" />
+            <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="searchTextBox" layoutX="55.0" layoutY="14.0" prefHeight="25.0" prefWidth="450.0" promptText="Search..." AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="10.0" />
-      <ButtonBar layoutX="121.0" layoutY="174.0" prefHeight="40.0" prefWidth="358.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="165.0">
+      <TextField fx:id="searchTextBox" layoutX="57.0" layoutY="105.0" prefHeight="70.0" prefWidth="1130.0" promptText="Search..." AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="105.0">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
+      <ButtonBar layoutX="101.0" layoutY="648.0" prefHeight="107.0" prefWidth="1038.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="648.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="31.0" prefWidth="142.0" text="Staff">
+          <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="70.0" prefWidth="370.0" text="Care Provider">
                <font>
-                  <Font size="15.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="31.0" text="Departments">
+            <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="70.0" text="Departments">
                <font>
-                  <Font size="15.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleServices" text="Services">
+            <Button mnemonicParsing="false" onAction="#handleServices" prefHeight="70.0" text="Services">
                <font>
-                  <Font size="15.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
         </buttons>
