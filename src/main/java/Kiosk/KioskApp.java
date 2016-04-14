@@ -104,13 +104,14 @@ public class KioskApp extends Application {
         try {
             // Load AdminLogin
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/AdminLoginAdam.fxml"));
+            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Admin Login");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App
