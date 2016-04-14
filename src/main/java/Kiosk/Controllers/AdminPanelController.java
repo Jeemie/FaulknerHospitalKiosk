@@ -7,13 +7,6 @@ import Kiosk.KioskApp;
 import Map.Map;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,12 +17,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.TextFlow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
@@ -39,22 +32,13 @@ import static Map.ObjectToJsonToJava.loadFromFile;
 public class AdminPanelController implements Initializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminPanelController.class);
+    private URL saveFilePath;
+
 
     @FXML
     VBox root_vbox;
     @FXML
     private ListView<String> map_listview;
-    @FXML
-    private ListView<String> buttonView;
-    @FXML
-    private TextFlow buttonView2 = new TextFlow();
-    @FXML
-    public Label alabel;
-
-    @FXML
-    private Button theButton;
-
-    StringProperty thestring = new SimpleStringProperty();
     @FXML
     private ScrollPane map_scrollpane;
     @FXML
@@ -68,7 +52,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private ToggleButton size_togglebutton;
     @FXML
-    private Button modifyLocationButton;
+    private  Button modifyLocationButton;
     @FXML
     private Button addLocationButton;
     @FXML
@@ -98,7 +82,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private Button changeFloorButton7;
 
-    ObservableList<String> viewing = FXCollections.observableArrayList();
+
 
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
@@ -111,6 +95,59 @@ public class AdminPanelController implements Initializable {
     private Admin print;
 
     AdminDepartmentPanelController control = new AdminDepartmentPanelController();
+
+
+    private LocationNode
+            mNode1Audiology,
+            mNode1Cardiac,
+            mNode1Preop,
+            mNode1ER,
+            mNode1GI,
+            mNode1Lab,
+            mNode1Financial,
+            mNode1Radiology,
+            mNode1SpecialTesting,
+            mNode1FamilyCenter,
+            mNode1Info,
+            mNode1Admitting,
+            mNode1Cafe,
+            mNode1Valet,
+            mNode2A,
+            mNode2B,
+            mNode2,
+            mNode2PhyscialTherapy,
+            mNode2Psychology,
+            mNode2Addiction,
+            mNode2Rehab,
+            mNode3A,
+            mNode3B,
+            mNode3C,
+            mNode3ATM,
+            mNode3Cafeteria,
+            mNode3Chapel,
+            mNode3Gifts,
+            mNode3Auditorium,
+            mNode3PatientRelations,
+            mNode3VolunteerServices,
+            mNode4A,
+            mNode4B,
+            mNode4C,
+            mNode4D,
+            mNode4F,
+            mNode4G,
+            mNode4H,
+            mNode4I,
+            mNode4J,
+            mNode4N,
+            mNode4S,
+            mNode4Doherty,
+            mNode4Tynan,
+            mNode4Sadowsky,
+            mNode4Saslow,
+            mNode4Interpreter,
+            mNode4Library,
+            mNode4Records,
+            mNode4SocialWork;
 
 
     @FXML
@@ -168,8 +205,13 @@ public class AdminPanelController implements Initializable {
 //            Rectangle2D bounds = screen.getVisualBounds();
 //            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
 //        }
+        try {
+            this.saveFilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-
+        mMainHospital = new Building();
         if (mMainHospital != null) {
             setupListeners();
         }
@@ -238,7 +280,7 @@ public class AdminPanelController implements Initializable {
 //        stage.show();
 //    }
 
-    public void print() {
+    public void  print() {
         System.out.print(print.getDept());
 
     }
@@ -254,74 +296,37 @@ public class AdminPanelController implements Initializable {
     private void setupListeners() {
 
 
-        // "Hardcoded" floor objects
-        // Can comment out/removed when floors are available in JSON file
-        // Can be removed entirely when an add floor functionality is added to the Admin Control Panel
-        /*  mMainHospital.addFloor(1, "Floor1_Final.png");
-        mMainHospital.addFloor(2, "Floor2_Draft.png");
-        mMainHospital.addFloor(3, "Floor3_Final.png");
-        mMainHospital.addFloor(4, "Floor4_Draft.png");
-        */
 
-        // Initialize fields of existing Map components - Buildings, Floors, and Nodes - after loading from a JSON file.
-        // Fields associated with JavaFX require initialization after loading object data from JSON file.
-        //TODO Abstract this for use by all controllers
-
-
-        for (Floor floor : mMainHospital.getFloors()) {
-            floor.setFloorImage(getClass().getResource(floor.getImagePath()));
-            if (floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
-                for (LocationNode node : floor.getFloorNodes()) {
-                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
-                    node.initObserver();
-                    node.initAdjacentLines();
-                }
-            }
-            floor.drawFloorAdmin(imageStackPane);
-        }
-
-        // for (Floor floor: mMainHospital.getFloors()) {
-        //   floor.drawFloorAdmin(imageStackPane);
-        //}
+           /* URL floor1Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor1_Final.png");
+            URL floor2Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor2_Final.png");
+            URL floor3Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor3_Final.png");
+            URL floor4Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor4_Final.png");
+            mMainHospital.addFloor(1, floor1Url);
+            mMainHospital.addFloor(2, floor2Url);
+            mMainHospital.addFloor(3, floor3Url);
+            mMainHospital.addFloor(4, floor4Url);*/
+            mMainHospital.addFloor(1, "Floor1_Final.png");
+            mMainHospital.addFloor(2, "Floor2_Final.png");
+            mMainHospital.addFloor(3, "Floor3_Final.png");
+            mMainHospital.addFloor(4, "Floor4_Final.png");
 
 
-        addLocationButton.setOnAction(event -> {
+        mMainHospital = Map.initMapComponents(mMainHospital);
 
-            addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
-            alabel.setText("Current Button : addLocation");
-        });
+        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
 
-        removeLocationButton.setOnAction(event -> {
+        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
 
-            removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
+        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
 
-            alabel.setText("Current Button : removeLocation");
-        });
+        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
 
-        addConnectedLocationButton.setOnAction(event -> {
-
-            addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
-            alabel.setText("Current Button : addConnectedLocation");
-        });
-
-        moveLocationButton.setOnAction(event -> {
-
-            moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
-            alabel.setText("Current Button : moveLocation");
-        });
-
-        modifyLocationButton.setOnAction(event -> {
-
-            modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
-            alabel.setText("Current Button : modifyLocation");
-        });
-
-
+        modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
 
 
         saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -330,13 +335,11 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
 
                 try {
-
-                    mMainHospital.saveToFile("Kiosk/Controllers/mapdata.json");
-
+                    mMainHospital.saveToFile(saveFilePath);
                 } catch (IOException e) {
-
+                    e.printStackTrace();
                 } catch (URISyntaxException e) {
-
+                    e.printStackTrace();
                 }
 
             }
@@ -347,7 +350,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                alabel.setText("Current Button : NoButtonSelected");
+
                 try {
                     mMainHospital.getFloor(1).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -362,7 +365,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                alabel.setText("Current Button : NoButtonSelected");
+
                 try {
                     mMainHospital.getFloor(2).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -377,7 +380,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                alabel.setText("Current Button : NoButtonSelected");
+
                 try {
                     mMainHospital.getFloor(3).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -392,7 +395,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                alabel.setText("Current Button : NoButtonSelected");
+
                 try {
                     mMainHospital.getFloor(4).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -409,12 +412,12 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
 
                 mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
-                alabel.setText("Current Button : setStartLocation");
-                LOGGER.info("Building State changed to " + mMainHospital.getState().name());
+                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
 
             }
 
         });
+
 
 
     }
@@ -426,5 +429,6 @@ public class AdminPanelController implements Initializable {
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
     }
+
 
 }

@@ -135,7 +135,7 @@ public class SearchController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                             }
 
@@ -260,7 +260,7 @@ public class SearchController {
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                 }
 
@@ -273,7 +273,6 @@ public class SearchController {
     @FXML
     public void displayResult(String value) {
 
-        building = Map.storeMapData();
         destinations.setAll(building.getDestinations());
 
         searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());

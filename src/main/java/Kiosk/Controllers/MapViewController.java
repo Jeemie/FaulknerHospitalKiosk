@@ -222,7 +222,7 @@ public class MapViewController {
         running = false;
         timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+        destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
     }
 
     public void setStartNode(LocationNode startNode) {
