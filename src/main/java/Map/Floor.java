@@ -41,7 +41,6 @@ public class Floor extends Observable{
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
-    @JsonIgnore
     private LocationNode startNode;
 
 
@@ -67,9 +66,10 @@ public class Floor extends Observable{
         this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
         this.relativePath = relativePath;
-        //this.imagePath = imagePath;
         this.floorImage = new ImageView();
         this.nodePane = new Pane();
+
+        setImagePath(this.relativePath);
 
         LOGGER.info("Created new Floor: " + this.toString());
 
@@ -244,9 +244,7 @@ public class Floor extends Observable{
 
     }
 
-    public void setFloorImage(String relativeImagePath) {
-
-        setImagePath(relativeImagePath);
+    public void setFloorImage(URL imagePath) {
 
         if(this.floorImage == null) {
             this.floorImage = new ImageView();
@@ -255,7 +253,7 @@ public class Floor extends Observable{
             this.nodePane = new Pane();
         }
 
-        Image image = new Image(String.valueOf(this.imagePath));
+        Image image = new Image(String.valueOf(imagePath));
         this.floorImage.setImage(image);
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
@@ -348,18 +346,12 @@ public class Floor extends Observable{
         return floorImage;
     }
 
-    @JsonIgnore
-    public URL getImagePath() {
-
-        return imagePath;
-    }
-
     @JsonGetter
     public String getRelativePath() {
-
         return relativePath;
     }
 
+    @JsonIgnore
     public void setRelativePath(URL imagePath) {
         URI uri = null;
         try {
@@ -373,6 +365,13 @@ public class Floor extends Observable{
         this.relativePath =  idStr;
     }
 
+    @JsonIgnore
+    public URL getImagePath() {
+
+        return imagePath;
+    }
+
+    @JsonIgnore
     public void setImagePath(String relativePath) {
         try {
             this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);

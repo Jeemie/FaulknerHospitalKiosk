@@ -44,7 +44,7 @@ public class BuildingTest {
 
     }
 
-    @Test
+  /*  @Test
     public void testSaveToFile() throws URISyntaxException {
         try {
             mTestBuilding.addNode(1, new Location(100, 100));
@@ -58,7 +58,7 @@ public class BuildingTest {
          catch (FloorDoesNotExistException e) {
            e.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     public void addFloor() {
@@ -66,11 +66,11 @@ public class BuildingTest {
        // mTestBuilding.addFloor(2);
        // mTestBuilding.addFloor(7);
     }
-
+/*
     @Test
     public void testLoadFromFile() throws URISyntaxException,FloorDoesNotExistException {
         try {
-           /* mFloor1 = new Floor(1, mTestBuilding);
+            mFloor1 = new Floor(1, mTestBuilding);
             mFloor2 = new Floor(2, mTestBuilding);
             mTestBuilding.addFloor(1);
             mTestBuilding.addFloor(2);
@@ -78,7 +78,8 @@ public class BuildingTest {
             mTwo.addAdjacentNode(mThree);
             mTestBuilding.addNode(1, new Location(100, 100));
             mTestBuilding.addNode(2, new Location(100, 200));
-            mFloor1.addNode(new Location(100, 100));*/
+            mFloor1.addNode(new Location(100, 100));
+
             mTwo.addDestination(Destination.DEPARTMENT, "ER");
             mTwo.addDestination(Destination.PHYSICIAN, "Dr. Binam");
             mOne.addDestination(Destination.KIOSK, "Kiosk");
@@ -90,5 +91,6 @@ public class BuildingTest {
         catch(java.io.IOException e) {
             e.printStackTrace();
         }
-    }
+    } */
+
 }
