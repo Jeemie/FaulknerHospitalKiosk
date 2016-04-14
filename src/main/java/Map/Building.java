@@ -277,7 +277,7 @@ public class Building extends Observable {
 
         for (int i = 0; i < path.size() - 1; i++) {
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+            path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
 
         }
 

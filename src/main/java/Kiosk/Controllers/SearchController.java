@@ -37,40 +37,25 @@ public class SearchController {
     List<String> searchResult;
 
 
+
+    ToggleButton departments;
+    ToggleButton physicians;
+    ToggleButton services;
+
+
+
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
     int counter = 0;
     private volatile boolean running = true;
 
-    @FXML
-    ToggleButton departments;
-    @FXML
-    ToggleButton physicians;
-    @FXML
-    ToggleButton services;
-
-
     TimerTask timerTask = new TimerTask() {
 
         @Override
         public void run() {
-
-                System.out.println("I'm at Start Timer");
                 counter++;
         }
     };
-
-
-    ObservableList<String> destinations = FXCollections.observableArrayList();
-    ObservableList<String> searchResults = FXCollections.observableArrayList();
-
-    @FXML
-    private ListView<String> listDirectory;
-
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
-    @FXML
-    private TextField searchTextBox;
 
     Runnable runnable = new Runnable() {
         @Override
@@ -78,8 +63,8 @@ public class SearchController {
             while (running) {
                 try {
                     System.out.println(counter + " seconds have passed.");
-                    if (counter == 5) {
-                        System.out.println("Timeout Sucker.");
+                    if (counter == 60) {
+                        System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
                         atimer.cancel();
@@ -94,7 +79,7 @@ public class SearchController {
                     timer.cancel();
                     timerTask.cancel();
                     running = false;
-                    exception.printStackTrace();
+                   // exception.printStackTrace();
                     break;
                 }
 
@@ -103,6 +88,7 @@ public class SearchController {
     };
 
     Thread timerThread = new Thread(runnable);
+
     Runnable resetKiosk = new Runnable() {
 
         @Override
@@ -111,16 +97,16 @@ public class SearchController {
         }
     };
 
-    TimerTask noFreeze = new TimerTask() {
+    ObservableList<String> destinations = FXCollections.observableArrayList();
+    ObservableList<String> searchResults = FXCollections.observableArrayList();
 
-        @Override
-        public void run() {
+    @FXML
+    private ListView<String> listDirectory;
 
-            System.out.println("Reset");
-     //       running = true;
-            atimer.cancel();
-        }
-    };
+    @FXML
+    private TextField searchTextBox;
+
+
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -172,8 +158,6 @@ public class SearchController {
                     running = false;
                     timerThread.interrupt();
 
-                    System.out.println("Merp");
-                    LOGGER.info("Search Controller " + searchTextBox.getText());
                     kioskApp.showSearch(searchTextBox.getText());
 
                 }
@@ -245,7 +229,6 @@ public class SearchController {
         timer.purge();
         running = false;
         timerThread.interrupt();
-        //timerTask.cancel();
         kioskApp.reset();
     }
 
@@ -255,11 +238,6 @@ public class SearchController {
     @FXML
     private void handleCancel() {
 
-
-        //timer.cancel();
-        //running = false;
-        //timerThread.interrupt();
-        //timerTask.cancel();
         this.handleBack();
     }
 
@@ -295,10 +273,7 @@ public class SearchController {
     @FXML
     public void displayResult(String value) {
 
-        // TODO Maryann was here
-        //building = Map.storeMapData();
         destinations.setAll(building.getDestinations());
-
 
         searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
 
@@ -317,7 +292,7 @@ public class SearchController {
 
         if (destinationType == Destination.PHYSICIAN) {
 
-            System.out.println("HEE " + inValue);
+            counter = 0;
             destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);
@@ -326,7 +301,8 @@ public class SearchController {
         }
 
         if (destinationType == Destination.DEPARTMENT) {
-            System.out.println("GRR " + inValue);
+
+            counter = 0;
             destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);
@@ -336,7 +312,7 @@ public class SearchController {
 
         if (destinationType == Destination.SERVICE) {
 
-            System.out.println("HELLO THERE " + inValue);
+            counter = 0;
             destinations.setAll(building.getDestinations(Destination.SERVICE));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);

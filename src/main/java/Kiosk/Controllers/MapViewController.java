@@ -3,10 +3,12 @@ package Kiosk.Controllers;
 import Map.Building;
 import Map.Floor;
 import Map.LocationNode;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,6 +18,8 @@ import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapViewController {
 
@@ -26,6 +30,7 @@ public class MapViewController {
     private Building building;
     private LocationNode startNode;
     private LocationNode destinationNode;
+    private int numThreads = 0;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
     @FXML
@@ -35,6 +40,65 @@ public class MapViewController {
 
     @FXML
     private Button confirmButton;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    Timer timer = new Timer("A Timer");
+    Timer atimer = new Timer();
+
+    int counter = 0;
+    private volatile boolean running = true;
+
+    TimerTask timerTask = new TimerTask() {
+
+        @Override
+        public void run() {
+            counter++;
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+                    System.out.println(counter + " seconds have passed.");
+                    if (counter == 60) {
+                        System.out.println("Timed Out.");
+                        running = false;
+                        timer.cancel();
+                        timer.purge();
+                        atimer.cancel();
+                        atimer.purge();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    System.out.println("I'm outta here");
+                    atimer.cancel();
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    exception.printStackTrace();
+                    break;
+                }
+
+            }
+        }
+    };
+
+    Thread timerThread = new Thread(runnable);
+
+    Runnable resetKiosk = new Runnable() {
+
+        @Override
+        public void run() {
+            handleBack();
+        }
+    };
 
 
     /**
@@ -49,41 +113,54 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                // Check if path spans across multiple floor levels
-                if (startNode.getNodeFloor() != destinationNode.getNodeFloor()) {
-                    // Find shortest path to from starNode elevator node on startNode floor
-                    // Draw path
+                counter = 0;
+                building.drawShortestPath(startNode, destinationNode);
 
-                    // Find shortest path from elevator node to destinationNode on destinationNode floor
-                    // Draw path - Assumes path drawn first is not erased and still available to view
-
-
-                } else { // Path is on a single floor level
-                    building.drawShortestPath(startNode, destinationNode);
-                }
             }
+
         });
 
 
-        this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
-                    LOGGER.info("MapView" + searchTextBox.getText());
+                    timer.cancel();
+                    running = false;
+                    timerThread.interrupt();
+                    LOGGER.info("Blah " + searchTextBox.getText());
                     kioskApp.showSearch(searchTextBox.getText());
 
+                } else {
+
+                    counter = 0;
+
                 }
-
-
             }
+        });
 
+        scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if(numThreads == 0) {
+                    numThreads +=1;
+                    running = true;
+                    timerThread.start();
+                }
+                counter = 0;
+            }
         });
 
 
-    }
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
+        //timerThread.start();
+
+
+    }
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -112,6 +189,8 @@ public class MapViewController {
     // accessed from
     @FXML
     private void handleBack() {
+
+        handleCancel();
     }
 
     /**
@@ -119,6 +198,13 @@ public class MapViewController {
      */
     @FXML
     private void handleCancel() {
+
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         kioskApp.reset();
     }
 
@@ -128,6 +214,13 @@ public class MapViewController {
     }
 
     public void setDestinationNode(LocationNode destinationNode) {
+
+/*        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();*/
+        running = false;
+        timerThread.interrupt();
         this.destinationNode = destinationNode;
         destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
     }

@@ -134,7 +134,7 @@ public class Map {
     }
 
 
-    public Floor getCurrentFloor() {
+    public Floor getNodeFloor() {
 
         return currentFloor;
     }
