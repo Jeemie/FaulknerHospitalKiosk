@@ -52,6 +52,7 @@ public class KioskApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
 //            System.out.println(getClass().getResource("stylesheet.css"));
 //            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
             primaryStage.show();
@@ -76,6 +77,7 @@ public class KioskApp extends Application {
          // Give the controller access to the main app.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setListeners();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,32 +130,6 @@ public class KioskApp extends Application {
      * 
      */
     public boolean showAdminControls() {
-
-//        try {
-//
-//            Stage stage;
-//            stage = new Stage();
-//
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
-//            Parent root = (Parent)loader.load();
-//            AdminPanelController controller = loader.<AdminPanelController>getController();
-//
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.show();
-//
-//            controller.setBuilding(this.hospitalBuilding);
-//            controller.setKioskApp(this);
-//
-//            return controller.isOkClicked();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-
 
         try {
             // Load AdminDashboard

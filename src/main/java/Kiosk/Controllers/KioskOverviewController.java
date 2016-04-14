@@ -2,27 +2,32 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Destination;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class KioskOverviewController {
 
     // Reference to the main application.
     private KioskApp kioskApp;
 
-    /**
-     * The constructor.
-     * The constructor is called before the initialize() method.
-     */
-    public KioskOverviewController() {
-    }
+    // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(KioskOverviewController.class);
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
     @FXML
-    private void initialize() {
-    }
+    private Button adminButton;
+
+    @FXML
+    private Button providersButton;
+
+    @FXML
+    private Button departmentsButton;
+
+    @FXML
+    private Button servicesButton;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -32,41 +37,64 @@ public class KioskOverviewController {
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
     }
-    
-    /**
-     * Called when the user clicks the admin button.
-     */
-    @FXML
-    private void handleAdmin() {
-        kioskApp.showAdminLogin();
-    }
-    
-    /**
-     * Called when the user clicks the Physicians button.
-     * The flag is set to 0 to show the physician list
-     */
-    @FXML
-    private void handlePhysicians() {
-    	kioskApp.showDirectory(Destination.PHYSICIAN);
-    }
-    
 
     /**
-     * Called when the user clicks the Departments button.
-     * The flag is set to 1 to show the department list
+     * Setup the Button listeners for the Kiosk Overview
      */
-    @FXML
-    private void handleDepartments() {
-    	kioskApp.showDirectory(Destination.DEPARTMENT);
-    }
-    
-    /**
-     * Called when the user clicks the Services button.
-     * The flag is set to 2 to show the services list
-     */
-    @FXML
-    private void handleServices() {
-    	kioskApp.showDirectory(null);
+    public void setListeners() {
+
+        this.adminButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Admin Button pressed");
+
+                kioskApp.showAdminLogin();
+
+            }
+
+        });
+
+        this.providersButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Providers Button pressed");
+
+                kioskApp.showDirectory(Destination.PHYSICIAN);
+
+            }
+
+        });
+
+        this.departmentsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Departments Button pressed");
+
+                kioskApp.showDirectory(Destination.DEPARTMENT);
+
+            }
+
+        });
+
+        this.servicesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Services Button pressed");
+
+                kioskApp.showDirectory(null);
+
+            }
+
+        });
+
     }
     
     /**
