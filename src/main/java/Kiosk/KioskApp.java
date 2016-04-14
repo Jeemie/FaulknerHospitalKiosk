@@ -40,6 +40,7 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
     private LocationNode startNode;
+    private LocationNode destinationNode;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
     @FXML
