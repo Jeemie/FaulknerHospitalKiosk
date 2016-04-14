@@ -2,10 +2,7 @@ package Map;
 
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -26,7 +23,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     private Location location; // The pixel location of the node on the map
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
-    private Floor currentFloor; // The floor that the node is associated with
+    private Floor nodeFloor; // The floor that the node is associated with
     @JsonIgnore
     public double minDistance = Double.POSITIVE_INFINITY;
     @JsonIgnore
@@ -51,16 +48,16 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      *
      * @param heuristicCost
      * @param location
-     * @param currentFloor
+     * @param nodeFloor
      */
-    public LocationNode(double heuristicCost, Location location, Floor currentFloor) {
+    public LocationNode(double heuristicCost, Location location, Floor nodeFloor) {
 
         this.heuristicCost = heuristicCost;
         this.uniqueID = UUID.randomUUID();
         this.location = location;
         this.adjacentLocationNodes = new ArrayList<>();
         this.destinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
-        this.currentFloor = currentFloor;
+        this.nodeFloor = nodeFloor;
         this.adjacentLines = new ArrayList<>();
         this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
 
@@ -358,7 +355,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @JsonIgnore
     public BuildingState getState() {
 
-        return this.currentFloor.getState();
+        return this.nodeFloor.getState();
     }
 
     /**
@@ -368,7 +365,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
      */
     public void setState(BuildingState state) {
 
-        this.currentFloor.setState(state);
+        this.nodeFloor.setState(state);
 
     }
 
@@ -399,7 +396,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         notifyObservers();
         setChanged();
 
-        this.currentFloor.removeLocationNode(this);
+        this.nodeFloor.removeLocationNode(this);
 
     }
 
@@ -425,7 +422,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     protected void finalize() throws Throwable {
 
         LOGGER.info("Deleting Node: " + toString());
-        getCurrentFloor().getNodePane().getChildren().remove(this.nodeCircle);
+        getNodeFloor().getNodePane().getChildren().remove(this.nodeCircle);
 
         super.finalize();
     }
@@ -435,8 +432,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         return this;
     }
 
-    public Floor getCurrentFloor() {
-        return currentFloor;
+    public Floor getNodeFloor() {
+        return nodeFloor;
     }
 
     @Override
@@ -464,7 +461,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     public void setAsFloorStartNode() {
 
-        this.currentFloor.setStartNode(this);
+        this.nodeFloor.setStartNode(this);
     }
 
     public Pane getAssociatedPane() {
@@ -495,6 +492,29 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         notifyObservers();
 
     }
+/*
+    @JsonGetter
+    public void getNodeObserverDummy(){
+    }
+
+    @JsonSetter
+    public void setNodeObserverDummy(){
+        this.observer = new NodeObserver();
+    }
+
+
+    @JsonGetter
+    public String getNodeCircle() {
+        return "circle";
+
+    }
+    @JsonSetter
+    public void setNodeCircle() {
+        this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
+    }
+*/
+
+
 }
 
 

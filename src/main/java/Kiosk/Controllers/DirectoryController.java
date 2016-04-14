@@ -64,13 +64,16 @@ public class DirectoryController {
 
                             if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+
+                            kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                             }
+
 
                         }
 
                     }
+
                 }
             }
 
@@ -83,6 +86,7 @@ public class DirectoryController {
                 if (event.getCode().equals(KeyCode.ENTER)) {
                     LOGGER.info("Directory Controller" + searchTextBox.getText());
                     kioskApp.showSearch(searchTextBox.getText());
+
 
                 }
 
@@ -226,7 +230,7 @@ public class DirectoryController {
 
                 if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                 }
 

@@ -2,6 +2,7 @@ package Map;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import Map.Exceptions.FloorDoesNotExistException;
 import com.fasterxml.jackson.annotation.*;
@@ -56,9 +57,9 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void saveToFile(String filePath) throws IOException, URISyntaxException {
+    public void saveToFile(URL filePath) throws IOException, URISyntaxException {
 
-        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        File file = new File(filePath.toURI());
         ObjectToJsonToJava.saveToFile(file, this);
 
         LOGGER.info("Saving the building to the file: " + filePath);
@@ -89,13 +90,14 @@ public class Building extends Observable {
 
         for (int i = 0; i < path.size() - 1; i++) {
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+            path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
 
         }
 
     }
 
-    /**
+
+
 
 
      /**

@@ -42,8 +42,11 @@ public class SearchController {
     int counter = 0;
     private volatile boolean running = true;
 
+    @FXML
     ToggleButton departments;
+    @FXML
     ToggleButton physicians;
+    @FXML
     ToggleButton services;
 
 
@@ -146,7 +149,7 @@ public class SearchController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                             }
 
@@ -279,7 +282,7 @@ public class SearchController {
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                 }
 
@@ -292,10 +295,11 @@ public class SearchController {
     @FXML
     public void displayResult(String value) {
 
-        building = Map.storeMapData();
+        // TODO Maryann was here
+        //building = Map.storeMapData();
         destinations.setAll(building.getDestinations());
 
-        System.out.println("Hello");
+
         searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
 
         inValue = value;

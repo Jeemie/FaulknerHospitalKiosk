@@ -20,9 +20,10 @@ public class ObjectToJsonToJava {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectToJsonToJava.class); // Logger for this class
 
     public static void saveToFile(File file, Building building) throws IOException, URISyntaxException {
-
+        
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, building);
+        LOGGER.info("Saving the building to the file: " + file.toString());
     }
 
     /**

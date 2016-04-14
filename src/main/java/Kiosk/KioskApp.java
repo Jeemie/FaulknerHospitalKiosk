@@ -2,6 +2,7 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
@@ -21,12 +22,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +45,7 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
     private LocationNode startNode;
-
+    private URL filePath; // Path to file load from
     private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
     @FXML
     private TableView<String> listDirectory;
@@ -49,8 +54,30 @@ public class KioskApp extends Application {
     public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
 
         this.primaryStage = primaryStage;
-        //this.hospitalBuilding = new Building();
-        this.hospitalBuilding = Map.storeMapData(); //TODO Change to map by iteration 3
+        this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
+        try {
+
+            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+
+        } catch (DefaultFileDoesNotExistException e) {
+            // Create new default file
+            try {
+
+                File newFile = new File(this.filePath.toURI());
+                newFile.createNewFile();
+
+            } catch (URISyntaxException exception) {
+
+                exception.printStackTrace();
+
+            } catch (IOException exception) {
+
+                exception.printStackTrace();
+
+            }
+
+        }
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();
