@@ -15,9 +15,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import static Map.Map.storeMapData;
@@ -35,12 +38,29 @@ public class KioskApp extends Application {
     public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
 
         this.primaryStage = primaryStage;
-        this.filePath = new URL("file:/" + System.getProperty("user.dir") + "/resources/" + "default.json");
-        //this.hospitalBuilding = new Building();
+        this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
         try {
+
             this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+
         } catch (DefaultFileDoesNotExistException e) {
-            e.printStackTrace();
+
+            try {
+
+                File newFile = new File(this.filePath.toURI());
+                newFile.createNewFile();
+
+            } catch (URISyntaxException exception) {
+
+                exception.printStackTrace();
+
+            } catch (IOException exception) {
+
+                exception.printStackTrace();
+
+            }
+
         }
         this.primaryStage.setTitle("Pathfinding Application");
 
