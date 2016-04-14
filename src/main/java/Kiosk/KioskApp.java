@@ -302,6 +302,7 @@ public class KioskApp extends Application {
             AnchorPane page = loader.load();
 
             // Replace previous screen with KioskOverview.
+
             primaryStage.setTitle("Pathfinding Application");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);

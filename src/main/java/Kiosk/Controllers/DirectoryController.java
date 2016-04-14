@@ -53,22 +53,24 @@ public class DirectoryController {
             @Override
             public void handle(MouseEvent event) {
 
-                ArrayList<Floor> floors = building.getFloors();
+                if(event.getClickCount() == 2) {
+                    ArrayList<Floor> floors = building.getFloors();
 
-                for (Floor f : floors) {
+                    for (Floor f : floors) {
 
-                    ArrayList<LocationNode> nodes = f.getFloorNodes();
+                        ArrayList<LocationNode> nodes = f.getFloorNodes();
 
-                    for (LocationNode n : nodes) {
+                        for (LocationNode n : nodes) {
 
-                        if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                            kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+
+                            }
 
                         }
 
                     }
-
                 }
             }
 
@@ -214,11 +216,23 @@ public class DirectoryController {
     @FXML
     private void handleForward() {
 
-//        String name;
-//        name = listDirectory.getSelectionModel().getSelectedItem();
-//        System.out.println(name);
-//
-//        kioskApp.showMap(startNode, destinationNode);
+        ArrayList<Floor> floors = building.getFloors();
+
+        for (Floor f : floors) {
+
+            ArrayList<LocationNode> nodes = f.getFloorNodes();
+
+            for (LocationNode n : nodes) {
+
+                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+
+                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+
+                }
+
+            }
+
+        }
     }
 
     public void setList(Destination destinationType) {
