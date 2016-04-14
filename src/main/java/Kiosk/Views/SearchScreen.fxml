@@ -10,7 +10,6 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
     <children>
@@ -25,23 +24,17 @@
           <Button layoutX="539.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleForward" text="OK" />
           <Button layoutX="527.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" />
-      <ButtonBar layoutX="315.0" layoutY="51.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="300.0" layoutY="52.0" prefHeight="40.0" prefWidth="200.0" />
+      <ButtonBar layoutX="161.0" layoutY="41.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="31.0" prefWidth="109.0" text="Physicians">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#sortDepartments" text="Departments" />
-            <Button mnemonicParsing="false" onAction="#sortServices" text="Services" />
+            <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" text="Services">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Sorting" />
+               </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" text="Departments" toggleGroup="$Sorting" />
+            <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" text="Physician" toggleGroup="$Sorting" />
         </buttons>
       </ButtonBar>
-      <ToggleButton layoutX="26.0" layoutY="56.0" mnemonicParsing="false" onAction="#sortPhysicians" text="Physician">
-         <toggleGroup>
-            <ToggleGroup fx:id="Sorting" />
-         </toggleGroup>
-      </ToggleButton>
-      <ToggleButton layoutX="107.0" layoutY="56.0" mnemonicParsing="false" onAction="#sortDepartments" text="Departments" toggleGroup="$Sorting" />
-      <ToggleButton layoutX="213.0" layoutY="56.0" mnemonicParsing="false" onAction="#sortServices" text="Services" toggleGroup="$Sorting" />
     </children>
 </AnchorPane>
