@@ -41,13 +41,22 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                building.drawShortestPath(startNode, destinationNode);
+                // Check if path spans across multiple floor levels
+                if(startNode.getNodeFloor() != destinationNode.getNodeFloor()) {
+                    // Find shortest path to from starNode elevator node on startNode floor
+                    // Draw path
+
+                    // Find shortest path from elevator node to destinationNode on destinationNode floor
+                    // Draw path - Assumes path drawn first is not erased and still available to view
+
+
+                } else { // Path is on a single floor level
+                    building.drawShortestPath(startNode, destinationNode);
+                }
 
             }
 
         });
-
-
     }
 
     /**
@@ -101,7 +110,7 @@ public class MapViewController {
 
     public void setDestinationNode(LocationNode destinationNode) {
         this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+        destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
     }
 
     public void setStartNode(LocationNode startNode) {

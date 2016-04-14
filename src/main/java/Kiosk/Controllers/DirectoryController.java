@@ -55,12 +55,11 @@ public class DirectoryController {
 
                         if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                            kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                            kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                         }
 
                     }
-
                 }
             }
 

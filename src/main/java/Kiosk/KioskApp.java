@@ -2,6 +2,7 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
@@ -27,16 +28,20 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
     private LocationNode startNode;
-
-
+    private URL filePath; // Path to file load from
     private ListView<String> listDirectory;
 
     @Override
     public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
 
         this.primaryStage = primaryStage;
+        this.filePath = new URL("file:/" + System.getProperty("user.dir") + "/resources/" + "default.json");
         //this.hospitalBuilding = new Building();
-        this.hospitalBuilding = Map.storeMapData(); //TODO Change to map by iteration 3
+        try {
+            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+        } catch (DefaultFileDoesNotExistException e) {
+            e.printStackTrace();
+        }
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();

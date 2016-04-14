@@ -27,7 +27,7 @@ public class Floor extends Observable{
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
     private ArrayList<LocationNode> locationNodes;
-    private String imagePath;
+    private URL imagePath; // Relative image path
     @JsonIgnore
     private ImageView floorImage;
     @JsonIgnore
@@ -55,7 +55,7 @@ public class Floor extends Observable{
      * @param currentBuilding The building that the floor is located in.
      * @param imagePath       The relative path of the floor image
      */
-    public Floor(int floor, Building currentBuilding, String imagePath) {
+    public Floor(int floor, Building currentBuilding, URL imagePath) {
 
         this.floor = floor;
         this.uniqueID = UUID.randomUUID();
@@ -342,7 +342,7 @@ public class Floor extends Observable{
 
     @JsonGetter
     //Maryann is adding this
-    public String getImagePath() {
+    public URL getImagePath() {
         return imagePath;
     }
 }
