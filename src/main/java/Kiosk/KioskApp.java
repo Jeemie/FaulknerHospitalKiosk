@@ -45,7 +45,7 @@ public class KioskApp extends Application {
             this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
 
         } catch (DefaultFileDoesNotExistException e) {
-
+            // Create new default file
             try {
 
                 File newFile = new File(this.filePath.toURI());

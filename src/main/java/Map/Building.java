@@ -59,7 +59,7 @@ public class Building extends Observable {
      */
     public void saveToFile(URL filePath) throws IOException, URISyntaxException {
 
-        File file = new File(String.valueOf(filePath));
+        File file = new File(filePath.toURI());
         ObjectToJsonToJava.saveToFile(file, this);
 
         LOGGER.info("Saving the building to the file: " + filePath);

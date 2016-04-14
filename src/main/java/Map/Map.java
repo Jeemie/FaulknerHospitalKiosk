@@ -50,25 +50,34 @@ public class Map {
         }
 
         // TODO file does not exist (according to exist) when file:/ is at front of file path
-        // TODO save is not executing
         // TODO create file if one does not exisit
 
         try {
 
             File specifiedFile = new File(specifiedFilePath.toURI());
+
             File defaultFile = new File(defaultFilePath.toURI());
 
-            if (specifiedFile.length() > 0) {
+            if (specifiedFile.exists() && specifiedFile.length() > 0) {
 
                 // Load specified file
                 mMainHospital = loadFromFile(specifiedFile);
+                LOGGER.info("Loaded map from file " + specifiedFile.toString());
+
+            } else if (defaultFile.exists()) {
+
+                mMainHospital = loadFromFile(defaultFile);
+                LOGGER.info("Loaded map from file " + defaultFile.toString());
+
+                if (defaultFile.length() > 0) {
+
+                    LOGGER.warn("Loaded file is empty");
+
+                }
 
             } else {
 
-                // Load from default.json
-                mMainHospital = loadFromFile(defaultFile);
-
-                LOGGER.info("Loaded map from file " + defaultFile.toString());
+                throw new DefaultFileDoesNotExistException();
 
             }
 
@@ -81,11 +90,8 @@ public class Map {
             e.printStackTrace();
 
         } catch (URISyntaxException e) {
-
             e.printStackTrace();
-
         }
-
 
         return mMainHospital;
     }
