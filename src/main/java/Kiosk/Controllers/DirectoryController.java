@@ -2,6 +2,7 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class DirectoryController {
@@ -39,6 +42,58 @@ public class DirectoryController {
 //    private LocationNode startNode;
 //    private LocationNode destinationNode;
 
+    Timer timer = new Timer("A Timer");
+    Timer atimer = new Timer();
+    int counter = 0;
+    private volatile boolean running = true;
+
+    TimerTask timerTask = new TimerTask() {
+
+        @Override
+        public void run() {
+            counter++;
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+                    System.out.println(counter + " seconds have passed.");
+                    if (counter == 60) {
+                        System.out.println("Timed Out.");
+                        running = false;
+                        timer.cancel();
+                        atimer.cancel();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    System.out.println("I'm outta here");
+                    atimer.cancel();
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    //exception.printStackTrace();
+                    break;
+                }
+
+            }
+        }
+    };
+
+    Thread timerThread = new Thread(runnable);
+
+    Runnable resetKiosk = new Runnable() {
+
+        @Override
+        public void run() {
+            handleBack();
+        }
+    };
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -53,7 +108,7 @@ public class DirectoryController {
             @Override
             public void handle(MouseEvent event) {
 
-                if(event.getClickCount() == 2) {
+                if (event.getClickCount() == 2) {
                     ArrayList<Floor> floors = building.getFloors();
 
                     for (Floor f : floors) {
@@ -64,7 +119,11 @@ public class DirectoryController {
 
                             if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                timer.cancel();
+                                running = false;
+                                timerThread.interrupt();
+                                System.out.println("woop?");
+                                kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                             }
 
@@ -76,19 +135,41 @@ public class DirectoryController {
 
         });
 
-        this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
+
                 if (event.getCode().equals(KeyCode.ENTER)) {
-                    LOGGER.info("Directory Controller" + searchTextBox.getText());
+
+                    timer.cancel();
+                    running = false;
+                    timerThread.interrupt();
+
                     kioskApp.showSearch(searchTextBox.getText());
 
+                } else {
+
+                    counter = 0;
+
                 }
-
             }
-
         });
+
+
+        listDirectory.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                counter = 0;
+            }
+        });
+
+
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
+
+
     }
 
     /**
@@ -136,6 +217,7 @@ public class DirectoryController {
 //                "Stacks, Robert, MD",
 //                "Tunick, Mitchell, MD",
 //                "Viola, Julianne, MD");
+        counter = 0;
         currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
         listDirectory.setItems(currentNames);
 
@@ -161,6 +243,7 @@ public class DirectoryController {
 //                "Roslindale Pediatric Associates ",
 //                "Suburban Eye Specialists ",
 //                "Taiclet Family Center");
+        counter = 0;
         currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
         listDirectory.setItems(currentNames);
 
@@ -190,6 +273,7 @@ public class DirectoryController {
 //                "Starbucks",
 //                "Valet Parking",
 //                "Volunteer Services");
+        counter = 0;
         currentNames.setAll(building.getDestinations());
         listDirectory.setItems(currentNames);
     }
@@ -199,6 +283,12 @@ public class DirectoryController {
      */
     @FXML
     private void handleBack() {
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         kioskApp.reset();
     }
 
@@ -226,7 +316,10 @@ public class DirectoryController {
 
                 if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                    timer.cancel();
+                    running = false;
+                    timerThread.interrupt();
+                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
 
                 }
 
@@ -240,18 +333,22 @@ public class DirectoryController {
         switch (destinationType) {
 
             case PHYSICIAN:
+                counter = 0;
                 currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
                 listDirectory.setItems(currentNames);
 
             case DEPARTMENT:
+                counter = 0;
                 currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
                 listDirectory.setItems(currentNames);
 
             case SERVICE:
+                counter = 0;
                 currentNames.setAll(building.getDestinations(Destination.SERVICE));
                 listDirectory.setItems(currentNames);
 
             default:
+                counter = 0;
                 currentNames.setAll(building.getDestinations());
                 listDirectory.setItems(currentNames);
 
