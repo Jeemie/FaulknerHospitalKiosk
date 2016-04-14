@@ -114,7 +114,7 @@ public class Map {
 
             //Initialize view-associated fields for each building floor
             //String filePath = System.getProperty("user.dir") + "/resources/" + floor.getImagePath();
-            floor.setFloorImage(floor.getImagePath());
+            floor.setFloorImage(floor.getRelativePath());
 
             // Check if the floor contains nodes
             if (floor.getFloorNodes().size() > 0) {

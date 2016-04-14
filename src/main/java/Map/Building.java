@@ -206,7 +206,7 @@ public class Building extends Observable {
         throw new FloorDoesNotExistException(floorNumber);
     }
 
-    public Floor addFloor(int floorNumber, URL imagePath) {
+    public Floor addFloor(int floorNumber, String imagePath) {
 
 
         for (Floor currentFloor : floors) {

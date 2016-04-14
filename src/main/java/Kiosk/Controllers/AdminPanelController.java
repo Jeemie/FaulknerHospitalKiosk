@@ -43,7 +43,7 @@ public class AdminPanelController implements Initializable {
     private ScrollPane map_scrollpane;
     @FXML
     private Slider zoom_slider;
-//    @FXML
+    //    @FXML
 //    private MenuButton map_pin;
 //    @FXML
 //    private MenuItem pin_info;
@@ -167,7 +167,7 @@ public class AdminPanelController implements Initializable {
 //        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
 //        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "dr.haha");
 
-       // String deptname = control.addTolist();
+        // String deptname = control.addTolist();
         //System.out.println(deptname);
 //        System.out.println("Controllers.initialize");
 //
@@ -294,19 +294,22 @@ public class AdminPanelController implements Initializable {
 
 
     private void setupListeners() {
-        this.mMainHospital = new Building();
-        try {
-            URL floor1Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor1_Final.png");
+
+
+
+           /* URL floor1Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor1_Final.png");
             URL floor2Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor2_Final.png");
             URL floor3Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor3_Final.png");
             URL floor4Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor4_Final.png");
             mMainHospital.addFloor(1, floor1Url);
             mMainHospital.addFloor(2, floor2Url);
             mMainHospital.addFloor(3, floor3Url);
-            mMainHospital.addFloor(4, floor4Url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+            mMainHospital.addFloor(4, floor4Url);*/
+            mMainHospital.addFloor(1, "Floor1_Final.png");
+            mMainHospital.addFloor(2, "Floor2_Final.png");
+            mMainHospital.addFloor(3, "Floor3_Final.png");
+            mMainHospital.addFloor(4, "Floor4_Final.png");
+
 
         mMainHospital = Map.initMapComponents(mMainHospital);
 
@@ -330,7 +333,6 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(saveFilePath.toString());
 
                 try {
                     mMainHospital.saveToFile(saveFilePath);

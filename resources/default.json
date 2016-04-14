@@ -1,3 +1,29 @@
 {
-"Hello"
+  "uniqueID" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+  "floors" : [ {
+    "uniqueID" : "73c40645-bede-48d6-ab1f-49760dda6912",
+    "floor" : 1,
+    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "locationNodes" : [ ],
+    "relativePath" : "Floor1_Final.png"
+  }, {
+    "uniqueID" : "88f27e38-5113-432f-adb9-5037cb9d1acf",
+    "floor" : 2,
+    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "locationNodes" : [ ],
+    "relativePath" : "Floor2_Final.png"
+  }, {
+    "uniqueID" : "74c2d12b-4194-4a9c-b59a-aa5b19faa425",
+    "floor" : 3,
+    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "locationNodes" : [ ],
+    "relativePath" : "Floor3_Final.png"
+  }, {
+    "uniqueID" : "f73b6367-9438-4c96-88ed-0f19d3b075f1",
+    "floor" : 4,
+    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "locationNodes" : [ ],
+    "relativePath" : "Floor4_Final.png"
+  } ],
+  "destinations" : [ ]
 }

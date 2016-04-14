@@ -10,6 +10,9 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -27,7 +30,9 @@ public class Floor extends Observable{
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
     private ArrayList<LocationNode> locationNodes;
-    private URL imagePath; // Relative image path
+    private String relativePath;
+    @JsonIgnore
+    private URL imagePath;
     @JsonIgnore
     private ImageView floorImage;
     @JsonIgnore
@@ -53,15 +58,16 @@ public class Floor extends Observable{
      *
      * @param floor           The number that is associated with the current floor.
      * @param currentBuilding The building that the floor is located in.
-     * @param imagePath       The relative path of the floor image
+     * @param relativePath       The relative path of the floor image
      */
-    public Floor(int floor, Building currentBuilding, URL imagePath) {
+    public Floor(int floor, Building currentBuilding, String relativePath) {
 
         this.floor = floor;
         this.uniqueID = UUID.randomUUID();
         this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
-        this.imagePath = imagePath;
+        this.relativePath = relativePath;
+        //this.imagePath = imagePath;
         this.floorImage = new ImageView();
         this.nodePane = new Pane();
 
@@ -238,7 +244,9 @@ public class Floor extends Observable{
 
     }
 
-    public void setFloorImage(URL imagePath) {
+    public void setFloorImage(String relativeImagePath) {
+
+        setImagePath(relativeImagePath);
 
         if(this.floorImage == null) {
             this.floorImage = new ImageView();
@@ -247,7 +255,7 @@ public class Floor extends Observable{
             this.nodePane = new Pane();
         }
 
-        Image image = new Image(String.valueOf(imagePath));
+        Image image = new Image(String.valueOf(this.imagePath));
         this.floorImage.setImage(image);
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
@@ -340,9 +348,36 @@ public class Floor extends Observable{
         return floorImage;
     }
 
-    @JsonGetter
-    //Maryann is adding this
+    @JsonIgnore
     public URL getImagePath() {
+
         return imagePath;
+    }
+
+    @JsonGetter
+    public String getRelativePath() {
+
+        return relativePath;
+    }
+
+    public void setRelativePath(URL imagePath) {
+        URI uri = null;
+        try {
+            uri = imagePath.toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String path = uri.getPath();
+        String idStr = path.substring(path.lastIndexOf('/') + 1);
+        int id = Integer.parseInt(idStr);
+        this.relativePath =  idStr;
+    }
+
+    public void setImagePath(String relativePath) {
+        try {
+            this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }

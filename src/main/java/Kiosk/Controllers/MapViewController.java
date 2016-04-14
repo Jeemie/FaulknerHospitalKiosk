@@ -7,13 +7,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class MapViewController {
-	
+
     // Reference to the main application.
 
     private boolean okClicked = false;
@@ -22,6 +27,9 @@ public class MapViewController {
     private LocationNode startNode;
     private LocationNode destinationNode;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
+    @FXML
+    private TextField searchTextBox;
     @FXML
     private StackPane imageStackPane;
 
@@ -42,7 +50,7 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 // Check if path spans across multiple floor levels
-                if(startNode.getNodeFloor() != destinationNode.getNodeFloor()) {
+                if (startNode.getNodeFloor() != destinationNode.getNodeFloor()) {
                     // Find shortest path to from starNode elevator node on startNode floor
                     // Draw path
 
@@ -53,31 +61,49 @@ public class MapViewController {
                 } else { // Path is on a single floor level
                     building.drawShortestPath(startNode, destinationNode);
                 }
+            }
+        });
+
+
+        this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if (event.getCode().equals(KeyCode.ENTER)) {
+
+                    LOGGER.info("MapView" + searchTextBox.getText());
+                    kioskApp.showSearch(searchTextBox.getText());
+
+                }
+
 
             }
 
         });
+
+
     }
+
 
     /**
      * Is called by the main application to give a reference back to itself.
-     * 
+     *
      * @param kioskApp
      */
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
     }
-    
+
     /**
      * Returns true if the user clicked OK, false otherwise.
-     * 
+     *
      * @return
      */
     public boolean isOkClicked() {
         return okClicked;
     }
-    
-    
+
+
     /**
      * Called when the user clicks back.
      */
@@ -87,22 +113,15 @@ public class MapViewController {
     @FXML
     private void handleBack() {
     }
-    
+
     /**
      * Called when the user clicks cancel.
      */
     @FXML
     private void handleCancel() {
-    	kioskApp.reset();
+        kioskApp.reset();
     }
-    
-    /**
-     * Called when the user clicks enter on the search bar.
-     */
-    @FXML
-    private void handleSearch() {
-    	kioskApp.showSearch();
-    }
+
 
     public void setBuilding(Building building) {
         this.building = building;
@@ -117,4 +136,4 @@ public class MapViewController {
         this.startNode = startNode;
     }
 
- }
+}
