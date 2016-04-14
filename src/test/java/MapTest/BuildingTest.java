@@ -15,9 +15,6 @@ import org.junit.Test;
 public class BuildingTest {
 
     private Building mTestBuilding;
-    private Floor mFloor1, mFloor2;
-    private LocationNode mNode1, mNodeTwo;
-    private Location mLocation1, mLocation;
 
     @Before
     public void setUp() {
