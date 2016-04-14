@@ -54,6 +54,11 @@
             <Slider fx:id="zoom_slider" />
             <Button mnemonicParsing="false" onAction="#zoomIn" text="+" />
             <Region />
+            <Label fx:id="alabel" prefHeight="21.0" prefWidth="314.0" text="No Active Button" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="350.0" right="300.0" />
+               </HBox.margin>
+            </Label>
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -81,6 +86,7 @@
                   <Button fx:id="changeFloorButton2" layoutX="124.0" layoutY="241.0" mnemonicParsing="false" text="Floor 2" />
                   <Button fx:id="changeFloorButton1" layoutX="124.0" layoutY="269.0" mnemonicParsing="false" text="Floor 1" />
                   <Button fx:id="moveLocationButton" layoutX="125.0" layoutY="296.0" mnemonicParsing="false" text="Move Location" />
+                  <Button fx:id="theButton" layoutX="14.0" layoutY="339.0" mnemonicParsing="false" text="Button" />
                </children></Pane>
          </items>
       </SplitPane>

@@ -7,6 +7,13 @@ import Kiosk.KioskApp;
 import Map.Map;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextFlow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,10 +45,21 @@ public class AdminPanelController implements Initializable {
     @FXML
     private ListView<String> map_listview;
     @FXML
+    private ListView<String> buttonView;
+    @FXML
+    private TextFlow buttonView2 = new TextFlow();
+    @FXML
+    public Label alabel;
+
+    @FXML
+    private Button theButton;
+
+    StringProperty thestring = new SimpleStringProperty();
+    @FXML
     private ScrollPane map_scrollpane;
     @FXML
     private Slider zoom_slider;
-//    @FXML
+    //    @FXML
 //    private MenuButton map_pin;
 //    @FXML
 //    private MenuItem pin_info;
@@ -49,7 +68,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private ToggleButton size_togglebutton;
     @FXML
-    private  Button modifyLocationButton;
+    private Button modifyLocationButton;
     @FXML
     private Button addLocationButton;
     @FXML
@@ -79,7 +98,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private Button changeFloorButton7;
 
-
+    ObservableList<String> viewing = FXCollections.observableArrayList();
 
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
     Group zoomGroup;
@@ -92,7 +111,6 @@ public class AdminPanelController implements Initializable {
     private Admin print;
 
     AdminDepartmentPanelController control = new AdminDepartmentPanelController();
-
 
 
     @FXML
@@ -112,7 +130,7 @@ public class AdminPanelController implements Initializable {
 //        mErrorAddingPhysician = new LocationNode(0, mLocation3B, mFloor3);
 //        mEyeCareSpecialists3B.addDestination(Destination.DEPARTMENT, "dr.haha");
 
-       // String deptname = control.addTolist();
+        // String deptname = control.addTolist();
         //System.out.println(deptname);
 //        System.out.println("Controllers.initialize");
 //
@@ -220,7 +238,7 @@ public class AdminPanelController implements Initializable {
 //        stage.show();
 //    }
 
-    public void  print() {
+    public void print() {
         System.out.print(print.getDept());
 
     }
@@ -247,12 +265,12 @@ public class AdminPanelController implements Initializable {
 
         // Initialize fields of existing Map components - Buildings, Floors, and Nodes - after loading from a JSON file.
         // Fields associated with JavaFX require initialization after loading object data from JSON file.
-       //TODO Abstract this for use by all controllers
+        //TODO Abstract this for use by all controllers
 
 
-        for (Floor floor: mMainHospital.getFloors()) {
+        for (Floor floor : mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
-            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
+            if (floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
                 for (LocationNode node : floor.getFloorNodes()) {
                     node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
                     node.initObserver();
@@ -262,16 +280,26 @@ public class AdminPanelController implements Initializable {
             floor.drawFloorAdmin(imageStackPane);
         }
 
-       // for (Floor floor: mMainHospital.getFloors()) {
-         //   floor.drawFloorAdmin(imageStackPane);
+        // for (Floor floor: mMainHospital.getFloors()) {
+        //   floor.drawFloorAdmin(imageStackPane);
         //}
 
 
-        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
+        addLocationButton.setOnAction(event -> {
 
-        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
+            addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
+            alabel.setText("Current Button : addLocation");
+        });
+
+        removeLocationButton.setOnAction(event -> {
+
+            removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
+
+            alabel.setText("Current Button : removeLocation");
+        });
+
 
         addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
@@ -368,12 +396,11 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
 
                 mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
+                LOGGER.info("Building State changed to " + mMainHospital.getState().name());
 
             }
 
         });
-
 
 
     }
@@ -385,6 +412,5 @@ public class AdminPanelController implements Initializable {
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
     }
-
 
 }
