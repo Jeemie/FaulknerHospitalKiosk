@@ -394,9 +394,53 @@ public class AdminDashboardController {
 
         });
 
+        this.buildingFloorsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    building.addFloorsToListView(buildingFloorsListView);
+
+                }
+
+            }
+
+        });
+
+        this.buildingFloorsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
+
+            }
+
+        });
+
+        this.buildingDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Destinations Titled Pane Opened");
+
+                    building.addBuildingDestinationsToListView(buildingFloorsListView);
+
+                }
+
+            }
+
+        });
 
 
-//        this.buildingFloorsTitledPane.isExpanded().add
+//        this.buildingDestinationsListView
 
     }
 

@@ -2,15 +2,20 @@ package Map;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.util.*;
+
 import Map.Exceptions.FloorDoesNotExistException;
 import com.fasterxml.jackson.annotation.*;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableListValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
-import java.util.List;
-import java.util.Observable;
-import java.util.UUID;
 
 import static Map.AStar.constructPath;
 import static Map.AStar.getShortestPathTo;
@@ -118,6 +123,26 @@ public class Building extends Observable {
         notifyObservers();
 
         return newLocationNode;
+    }
+
+    public void addFloorsToListView(ListView listView) {
+
+        ObservableList<Floor> Observedfloors = FXCollections.observableArrayList();
+
+        Observedfloors.addAll(this.floors);
+
+        listView.setItems(Observedfloors);
+
+    }
+
+    public void addBuildingDestinationsToListView(ListView listView) {
+
+        ObservableList<String> Observedfloors = FXCollections.observableArrayList();
+
+        Observedfloors.addAll(this.getDestinations());
+
+        listView.setItems(Observedfloors);
+
     }
 
     /**
