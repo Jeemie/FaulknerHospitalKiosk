@@ -2,12 +2,9 @@ package MapTest;
 
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.net.URISyntaxException;
-
-import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -17,80 +14,88 @@ import static org.junit.Assert.assertEquals;
 
 public class BuildingTest {
 
-    private Building mainBuilding;
     private Building mTestBuilding;
-    private Floor mFloor1, mFloor2, mFloor7;
-    private LocationNode mOne, mTwo, mThree;
+    private Floor mFloor1, mFloor2;
+    private LocationNode mNode1, mNodeTwo;
     private Location mLocation1, mLocation;
 
     @Before
     public void setUp() {
-        mainBuilding = new Building();
-        Floor mFloor3 = new Floor(3, mainBuilding, "Floor3_Final.png");
-        try {
-            mainBuilding.addNode(3, new Location(100,100));
-        } catch (FloorDoesNotExistException e) {
-            e.printStackTrace();
-        }
 
         mTestBuilding = new Building();
-        mFloor1 = mTestBuilding.addFloor(1, "Floor1_Final.png");
-        mFloor2 = mTestBuilding.addFloor(2, "Floor3_Final.png");
-        mOne = mFloor1.addNode(new Location(123, 546));
-        mTwo = mFloor1.addNode(new Location(100, 200));
-        mThree = mFloor2.addNode(new Location(100, 250));
+    }
 
+    /**
+     * Add floor to building
+     */
+    @Test
+    public void testAddFloor() {
 
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
+
+        Assert.assertTrue(mTestBuilding.getFloors().size() == 1);
 
     }
 
-  /*  @Test
-    public void testSaveToFile() throws URISyntaxException {
-        try {
-            mTestBuilding.addNode(1, new Location(100, 100));
-            mTestBuilding.addNode(2, new Location(100, 200));
-            mTwo.addAdjacentNode(mThree);
-            mTestBuilding.saveToFile("Kiosk/Controllers/mapdata.json");
-        }
-        catch(java.io.IOException e) {
-            e.printStackTrace();
-        }
-         catch (FloorDoesNotExistException e) {
-           e.printStackTrace();
-        }
-    }*/
-
+    /**
+     * Add multiple floors to building
+     */
     @Test
-    public void addFloor() {
-       // mTestBuilding.addFloor(1);
-       // mTestBuilding.addFloor(2);
-       // mTestBuilding.addFloor(7);
+    public void testAddMultipleFloors() {
+
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
+        mTestBuilding.addFloor(2, "Floor2_Final.png");
+        mTestBuilding.addFloor(3, "Floor3_Final.png");
+
+        Assert.assertTrue(mTestBuilding.getFloors().size() == 3);
+
     }
-/*
+
+    /**
+     * Add node to building
+     */
     @Test
-    public void testLoadFromFile() throws URISyntaxException,FloorDoesNotExistException {
-        try {
-            mFloor1 = new Floor(1, mTestBuilding);
-            mFloor2 = new Floor(2, mTestBuilding);
-            mTestBuilding.addFloor(1);
-            mTestBuilding.addFloor(2);
-            mOne.addAdjacentNode(mTwo);
-            mTwo.addAdjacentNode(mThree);
-            mTestBuilding.addNode(1, new Location(100, 100));
-            mTestBuilding.addNode(2, new Location(100, 200));
-            mFloor1.addNode(new Location(100, 100));
+    public void testAddNode() throws FloorDoesNotExistException {
 
-            mTwo.addDestination(Destination.DEPARTMENT, "ER");
-            mTwo.addDestination(Destination.PHYSICIAN, "Dr. Binam");
-            mOne.addDestination(Destination.KIOSK, "Kiosk");
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
+        mTestBuilding.addNode(1, new Location(100, 100));
 
+        Assert.assertTrue(mTestBuilding.getFloor(1).getLocationNodes().size() == 1);
 
-            mTestBuilding.saveToFile("Kiosk/Controllers/mapdata.json");
-            //mTestBuilding.loadFromFile("Kiosk/Controllers/mapdata.json");
-        }
-        catch(java.io.IOException e) {
-            e.printStackTrace();
-        }
-    } */
+    }
+
+    /**
+     * Get service destinations from floor one
+     */
+
+    @Test
+    public void testGetServiceDestinations() throws FloorDoesNotExistException {
+
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
+        mTestBuilding.addNode(1, new Location(100, 100));
+        mTestBuilding.addNode(1, new Location(200, 200));
+        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Destination.SERVICE, "Test Service1");
+        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Destination.SERVICE, "Test Service2");
+
+        Assert.assertTrue(mTestBuilding.getDestinations(Destination.SERVICE).contains("Test Service1"));
+        Assert.assertTrue(mTestBuilding.getDestinations(Destination.SERVICE).contains("Test Service2"));
+    }
+
+    /**
+     * Get all building destinations from floor one
+     */
+    @Test
+    public void testGetDestinations() throws FloorDoesNotExistException {
+
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
+        mTestBuilding.addNode(1, new Location(100, 100));
+        mTestBuilding.addNode(1, new Location(200, 200));
+        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Destination.DEPARTMENT, "Test Department");
+        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Destination.KIOSK, "Test Kiosk");
+
+        Assert.assertTrue(mTestBuilding.getDestinations().contains("Test Department"));
+        Assert.assertTrue(mTestBuilding.getDestinations().contains("Test Kiosk"));
+
+    }
 
 }
