@@ -248,6 +248,8 @@ public class AdminPanelController implements Initializable {
         // Initialize fields of existing Map components - Buildings, Floors, and Nodes - after loading from a JSON file.
         // Fields associated with JavaFX require initialization after loading object data from JSON file.
        //TODO Abstract this for use by all controllers
+
+
         for (Floor floor: mMainHospital.getFloors()) {
             floor.setFloorImage(getClass().getResource(floor.getImagePath()));
             if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes

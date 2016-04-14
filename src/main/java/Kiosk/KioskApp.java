@@ -5,19 +5,32 @@ import Map.Building;
 import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static Map.Map.storeMapData;
 
@@ -28,8 +41,9 @@ public class KioskApp extends Application {
     private Building hospitalBuilding;
     private LocationNode startNode;
 
-
-    private ListView<String> listDirectory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
+    @FXML
+    private TableView<String> listDirectory;
 
     @Override
     public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
@@ -167,9 +181,11 @@ public class KioskApp extends Application {
      * 
      */
  // TODO: showSearch should have parameter for input
-    public boolean showSearch() {
+    public boolean showSearch(String value) {
         try {
             // Load SearchScreen
+
+            System.out.println(value);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
             AnchorPane page = loader.load();
@@ -180,9 +196,19 @@ public class KioskApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+
+
+
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setBuilding(hospitalBuilding);
+
+            System.out.println(value);
+            controller.displayResult(value);
+
+
+
 
             return controller.isOkClicked();
             

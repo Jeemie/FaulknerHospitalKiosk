@@ -7,7 +7,12 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
@@ -16,9 +21,12 @@ public class DirectoryController {
 
     private boolean okClicked = false;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryController.class);
     // Reference to the main application.
     private KioskApp kioskApp;
 
+    @FXML
+    private TextField searchTextBox;
     /**
      * Initialize the ListView and the list that fills it
      */
@@ -65,6 +73,20 @@ public class DirectoryController {
             }
 
         });
+
+        this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    LOGGER.info("Directory Controller" + searchTextBox.getText());
+                    kioskApp.showSearch(searchTextBox.getText());
+
+                }
+
+            }
+
+        });
     }
 
     /**
@@ -85,13 +107,6 @@ public class DirectoryController {
         return okClicked;
     }
 
-    /**
-     * Called when the user clicks enter in the search bar.
-     */
-    @FXML
-    private void handleSearch() {
-    	kioskApp.showSearch();
-    }
 
     /**
      * Called when the user clicks the Physicians button.
@@ -173,7 +188,7 @@ public class DirectoryController {
 //                "Starbucks",
 //                "Valet Parking",
 //                "Volunteer Services");
-        currentNames.addAll(building.getDestinations());
+        currentNames.setAll(building.getDestinations());
         listDirectory.setItems(currentNames);
     }
 
@@ -182,7 +197,7 @@ public class DirectoryController {
      */
     @FXML
     private void handleBack() {
-    	kioskApp.reset();
+        kioskApp.reset();
     }
 
     /**
@@ -206,7 +221,7 @@ public class DirectoryController {
 //        kioskApp.showMap(startNode, destinationNode);
     }
 
-   public void setList(Destination destinationType) {
+    public void setList(Destination destinationType) {
 
         switch (destinationType) {
 
