@@ -300,15 +300,28 @@ public class AdminPanelController implements Initializable {
             alabel.setText("Current Button : removeLocation");
         });
 
+        addConnectedLocationButton.setOnAction(event -> {
 
-        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
+            addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
+            alabel.setText("Current Button : addConnectedLocation");
+        });
 
-        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
+        moveLocationButton.setOnAction(event -> {
 
-        modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
+            moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
+            alabel.setText("Current Button : moveLocation");
+        });
+
+        modifyLocationButton.setOnAction(event -> {
+
+            modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
+            alabel.setText("Current Button : modifyLocation");
+        });
+
+
 
 
         saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -334,7 +347,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-
+                alabel.setText("Current Button : NoButtonSelected");
                 try {
                     mMainHospital.getFloor(1).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -349,7 +362,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-
+                alabel.setText("Current Button : NoButtonSelected");
                 try {
                     mMainHospital.getFloor(2).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -364,7 +377,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-
+                alabel.setText("Current Button : NoButtonSelected");
                 try {
                     mMainHospital.getFloor(3).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -379,7 +392,7 @@ public class AdminPanelController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-
+                alabel.setText("Current Button : NoButtonSelected");
                 try {
                     mMainHospital.getFloor(4).drawFloorAdmin(imageStackPane);
                 } catch (FloorDoesNotExistException e) {
@@ -396,6 +409,7 @@ public class AdminPanelController implements Initializable {
             public void handle(MouseEvent event) {
 
                 mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
+                alabel.setText("Current Button : setStartLocation");
                 LOGGER.info("Building State changed to " + mMainHospital.getState().name());
 
             }
