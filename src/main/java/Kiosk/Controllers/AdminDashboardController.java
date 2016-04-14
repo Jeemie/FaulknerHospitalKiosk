@@ -1,5 +1,6 @@
 package Kiosk.Controllers;
 
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
 import Kiosk.KioskApp;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
@@ -7,9 +8,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import java.net.URISyntaxException;
 public class AdminDashboardController {
 
     private Building building;
+    private LocationNode currentLocationNode;
     private KioskApp kioskApp;
 
     // Logger for this class
@@ -444,9 +447,47 @@ public class AdminDashboardController {
 
     }
 
-    private void setFloorTabListeners() {}
+    private void setFloorTabListeners() {
 
-    private void setLocationTabListeners() {}
+
+
+
+    }
+
+    private void setLocationTabListeners() {
+
+
+
+        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentLocationNode != null) {
+
+                    AdminSubControllerLoader loader = new AdminSubControllerLoader();
+
+                    loader.setStackPane(mapStackPane);
+                    loader.setCurrentLocationNode(currentLocationNode);
+                    loader.load();
+
+                } else {
+
+                    // TODO remove once there are nodes
+
+                    AdminSubControllerLoader loader = new AdminSubControllerLoader();
+
+                    loader.setStackPane(mapStackPane);
+                    loader.setCurrentLocationNode(currentLocationNode);
+                    loader.load();
+
+                }
+
+            }
+
+        });
+
+    }
 
 
 
@@ -465,6 +506,12 @@ public class AdminDashboardController {
     public void setKioskApp(KioskApp kioskApp) {
 
         this.kioskApp = kioskApp;
+
+    }
+
+    public void addToStackPane(Node node) {
+
+        this.mapStackPane.getChildren().add(node);
 
     }
 
