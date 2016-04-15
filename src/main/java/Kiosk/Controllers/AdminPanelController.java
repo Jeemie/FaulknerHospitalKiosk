@@ -52,7 +52,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private ToggleButton size_togglebutton;
     @FXML
-    private  Button modifyLocationButton;
+    private Button modifyLocationButton;
     @FXML
     private Button addLocationButton;
     @FXML
@@ -81,7 +81,8 @@ public class AdminPanelController implements Initializable {
     private Button changeFloorButton6;
     @FXML
     private Button changeFloorButton7;
-
+    @FXML
+    public Label alabel;
 
 
     private final HashMap<String, ArrayList<Comparable<?>>> hm = new HashMap<>();
@@ -206,7 +207,13 @@ public class AdminPanelController implements Initializable {
 //            root_vbox.setPrefSize(bounds.getWidth(), bounds.getHeight());
 //        }
         try {
-            this.saveFilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            /**
+             *
+             *This is for OSx use this while testing.
+             *
+             *this.savefilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+             */
+            this.saveFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -280,7 +287,7 @@ public class AdminPanelController implements Initializable {
 //        stage.show();
 //    }
 
-    public void  print() {
+    public void print() {
         System.out.print(print.getDept());
 
     }
@@ -301,114 +308,157 @@ public class AdminPanelController implements Initializable {
         mMainHospital.addFloor(4, "Floor4_Final.png");
 
 
+
         //mMainHospital = Map.initMapComponents(mMainHospital);
 
-        addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
-
-        removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
-
-        addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
-
-        moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
-
-        modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
 
 
-        saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        addLocationButton.setOnAction(event -> {
 
-            @Override
-            public void handle(MouseEvent event) {
+            addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));
+            alabel.setText("Current Button : addLocation");
 
-                try {
-                    mMainHospital.saveToFile(saveFilePath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
+        });
+
+
+        removeLocationButton.setOnAction(event -> {
+
+            removeLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.REMOVENODE));
+            alabel.setText("Current Button : removeLocation");
+
+        });
+
+
+        addConnectedLocationButton.setOnAction(event -> {
+
+            addConnectedLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDADJACENTNODE));
+            alabel.setText("Current Button : addConnectedLocation");
+
+        });
+
+        moveLocationButton.setOnAction(event -> {
+
+            moveLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MOVENODE));
+            alabel.setText("Current Button : moveLocation");
+
+        });
+
+        modifyLocationButton.setOnAction(event -> {
+
+            modifyLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.MODIFYDESTINATIONS));
+            alabel.setText("Current Button : modifyLocation");
+
+        });
+
+        saveToFileButton.setOnAction(event -> {
+                    alabel.setText("Save was successful");
+                    saveToFileButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            try {
+                                mMainHospital.saveToFile(saveFilePath);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (URISyntaxException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                });
+        changeFloorButton1.setOnAction(event -> {
+                    alabel.setText("You are currently on Floor 1");
+                    changeFloorButton1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            try {
+                                mMainHospital.getFloor(1).drawFloorAdmin(imageStackPane);
+                            } catch (FloorDoesNotExistException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                });
+
+        changeFloorButton2.setOnAction(event -> {
+                    alabel.setText("You are currently on Floor 2");
+                    changeFloorButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            try {
+                                mMainHospital.getFloor(2).drawFloorAdmin(imageStackPane);
+                            } catch (FloorDoesNotExistException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                });
+
+        changeFloorButton3.setOnAction(event -> {
+                    alabel.setText("You are currently on Floor 3");
+                    changeFloorButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            try {
+                                mMainHospital.getFloor(3).drawFloorAdmin(imageStackPane);
+                            } catch (FloorDoesNotExistException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                });
+
+        changeFloorButton4.setOnAction(event -> {
+                    alabel.setText("You are currently on Floor 4");
+                    changeFloorButton4.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            try {
+                                mMainHospital.getFloor(4).drawFloorAdmin(imageStackPane);
+                            } catch (FloorDoesNotExistException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                });
+        setStartLocationButton.setOnAction(event -> {
+            alabel.setText("Click to set a start location!");
+            setStartLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+
+                    mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
+                    LOGGER.info("Building State changed to " + mMainHospital.getState().name());
+
                 }
 
-            }
-
+            });
         });
-
-        changeFloorButton1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                try {
-                    mMainHospital.getFloor(1).drawFloorAdmin(imageStackPane);
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-        changeFloorButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                try {
-                    mMainHospital.getFloor(2).drawFloorAdmin(imageStackPane);
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-        changeFloorButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                try {
-                    mMainHospital.getFloor(3).drawFloorAdmin(imageStackPane);
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-        changeFloorButton4.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                try {
-                    mMainHospital.getFloor(4).drawFloorAdmin(imageStackPane);
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-        setStartLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                mMainHospital.setState(BuildingState.SETFLOORSTARTNODE);
-                LOGGER.info("Building State changed to " +  mMainHospital.getState().name());
-
-            }
-
-        });
-
-
 
     }
 

@@ -40,7 +40,6 @@ public class KioskOverviewController {
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
-                    LOGGER.info("Overview Controller " + searchTextBox.getText());
                     kioskApp.showSearch(searchTextBox.getText());
 
                 }
