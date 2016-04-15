@@ -21,6 +21,15 @@ public class LocationTest {
 
     }
 
+    @Test
+    public void getDistanceBetween() {
+
+        Location testLocation1 = new Location(0, 0);
+        Location testLocation2 = new Location(0, 10);
+
+        assertEquals(testLocation1.getDistanceBetween(testLocation2), 10, 0.001);
+    }
+
 
 
 

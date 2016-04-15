@@ -8,5 +8,5 @@ import Map.Building;
 public class AdminDashboardAddFloorController {
 
     private Building currentBuilding;
-    private
+//    private
 }

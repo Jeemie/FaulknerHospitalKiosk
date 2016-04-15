@@ -54,16 +54,16 @@ public class AdminSubControllerLoader {
     }
 
     public void loadAddFloor() {
-
-        try {
-
-
-
-
-        } catch (IOException e) {
-
-            LOGGER.error("Unable to loadAddFloor fxml file", e);
-        }
+//
+//        try {
+//
+//
+//
+//
+//        } catch (IOException e) {
+//
+//            LOGGER.error("Unable to loadAddFloor fxml file", e);
+//        }
 
     }
 

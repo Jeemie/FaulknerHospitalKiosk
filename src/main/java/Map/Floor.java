@@ -1,9 +1,6 @@
 package Map;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,8 +13,12 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Observable;
 import java.util.UUID;
 
@@ -26,14 +27,15 @@ import java.util.UUID;
  */
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
-public class Floor extends Observable {
+public class Floor extends Observable{
 
     private int floor; // The level number associated with the floor
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
     private Building currentBuilding;
     private ArrayList<LocationNode> locationNodes;
-    // Maryann added this
-    private String imagePath;
+    private String relativePath;
+    @JsonIgnore
+    private URL imagePath;
     @JsonIgnore
     private ImageView floorImage;
     @JsonIgnore
@@ -42,7 +44,6 @@ public class Floor extends Observable {
     private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
-    @JsonIgnore
     private LocationNode startNode;
     @JsonIgnore
     private StackPane stackPane;
@@ -61,17 +62,20 @@ public class Floor extends Observable {
      *
      * @param floor           The number that is associated with the current floor.
      * @param currentBuilding The building that the floor is located in.
-     * @param imagePath       The relative path of the floor image
+     * @param relativePath       The relative path of the floor image
      */
-    public Floor(int floor, Building currentBuilding, String imagePath) {
+    public Floor(int floor, Building currentBuilding, String relativePath) {
 
         this.floor = floor;
         this.uniqueID = UUID.randomUUID();
         this.locationNodes = new ArrayList<>();
         this.currentBuilding = currentBuilding;
-        this.imagePath = imagePath;
+        this.relativePath = relativePath;
         this.floorImage = new ImageView();
         this.nodePane = new Pane();
+
+        setImagePath(this.relativePath);
+
 
         LOGGER.info("Created new Floor: " + this.toString());
 
@@ -214,10 +218,10 @@ public class Floor extends Observable {
 
         });
 
-        setStackPane(stackPane);
-
         // add the current floor's canvas and imageview to the stackpane
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
+
+        this.stackPane = stackPane;
 
         updateFloorAdmin();
 
@@ -250,7 +254,6 @@ public class Floor extends Observable {
 
     public void setFloorImage(URL imagePath) {
 
-        Image image = new Image(imagePath.toString());
         if(this.floorImage == null) {
             this.floorImage = new ImageView();
         }
@@ -258,10 +261,41 @@ public class Floor extends Observable {
             this.nodePane = new Pane();
         }
 
+        Image image = new Image(String.valueOf(imagePath));
         this.floorImage.setImage(image);
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
 
+    }
+
+
+    public void addLocationToListView(ListView listView) {
+
+        if (this.locationNodes == null) {
+
+            return;
+        }
+
+        ObservableList<LocationNode> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.locationNodes);
+
+        listView.setItems(ObservedLocation);
+    }
+
+
+    public void addDestinationsToListView(ListView listView) {
+
+        if (this.getFloorDestinations() == null) {
+
+            return;
+        }
+
+        ObservableList<String> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.getFloorDestinations());
+
+        listView.setItems(ObservedLocation);
     }
 
     /**
@@ -303,7 +337,6 @@ public class Floor extends Observable {
 
     }
 
-
     /**
      * Return a FloorObserver associated with Floor
      *
@@ -320,35 +353,6 @@ public class Floor extends Observable {
 
         return uniqueID.toString();
     }
-
-    public void addLocationToListView(ListView listView) {
-
-        if(this.locationNodes == null){
-            return;
-        }
-
-        ObservableList<LocationNode> ObservedLocation = FXCollections.observableArrayList();
-
-        ObservedLocation.addAll(this.locationNodes);
-
-        listView.setItems(ObservedLocation);
-    }
-
-
-    public void addDestinationsToListView(ListView listView) {
-
-        if(this.getFloorDestinations() == null){
-            return;
-        }
-
-        ObservableList<String> ObservedLocation = FXCollections.observableArrayList();
-
-        ObservedLocation.addAll(this.getFloorDestinations());
-
-        listView.setItems(ObservedLocation);
-    }
-
-
 
     public Pane getNodePane() {
         return nodePane;
@@ -381,11 +385,47 @@ public class Floor extends Observable {
     }
 
     @JsonGetter
-    //Maryann is adding this
-    public String getImagePath() {
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    @JsonIgnore
+    public void setRelativePath(URL imagePath) {
+        URI uri = null;
+        try {
+            uri = imagePath.toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String path = uri.getPath();
+        String idStr = path.substring(path.lastIndexOf('/') + 1);
+        int id = Integer.parseInt(idStr);
+        this.relativePath =  idStr;
+    }
+
+    @JsonIgnore
+    public URL getImagePath() {
+
         return imagePath;
     }
 
+    @JsonIgnore
+    public void setImagePath(String relativePath) {
+        try {
+
+            /**
+             *
+             *This is for OSx use this while testing.
+             *
+             *this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);
+             */
+        //Use this for windows
+
+            this.imagePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + relativePath);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public StackPane getStackPane() {
         return stackPane;
@@ -394,5 +434,4 @@ public class Floor extends Observable {
     public void setStackPane(StackPane stackPane) {
         this.stackPane = stackPane;
     }
-
 }

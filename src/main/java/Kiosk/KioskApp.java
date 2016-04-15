@@ -2,6 +2,7 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
@@ -14,7 +15,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class KioskApp extends Application {
 
@@ -22,14 +28,40 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     private Building hospitalBuilding;
     private LocationNode startNode;
+    private URL filePath;
 
 
     private ListView<String> listDirectory;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws MalformedURLException {
 
         this.primaryStage = primaryStage;
+
+        this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+        try {
+
+            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+
+        } catch (DefaultFileDoesNotExistException e) {
+            // Create new default file
+            try {
+
+                File newFile = new File(this.filePath.toURI());
+                newFile.createNewFile();
+
+            } catch (URISyntaxException exception) {
+
+                exception.printStackTrace();
+
+            } catch (IOException exception) {
+
+                exception.printStackTrace();
+
+            }
+
+        }
+
         this.hospitalBuilding = new Building();
         this.primaryStage.setTitle("Pathfinding Application");
 
@@ -77,7 +109,7 @@ public class KioskApp extends Application {
          // Give the controller access to the main app.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setListeners();
+//            controller.setListeners();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,7 +199,7 @@ public class KioskApp extends Application {
      * 
      */
  // TODO: showSearch should have parameter for input
-    public boolean showSearch() {
+    public boolean showSearch(String searchText) {
         try {
             // Load SearchScreen
             FXMLLoader loader = new FXMLLoader();
@@ -183,6 +215,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.displayResult(searchText);
 
             return controller.isOkClicked();
             

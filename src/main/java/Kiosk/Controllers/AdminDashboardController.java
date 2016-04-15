@@ -187,44 +187,11 @@ public class AdminDashboardController {
 
     public void setListeners() {
 
-        deleteThis();
-
         // Setup Listeners
         setCoreFunctionalityListeners();
         setBuildingTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
-
-    }
-
-    // TODO PLEASE DELETE THIS
-    private void deleteThis() {
-
-
-        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(10.0,10.0)).addDestination(Destination.BATHROOM,"haha");
-        this.building.addFloor(3, "Floor3_Final.png");
-        this.building.addFloor(4, "Floor2_Draft.png");
-
-        try {
-            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
-            node3A.addDestination(Destination.KIOSK, "Kiosk3");
-        } catch (FloorDoesNotExistException e) {
-            e.printStackTrace();
-        }
-
-
-        for (Floor floor: this.building.getFloors()) {
-            floor.setFloorImage(getClass().getResource(floor.getImagePath()));
-            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
-                for (LocationNode node : floor.getFloorNodes()) {
-                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
-                    node.initObserver();
-                    node.initAdjacentLines();
-                }
-            }
-            floor.drawFloorAdmin(this.mapStackPane);
-        }
-
 
     }
 
