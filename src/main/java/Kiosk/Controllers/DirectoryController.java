@@ -61,7 +61,7 @@ public class DirectoryController {
             while (running) {
                 try {
                     System.out.println(counter + " seconds have passed.");
-                    if (counter == 60) {
+                    if (counter == 20) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();

@@ -31,12 +31,15 @@ public class AdminDashboardController {
     private KioskApp kioskApp;
     private Floor location;
 
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
     @FXML
     private ScrollPane mapScrollPane;
 
+    @FXML
+    private Label alabel;
     @FXML
     private Button setStartNode;
 
@@ -527,14 +530,36 @@ public class AdminDashboardController {
                 }
             }
         });
-        floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
 
-        floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+        floorLocationsAddButton.setOnAction(event ->{
 
-        floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
+            alabel.setText("Add Button");
+
+            floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
+
+        });
+
+
+        floorLocationsDeleteButton.setOnAction(event ->{
+
+            alabel.setText("Delete Button");
+
+            floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+
+        });
+
+
+        floorLocationsModifyButton.setOnAction(event ->{
+
+            alabel.setText("Modify Button");
+
+            floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
+
+
+        });
 
 
 
@@ -575,7 +600,6 @@ public class AdminDashboardController {
                     building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
 
-
                 }
 
             }
@@ -599,8 +623,6 @@ public class AdminDashboardController {
                     }
 
 
-
-
                 }
 
             }
@@ -609,11 +631,23 @@ public class AdminDashboardController {
         });
 
 
+        locationConnectedLocationsAddButton.setOnAction(event -> {
 
-        this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
-        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
-        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+            alabel.setText("Add Connected Button");
+            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
 
+        });
+
+        locationDestinationsAddButton.setOnAction(event -> {
+            alabel.setText("Add Destination Button");
+            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+        });
+
+        locationConnectedLocationsDeleteButton.setOnAction(event -> {
+
+            alabel.setText("Delete Destination Button");
+        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+    });
 
 
 
