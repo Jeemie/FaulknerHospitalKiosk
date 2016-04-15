@@ -43,6 +43,7 @@ public class KioskApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    protected Map faulknerMap;
     private Building hospitalBuilding;
     private LocationNode startNode;
     private URL filePath; // Path to file load from
@@ -55,7 +56,6 @@ public class KioskApp extends Application {
 
         this.primaryStage = primaryStage;
         this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
-
 
         try {
 
@@ -82,6 +82,7 @@ public class KioskApp extends Application {
 
 
         this.hospitalBuilding = Map.initMapComponents(this.hospitalBuilding);
+
 
         this.primaryStage.setTitle("Pathfinding Application");
 
@@ -308,11 +309,13 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
-            controller.setStartNode(startNode);
-            controller.setDestinationNode(destinationNode);
 
             controller.setKioskApp(this);
             controller.setBuilding(this.hospitalBuilding);
+            controller.setStartNode(startNode);
+            controller.setDestinationNode(destinationNode);
+
+
 
             return controller.isOkClicked();
             
@@ -353,7 +356,6 @@ public class KioskApp extends Application {
     public void setStartNode(LocationNode startNode) {
 
         this.startNode = startNode;
-
 
     }
 

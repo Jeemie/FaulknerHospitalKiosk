@@ -44,6 +44,13 @@ public class MapViewController {
     @FXML
     private ScrollPane scrollPane;
 
+    @FXML
+    private Button changeFloorButtonUp;
+
+    @FXML
+    private Button changeFloorButtonDown;
+
+
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
 
@@ -159,6 +166,18 @@ public class MapViewController {
 
         //timerThread.start();
 
+        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                //if(faulkner)
+                counter = 0;
+                building.drawShortestPath(startNode, destinationNode);
+
+            }
+
+        });
+
 
     }
 
@@ -207,7 +226,6 @@ public class MapViewController {
         timerThread.interrupt();
         kioskApp.reset();
     }
-
 
     public void setBuilding(Building building) {
         this.building = building;

@@ -1,123 +1,451 @@
 {
-  "uniqueID" : "ee1673dd-184d-42a6-be66-adb193656005",
+  "uniqueID" : "5a30c373-8fd4-4c86-a139-51bcb80f49ff",
   "floors" : [ {
-    "uniqueID" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+    "uniqueID" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
     "floor" : 1,
-    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
+    "currentBuilding" : "5a30c373-8fd4-4c86-a139-51bcb80f49ff",
     "locationNodes" : [ {
-      "uniqueID" : "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd",
+      "uniqueID" : "1e064780-d048-4f77-a4d9-3b5772821cd5",
       "heuristicCost" : 0.0,
       "location" : {
-        "x" : 1000.0,
-        "y" : 384.0
+        "x" : 10.0,
+        "y" : 10.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Audiology" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Audiology" ]
+    }, {
+      "uniqueID" : "0aa750aa-fc0d-4f3a-9c11-59c45bc7d88f",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 20.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Cardiac Rehabilitation" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Cardiac Rehabilitation" ]
+    }, {
+      "uniqueID" : "e925cfe8-0565-4ae4-830e-bf4d5916afd3",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 30.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Center for Preoperative Evaluation" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Center for Preoperative Evaluation" ]
+    }, {
+      "uniqueID" : "804856d7-ab87-4d0a-84be-fbb44bbacaf0",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 40.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Emergency Room" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Emergency Room" ]
+    }, {
+      "uniqueID" : "4ee5412b-eaec-4df8-8d4a-c02822d7b339",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 50.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "GI Endoscopy" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "GI Endoscopy" ]
+    }, {
+      "uniqueID" : "771e75a4-c255-41dc-99f5-1d5404b17409",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 60.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Laboratory" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Laboratory" ]
+    }, {
+      "uniqueID" : "1b6c7b88-a396-464a-a18c-d2f000e6866d",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 70.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Patient Financial Services" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Patient Financial Services" ]
+    }, {
+      "uniqueID" : "32250257-ee2f-4c7f-b277-b1a8d904b0eb",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 80.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Radiology" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Radiology" ]
+    }, {
+      "uniqueID" : "5d6e1ac0-5967-4c53-94f5-1032fca9d37d",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 90.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Special Testing" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Special Testing" ]
+    }, {
+      "uniqueID" : "d771b793-4720-4d28-bad9-f7d561ee9307",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 100.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Taiclet Family Center" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Taiclet Family Center" ]
+    }, {
+      "uniqueID" : "66c32ecd-46de-468d-a610-885cba1fed0c",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 110.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Information" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Information" ]
+    }, {
+      "uniqueID" : "b279fe2e-0bb9-44d0-89fc-80d23151a23c",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 120.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Admitting/Registration" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Admitting/Registration" ]
+    }, {
+      "uniqueID" : "a061e45d-4735-48d6-be00-4ad81911cef4",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 130.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Atrium Cafe" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Atrium Cafe" ]
+    }, {
+      "uniqueID" : "7a4f8607-ff18-4430-9ac6-d59db829b248",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 140.0
       },
       "adjacentLocationNodes" : [ {
-        "uniqueID" : "7a60fc83-8538-42ef-9eb4-8a35bc4cea54",
+        "uniqueID" : "5ca18c9b-fbce-49f5-8b19-0b82b3251eb2",
         "heuristicCost" : 0.0,
         "location" : {
-          "x" : 1003.0,
-          "y" : 379.0
+          "x" : 282.0,
+          "y" : 133.0
         },
-        "adjacentLocationNodes" : [ {
-          "uniqueID" : "7e70c63f-a7fe-452d-8199-1ee14f51a794",
+        "adjacentLocationNodes" : [ "7a4f8607-ff18-4430-9ac6-d59db829b248", {
+          "uniqueID" : "79c70702-75de-4b96-843f-fef8cb6cb00d",
           "heuristicCost" : 0.0,
           "location" : {
-            "x" : 1051.0,
-            "y" : 374.0
+            "x" : 449.0,
+            "y" : 130.0
           },
-          "adjacentLocationNodes" : [ {
-            "uniqueID" : "f130bde5-d1ae-4bae-b3da-e5f2e0482d87",
+          "adjacentLocationNodes" : [ "5ca18c9b-fbce-49f5-8b19-0b82b3251eb2", {
+            "uniqueID" : "1a71f100-c945-4274-ae2c-b7edca96220a",
             "heuristicCost" : 0.0,
             "location" : {
-              "x" : 1041.0,
-              "y" : 276.0
+              "x" : 549.0,
+              "y" : 128.0
             },
-            "adjacentLocationNodes" : [ "7e70c63f-a7fe-452d-8199-1ee14f51a794", {
-              "uniqueID" : "14973097-487a-4fd3-9e1e-1996d4d85461",
-              "heuristicCost" : 0.0,
-              "location" : {
-                "x" : 1045.0,
-                "y" : 211.0
-              },
-              "adjacentLocationNodes" : [ "f130bde5-d1ae-4bae-b3da-e5f2e0482d87" ],
-              "destinations" : { },
-              "nodeFloor" : {
-                "uniqueID" : "2db50357-0b38-41d5-800c-0269d94f449f",
-                "floor" : 3,
-                "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
-                "locationNodes" : [ "7a60fc83-8538-42ef-9eb4-8a35bc4cea54", "f130bde5-d1ae-4bae-b3da-e5f2e0482d87", "7e70c63f-a7fe-452d-8199-1ee14f51a794", "14973097-487a-4fd3-9e1e-1996d4d85461" ],
-                "relativePath" : "Floor3_Final.png",
-                "startNode" : "14973097-487a-4fd3-9e1e-1996d4d85461"
-              },
-              "buildingDestinations" : [ ]
-            } ],
-            "destinations" : {
-              "KIOSK" : [ "Kiosk" ]
-            },
-            "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
-            "buildingDestinations" : [ "Kiosk" ]
-          }, "7a60fc83-8538-42ef-9eb4-8a35bc4cea54" ],
-          "destinations" : { },
-          "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
-          "buildingDestinations" : [ ]
-        }, "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd" ],
-        "destinations" : { },
-        "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
-        "buildingDestinations" : [ ]
-      }, {
-        "uniqueID" : "7e2764e2-6fc8-4f01-ac16-932681b5403c",
-        "heuristicCost" : 0.0,
-        "location" : {
-          "x" : 1046.0,
-          "y" : 382.0
-        },
-        "adjacentLocationNodes" : [ {
-          "uniqueID" : "6548955e-bbce-4696-95e9-771c5167df3a",
-          "heuristicCost" : 0.0,
-          "location" : {
-            "x" : 1048.0,
-            "y" : 567.0
-          },
-          "adjacentLocationNodes" : [ "7e2764e2-6fc8-4f01-ac16-932681b5403c", {
-            "uniqueID" : "11583c54-a178-4720-9f99-589771e2eda7",
-            "heuristicCost" : 0.0,
-            "location" : {
-              "x" : 1050.0,
-              "y" : 653.0
-            },
-            "adjacentLocationNodes" : [ "6548955e-bbce-4696-95e9-771c5167df3a" ],
+            "adjacentLocationNodes" : [ "79c70702-75de-4b96-843f-fef8cb6cb00d" ],
             "destinations" : { },
-            "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+            "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
             "buildingDestinations" : [ ]
           } ],
           "destinations" : { },
-          "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+          "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
           "buildingDestinations" : [ ]
-        }, "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd" ],
+        } ],
         "destinations" : { },
-        "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+        "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
         "buildingDestinations" : [ ]
       } ],
-      "destinations" : { },
-      "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
-      "buildingDestinations" : [ ]
-    }, "7e2764e2-6fc8-4f01-ac16-932681b5403c", "6548955e-bbce-4696-95e9-771c5167df3a", "11583c54-a178-4720-9f99-589771e2eda7" ],
+      "destinations" : {
+        "SERVICE" : [ "Valet Parking" ]
+      },
+      "nodeFloor" : "fa45fddb-0e46-4c3d-8dce-cb570f7445d6",
+      "buildingDestinations" : [ "Valet Parking" ]
+    }, "5ca18c9b-fbce-49f5-8b19-0b82b3251eb2", "79c70702-75de-4b96-843f-fef8cb6cb00d", "1a71f100-c945-4274-ae2c-b7edca96220a" ],
     "relativePath" : "Floor1_Final.png",
-    "startNode" : "11583c54-a178-4720-9f99-589771e2eda7"
+    "startNode" : "7a4f8607-ff18-4430-9ac6-d59db829b248"
   }, {
-    "uniqueID" : "40060a41-04d8-4aca-ab26-0d5626a5b917",
+    "uniqueID" : "c594e445-b85c-4cb9-89a7-5d0646f562c6",
     "floor" : 2,
-    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
+    "currentBuilding" : "5a30c373-8fd4-4c86-a139-51bcb80f49ff",
     "locationNodes" : [ ],
     "relativePath" : "Floor2_Final.png",
     "startNode" : null
-  }, "2db50357-0b38-41d5-800c-0269d94f449f", {
-    "uniqueID" : "d5be7760-6374-40b2-8034-5456d978dcdf",
+  }, {
+    "uniqueID" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+    "floor" : 3,
+    "currentBuilding" : "5a30c373-8fd4-4c86-a139-51bcb80f49ff",
+    "locationNodes" : [ {
+      "uniqueID" : "96f885b8-4455-4f43-bb72-cc748647d281",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 10.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD" ],
+        "DEPARTMENT" : [ "Roslindale Pediatric Associates" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates" ]
+    }, {
+      "uniqueID" : "49fc09ad-9e11-4c31-994f-c302ea508b32",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 20.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD" ],
+        "DEPARTMENT" : [ "Eye Care Specialists", "Suburban Eye Specialists" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists" ]
+    }, {
+      "uniqueID" : "b0ea1063-9218-425c-8584-c6c9e790d829",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 30.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD" ],
+        "DEPARTMENT" : [ "Obstetrics and Gynecology Associates" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates" ]
+    }, {
+      "uniqueID" : "3d7dd5cc-a669-4bbe-a6e6-695d6d0ff232",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 40.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "ATM" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "ATM" ]
+    }, {
+      "uniqueID" : "88994987-74fc-49fe-b528-61b92f3f3d51",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 50.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Huvos Auditorium" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Huvos Auditorium" ]
+    }, {
+      "uniqueID" : "7febbe11-a5e6-40be-b2ec-3b2c73430cfa",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 60.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Cafeteria", "Chapel" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Cafeteria", "Chapel" ]
+    }, {
+      "uniqueID" : "ee7145ca-7ced-4dff-b468-19a70694bf3a",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 70.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Gift Shop" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Gift Shop" ]
+    }, {
+      "uniqueID" : "d591704a-6ad4-42d3-8039-f03f2c730d00",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 80.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Patient Relations" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Patient Relations" ]
+    }, {
+      "uniqueID" : "a4f66d87-7e95-4bdc-a02e-555ac3d2e421",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 90.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Volunteer Services" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Volunteer Services" ]
+    }, {
+      "uniqueID" : "64930ddf-af85-4c95-8615-05f9340a60fc",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 100.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "KIOSK" : [ "Kiosk" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Kiosk" ]
+    }, {
+      "uniqueID" : "d150f844-5939-43ed-a942-e436797ea86d",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 110.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 1 Bathroom" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Floor 1 Bathroom" ]
+    }, {
+      "uniqueID" : "624d2363-b39f-4e90-8a80-4d97a50cad82",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 30.0,
+        "y" : 120.0
+      },
+      "adjacentLocationNodes" : [ {
+        "uniqueID" : "e2baabc2-5494-42a3-b239-34d7ba3e2f16",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 476.0,
+          "y" : 144.0
+        },
+        "adjacentLocationNodes" : [ {
+          "uniqueID" : "64a43a80-5b64-415c-8f86-804751db64a3",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 478.0,
+            "y" : 223.0
+          },
+          "adjacentLocationNodes" : [ {
+            "uniqueID" : "cb5325be-b68e-4c49-8b26-17a0c187a199",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 542.0,
+              "y" : 223.0
+            },
+            "adjacentLocationNodes" : [ {
+              "uniqueID" : "2cbeb424-7a0e-41cd-91f9-43c7cb6412d8",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 539.0,
+                "y" : 144.0
+              },
+              "adjacentLocationNodes" : [ "cb5325be-b68e-4c49-8b26-17a0c187a199" ],
+              "destinations" : { },
+              "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+              "buildingDestinations" : [ ]
+            }, "64a43a80-5b64-415c-8f86-804751db64a3" ],
+            "destinations" : { },
+            "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+            "buildingDestinations" : [ ]
+          }, "e2baabc2-5494-42a3-b239-34d7ba3e2f16" ],
+          "destinations" : { },
+          "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+          "buildingDestinations" : [ ]
+        }, "624d2363-b39f-4e90-8a80-4d97a50cad82" ],
+        "destinations" : { },
+        "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+        "buildingDestinations" : [ ]
+      } ],
+      "destinations" : {
+        "ELEVATOR" : [ "Elevatoe" ]
+      },
+      "nodeFloor" : "e2b5c132-6087-473d-bbef-a0764a42eb92",
+      "buildingDestinations" : [ "Elevatoe" ]
+    }, "2cbeb424-7a0e-41cd-91f9-43c7cb6412d8", "cb5325be-b68e-4c49-8b26-17a0c187a199", "64a43a80-5b64-415c-8f86-804751db64a3", "e2baabc2-5494-42a3-b239-34d7ba3e2f16" ],
+    "relativePath" : "Floor3_Final.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "ba024b00-d416-458c-9674-2f90219627fb",
     "floor" : 4,
-    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
+    "currentBuilding" : "5a30c373-8fd4-4c86-a139-51bcb80f49ff",
     "locationNodes" : [ ],
     "relativePath" : "Floor4_Final.png",
     "startNode" : null
   } ],
-  "destinations" : [ "Kiosk" ]
+  "destinations" : [ "Audiology", "Cardiac Rehabilitation", "Center for Preoperative Evaluation", "Emergency Room", "GI Endoscopy", "Laboratory", "Patient Financial Services", "Radiology", "Special Testing", "Taiclet Family Center", "Information", "Admitting/Registration", "Atrium Cafe", "Valet Parking", "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates", "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists", "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates", "ATM", "Huvos Auditorium", "Cafeteria", "Chapel", "Gift Shop", "Patient Relations", "Volunteer Services", "Kiosk", "Floor 1 Bathroom", "Elevatoe" ]
 }

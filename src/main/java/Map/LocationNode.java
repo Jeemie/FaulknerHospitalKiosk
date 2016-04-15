@@ -5,6 +5,7 @@ import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import com.fasterxml.jackson.annotation.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import org.slf4j.Logger;
@@ -339,7 +340,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         Line newLine  = new Line(this.location.getX(), this.location.getY(),
                 adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
-        newLine.setStrokeWidth(10.0);
+        newLine.setStrokeWidth(1.0);
 
         pane.getChildren().add(newLine);
 
