@@ -143,15 +143,6 @@ public class AdminDashboardController {
     private TitledPane locationConnectedLocationsTitledPane;
 
     @FXML
-    private TableView locationConnectedLocationsTableView;
-
-    @FXML
-    private TableColumn locationConnecteLocationsLocationTableColumn;
-
-    @FXML
-    private TableColumn locationConnecteLocationsFloorTableColumn;
-
-    @FXML
     private Button locationConnectedLocationsAddButton;
 
     @FXML
@@ -483,7 +474,6 @@ public class AdminDashboardController {
 
                         building.getCurrentFloor().addLocationToListView(floorLocationsListView);
 
-
                     }
 
 
@@ -555,10 +545,11 @@ public class AdminDashboardController {
 
                     if (building.getAdjacentsNodes() != null) {
 
-                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationsTableView);
+                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
 
                     }
+
                 }
 
             }

@@ -214,6 +214,8 @@ public class Floor extends Observable {
 
         });
 
+        setStackPane(stackPane);
+
         // add the current floor's canvas and imageview to the stackpane
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
