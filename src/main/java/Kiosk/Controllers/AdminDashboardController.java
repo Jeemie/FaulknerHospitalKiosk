@@ -17,7 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Created by matt on 4/12/16.
@@ -231,6 +233,8 @@ public class AdminDashboardController {
         // Setup Save Changes Button
         this.saveChangesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+            public URL saveFilePath;
+
             @Override
             public void handle(MouseEvent event) {
 
@@ -238,9 +242,23 @@ public class AdminDashboardController {
 
                 LOGGER.info("Attempting to save changes to the map");
 
+
+                try {
+                    /**
+                     *
+                     *This is for OSx use this while testing.
+                     *
+                     *this.savefilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+                     */
+                    this.saveFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+
                 try {
 
-                    building.saveToFile("Kiosk/Controllers/mapdata.json");
+                    building.saveToFile(saveFilePath);
 
                     LOGGER.info("Changes were saved");
 

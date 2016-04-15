@@ -51,7 +51,7 @@ public class Map {
              *
              *This is for OSx use this while testing.
              *
-             *defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+             *defaultFilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
              */
             //This is for Windows. Use this while testing.
 

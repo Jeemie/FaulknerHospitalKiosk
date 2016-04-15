@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
@@ -71,9 +72,9 @@ public class Building extends Observable {
      * @param filePath
      * @throws IOException
      */
-    public void saveToFile(String filePath) throws IOException, URISyntaxException {
+    public void saveToFile(URL filePath) throws IOException, URISyntaxException {
 
-        File file = new File(getClass().getClassLoader().getResource(filePath).toURI());
+        File file = new File(filePath.toURI());
         ObjectToJsonToJava.saveToFile(file, this);
 
         LOGGER.info("Saving the building to the file: " + filePath);
