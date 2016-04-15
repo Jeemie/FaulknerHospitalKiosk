@@ -51,8 +51,8 @@ public class MapViewController {
     private Button changeFloorButtonDown;
 
 
-    Timer timer = new Timer("A Timer");
-    Timer atimer = new Timer();
+    public Timer timer;
+    public Timer atimer;
 
     int counter = 0;
     private volatile boolean running = true;
@@ -70,7 +70,6 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
                     if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
@@ -84,7 +83,6 @@ public class MapViewController {
                     }
                     Thread.sleep(1000);
                 } catch (InterruptedException exception) {
-                    System.out.println("I'm outta here");
                     atimer.cancel();
                     timer.cancel();
                     timerTask.cancel();
@@ -97,7 +95,7 @@ public class MapViewController {
         }
     };
 
-    Thread timerThread = new Thread(runnable);
+    Thread timerThread;
 
     Runnable resetKiosk = new Runnable() {
 
@@ -155,6 +153,10 @@ public class MapViewController {
                 if(numThreads == 0) {
                     numThreads +=1;
                     running = true;
+                    timer = new Timer("A Timer");
+                    atimer = new Timer("A Timer2");
+                    timerThread = new Thread(runnable);
+                    timer.scheduleAtFixedRate(timerTask, 30, 1000);
                     timerThread.start();
                 }
                 counter = 0;
@@ -162,7 +164,7 @@ public class MapViewController {
         });
 
 
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
         //timerThread.start();
 
@@ -231,14 +233,14 @@ public class MapViewController {
         this.building = building;
     }
 
-    public void setDestinationNode(LocationNode destinationNode) {
+    public void setDestinationNode(LocationNode destinationNode){
 
-/*        atimer.cancel();
+/*      atimer.cancel();
         atimer.purge();
         timer.cancel();
         timer.purge();*/
         running = false;
-        timerThread.interrupt();
+        //timerThread.interrupt();
         this.destinationNode = destinationNode;
         destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
     }
