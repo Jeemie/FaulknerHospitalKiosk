@@ -2,18 +2,17 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
+import Map.Destination;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
-import Map.*;
+import Map.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -220,6 +219,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
             return controller.isOkClicked();

@@ -58,6 +58,10 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
         switch(locationNode.getState()) {
 
             case NORMAL:
+                this.locationNode.getAdjacentLocationNodes();
+                this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
+                System.out.println(this.locationNode.getAdjacentLocationNodes());
+                System.out.println(this.locationNode.getDestinations());
 
                 break;
 
@@ -123,6 +127,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                 LOGGER.info("Setting the new start node to ");
 
                 this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
+
 
 
             default:

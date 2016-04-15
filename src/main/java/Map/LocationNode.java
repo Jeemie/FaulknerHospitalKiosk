@@ -103,6 +103,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         notifyObservers();
 
 
+        //return null;
     }
 
     @JsonIgnore
@@ -253,8 +254,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             //removes the node from list of adjacent Nodes
             adjacentLocationNodes.remove(adjacentLocationNode);
 
-           //removes this node from the other node's list of adjacent nodes
-            adjacentLocationNode.removeAdjacentNode(this);
+//            //removes this node from the other node's list of adjacent nodes
+//            adjacentLocationNode.removeAdjacentNode(this);
 
             setChanged();
 
@@ -344,8 +345,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         Line newLine = new Line(this.location.getX(), this.location.getY(),
                 adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
-        newLine.setStrokeWidth(1.0);
-
         pane.getChildren().add(newLine);
 
         this.adjacentLines.add(newLine);
@@ -400,12 +399,10 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
-        this.currentFloor.removeLocationNode(this);
-
         notifyObservers();
         setChanged();
 
-
+        this.currentFloor.removeLocationNode(this);
 
     }
 
@@ -515,7 +512,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         listView.setItems(ObservedLocation);
     }
-
     public void addDestinationsToListView(ListView listView) {
 
         if(this.adjacentLocationNodes == null){
@@ -528,7 +524,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         listView.setItems(ObservedLocation);
     }
-
 
 
 }
