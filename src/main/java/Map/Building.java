@@ -89,12 +89,20 @@ public class Building extends Observable {
         LOGGER.info("Drawing Shortest Path");
 
         for (int i = 0; i < path.size() - 1; i++) {
+            if (path.get(i).getNodeFloor().getFloor() == path.get(i + 1).getNodeFloor().getFloor()) {
+                System.out.println("***** Drawing path between node at " + i + " and node at " + (i+1));
+                System.out.println("Node at i: " + path.get(i).toString());
+                System.out.println("Node at i + 1" + path.get(i+1).toString());
+                path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
+            }
+        }
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
+
+
 
         }
 
-    }
+
 
 
 

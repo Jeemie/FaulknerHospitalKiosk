@@ -39,7 +39,7 @@ public class DirectoryController {
     private ObservableList<String> currentNames = FXCollections.observableArrayList();
 
     private Building building;
-//    private LocationNode startNode;
+    private LocationNode startNode;
 //    private LocationNode destinationNode;
 
     Timer timer = new Timer("A Timer");
@@ -364,7 +364,7 @@ public class DirectoryController {
 
     public void setStartNode(LocationNode startNode) {
 
-//        this.startNode = startNode;
+        this.startNode = startNode;
 
     }
 

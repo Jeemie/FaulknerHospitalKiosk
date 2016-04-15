@@ -56,6 +56,7 @@ public class KioskApp extends Application {
         this.primaryStage = primaryStage;
         this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
+
         try {
 
             this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
@@ -78,6 +79,10 @@ public class KioskApp extends Application {
             }
 
         }
+
+
+        this.hospitalBuilding = Map.initMapComponents(this.hospitalBuilding);
+
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();
@@ -267,7 +272,7 @@ public class KioskApp extends Application {
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
             controller.setBuilding(hospitalBuilding);
-//            controller.setStartNode(startNode);
+            controller.setStartNode(startNode);
 
             //set the selected directory view to appear
             controller.setList(destinationType);
@@ -348,6 +353,7 @@ public class KioskApp extends Application {
     public void setStartNode(LocationNode startNode) {
 
         this.startNode = startNode;
+
 
     }
 

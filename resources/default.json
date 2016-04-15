@@ -1,33 +1,123 @@
 {
-  "uniqueID" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+  "uniqueID" : "ee1673dd-184d-42a6-be66-adb193656005",
   "floors" : [ {
-    "uniqueID" : "73c40645-bede-48d6-ab1f-49760dda6912",
+    "uniqueID" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
     "floor" : 1,
-    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
-    "locationNodes" : [ ],
+    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
+    "locationNodes" : [ {
+      "uniqueID" : "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1000.0,
+        "y" : 384.0
+      },
+      "adjacentLocationNodes" : [ {
+        "uniqueID" : "7a60fc83-8538-42ef-9eb4-8a35bc4cea54",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 1003.0,
+          "y" : 379.0
+        },
+        "adjacentLocationNodes" : [ {
+          "uniqueID" : "7e70c63f-a7fe-452d-8199-1ee14f51a794",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 1051.0,
+            "y" : 374.0
+          },
+          "adjacentLocationNodes" : [ {
+            "uniqueID" : "f130bde5-d1ae-4bae-b3da-e5f2e0482d87",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 1041.0,
+              "y" : 276.0
+            },
+            "adjacentLocationNodes" : [ "7e70c63f-a7fe-452d-8199-1ee14f51a794", {
+              "uniqueID" : "14973097-487a-4fd3-9e1e-1996d4d85461",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1045.0,
+                "y" : 211.0
+              },
+              "adjacentLocationNodes" : [ "f130bde5-d1ae-4bae-b3da-e5f2e0482d87" ],
+              "destinations" : { },
+              "nodeFloor" : {
+                "uniqueID" : "2db50357-0b38-41d5-800c-0269d94f449f",
+                "floor" : 3,
+                "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
+                "locationNodes" : [ "7a60fc83-8538-42ef-9eb4-8a35bc4cea54", "f130bde5-d1ae-4bae-b3da-e5f2e0482d87", "7e70c63f-a7fe-452d-8199-1ee14f51a794", "14973097-487a-4fd3-9e1e-1996d4d85461" ],
+                "relativePath" : "Floor3_Final.png",
+                "startNode" : "14973097-487a-4fd3-9e1e-1996d4d85461"
+              },
+              "buildingDestinations" : [ ]
+            } ],
+            "destinations" : {
+              "KIOSK" : [ "Kiosk" ]
+            },
+            "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
+            "buildingDestinations" : [ "Kiosk" ]
+          }, "7a60fc83-8538-42ef-9eb4-8a35bc4cea54" ],
+          "destinations" : { },
+          "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
+          "buildingDestinations" : [ ]
+        }, "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd" ],
+        "destinations" : { },
+        "nodeFloor" : "2db50357-0b38-41d5-800c-0269d94f449f",
+        "buildingDestinations" : [ ]
+      }, {
+        "uniqueID" : "7e2764e2-6fc8-4f01-ac16-932681b5403c",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 1046.0,
+          "y" : 382.0
+        },
+        "adjacentLocationNodes" : [ {
+          "uniqueID" : "6548955e-bbce-4696-95e9-771c5167df3a",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 1048.0,
+            "y" : 567.0
+          },
+          "adjacentLocationNodes" : [ "7e2764e2-6fc8-4f01-ac16-932681b5403c", {
+            "uniqueID" : "11583c54-a178-4720-9f99-589771e2eda7",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 1050.0,
+              "y" : 653.0
+            },
+            "adjacentLocationNodes" : [ "6548955e-bbce-4696-95e9-771c5167df3a" ],
+            "destinations" : { },
+            "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+            "buildingDestinations" : [ ]
+          } ],
+          "destinations" : { },
+          "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+          "buildingDestinations" : [ ]
+        }, "d2cc818a-db09-4c96-8bbd-4ec5d5871fcd" ],
+        "destinations" : { },
+        "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+        "buildingDestinations" : [ ]
+      } ],
+      "destinations" : { },
+      "nodeFloor" : "f33ac5f0-8301-4d42-b7ec-771edf3ae1a4",
+      "buildingDestinations" : [ ]
+    }, "7e2764e2-6fc8-4f01-ac16-932681b5403c", "6548955e-bbce-4696-95e9-771c5167df3a", "11583c54-a178-4720-9f99-589771e2eda7" ],
     "relativePath" : "Floor1_Final.png",
-    "startNode" : null
+    "startNode" : "11583c54-a178-4720-9f99-589771e2eda7"
   }, {
-    "uniqueID" : "88f27e38-5113-432f-adb9-5037cb9d1acf",
+    "uniqueID" : "40060a41-04d8-4aca-ab26-0d5626a5b917",
     "floor" : 2,
-    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
     "locationNodes" : [ ],
     "relativePath" : "Floor2_Final.png",
     "startNode" : null
-  }, {
-    "uniqueID" : "74c2d12b-4194-4a9c-b59a-aa5b19faa425",
-    "floor" : 3,
-    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
-    "locationNodes" : [ ],
-    "relativePath" : "Floor3_Final.png",
-    "startNode" : null
-  }, {
-    "uniqueID" : "f73b6367-9438-4c96-88ed-0f19d3b075f1",
+  }, "2db50357-0b38-41d5-800c-0269d94f449f", {
+    "uniqueID" : "d5be7760-6374-40b2-8034-5456d978dcdf",
     "floor" : 4,
-    "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
+    "currentBuilding" : "ee1673dd-184d-42a6-be66-adb193656005",
     "locationNodes" : [ ],
     "relativePath" : "Floor4_Final.png",
     "startNode" : null
   } ],
-  "destinations" : [ ]
+  "destinations" : [ "Kiosk" ]
 }

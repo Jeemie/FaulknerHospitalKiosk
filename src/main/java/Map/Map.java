@@ -49,9 +49,6 @@ public class Map {
 
         }
 
-        // TODO file does not exist (according to exist) when file:/ is at front of file path
-        // TODO create file if one does not exisit
-
         try {
 
             File specifiedFile = new File(specifiedFilePath.toURI());
@@ -92,6 +89,26 @@ public class Map {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        // TODO delete - temporary
+
+
+        try {
+           // mMainHospital = new Building();
+           // mMainHospital.addFloor(1, "Floor1_Final.png");
+           // mMainHospital.addFloor(2, "Floor2_Final.png");
+           // mMainHospital.addFloor(3, "Floor3_Final.png");
+           // mMainHospital.addFloor(4, "Floor4_Final.png");
+
+            mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.KIOSK, "Kiosk");
+            //mMainHospital.getFloor(3).getLocationNodes().get(3).addDestination(Destination.SERVICE, "Atrium");
+            //mMainHospital.getFloor(3).getLocationNodes().get(4).addDestination(Destination.SERVICE, "Starbucks");
+
+        } catch (FloorDoesNotExistException e) {
+
+           e.printStackTrace();
+        }
+
 
         return mMainHospital;
     }
@@ -134,7 +151,9 @@ public class Map {
     }
 
 
-    public Floor getNodeFloor() {
+
+
+    public Floor getCurrentFloor() {
 
         return currentFloor;
     }

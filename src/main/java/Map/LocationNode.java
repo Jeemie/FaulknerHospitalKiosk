@@ -246,8 +246,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             //removes the node from list of adjacent Nodes
             adjacentLocationNodes.remove(adjacentLocationNode);
 
-//            //removes this node from the other node's list of adjacent nodes
-//            adjacentLocationNode.removeAdjacentNode(this);
+           //removes this node from the other node's list of adjacent nodes
+            adjacentLocationNode.removeAdjacentNode(this);
 
             setChanged();
 
@@ -339,6 +339,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         Line newLine  = new Line(this.location.getX(), this.location.getY(),
                 adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
+        newLine.setStrokeWidth(10.0);
+
         pane.getChildren().add(newLine);
 
         this.adjacentLines.add(newLine);
@@ -393,10 +395,10 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
+        this.nodeFloor.removeLocationNode(this);
+
         notifyObservers();
         setChanged();
-
-        this.nodeFloor.removeLocationNode(this);
 
     }
 

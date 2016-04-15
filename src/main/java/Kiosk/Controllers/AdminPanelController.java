@@ -295,23 +295,13 @@ public class AdminPanelController implements Initializable {
 
     private void setupListeners() {
 
+        mMainHospital.addFloor(1, "Floor1_Final.png");
+        mMainHospital.addFloor(2, "Floor2_Final.png");
+        mMainHospital.addFloor(3, "Floor3_Final.png");
+        mMainHospital.addFloor(4, "Floor4_Final.png");
 
 
-           /* URL floor1Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor1_Final.png");
-            URL floor2Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor2_Final.png");
-            URL floor3Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor3_Final.png");
-            URL floor4Url = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "Floor4_Final.png");
-            mMainHospital.addFloor(1, floor1Url);
-            mMainHospital.addFloor(2, floor2Url);
-            mMainHospital.addFloor(3, floor3Url);
-            mMainHospital.addFloor(4, floor4Url);*/
-            mMainHospital.addFloor(1, "Floor1_Final.png");
-            mMainHospital.addFloor(2, "Floor2_Final.png");
-            mMainHospital.addFloor(3, "Floor3_Final.png");
-            mMainHospital.addFloor(4, "Floor4_Final.png");
-
-
-        mMainHospital = Map.initMapComponents(mMainHospital);
+        //mMainHospital = Map.initMapComponents(mMainHospital);
 
         addLocationButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeBuildingStateEventHandler(mMainHospital, BuildingState.ADDNODE));

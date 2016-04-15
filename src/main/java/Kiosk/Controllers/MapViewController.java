@@ -226,6 +226,7 @@ public class MapViewController {
     }
 
     public void setStartNode(LocationNode startNode) {
+
         this.startNode = startNode;
     }
 
