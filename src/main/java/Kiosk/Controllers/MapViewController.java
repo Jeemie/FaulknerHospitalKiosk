@@ -64,7 +64,7 @@ public class MapViewController {
             while (running) {
                 try {
                     System.out.println(counter + " seconds have passed.");
-                    if (counter == 5) {
+                    if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
