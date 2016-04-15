@@ -87,7 +87,7 @@ public class AdminDashboardController {
 
     // Destinations Titled Pane //
     @FXML
-    private TitledPane buildingInformationTitledPane;
+    private TitledPane buildingMiscTitledPane;
 
 
 
@@ -436,6 +436,18 @@ public class AdminDashboardController {
         });
 
 
+        this.buildingFloorsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
+
+            }
+
+        });
+
+
 //        this.buildingDestinationsListView
 
     }
@@ -545,7 +557,7 @@ public class AdminDashboardController {
 
                     if (building.getAdjacentsNodes() != null) {
 
-                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationListView);
+//                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
 
                     }

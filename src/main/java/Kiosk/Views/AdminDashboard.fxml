@@ -65,7 +65,7 @@
                                        </children></AnchorPane>
                               </content>
                             </TitledPane>
-                            <TitledPane fx:id="buildingInformationTitledPane" animated="false" text="Information">
+                            <TitledPane fx:id="buildingMiscTitledPane" animated="false" text="Information">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                               </content>

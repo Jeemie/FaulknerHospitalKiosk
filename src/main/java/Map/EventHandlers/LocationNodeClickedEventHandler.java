@@ -146,7 +146,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 //
 //
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-//            Parent root = loader.load();
+//            Parent root = loader.loadAddDestination();
 //            AdminDepartmentPanelController controller = loader.getController();
 //            controller.setNode(this.locationNode);
 //
@@ -164,7 +164,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         loader.setStackPane(this.locationNode.getCurrentFloor().getStackPane());
         loader.setCurrentLocationNode(this.locationNode);
-        loader.load();
+        loader.loadAddDestination();
 
     }
 

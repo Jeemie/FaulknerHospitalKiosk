@@ -2,6 +2,7 @@ package Kiosk.Controllers.AdminDashboardSubControllers;
 
 import Kiosk.Controllers.AdminDashboardController;
 import Kiosk.KioskApp;
+import Map.Building;
 import Map.LocationNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,11 +22,12 @@ public class AdminSubControllerLoader {
     private LocationNode currentLocationNode;
     private StackPane stackPane;
     private Node currentNode;
+    private Building currentBuilding;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminSubControllerLoader.class);
 
-    public void load() {
+    public void loadAddDestination() {
 
         try {
 
@@ -45,8 +47,22 @@ public class AdminSubControllerLoader {
 
         } catch(IOException e) {
 
-            LOGGER.error("Unable to load the fxml file", e);
+            LOGGER.error("Unable to loadAddDestination fxml file", e);
 
+        }
+
+    }
+
+    public void loadAddFloor() {
+
+        try {
+
+
+
+
+        } catch (IOException e) {
+
+            LOGGER.error("Unable to loadAddFloor fxml file", e);
         }
 
     }
@@ -55,6 +71,12 @@ public class AdminSubControllerLoader {
     public void setCurrentLocationNode(LocationNode currentLocationNode) {
 
         this.currentLocationNode = currentLocationNode;
+
+    }
+
+    public void currentBuilding(Building currentBuilding) {
+
+        this.currentBuilding = currentBuilding;
 
     }
 

@@ -212,7 +212,7 @@ public class AdminPanelController implements Initializable {
 //    private void adminSwitchMode(ActionEvent event) throws IOException {
 //        Stage stage;
 //        stage = new Stage();
-//        Parent root = FXMLLoader.load(getClass().getResource("../Views/AdminDepartmentPanel.fxml"));
+//        Parent root = FXMLLoader.loadAddDestination(getClass().getResource("../Views/AdminDepartmentPanel.fxml"));
 //        stage.setScene(new Scene(root));
 //        stage.initModality(Modality.APPLICATION_MODAL);
 //        stage.initOwner(modifyLocationButton.getScene().getWindow());
@@ -237,7 +237,7 @@ public class AdminPanelController implements Initializable {
             if (file.exists() && file.length() > 0) { // Check that default file exists and is not empty
                 this.mMainHospital = loadFromFile(file); // Load default.json
             } else {
-                LOGGER.info("Cannot load " + file.toString() + ". File does not exist or is empty.");
+                LOGGER.info("Cannot loadAddDestination " + file.toString() + ". File does not exist or is empty.");
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
