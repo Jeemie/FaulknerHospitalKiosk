@@ -40,8 +40,16 @@ public class Map {
         URL defaultFilePath = null;
 
         try {
+            /**
+             *
+             *This is for OSx use this while testing.
+             *
+             *defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+             */
+            //This is for Windows. Use this while testing.
 
-            defaultFilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            //specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
         } catch (MalformedURLException e) {
 
