@@ -1,19 +1,14 @@
 package Map.EventHandlers;
 
-import Kiosk.Controllers.AdminDepartmentPanelController;
-import Utils.FixedSizedStack;
-import Map.LocationNode;
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
 import Map.BuildingState;
+import Map.LocationNode;
+import Utils.FixedSizedStack;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
+
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -165,6 +160,11 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 //            LOGGER.info("Unable to open the modify node view ", e);
 //
 //        }
+        AdminSubControllerLoader loader = new AdminSubControllerLoader();
+
+        loader.setStackPane(this.locationNode.getCurrentFloor().getStackPane());
+        loader.setCurrentLocationNode(this.locationNode);
+        loader.load();
 
     }
 

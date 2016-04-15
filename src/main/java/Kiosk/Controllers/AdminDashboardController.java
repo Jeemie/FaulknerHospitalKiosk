@@ -1,6 +1,6 @@
 package Kiosk.Controllers;
 
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
+import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
@@ -28,6 +27,7 @@ public class AdminDashboardController {
     private Building building;
     private LocationNode currentLocationNode;
     private KioskApp kioskApp;
+    private Floor location;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
@@ -156,8 +156,8 @@ public class AdminDashboardController {
 
     @FXML
     private Button locationConnectedLocationsDeleteButton;
-
-
+    @FXML
+    private ListView locationConnectedLocationListView;
     // Destinations Titled Pane //
     @FXML
     private TitledPane locationDestinationsTitledPane;
@@ -210,9 +210,9 @@ public class AdminDashboardController {
     private void deleteThis() {
 
 
-        this.building.addFloor(2, "Floor2_Draft.png");
+        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(10.0,10.0)).addDestination(Destination.BATHROOM,"haha");
         this.building.addFloor(3, "Floor3_Final.png");
-        this.building.addFloor(4, "Floor4_Draft.png");
+        this.building.addFloor(4, "Floor2_Draft.png");
 
         try {
             LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
@@ -420,7 +420,9 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
-
+                building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                building.setAdjacentsNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
             }
 
         });
@@ -434,7 +436,7 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Destinations Titled Pane Opened");
 
-                    building.addBuildingDestinationsToListView(buildingFloorsListView);
+                    building.addBuildingDestinationsToListView(buildingDestinationsListView);
 
                 }
 
@@ -448,7 +450,72 @@ public class AdminDashboardController {
     }
 
     private void setFloorTabListeners() {
+        // Setup Building Accordion
+        this.floorAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
 
+            @Override
+            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
+
+                if (newValue != null) {
+
+                    LOGGER.info("In the Floor tab the " + newValue.getText() + " Titled Pane has been expanded");
+
+                } else {
+
+                    LOGGER.info("In the Floor tab the " + oldValue.getText() + " Titled Pane has been closed");
+
+                }
+
+            }
+
+        });
+
+        this.floorLocationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    if (building.getCurrentFloor() != null) {
+
+                        building.getCurrentFloor().addLocationToListView(floorLocationsListView);
+
+
+                    }
+
+
+
+                }
+
+            }
+
+        });
+
+        this.floorDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    if (building.getCurrentFloor() != null) {
+
+                        building.getCurrentFloor().addDestinationsToListView(floorDestinationsListView);
+
+
+                    }
+                }
+            }
+        });
+        floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
+        floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
 
 
 
@@ -457,35 +524,54 @@ public class AdminDashboardController {
     private void setLocationTabListeners() {
 
 
-
-        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        // Setup Building Accordion
+        this.locationAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
 
             @Override
-            public void handle(MouseEvent event) {
+            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
 
-                if (currentLocationNode != null) {
+                if (newValue != null) {
 
-                    AdminSubControllerLoader loader = new AdminSubControllerLoader();
-
-                    loader.setStackPane(mapStackPane);
-                    loader.setCurrentLocationNode(currentLocationNode);
-                    loader.load();
+                    LOGGER.info("In the Location tab the " + newValue.getText() + " Titled Pane has been expanded");
 
                 } else {
 
-                    // TODO remove once there are nodes
-
-                    AdminSubControllerLoader loader = new AdminSubControllerLoader();
-
-                    loader.setStackPane(mapStackPane);
-                    loader.setCurrentLocationNode(currentLocationNode);
-                    loader.load();
+                    LOGGER.info("In the Location tab the " + oldValue.getText() + " Titled Pane has been closed");
 
                 }
 
             }
 
         });
+
+        this.locationConnectedLocationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    if (building.getAdjacentsNodes() != null) {
+
+                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationsTableView);
+
+
+                    }
+                }
+
+            }
+
+        });
+
+
+
+        this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+
+
 
     }
 

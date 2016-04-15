@@ -6,12 +6,16 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 /**
@@ -19,7 +23,7 @@ import java.util.*;
  */
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=LocationNode.class)
-public class LocationNode extends Observable implements Comparable<LocationNode>{
+public class LocationNode extends Observable implements Comparable<LocationNode> {
 
     private double heuristicCost; // heuristic cost for AStar algorithm; used for stairs and elevator nodes
     private UUID uniqueID; // A randomly generated UUID associated with the current node
@@ -80,7 +84,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         ArrayList<String> temp;
 
-        if(destinations.containsKey(destination)) {
+        if (destinations.containsKey(destination)) {
 
             temp = destinations.get(destination);
             temp.add(name);
@@ -90,7 +94,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             temp = new ArrayList<String>();
             temp.add(name);
 
-            destinations.put(destination,temp);
+            destinations.put(destination, temp);
 
         }
 
@@ -102,7 +106,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     }
 
     @JsonIgnore
-    public NodeObserver getNodeObserver(){
+    public NodeObserver getNodeObserver() {
         return observer;
     }
 
@@ -307,8 +311,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     }
 
     /**
-     *
-     *
      * @param pane
      */
     public void drawAdjacentNodes(Pane pane) {
@@ -339,7 +341,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     public void drawAdjacentNode(Pane pane, LocationNode adjacentNode) {
 
-        Line newLine  = new Line(this.location.getX(), this.location.getY(),
+        Line newLine = new Line(this.location.getX(), this.location.getY(),
                 adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
         pane.getChildren().add(newLine);
@@ -441,7 +443,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     @Override
     public int compareTo(LocationNode o) {
-        return Double.compare(minDistance,o.minDistance);
+        return Double.compare(minDistance, o.minDistance);
     }
 
     public LocationNode getPrevious() {
@@ -495,6 +497,21 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         notifyObservers();
 
     }
-}
 
+
+    public void addAdjacentsToListView(TableView tableView) {
+
+        if(this.adjacentLocationNodes == null){
+            return;
+        }
+
+        ObservableList<LocationNode> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.adjacentLocationNodes);
+
+        tableView.setItems(ObservedLocation);
+    }
+
+
+}
 
