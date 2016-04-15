@@ -1,17 +1,21 @@
 package Map;
 
-import java.io.*;
+import Map.Exceptions.FloorDoesNotExistException;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-
-import Kiosk.Controllers.AdminPanelController;
-import Map.Exceptions.FloorDoesNotExistException;
-import com.fasterxml.jackson.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.IOException;
-import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 
@@ -28,7 +32,6 @@ public class Building extends Observable {
     @JsonIgnore
     private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
-    private AdminPanelController forLabel;
     private ArrayList<Floor> floors; // A list of all of the floors in the building
     @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
@@ -36,6 +39,15 @@ public class Building extends Observable {
     private static BuildingObserver observer = new BuildingObserver(); // Observer for all of the buildings
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
+    @JsonIgnore
+    private Floor currentFloor;
+    @JsonIgnore
+    private LocationNode currentDestination;
+    @JsonIgnore
+    private LocationNode adjacentsNodes;
+
+
+
 
     /**
      * Default constructor for the building class.
@@ -93,14 +105,13 @@ public class Building extends Observable {
 
         for (int i = 0; i < path.size() - 1; i++) {
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
+            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
 
         }
 
     }
 
-
-
+    /**
 
 
      /**
@@ -124,6 +135,31 @@ public class Building extends Observable {
 
         return newLocationNode;
     }
+
+    public void addFloorsToListView(ListView listView) {
+
+        ObservableList<Floor> Observedfloors = FXCollections.observableArrayList();
+
+        Observedfloors.addAll(this.floors);
+
+        listView.setItems(Observedfloors);
+
+    }
+
+    public void addBuildingDestinationsToListView(ListView listView) {
+
+        ObservableList<String> Observedfloors = FXCollections.observableArrayList();
+
+        Observedfloors.addAll(this.getDestinations());
+
+        listView.setItems(Observedfloors);
+
+    }
+
+
+
+
+
 
     /**
      * TODO
@@ -280,7 +316,7 @@ public class Building extends Observable {
 
         for (int i = 0; i < path.size() - 1; i++) {
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getNodeFloor().getNodePane(), path.get(i + 1));
+            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
 
         }
 
@@ -308,7 +344,9 @@ public class Building extends Observable {
         return state;
     }
 
-    public void setState(BuildingState state) { this.state = state;}
+    public void setState(BuildingState state) {
+        this.state = state;
+    }
 
     @JsonGetter
     public UUID getUniqueID() {
@@ -320,4 +358,28 @@ public class Building extends Observable {
         return floors;
     }
 
+
+    public Floor getCurrentFloor() {
+        return currentFloor;
+    }
+
+    public void setCurrentFloor(Floor currentFloor) {
+        this.currentFloor = currentFloor;
+    }
+
+    public LocationNode getCurrentDestination() {
+        return currentDestination;
+    }
+
+    public void setCurrentDestination(LocationNode currentDestination) {
+        this.currentDestination = currentDestination;
+    }
+
+    public LocationNode getAdjacentsNodes() {
+        return adjacentsNodes;
+    }
+
+    public void setAdjacentsNodes(LocationNode adjacentsNodes) {
+        this.adjacentsNodes = adjacentsNodes;
+    }
 }

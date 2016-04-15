@@ -52,12 +52,12 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button layoutX="969.0" layoutY="261.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="283.0" text="Change Floor Level" AnchorPane.bottomAnchor="469.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="261.0">
+        <Button fx:id="changeFloorButtonUp" layoutX="969.0" layoutY="261.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="283.0" text="Change Floors [UP]" AnchorPane.bottomAnchor="469.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="261.0">
             <font>
                 <Font size="24.0" />
             </font>
         </Button>
-        <Button layoutX="969.0" layoutY="346.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="283.0" text="Show/Hide Map Details" AnchorPane.bottomAnchor="384.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="346.0">
+        <Button fx:id="changeFloorButtonDown" layoutX="969.0" layoutY="346.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="283.0" text="Change Floors [DOWN]" AnchorPane.bottomAnchor="384.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="346.0">
             <font>
                 <Font size="24.0" />
             </font>

@@ -44,8 +44,15 @@ public class MapViewController {
     @FXML
     private ScrollPane scrollPane;
 
-    Timer timer;
-    Timer atimer;
+    @FXML
+    private Button changeFloorButtonUp;
+
+    @FXML
+    private Button changeFloorButtonDown;
+
+
+    public Timer timer;
+    public Timer atimer;
 
     int counter = 0;
     private volatile boolean running = true;
@@ -63,7 +70,6 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
                     if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
@@ -77,7 +83,6 @@ public class MapViewController {
                     }
                     Thread.sleep(1000);
                 } catch (InterruptedException exception) {
-                    System.out.println("I'm outta here");
                     atimer.cancel();
                     timer.cancel();
                     timerTask.cancel();
@@ -163,6 +168,18 @@ public class MapViewController {
 
         //timerThread.start();
 
+        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                //if(faulkner)
+                counter = 0;
+                building.drawShortestPath(startNode, destinationNode);
+
+            }
+
+        });
+
 
     }
 
@@ -212,7 +229,6 @@ public class MapViewController {
         kioskApp.reset();
     }
 
-
     public void setBuilding(Building building) {
         this.building = building;
     }
@@ -226,10 +242,11 @@ public class MapViewController {
         running = false;
         //timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
+        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
     }
 
     public void setStartNode(LocationNode startNode) {
+
         this.startNode = startNode;
     }
 
