@@ -97,7 +97,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                     this.locationNode.addAdjacentNode(lastAction.getKey());
 
-                    this.locationNode.setState(BuildingState.NORMAL);
+                    //this.locationNode.setState(BuildingState.NORMAL);
 
                 }
 
