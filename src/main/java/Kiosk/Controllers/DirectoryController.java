@@ -123,7 +123,7 @@ public class DirectoryController {
                                 running = false;
                                 timerThread.interrupt();
                                 System.out.println("woop?");
-                                kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
 
                             }
 
@@ -319,7 +319,7 @@ public class DirectoryController {
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
+                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
 
                 }
 

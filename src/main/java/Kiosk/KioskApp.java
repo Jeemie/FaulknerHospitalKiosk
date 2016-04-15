@@ -6,38 +6,21 @@ import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
 import Map.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static Map.Map.storeMapData;
 
 public class KioskApp extends Application {
 
@@ -46,25 +29,16 @@ public class KioskApp extends Application {
     protected Map faulknerMap;
     private Building hospitalBuilding;
     private LocationNode startNode;
-    private URL filePath; // Path to file load from
-    private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
-    @FXML
-    private TableView<String> listDirectory;
+    private URL filePath;
+
+
+    private ListView<String> listDirectory;
 
     @Override
-    public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
+    public void start(Stage primaryStage) throws MalformedURLException {
 
         this.primaryStage = primaryStage;
 
-        /**
-         *
-         *This is for OSx use this while testing.
-         *
-         *this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
-         */
-
-
-        //This is for windows
         this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
         try {
 
@@ -114,6 +88,7 @@ public class KioskApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
 //            System.out.println(getClass().getResource("stylesheet.css"));
 //            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
             primaryStage.show();
@@ -130,7 +105,7 @@ public class KioskApp extends Application {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane kioskOverview = loader.load();
+            AnchorPane kioskOverview = (AnchorPane) loader.load();
 
             // Set kiosk overview into the center of root layout.
             rootLayout.setCenter(kioskOverview);
@@ -138,7 +113,8 @@ public class KioskApp extends Application {
          // Give the controller access to the main app.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
-            
+//            controller.setListeners();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,13 +140,14 @@ public class KioskApp extends Application {
         try {
             // Load AdminLogin
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/AdminLoginAdam.fxml"));
-            AnchorPane page = loader.load();
+            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Admin Login");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App
@@ -192,25 +169,28 @@ public class KioskApp extends Application {
     public boolean showAdminControls() {
 
         try {
+            // Load AdminDashboard
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AdminDashboard.fxml"));
+            SplitPane page = (SplitPane) loader.load();
 
-            Stage stage;
-            stage = new Stage();
+            // Replace KioskOverview with AdminLogin
+            primaryStage.setTitle("Administrator Dashboard");
+            Scene scene = new Scene(page);
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
 
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/AdminPanel.fxml"));
-            Parent root = loader.load();
-            AdminPanelController controller = loader.getController();
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            controller.setBuilding(this.hospitalBuilding);
+            // Give controller access to Main App
+            AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setBuilding(this.hospitalBuilding);
+            controller.setListeners();
 
-            return controller.isOkClicked();
-            
+//            return controller.isOkClicked();
+            return false;
+
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -223,14 +203,12 @@ public class KioskApp extends Application {
      * 
      */
  // TODO: showSearch should have parameter for input
-    public boolean showSearch(String value) {
+    public boolean showSearch(String searchText) {
         try {
             // Load SearchScreen
-
-            System.out.println(value);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
@@ -238,19 +216,10 @@ public class KioskApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-
-
-
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(hospitalBuilding);
-
-            System.out.println(value);
-            controller.displayResult(value);
-
-
-
+            controller.displayResult(searchText);
 
             return controller.isOkClicked();
             
@@ -270,7 +239,7 @@ public class KioskApp extends Application {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Directories");
@@ -308,7 +277,7 @@ public class KioskApp extends Application {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
@@ -343,10 +312,9 @@ public class KioskApp extends Application {
             // Load KioskOverview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane page = (AnchorPane) loader.load();
 
             // Replace previous screen with KioskOverview.
-
             primaryStage.setTitle("Pathfinding Application");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
