@@ -123,7 +123,7 @@ public class DirectoryController {
                                 running = false;
                                 timerThread.interrupt();
                                 System.out.println("woop?");
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                             }
 

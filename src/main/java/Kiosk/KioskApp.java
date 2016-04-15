@@ -214,6 +214,7 @@ public class KioskApp extends Application {
             primaryStage.setTitle("Search Results");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App.
@@ -245,6 +246,7 @@ public class KioskApp extends Application {
             primaryStage.setTitle("Directories");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App.
@@ -283,6 +285,7 @@ public class KioskApp extends Application {
             primaryStage.setTitle("Map");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App.
@@ -318,6 +321,7 @@ public class KioskApp extends Application {
             primaryStage.setTitle("Pathfinding Application");
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
             primaryStage.show();
 
             // Give controller access to Main App.

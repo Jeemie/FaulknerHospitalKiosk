@@ -38,6 +38,9 @@ public class AdminDashboardController {
     private ScrollPane mapScrollPane;
 
     @FXML
+    private Button setStartNode;
+
+    @FXML
     private StackPane mapStackPane;
 
     @FXML
@@ -538,8 +541,12 @@ public class AdminDashboardController {
         });
         floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
+
         floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+
+        floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
 
 
 
@@ -597,7 +604,12 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+                    if (building.getCurrentNodes() != null) {
+
+                        building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+
+                    }
+
 
 
 
@@ -616,10 +628,20 @@ public class AdminDashboardController {
 
 
 
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Setting start node to: " + building.getCurrentNodes());
+
+                building.setStartNode(building.getCurrentNodes());
+
+            }
+
+        });
     }
-
-
-
 
 
 

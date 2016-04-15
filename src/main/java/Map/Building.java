@@ -45,9 +45,16 @@ public class Building extends Observable {
     private LocationNode currentDestination;
     @JsonIgnore
     private LocationNode currentNodes;
+    @JsonIgnore
+    private LocationNode startNode;
 
+    public LocationNode getStartNode() {
+        return startNode;
+    }
 
-
+    public void setStartNode(LocationNode startNode) {
+        this.startNode = startNode;
+    }
 
     /**
      * Default constructor for the building class.
