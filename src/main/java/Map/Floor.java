@@ -71,6 +71,7 @@ public class Floor extends Observable{
 
         setImagePath(this.relativePath);
 
+
         LOGGER.info("Created new Floor: " + this.toString());
 
         // adds an observer to this floor and add the floor to list of observed floors in the Observer object
@@ -374,7 +375,16 @@ public class Floor extends Observable{
     @JsonIgnore
     public void setImagePath(String relativePath) {
         try {
-            this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);
+
+            /**
+             *
+             *This is for OSx use this while testing.
+             *
+             *this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);
+             */
+        //Use this for windows
+
+            this.imagePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + relativePath);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

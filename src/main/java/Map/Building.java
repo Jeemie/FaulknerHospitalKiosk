@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import Kiosk.Controllers.AdminPanelController;
 import Map.Exceptions.FloorDoesNotExistException;
 import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ public class Building extends Observable {
     @JsonIgnore
     private BuildingState state;
     private UUID uniqueID; // A randomly generated UUID associated with the current building
+    private AdminPanelController forLabel;
     private ArrayList<Floor> floors; // A list of all of the floors in the building
     @JsonIgnore
     private final AStar aStarSearch; // The AStar algorithm associated with the current building
@@ -305,9 +308,7 @@ public class Building extends Observable {
         return state;
     }
 
-    public void setState(BuildingState state) {
-        this.state = state;
-    }
+    public void setState(BuildingState state) { this.state = state;}
 
     @JsonGetter
     public UUID getUniqueID() {

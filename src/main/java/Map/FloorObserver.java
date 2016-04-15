@@ -36,6 +36,7 @@ public class FloorObserver implements Observer {
         // check that the floor is not already being observed
         if (!observedFloors.contains(floor)) {
 
+
             LOGGER.info("Observing new Floor: " + floor.toString());
 
             // add an observer watching the floor

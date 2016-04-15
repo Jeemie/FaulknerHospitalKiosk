@@ -54,8 +54,17 @@ public class KioskApp extends Application {
     public void start(Stage primaryStage) throws UnsupportedEncodingException, MalformedURLException {
 
         this.primaryStage = primaryStage;
-        this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
+        /**
+         *
+         *This is for OSx use this while testing.
+         *
+         *this.filePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
+         */
+
+
+        //This is for windows
+        this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
         try {
 
             this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
