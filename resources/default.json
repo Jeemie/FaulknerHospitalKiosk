@@ -377,6 +377,19 @@
       },
       "currentFloor" : "b4f30759-ab77-4c36-b6e0-531f2603b943",
       "buildingDestinations" : [ "triet" ]
+    }, {
+      "uniqueID" : "2c0cacf0-4fc1-4fae-adc2-36220d3a1f2d",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 500.0,
+        "y" : 500.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "triet" ]
+      },
+      "currentFloor" : "b4f30759-ab77-4c36-b6e0-531f2603b943",
+      "buildingDestinations" : [ "triet" ]
     } ],
     "relativePath" : "Floor2_Final.png",
     "startNode" : null
@@ -446,52 +459,117 @@
         "x" : 1143.0,
         "y" : 756.0
       },
-      "adjacentLocationNodes" : [ ],
+      "adjacentLocationNodes" : [ {
+        "uniqueID" : "c20c4e90-8f3e-4054-b197-28ef54de0dea",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 1034.0,
+          "y" : 800.0
+        },
+        "adjacentLocationNodes" : [ {
+          "uniqueID" : "98c363f8-3978-44ee-bd0e-277fe0823049",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 1080.0,
+            "y" : 580.0
+          },
+          "adjacentLocationNodes" : [ {
+            "uniqueID" : "b0002077-8d2c-45f6-997a-106eb393186f",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 948.0,
+              "y" : 225.0
+            },
+            "adjacentLocationNodes" : [ {
+              "uniqueID" : "f81491f9-e50e-4361-8372-17d5243dc4c3",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1158.0,
+                "y" : 225.0
+              },
+              "adjacentLocationNodes" : [ {
+                "uniqueID" : "a957f1f7-1db7-4d99-a416-faca4789a5a0",
+                "heuristicCost" : 0.0,
+                "location" : {
+                  "x" : 1060.0,
+                  "y" : 256.0
+                },
+                "adjacentLocationNodes" : [ {
+                  "uniqueID" : "bf037bfc-8da0-4ad4-a3b8-25455458fb5d",
+                  "heuristicCost" : 0.0,
+                  "location" : {
+                    "x" : 1089.0,
+                    "y" : 376.0
+                  },
+                  "adjacentLocationNodes" : [ "a957f1f7-1db7-4d99-a416-faca4789a5a0" ],
+                  "destinations" : {
+                    "ELEVATOR" : [ " Hillside Elevator" ]
+                  },
+                  "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+                  "buildingDestinations" : [ " Hillside Elevator" ]
+                }, "f81491f9-e50e-4361-8372-17d5243dc4c3" ],
+                "destinations" : {
+                  "KIOSK" : [ "Kiosk" ]
+                },
+                "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+                "buildingDestinations" : [ "Kiosk" ]
+              }, "b0002077-8d2c-45f6-997a-106eb393186f" ],
+              "destinations" : {
+                "SERVICE" : [ "Chapel" ]
+              },
+              "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+              "buildingDestinations" : [ "Chapel" ]
+            }, "98c363f8-3978-44ee-bd0e-277fe0823049" ],
+            "destinations" : {
+              "SERVICE" : [ "Volunteer Services" ]
+            },
+            "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+            "buildingDestinations" : [ "Volunteer Services" ]
+          }, "c20c4e90-8f3e-4054-b197-28ef54de0dea" ],
+          "destinations" : {
+            "SERVICE" : [ "Gift Shop" ]
+          },
+          "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+          "buildingDestinations" : [ "Gift Shop" ]
+        }, "7efa1b75-14eb-4d43-b9da-e52004a10849" ],
+        "destinations" : {
+          "SERVICE" : [ "Cafeteria" ]
+        },
+        "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+        "buildingDestinations" : [ "Cafeteria" ]
+      }, {
+        "uniqueID" : "29770362-421f-4426-933e-cbeeedd69ae7",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 1186.0,
+          "y" : 821.0
+        },
+        "adjacentLocationNodes" : [ "7efa1b75-14eb-4d43-b9da-e52004a10849", {
+          "uniqueID" : "0cc23e3d-b0b0-4822-8c6d-18921195d497",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 1054.0,
+            "y" : 1000.0
+          },
+          "adjacentLocationNodes" : [ "29770362-421f-4426-933e-cbeeedd69ae7" ],
+          "destinations" : {
+            "ELEVATOR" : [ "Atrium Elevatoe" ]
+          },
+          "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+          "buildingDestinations" : [ "Atrium Elevatoe" ]
+        } ],
+        "destinations" : {
+          "BATHROOM" : [ "Floor 3 Bathroom" ]
+        },
+        "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
+        "buildingDestinations" : [ "Floor 3 Bathroom" ]
+      } ],
       "destinations" : {
         "SERVICE" : [ "Huvos Auditorium" ]
       },
       "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
       "buildingDestinations" : [ "Huvos Auditorium" ]
-    }, {
-      "uniqueID" : "c20c4e90-8f3e-4054-b197-28ef54de0dea",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1034.0,
-        "y" : 800.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "SERVICE" : [ "Cafeteria" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Cafeteria" ]
-    }, {
-      "uniqueID" : "f81491f9-e50e-4361-8372-17d5243dc4c3",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1158.0,
-        "y" : 225.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "SERVICE" : [ "Chapel" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Chapel" ]
-    }, {
-      "uniqueID" : "98c363f8-3978-44ee-bd0e-277fe0823049",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1080.0,
-        "y" : 580.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "SERVICE" : [ "Gift Shop" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Gift Shop" ]
-    }, {
+    }, "c20c4e90-8f3e-4054-b197-28ef54de0dea", "f81491f9-e50e-4361-8372-17d5243dc4c3", "98c363f8-3978-44ee-bd0e-277fe0823049", {
       "uniqueID" : "2f425c37-775e-442d-b352-3f80cffbc026",
       "heuristicCost" : 0.0,
       "location" : {
@@ -504,33 +582,7 @@
       },
       "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
       "buildingDestinations" : [ "Patient Relations" ]
-    }, {
-      "uniqueID" : "b0002077-8d2c-45f6-997a-106eb393186f",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 948.0,
-        "y" : 225.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "SERVICE" : [ "Volunteer Services" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Volunteer Services" ]
-    }, {
-      "uniqueID" : "a957f1f7-1db7-4d99-a416-faca4789a5a0",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1060.0,
-        "y" : 256.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "KIOSK" : [ "Kiosk" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Kiosk" ]
-    }, {
+    }, "b0002077-8d2c-45f6-997a-106eb393186f", "a957f1f7-1db7-4d99-a416-faca4789a5a0", {
       "uniqueID" : "59a9df8c-fe2d-4914-b0ca-d79e785d3776",
       "heuristicCost" : 0.0,
       "location" : {
@@ -556,46 +608,7 @@
       },
       "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
       "buildingDestinations" : [ "Floor 3 Bathroom" ]
-    }, {
-      "uniqueID" : "29770362-421f-4426-933e-cbeeedd69ae7",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1186.0,
-        "y" : 821.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "BATHROOM" : [ "Floor 3 Bathroom" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Floor 3 Bathroom" ]
-    }, {
-      "uniqueID" : "bf037bfc-8da0-4ad4-a3b8-25455458fb5d",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1089.0,
-        "y" : 376.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "ELEVATOR" : [ " Hillside Elevator" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ " Hillside Elevator" ]
-    }, {
-      "uniqueID" : "0cc23e3d-b0b0-4822-8c6d-18921195d497",
-      "heuristicCost" : 0.0,
-      "location" : {
-        "x" : 1054.0,
-        "y" : 1000.0
-      },
-      "adjacentLocationNodes" : [ ],
-      "destinations" : {
-        "ELEVATOR" : [ "Atrium Elevatoe" ]
-      },
-      "currentFloor" : "25de6ec1-abfb-4f67-8e99-463774200f36",
-      "buildingDestinations" : [ "Atrium Elevatoe" ]
-    } ],
+    }, "29770362-421f-4426-933e-cbeeedd69ae7", "bf037bfc-8da0-4ad4-a3b8-25455458fb5d", "0cc23e3d-b0b0-4822-8c6d-18921195d497" ],
     "relativePath" : "Floor3_Final.png",
     "startNode" : null
   }, {
@@ -913,5 +926,5 @@
     "relativePath" : "Floor4_Final.png",
     "startNode" : null
   } ],
-  "destinations" : [ "Audiology", "Cardiac Rehabilitation", "Center for Preoperative Evaluation", "Emergency Room", "GI Endoscopy", "Laboratory", "Patient Financial Services", "Radiology", "Special Testing", "Taiclet Family Center", "Information", "Admitting/Registration", "Atrium Cafe", "Starbucks", "Valet Parking", "Kiosk", "Floor 1 Bathroom", "Hillside Elevator", "Atrium Elevator", "Corrales, Carleton Eduardo, MD", "Prince, Anthony, MD", "Roditi, Rachel, MD", "Otolarngology", "Carty, Matthew, MD", "Caterson, Stephanie, MD", "Chun, Yoon Sun, MD", "Hajj, Micheline, RN", "Halvorson, Eric, MD", "Hergrueter, Charles, MD", "Ingram, Abbie, PA-C", "Lafleur, Emily, PA-C", "Lahair, Tracy, PA-C", "Plastic Surgery", "Physical Therapy", "Psychology", "Addiction Recovery Program", "Rehabilitation Services", "Floor 2 Bathroom ", "Hillside Elevator", "Atrium Elevator", "triet", "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates", "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists", "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates", "ATM", "Huvos Auditorium", "Cafeteria", "Chapel", "Gift Shop", "Patient Relations", "Volunteer Services", "Kiosk", "Floor 3 Bathroom", "Floor 3 Bathroom", "Floor 3 Bathroom", " Hillside Elevator", "Atrium Elevatoe", "Caplan, Laura, PA-C", "Cohen, Natalie, MD", "Copello, Maria, MD", "Healy, Barbara, RN", "Lauretti, Linda, MD", "McCord, Laura, MD", "Nuspl, Kristen, PA-C", "Oliver, Lynn, RN", "Walsh Samp, Kathy, LICSW", "Welker, Roy, MD", "Brigham and Women's Primary Physicians", "Conant, Alene, MD", "Drewniak, Stephen, MD", "Homenko, Daria, MD", "Lo, Amy, MD", "Matloff, Daniel, MD", "Mutinga, Muthoka, MD", "Preneta, Ewa, MD", "Smith, Benjamin, MD", "Gastroenterology Associates", "Horowitz, Sandra, MD", "Mullally, William, MD", "Novak, Peter, MD", "Pavlova, Milena, MD", "Pilgrim, David, MD", "Vardeh, Daniel, MD", "Weisholtz, Daniel, MD", "Whitman, Gregory, MD", "Neurology/Sleep Division", "Sleep Disorders Service", "Hoover, Paul, MD, PhD", "Pariser, Kenneth, MD", "Todd, Derrick, MD, PhD", "Wei, Kevin, MD", "Arthritis Center", "Rheumatology Center", "Clark, Roger, DO", "Cohen, Jeffrey, MD", "McGowan, Katherine, MD", "Infectious Diseases ", "Ash, Samuel, MD", "Bachman, William, MD", "Batool-Anwar, Salma, MD, MPH", "Bonaca, Marc, MD", "Budhiraja, Rohit, MD", "Cardet, Juan Carlos, MD", "Cardin, Kristin, NP", "Chan, Walter, MD", "Connell, Nathan, MD", "D'Ambrosio, Carolyn, MD", "Dave, Jatin, MD", "Epstein, Lawrence, MD", "Fanta, Christopher, MD", "Halperin, Florencia, MD", "Hentschel, Dirk, MD", "Hsu, Joyce, MD", "Lilly, Leonard Stuart, MD", "Parnes, Aric, MD", "Quan, Stuart F., MD", "Ramirez, Alberto, MD", "Romano, Keith, MD", "Ruff, Christian, MD", "Saldana, Fidencio, MD", "Schissel, Scott, MD", "Shah, Amil, MD", "Sheth, Samira, NP", "Smith, Colleen, MD", "Stephens, Kelly, MD", "Sweeney, Michael, MD", "Tucker, J. Kevin, MD", "Voiculescu, Adina, MD", "Wellman, David, MD", "White, David, MD", "Wickner, Paige, MD", "Angell, Trevor, MD", "Allergy", "Cardiology", "Endocrinology", "Gastroenterology", "Geriatrics/Senior Health", "Hematology", "Medical Specialties", "Pulmonary", "Renal", "Sleep Medicine", "Bernstein, Carolyn, MD", "Burch, Rebecca, MD", "Cochrane, Thomas, MD", "Friedman, Pamela, PsyD, ABPP", "Loder, Elizabeth, MD", "Mathew, Paul, MD", "Rizzoli, Paul, MD", "Brigham and Women's Primary Physicians", "Headache Center", "John R. Graham Headache Center", "Neurology", "Cua, Christopher, MD", "Lahive, Karen, MD", "Tarpy, Robert, MD", "Tarpy, Robert, MD", "Mohs and Dermatologic Surgery", "Chang, Steven, MD", "Kathrins, Martin, MD", "Malone, Michael, MD", "McDonald, Michael, MD", "O'Leary, Michael, MD", "Steele, Graeme, MD", "Men's Health Center", "Ruiz, Emily, MD", "Schmults, Chrysalyne, MD", "Goldman, Jill, MD", "Lilienfeld, Armin, MD", "Owens, Lisa Michelle, MD", "Brigham and Women's Primary Physicians", "Doherty Conference Room", "Interpreter Services", "Mary Ann Tynan Conference Rooms", "Medical Library", "Medical Records", "Sadowsky Conference Room", "Saslow Conference Room", "Social Work", "Floor 4 Bathroom", "Hillside Elevator", "Atrium Elevator" ]
+  "destinations" : [ "Audiology", "Cardiac Rehabilitation", "Center for Preoperative Evaluation", "Emergency Room", "GI Endoscopy", "Laboratory", "Patient Financial Services", "Radiology", "Special Testing", "Taiclet Family Center", "Information", "Admitting/Registration", "Atrium Cafe", "Starbucks", "Valet Parking", "Kiosk", "Floor 1 Bathroom", "Hillside Elevator", "Atrium Elevator", "Corrales, Carleton Eduardo, MD", "Prince, Anthony, MD", "Roditi, Rachel, MD", "Otolarngology", "Carty, Matthew, MD", "Caterson, Stephanie, MD", "Chun, Yoon Sun, MD", "Hajj, Micheline, RN", "Halvorson, Eric, MD", "Hergrueter, Charles, MD", "Ingram, Abbie, PA-C", "Lafleur, Emily, PA-C", "Lahair, Tracy, PA-C", "Plastic Surgery", "Physical Therapy", "Psychology", "Addiction Recovery Program", "Rehabilitation Services", "Floor 2 Bathroom ", "Hillside Elevator", "Atrium Elevator", "triet", "triet", "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates", "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists", "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates", "ATM", "Huvos Auditorium", "Cafeteria", "Chapel", "Gift Shop", "Patient Relations", "Volunteer Services", "Kiosk", "Floor 3 Bathroom", "Floor 3 Bathroom", "Floor 3 Bathroom", " Hillside Elevator", "Atrium Elevatoe", "Caplan, Laura, PA-C", "Cohen, Natalie, MD", "Copello, Maria, MD", "Healy, Barbara, RN", "Lauretti, Linda, MD", "McCord, Laura, MD", "Nuspl, Kristen, PA-C", "Oliver, Lynn, RN", "Walsh Samp, Kathy, LICSW", "Welker, Roy, MD", "Brigham and Women's Primary Physicians", "Conant, Alene, MD", "Drewniak, Stephen, MD", "Homenko, Daria, MD", "Lo, Amy, MD", "Matloff, Daniel, MD", "Mutinga, Muthoka, MD", "Preneta, Ewa, MD", "Smith, Benjamin, MD", "Gastroenterology Associates", "Horowitz, Sandra, MD", "Mullally, William, MD", "Novak, Peter, MD", "Pavlova, Milena, MD", "Pilgrim, David, MD", "Vardeh, Daniel, MD", "Weisholtz, Daniel, MD", "Whitman, Gregory, MD", "Neurology/Sleep Division", "Sleep Disorders Service", "Hoover, Paul, MD, PhD", "Pariser, Kenneth, MD", "Todd, Derrick, MD, PhD", "Wei, Kevin, MD", "Arthritis Center", "Rheumatology Center", "Clark, Roger, DO", "Cohen, Jeffrey, MD", "McGowan, Katherine, MD", "Infectious Diseases ", "Ash, Samuel, MD", "Bachman, William, MD", "Batool-Anwar, Salma, MD, MPH", "Bonaca, Marc, MD", "Budhiraja, Rohit, MD", "Cardet, Juan Carlos, MD", "Cardin, Kristin, NP", "Chan, Walter, MD", "Connell, Nathan, MD", "D'Ambrosio, Carolyn, MD", "Dave, Jatin, MD", "Epstein, Lawrence, MD", "Fanta, Christopher, MD", "Halperin, Florencia, MD", "Hentschel, Dirk, MD", "Hsu, Joyce, MD", "Lilly, Leonard Stuart, MD", "Parnes, Aric, MD", "Quan, Stuart F., MD", "Ramirez, Alberto, MD", "Romano, Keith, MD", "Ruff, Christian, MD", "Saldana, Fidencio, MD", "Schissel, Scott, MD", "Shah, Amil, MD", "Sheth, Samira, NP", "Smith, Colleen, MD", "Stephens, Kelly, MD", "Sweeney, Michael, MD", "Tucker, J. Kevin, MD", "Voiculescu, Adina, MD", "Wellman, David, MD", "White, David, MD", "Wickner, Paige, MD", "Angell, Trevor, MD", "Allergy", "Cardiology", "Endocrinology", "Gastroenterology", "Geriatrics/Senior Health", "Hematology", "Medical Specialties", "Pulmonary", "Renal", "Sleep Medicine", "Bernstein, Carolyn, MD", "Burch, Rebecca, MD", "Cochrane, Thomas, MD", "Friedman, Pamela, PsyD, ABPP", "Loder, Elizabeth, MD", "Mathew, Paul, MD", "Rizzoli, Paul, MD", "Brigham and Women's Primary Physicians", "Headache Center", "John R. Graham Headache Center", "Neurology", "Cua, Christopher, MD", "Lahive, Karen, MD", "Tarpy, Robert, MD", "Tarpy, Robert, MD", "Mohs and Dermatologic Surgery", "Chang, Steven, MD", "Kathrins, Martin, MD", "Malone, Michael, MD", "McDonald, Michael, MD", "O'Leary, Michael, MD", "Steele, Graeme, MD", "Men's Health Center", "Ruiz, Emily, MD", "Schmults, Chrysalyne, MD", "Goldman, Jill, MD", "Lilienfeld, Armin, MD", "Owens, Lisa Michelle, MD", "Brigham and Women's Primary Physicians", "Doherty Conference Room", "Interpreter Services", "Mary Ann Tynan Conference Rooms", "Medical Library", "Medical Records", "Sadowsky Conference Room", "Saslow Conference Room", "Social Work", "Floor 4 Bathroom", "Hillside Elevator", "Atrium Elevator" ]
 }
