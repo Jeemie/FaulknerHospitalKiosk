@@ -44,7 +44,7 @@ public class Building extends Observable {
     @JsonIgnore
     private LocationNode currentDestination;
     @JsonIgnore
-    private LocationNode adjacentsNodes;
+    private LocationNode currentNodes;
 
 
 
@@ -224,7 +224,7 @@ public class Building extends Observable {
      * @return
      */
     @JsonIgnore
-    public Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
+    public  Floor getFloor(int floorNumber) throws FloorDoesNotExistException {
 
         // iterate through array of floors and get each floorNumber from the array
         for (Floor currentFloor : floors) {
@@ -375,11 +375,11 @@ public class Building extends Observable {
         this.currentDestination = currentDestination;
     }
 
-    public LocationNode getAdjacentsNodes() {
-        return adjacentsNodes;
+    public LocationNode getCurrentNodes() {
+        return currentNodes;
     }
 
-    public void setAdjacentsNodes(LocationNode adjacentsNodes) {
-        this.adjacentsNodes = adjacentsNodes;
+    public void setCurrentNodes(LocationNode currentNodes) {
+        this.currentNodes = currentNodes;
     }
 }

@@ -187,6 +187,8 @@ public class AdminDashboardController {
 
 
 
+
+
     public void setListeners() {
 
         // Setup Listeners
@@ -194,8 +196,40 @@ public class AdminDashboardController {
         setBuildingTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
+        deleteThis();
 
     }
+
+    private void deleteThis() {
+
+
+        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
+
+        try {
+            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
+            node3A.addDestination(Destination.KIOSK, "Kiosk3");
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
+
+        for (Floor floor: this.building.getFloors()) {
+            floor.setFloorImage(getClass().getResource(String.valueOf(floor.getImagePath())));
+            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
+                for (LocationNode node : floor.getFloorNodes()) {
+                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
+                    node.initObserver();
+                    node.initAdjacentLines();
+                }
+            }
+            floor.drawFloorAdmin(this.mapStackPane);
+        }
+
+
+    }
+
+
+
 
 
     private void setCoreFunctionalityListeners() {
@@ -305,6 +339,9 @@ public class AdminDashboardController {
 
 
 
+
+
+
         // Setup Zoom In Button
         this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -398,7 +435,7 @@ public class AdminDashboardController {
                 ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
                 building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
                 building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                building.setAdjacentsNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
             }
 
         });
@@ -540,16 +577,34 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    if (building.getAdjacentsNodes() != null) {
-
-//                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationListView);
+                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
 
-                    }
 
                 }
 
             }
+
+
+        });
+
+        this.locationDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+
+
+
+                }
+
+            }
+
 
         });
 

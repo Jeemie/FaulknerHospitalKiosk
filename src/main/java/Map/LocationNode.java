@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -503,7 +503,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     }
 
 
-    public void addAdjacentsToListView(TableView tableView) {
+    public void addAdjacentsToListView(ListView listView) {
 
         if(this.adjacentLocationNodes == null){
             return;
@@ -513,8 +513,22 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         ObservedLocation.addAll(this.adjacentLocationNodes);
 
-        tableView.setItems(ObservedLocation);
+        listView.setItems(ObservedLocation);
     }
+
+    public void addDestinationsToListView(ListView listView) {
+
+        if(this.adjacentLocationNodes == null){
+            return;
+        }
+
+        ObservableList<EnumMap<Destination, ArrayList<String>>> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.getDestinations());
+
+        listView.setItems(ObservedLocation);
+    }
+
 
 
 }
