@@ -44,8 +44,8 @@ public class MapViewController {
     @FXML
     private ScrollPane scrollPane;
 
-    Timer timer = new Timer("A Timer");
-    Timer atimer = new Timer();
+    Timer timer;
+    Timer atimer;
 
     int counter = 0;
     private volatile boolean running = true;
@@ -90,7 +90,7 @@ public class MapViewController {
         }
     };
 
-    Thread timerThread = new Thread(runnable);
+    Thread timerThread;
 
     Runnable resetKiosk = new Runnable() {
 
@@ -148,6 +148,10 @@ public class MapViewController {
                 if(numThreads == 0) {
                     numThreads +=1;
                     running = true;
+                    timer = new Timer("A Timer");
+                    atimer = new Timer("A Timer2");
+                    timerThread = new Thread(runnable);
+                    timer.scheduleAtFixedRate(timerTask, 30, 1000);
                     timerThread.start();
                 }
                 counter = 0;
@@ -155,7 +159,7 @@ public class MapViewController {
         });
 
 
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
         //timerThread.start();
 
@@ -213,14 +217,14 @@ public class MapViewController {
         this.building = building;
     }
 
-    public void setDestinationNode(LocationNode destinationNode) {
+    public void setDestinationNode(LocationNode destinationNode){
 
-/*        atimer.cancel();
+/*      atimer.cancel();
         atimer.purge();
         timer.cancel();
         timer.purge();*/
         running = false;
-        timerThread.interrupt();
+        //timerThread.interrupt();
         this.destinationNode = destinationNode;
         destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
     }
