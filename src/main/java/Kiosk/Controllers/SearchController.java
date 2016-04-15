@@ -135,7 +135,7 @@ public class SearchController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                             }
 
