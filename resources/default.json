@@ -4,7 +4,29 @@
     "uniqueID" : "73c40645-bede-48d6-ab1f-49760dda6912",
     "floor" : 1,
     "currentBuilding" : "28c83b23-b2ff-41e2-aeab-d23efe9c204c",
-    "locationNodes" : [ ],
+    "locationNodes" : [ {
+      "uniqueID" : "e0099742-1e32-420f-9e72-ad0da46915bb",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 184.0,
+        "y" : 329.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "nodeFloor" : "73c40645-bede-48d6-ab1f-49760dda6912",
+      "buildingDestinations" : [ ]
+    }, {
+      "uniqueID" : "5f3d40f7-b389-4ae9-a07e-98d77006deb7",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 217.0,
+        "y" : 324.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "nodeFloor" : "73c40645-bede-48d6-ab1f-49760dda6912",
+      "buildingDestinations" : [ ]
+    } ],
     "relativePath" : "Floor1_Final.png",
     "startNode" : null
   }, {
