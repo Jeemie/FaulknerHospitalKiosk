@@ -60,8 +60,7 @@ public class DirectoryController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
-                    if (counter == 10) {
+                    if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -122,7 +121,6 @@ public class DirectoryController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                System.out.println("woop?");
                                 kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                             }
