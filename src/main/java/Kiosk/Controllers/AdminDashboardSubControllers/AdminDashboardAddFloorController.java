@@ -123,7 +123,7 @@ public class AdminDashboardAddFloorController {
                         }
                         dis.close(); // close the data input stream
 
-                        File newFloorImage = new File("file:///" + System.getProperty("user.dir") + "/resources/" + "Floor" +
+                        File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" + "Floor" +
                                 floorNum + ".png");
 
                         newFloorImage.createNewFile();
