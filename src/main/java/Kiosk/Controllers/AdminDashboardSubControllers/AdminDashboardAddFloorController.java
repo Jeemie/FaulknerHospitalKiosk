@@ -152,6 +152,17 @@ public class AdminDashboardAddFloorController {
         });
 
 
+        this.discardFloorButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                loader.removeFromScene();
+
+            }
+
+        });
+
 
     }
 
