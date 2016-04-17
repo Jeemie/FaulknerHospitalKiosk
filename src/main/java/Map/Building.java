@@ -1,6 +1,7 @@
 package Map;
 
 import Map.Exceptions.FloorDoesNotExistException;
+import Map.Exceptions.NoPathException;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -101,19 +102,21 @@ public class Building extends Observable {
 
         }
 
-        constructPath(startNode); // run Dijkstra
-        System.out.println("Distance to " + destinationNode + ": " + destinationNode.minDistance);
 
-        ArrayList<LocationNode> path = new ArrayList<>();
-        path.addAll(getShortestPathTo(destinationNode));
-        System.out.println("Path: " + path);
+            constructPath(startNode, destinationNode); // run Dijkstra
+            System.out.println("Distance to " + destinationNode + ": " + destinationNode.minDistance);
 
-        LOGGER.info("Drawing Shortest Path");
+            ArrayList<LocationNode> path = new ArrayList<>();
+            path.addAll(getShortestPathTo(destinationNode));
+            System.out.println("Path: " + path);
 
-        for (int i = 0; i < path.size() - 1; i++) {
+            LOGGER.info("Drawing Shortest Path");
 
-            path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+            for (int i = 0; i < path.size() - 1; i++) {
 
+                path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
+
+            }
         }
 
     }
