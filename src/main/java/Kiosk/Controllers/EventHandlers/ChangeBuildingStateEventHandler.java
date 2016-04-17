@@ -47,4 +47,5 @@ public class ChangeBuildingStateEventHandler implements EventHandler<MouseEvent>
         LOGGER.info("Building " + building.toString() + " State changed to " +  state.toString());
 
     }
+
 }

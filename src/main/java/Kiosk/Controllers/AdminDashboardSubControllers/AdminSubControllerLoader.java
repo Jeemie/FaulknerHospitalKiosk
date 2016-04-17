@@ -54,16 +54,27 @@ public class AdminSubControllerLoader {
     }
 
     public void loadAddFloor() {
-//
-//        try {
-//
-//
-//
-//
-//        } catch (IOException e) {
-//
-//            LOGGER.error("Unable to loadAddFloor fxml file", e);
-//        }
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml"));
+            Pane pane = loader.load();
+
+            currentNode = pane;
+
+            AdminDashboardAddFloorController controller = loader.getController();
+            controller.setCurrentBuilding(currentBuilding);
+            controller.setListeners();
+
+
+            this.stackPane.getChildren().add(pane);
+
+
+        } catch (IOException e) {
+
+            LOGGER.error("Unable to loadAddFloor fxml file", e);
+        }
 
     }
 
@@ -74,7 +85,7 @@ public class AdminSubControllerLoader {
 
     }
 
-    public void currentBuilding(Building currentBuilding) {
+    public void setCurrentBuilding(Building currentBuilding) {
 
         this.currentBuilding = currentBuilding;
 

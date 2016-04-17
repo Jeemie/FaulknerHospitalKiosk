@@ -1,5 +1,6 @@
 package Kiosk.Controllers;
 
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
 import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
@@ -426,7 +427,11 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
+                AdminSubControllerLoader loader = new AdminSubControllerLoader();
 
+                loader.setStackPane(mapStackPane);
+                loader.setCurrentBuilding(building);
+                loader.loadAddFloor();
 
             }
 
