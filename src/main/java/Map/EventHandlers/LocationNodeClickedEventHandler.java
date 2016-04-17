@@ -1,19 +1,14 @@
 package Map.EventHandlers;
 
-import Kiosk.Controllers.AdminDepartmentPanelController;
-import Utils.FixedSizedStack;
-import Map.LocationNode;
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
 import Map.BuildingState;
+import Map.LocationNode;
+import Utils.FixedSizedStack;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
+
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -56,10 +51,17 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
         LOGGER.info("Node " + this.locationNode.toString() + " was clicked with the state " +
                 this.locationNode.getState().toString());
 
+
+        locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
+
         // Switch statement that is dependant of the state of the node
         switch(locationNode.getState()) {
 
             case NORMAL:
+                this.locationNode.getAdjacentLocationNodes();
+                this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
+                System.out.println(this.locationNode.getAdjacentLocationNodes());
+                System.out.println(this.locationNode.getDestinations());
 
                 break;
 
@@ -95,7 +97,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                     this.locationNode.addAdjacentNode(lastAction.getKey());
 
-                    this.locationNode.setState(BuildingState.NORMAL);
+                    //this.locationNode.setState(BuildingState.NORMAL);
 
                 }
 
@@ -119,6 +121,12 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
             case MOVENODE:
 
                 break;
+
+            case SETSTARTNODE:
+
+                LOGGER.info("Setting the new start node to ");
+
+                this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
 
 
 
@@ -151,7 +159,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 //
 //
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-//            Parent root = loader.load();
+//            Parent root = loader.loadAddDestination();
 //            AdminDepartmentPanelController controller = loader.getController();
 //            controller.setNode(this.locationNode);
 //
@@ -165,6 +173,11 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 //            LOGGER.info("Unable to open the modify node view ", e);
 //
 //        }
+        AdminSubControllerLoader loader = new AdminSubControllerLoader();
+
+        loader.setStackPane(this.locationNode.getCurrentFloor().getStackPane());
+        loader.setCurrentLocationNode(this.locationNode);
+        loader.loadAddDestination();
 
     }
 

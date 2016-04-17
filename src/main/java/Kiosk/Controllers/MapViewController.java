@@ -1,20 +1,20 @@
 package Kiosk.Controllers;
 
+import Kiosk.KioskApp;
 import Map.Building;
-import Map.Floor;
+import Map.Exceptions.FloorDoesNotExistException;
 import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import Kiosk.KioskApp;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class MapViewController {
 
     private boolean okClicked = false;
     private KioskApp kioskApp;
-    private Building building;
+    private Building mMainHost;
     private LocationNode startNode;
     private LocationNode destinationNode;
     private int numThreads = 0;
@@ -44,10 +44,22 @@ public class MapViewController {
     @FXML
     private ScrollPane scrollPane;
 
-    Timer timer;
-    Timer atimer;
+    @FXML
+    private Button changeFloorButtonUp;
+
+    @FXML
+    private Button changeFloorButtonDown;
+
+    @FXML
+
+    private ListView Direction;
+
+
+    public Timer timer;
+    public Timer atimer;
 
     int counter = 0;
+    int getCounterFloor=1;
     private volatile boolean running = true;
 
     TimerTask timerTask = new TimerTask() {
@@ -63,7 +75,6 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
                     if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
@@ -77,7 +88,6 @@ public class MapViewController {
                     }
                     Thread.sleep(1000);
                 } catch (InterruptedException exception) {
-                    System.out.println("I'm outta here");
                     atimer.cancel();
                     timer.cancel();
                     timerTask.cancel();
@@ -114,7 +124,7 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 counter = 0;
-                building.drawShortestPath(startNode, destinationNode);
+                mMainHost.drawShortestPath(startNode, destinationNode);
 
             }
 
@@ -140,6 +150,24 @@ public class MapViewController {
                 }
             }
         });
+        changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                getCounterFloor--;
+                try {
+                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                    if(counter<1){
+                        counter =1;
+                    }
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(getCounterFloor);
+
+            }
+        });
+
 
         scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
@@ -159,12 +187,38 @@ public class MapViewController {
         });
 
 
+
+
+
         //timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
         //timerThread.start();
 
+        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                getCounterFloor++;
+                try {
+                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                    if(counter>4){
+                        counter =4;
+                    }
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(getCounterFloor);
+               // building.drawShortestPath(startNode, destinationNode);
+
+            }
+
+        });
+
 
     }
+
+
+
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -212,9 +266,8 @@ public class MapViewController {
         kioskApp.reset();
     }
 
-
     public void setBuilding(Building building) {
-        this.building = building;
+        this.mMainHost = building;
     }
 
     public void setDestinationNode(LocationNode destinationNode){
@@ -226,10 +279,11 @@ public class MapViewController {
         running = false;
         //timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getNodeFloor().drawFloorNormal(this.imageStackPane);
+        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
     }
 
     public void setStartNode(LocationNode startNode) {
+
         this.startNode = startNode;
     }
 

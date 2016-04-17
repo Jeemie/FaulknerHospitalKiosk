@@ -39,7 +39,7 @@ public class DirectoryController {
     private ObservableList<String> currentNames = FXCollections.observableArrayList();
 
     private Building building;
-//    private LocationNode startNode;
+    private LocationNode startNode;
 //    private LocationNode destinationNode;
 
     Timer timer = new Timer("A Timer");
@@ -60,7 +60,6 @@ public class DirectoryController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
                     if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
@@ -122,8 +121,7 @@ public class DirectoryController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                System.out.println("woop?");
-                                kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                             }
 
@@ -319,7 +317,7 @@ public class DirectoryController {
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    kioskApp.showMap(n.getNodeFloor().getStartNode(), n);
+                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
 
                 }
 
@@ -364,7 +362,7 @@ public class DirectoryController {
 
     public void setStartNode(LocationNode startNode) {
 
-//        this.startNode = startNode;
+        this.startNode = startNode;
 
     }
 

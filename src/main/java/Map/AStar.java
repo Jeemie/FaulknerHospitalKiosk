@@ -58,8 +58,9 @@ public class AStar {
     {
         List<LocationNode> path = new ArrayList<LocationNode>();
 
-        for (LocationNode node = target; node != null; node =node.previous)
+        for (LocationNode node = target; node != null; node=node.previous) {
             path.add(node);
+        }
 
         Collections.reverse(path);
         return path;

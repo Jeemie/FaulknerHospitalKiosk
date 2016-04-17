@@ -1,7 +1,10 @@
 package Map;
 
 import com.fasterxml.jackson.annotation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +45,8 @@ public class Floor extends Observable{
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
     private LocationNode startNode;
+    @JsonIgnore
+    private StackPane stackPane;
 
 
     /**
@@ -216,6 +221,8 @@ public class Floor extends Observable{
         // add the current floor's canvas and imageview to the stackpane
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
 
+        this.stackPane = stackPane;
+
         updateFloorAdmin();
 
     }
@@ -259,6 +266,36 @@ public class Floor extends Observable{
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
 
+    }
+
+
+    public void addLocationToListView(ListView listView) {
+
+        if (this.locationNodes == null) {
+
+            return;
+        }
+
+        ObservableList<LocationNode> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.locationNodes);
+
+        listView.setItems(ObservedLocation);
+    }
+
+
+    public void addDestinationsToListView(ListView listView) {
+
+        if (this.getFloorDestinations() == null) {
+
+            return;
+        }
+
+        ObservableList<String> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.getFloorDestinations());
+
+        listView.setItems(ObservedLocation);
     }
 
     /**
@@ -388,5 +425,13 @@ public class Floor extends Observable{
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public void setStackPane(StackPane stackPane) {
+        this.stackPane = stackPane;
     }
 }
