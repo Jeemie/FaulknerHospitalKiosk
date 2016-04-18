@@ -8,11 +8,13 @@ import Map.LocationNode;
 import Map.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -144,10 +146,11 @@ public class KioskApp extends Application {
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Admin Login");
-            Scene scene = new Scene(page);
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
-            primaryStage.show();
+            primaryStage.show();*/
 
             // Give controller access to Main App
             AdminLoginController controller = loader.getController();
@@ -176,10 +179,11 @@ public class KioskApp extends Application {
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Administrator Dashboard");
-            Scene scene = new Scene(page);
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
-            primaryStage.show();
+            primaryStage.show();*/
 
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
@@ -212,10 +216,13 @@ public class KioskApp extends Application {
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
+            primaryStage.getScene().setRoot(page);
+/*
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
             primaryStage.show();
+*/
 
             // Give controller access to Main App.
             SearchController controller = loader.getController();
@@ -239,16 +246,22 @@ public class KioskApp extends Application {
 
         try {
             // Load DirectoryScreen
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
-            // Replace KioskOverview with userUI3.
+            //Replace KioskOverview with userUI3.
             primaryStage.setTitle("Directories");
-            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();
+            primaryStage.getScene().setRoot(page);
+//            Scene scene = new Scene(page, width, height);
+//            primaryStage.setScene(scene);
+//            primaryStage.setFullScreen(false);
+//            primaryStage.setFullScreen(true);
+            //primaryStage.show();
+
+
+
 
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
@@ -284,10 +297,11 @@ public class KioskApp extends Application {
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
-            Scene scene = new Scene(page);
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
-            primaryStage.show();
+            primaryStage.show();*/
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
@@ -320,10 +334,11 @@ public class KioskApp extends Application {
 
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
-            Scene scene = new Scene(page);
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
-            primaryStage.show();
+            primaryStage.show();*/
 
             // Give controller access to Main App.
             KioskOverviewController controller = loader.getController();

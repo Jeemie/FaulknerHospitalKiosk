@@ -5,9 +5,11 @@ import Map.Destination;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,10 @@ public class KioskOverviewController {
     @FXML
     private TextField searchTextBox;
 
+    private int counter;
+
+    @FXML
+    private Label dontTouchMe;
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -48,6 +54,17 @@ public class KioskOverviewController {
 
         });
 
+        searchTextBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter +=1 ;
+
+                if (counter == 10){
+
+                    dontTouchMe.setText("Fuck youuu");
+                }
+            }
+        });
     }
 
     /**
@@ -73,6 +90,11 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
+
+
+
+
+
         kioskApp.showDirectory(Destination.PHYSICIAN);
     }
 
