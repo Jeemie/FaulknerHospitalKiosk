@@ -41,7 +41,6 @@ public class DirectoryController {
 
     private Building building;
     private LocationNode startNode;
-//    private LocationNode destinationNode;
 
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
@@ -123,14 +122,10 @@ public class DirectoryController {
 
                                 // This statement is called when we find the node which corresponds to the selection
                                 if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-                                    LocationNode startNode = n.getCurrentFloor().getStartNode();// TODO: startNode is null
-                                    //   kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
-                                    //  kioskApp.showMap(startNode, n);
 
                                     timer.cancel();
                                     running = false;
                                     timerThread.interrupt();
-                                    System.out.println("woop?");
                                     kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                                 }
@@ -208,7 +203,6 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Care Providers.
-        currentNames.removeAll();
         currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
@@ -224,7 +218,6 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Care Providers.
-        currentNames.removeAll();
         currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
@@ -240,7 +233,6 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Departments.
-        currentNames.removeAll();
         currentNames.setAll(building.getDestinations(Destination.SERVICE));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
@@ -308,7 +300,6 @@ public class DirectoryController {
                 counter = 0;
 
                 //Removes previous listings and sorts the list of Care Providers.
-                currentNames.removeAll();
                 currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
                 currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
@@ -319,7 +310,6 @@ public class DirectoryController {
                 counter = 0;
 
                 //Removes previous listings and sorts the list of Departments
-                currentNames.removeAll();
                 currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
                 currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
@@ -330,7 +320,6 @@ public class DirectoryController {
                 counter = 0;
 
                 //Removes previous listings and sorts the list of Services
-                currentNames.removeAll();
                 currentNames.setAll(building.getDestinations(Destination.SERVICE));
                 currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
@@ -341,7 +330,6 @@ public class DirectoryController {
                 counter = 0;
 
                 //Removes previous listings and sorts the list all destinations
-                currentNames.removeAll();
                 currentNames.setAll(building.getDestinations());
                 currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
