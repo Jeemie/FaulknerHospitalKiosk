@@ -6,10 +6,12 @@ import Map.LocationNode;
 import Utils.FixedSizedStack;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.AbstractMap;
+import java.util.EmptyStackException;
 import java.util.Map;
 
 /**
@@ -48,6 +50,18 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event) {
 
+        Map.Entry<LocationNode, BuildingState> lastAction = null;
+
+        if (previousActions.size() > 0 ) {
+
+            lastAction = previousActions.peek();
+            lastAction.getKey().getNodeCircle().setFill(Color.BLACK);
+
+        }
+
+
+        locationNode.getNodeCircle().setFill(Color.CRIMSON);
+
         LOGGER.info("Node " + this.locationNode.toString() + " was clicked with the state " +
                 this.locationNode.getState().toString());
 
@@ -81,9 +95,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 }
 
-                Map.Entry<LocationNode, BuildingState> lastAction = previousActions.peek();
-
-                if (lastAction.getValue() == BuildingState.ADDADJACENTNODE) {
+                if (lastAction != null && lastAction.getValue() == BuildingState.ADDADJACENTNODE) {
 
                     LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
                             lastAction.getKey().toString());

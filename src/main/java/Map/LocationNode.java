@@ -517,5 +517,10 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     }
 
 
+    public Circle getNodeCircle() {
+
+        return nodeCircle;
+
+    }
 }
 

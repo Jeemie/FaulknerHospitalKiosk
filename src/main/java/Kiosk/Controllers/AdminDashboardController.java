@@ -1,6 +1,8 @@
 package Kiosk.Controllers;
 
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController;
 import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
+import Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader;
 import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
@@ -28,9 +30,7 @@ import java.net.URL;
 public class AdminDashboardController {
 
     private Building building;
-    private LocationNode currentLocationNode;
     private KioskApp kioskApp;
-    private Floor location;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
@@ -433,6 +433,17 @@ public class AdminDashboardController {
                 loader.setCurrentBuilding(building);
                 loader.loadAddFloor();
 
+
+                SubViewLoader<AdminDashboardAddFloorController> subViewLoader =
+                        new SubViewLoader<>("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml", mapStackPane);
+
+                AdminDashboardAddFloorController adminDashboardAddFloorController = subViewLoader.loadView();
+
+
+                adminDashboardAddFloorController.setCurrentBuilding(building);
+                adminDashboardAddFloorController.setSubViewLoader(subViewLoader);
+                adminDashboardAddFloorController.setListeners();
+
             }
 
         });
@@ -560,9 +571,14 @@ public class AdminDashboardController {
 
 
 
-        this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
-        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
-        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,  new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+        this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+
+        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+
+        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
 
 
 
@@ -585,12 +601,6 @@ public class AdminDashboardController {
     public void setKioskApp(KioskApp kioskApp) {
 
         this.kioskApp = kioskApp;
-
-    }
-
-    public void addToStackPane(Node node) {
-
-        this.mapStackPane.getChildren().add(node);
 
     }
 

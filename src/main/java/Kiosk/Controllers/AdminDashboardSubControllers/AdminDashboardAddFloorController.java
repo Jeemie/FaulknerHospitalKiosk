@@ -2,6 +2,7 @@ package Kiosk.Controllers.AdminDashboardSubControllers;
 
 import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
+import Map.Floor;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class AdminDashboardAddFloorController {
     private Building currentBuilding;
 
     // The controller that created this instance
-    private AdminSubControllerLoader loader;
+    private SubViewLoader<AdminDashboardAddFloorController> subViewLoader;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardAddFloorController.class);
@@ -75,20 +76,13 @@ public class AdminDashboardAddFloorController {
 
         });
 
-        this.discardFloorButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-            }
-
-        });
-
 
         this.createFloorButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
+
+                LOGGER.info("Attempting to add a new floor.");
 
                 if (false) {
 
@@ -140,9 +134,10 @@ public class AdminDashboardAddFloorController {
 
                     }
 
-                    currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
+                    Floor newFloor = currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
+                    newFloor.drawFloorAdmin(subViewLoader.getMapStackPane());
 
-                    loader.removeFromScene();
+                    subViewLoader.removeFromStackPane();
 
                 }
 
@@ -157,7 +152,9 @@ public class AdminDashboardAddFloorController {
             @Override
             public void handle(MouseEvent event) {
 
-                loader.removeFromScene();
+                LOGGER.info("Discarding the new Floor");
+
+                subViewLoader.removeFromStackPane();
 
             }
 
@@ -168,9 +165,9 @@ public class AdminDashboardAddFloorController {
 
 
 
-    public void setParentController(AdminSubControllerLoader loader) {
+    public void setSubViewLoader(SubViewLoader<AdminDashboardAddFloorController> subViewLoader) {
 
-        this.loader = loader;
+        this.subViewLoader = subViewLoader;
 
     }
 
