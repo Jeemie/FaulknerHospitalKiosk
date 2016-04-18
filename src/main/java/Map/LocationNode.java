@@ -31,7 +31,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     private ArrayList<LocationNode> adjacentLocationNodes; // A list of nodes that are connected to the current node
     private EnumMap<Destination, ArrayList<String>> destinations; // A map  of the destinations at the current node
     private Floor currentFloor; // The floor that the node is associated with
-    @JsonIgnore //TODO Refactor
+    @JsonIgnore
     public double minDistance = Double.POSITIVE_INFINITY;
     @JsonIgnore
     private double gScore;  // Cost of path from the start node to last node on path
@@ -556,6 +556,11 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
     public void setCameFrom(LocationNode cameFrom) {
         this.cameFrom = cameFrom;
+    }
+    public Circle getNodeCircle() {
+
+        return nodeCircle;
+
     }
 }
 
