@@ -6,9 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +16,8 @@ public class KioskOverviewController {
     private static final Logger LOGGER = LoggerFactory.getLogger(KioskOverviewController.class);
     // Reference to the main application.
     private KioskApp kioskApp;
+
+    private KeyCombination adminHotkey = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
 
     @FXML
     private TextField searchTextBox;
@@ -39,21 +39,28 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
-        
+
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
                     kioskApp.showSearch(searchTextBox.getText());
 
                 }
-                if (event.getCode().equals(KeyCode.HOME)) {
+                if (event.getCode().equals(KeyCode.INSERT)) {
 
                     kioskApp.showAdminLogin();
 
                 }
+                if (adminHotkey.match(event)) {
+
+                    kioskApp.showAdminLogin();
+
+                }
+
 
             }
 
