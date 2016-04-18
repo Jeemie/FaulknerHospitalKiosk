@@ -27,7 +27,7 @@ import java.util.UUID;
  */
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
-public class Floor extends Observable{
+public class Floor extends Observable {
 
     private int floor; // The level number associated with the floor
     private UUID uniqueID; // A randomly generated UUID associated with the current floor
