@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -103,6 +103,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         notifyObservers();
 
 
+        //return null;
     }
 
     @JsonIgnore
@@ -253,8 +254,8 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
             //removes the node from list of adjacent Nodes
             adjacentLocationNodes.remove(adjacentLocationNode);
 
-           //removes this node from the other node's list of adjacent nodes
-            adjacentLocationNode.removeAdjacentNode(this);
+//            //removes this node from the other node's list of adjacent nodes
+//            adjacentLocationNode.removeAdjacentNode(this);
 
             setChanged();
 
@@ -344,8 +345,6 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         Line newLine = new Line(this.location.getX(), this.location.getY(),
                 adjacentNode.getLocation().getX(), adjacentNode.getLocation().getY());
 
-        newLine.setStrokeWidth(1.0);
-
         pane.getChildren().add(newLine);
 
         this.adjacentLines.add(newLine);
@@ -400,12 +399,10 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         }
 
-        this.currentFloor.removeLocationNode(this);
-
         notifyObservers();
         setChanged();
 
-
+        this.currentFloor.removeLocationNode(this);
 
     }
 
@@ -503,7 +500,7 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     }
 
 
-    public void addAdjacentsToListView(TableView tableView) {
+    public void addAdjacentsToListView(ListView listView) {
 
         if(this.adjacentLocationNodes == null){
             return;
@@ -513,7 +510,19 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
 
         ObservedLocation.addAll(this.adjacentLocationNodes);
 
-        tableView.setItems(ObservedLocation);
+        listView.setItems(ObservedLocation);
+    }
+    public void addDestinationsToListView(ListView listView) {
+
+        if(this.adjacentLocationNodes == null){
+            return;
+        }
+
+        ObservableList<EnumMap<Destination, ArrayList<String>>> ObservedLocation = FXCollections.observableArrayList();
+
+        ObservedLocation.addAll(this.getDestinations());
+
+        listView.setItems(ObservedLocation);
     }
 
 

@@ -62,7 +62,7 @@ public class SearchController {
         public void run() {
             while (running) {
                 try {
-                    System.out.println(counter + " seconds have passed.");
+
                     if (counter == 60) {
                         System.out.println("Timed Out.");
                         running = false;
@@ -74,7 +74,6 @@ public class SearchController {
                     }
                     Thread.sleep(1000);
                 } catch (InterruptedException exception) {
-                    System.out.println("I'm outta here");
                     atimer.cancel();
                     timer.cancel();
                     timerTask.cancel();
@@ -135,7 +134,7 @@ public class SearchController {
                                 timer.cancel();
                                 running = false;
                                 timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
                             }
 
@@ -258,6 +257,7 @@ public class SearchController {
                 if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
                     timer.cancel();
+                    atimer.cancel();
                     running = false;
                     timerThread.interrupt();
                     kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
