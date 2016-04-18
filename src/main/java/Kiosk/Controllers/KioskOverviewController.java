@@ -2,7 +2,6 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Destination;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class KioskOverviewController {
 
@@ -39,7 +39,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
-
+        
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -49,8 +49,14 @@ public class KioskOverviewController {
                     kioskApp.showSearch(searchTextBox.getText());
 
                 }
+                if (event.getCode().equals(KeyCode.HOME)) {
+
+                    kioskApp.showAdminLogin();
+
+                }
 
             }
+
 
         });
 
