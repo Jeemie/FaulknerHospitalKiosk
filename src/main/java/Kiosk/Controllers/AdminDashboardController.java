@@ -1,5 +1,8 @@
 package Kiosk.Controllers;
 
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController;
+import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
+import Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader;
 import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
@@ -22,14 +25,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- * Created by matt on 4/12/16.
+ * Controller for the admin dashboard view
  */
 public class AdminDashboardController {
 
     private Building building;
-    private LocationNode currentLocationNode;
     private KioskApp kioskApp;
-    private Floor location;
 
 
     // Logger for this class
@@ -463,6 +464,32 @@ public class AdminDashboardController {
 
         });
 
+        this.buildingFloorsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                AdminSubControllerLoader loader = new AdminSubControllerLoader();
+
+                loader.setStackPane(mapStackPane);
+                loader.setCurrentBuilding(building);
+                loader.loadAddFloor();
+
+
+                SubViewLoader<AdminDashboardAddFloorController> subViewLoader =
+                        new SubViewLoader<>("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml", mapStackPane);
+
+                AdminDashboardAddFloorController adminDashboardAddFloorController = subViewLoader.loadView();
+
+
+                adminDashboardAddFloorController.setCurrentBuilding(building);
+                adminDashboardAddFloorController.setSubViewLoader(subViewLoader);
+                adminDashboardAddFloorController.setListeners();
+
+            }
+
+        });
+
 
 //        this.buildingDestinationsListView
 
@@ -646,8 +673,8 @@ public class AdminDashboardController {
         locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
             alabel.setText("Delete Destination Button");
-        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
-    });
+            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+        });
 
 
 
@@ -679,12 +706,6 @@ public class AdminDashboardController {
     public void setKioskApp(KioskApp kioskApp) {
 
         this.kioskApp = kioskApp;
-
-    }
-
-    public void addToStackPane(Node node) {
-
-        this.mapStackPane.getChildren().add(node);
 
     }
 
