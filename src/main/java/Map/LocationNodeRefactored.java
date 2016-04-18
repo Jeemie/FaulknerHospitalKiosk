@@ -1,9 +1,13 @@
 package Map;
 
 
+import Map.EventHandlers.LocationNodeClickedEventHandler;
+import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Utils.ImageType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,6 +137,29 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
         }
 
         return nodeDestinations;
+    }
+
+    public double getDistanceBetweenNodes(LocationNode destinationLocationNode) {
+
+        // location of destination node
+        Location destinationLocation = destinationLocationNode.getLocation();
+
+        // return the distance between the nodes
+        return this.location.getDistanceBetween(destinationLocation);
+    }
+
+    public void drawAdmin(Pane pane) {
+
+        if (pane.getChildren().contains(nodeCircle)) {
+
+            return;
+        }
+
+        pane.getChildren().add(this.currentImage);
+
+        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
+        nodeCircle.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
+
     }
 
 
