@@ -25,18 +25,24 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- * Created by matt on 4/12/16.
+ * Controller for the admin dashboard view
  */
 public class AdminDashboardController {
 
     private Building building;
     private KioskApp kioskApp;
 
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
     @FXML
     private ScrollPane mapScrollPane;
+
+    @FXML
+    private Label alabel;
+    @FXML
+    private Button setStartNode;
 
     @FXML
     private StackPane mapStackPane;
@@ -188,6 +194,8 @@ public class AdminDashboardController {
 
 
 
+
+
     public void setListeners() {
 
         // Setup Listeners
@@ -195,8 +203,40 @@ public class AdminDashboardController {
         setBuildingTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
+        deleteThis();
 
     }
+
+    private void deleteThis() {
+
+
+        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
+
+        try {
+            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
+            node3A.addDestination(Destination.KIOSK, "Kiosk3");
+        } catch (FloorDoesNotExistException e) {
+            e.printStackTrace();
+        }
+
+
+        for (Floor floor: this.building.getFloors()) {
+            floor.setFloorImage(getClass().getResource(String.valueOf(floor.getImagePath())));
+            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
+                for (LocationNode node : floor.getFloorNodes()) {
+                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
+                    node.initObserver();
+                    node.initAdjacentLines();
+                }
+            }
+            floor.drawFloorAdmin(this.mapStackPane);
+        }
+
+
+    }
+
+
+
 
 
     private void setCoreFunctionalityListeners() {
@@ -306,6 +346,9 @@ public class AdminDashboardController {
 
 
 
+
+
+
         // Setup Zoom In Button
         this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -399,7 +442,7 @@ public class AdminDashboardController {
                 ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
                 building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
                 building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                building.setAdjacentsNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
             }
 
         });
@@ -420,7 +463,6 @@ public class AdminDashboardController {
             }
 
         });
-
 
         this.buildingFloorsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -515,10 +557,36 @@ public class AdminDashboardController {
                 }
             }
         });
-        floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
-        floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+
+        floorLocationsAddButton.setOnAction(event ->{
+
+            alabel.setText("Add Button");
+
+            floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
+
+        });
+
+
+        floorLocationsDeleteButton.setOnAction(event ->{
+
+            alabel.setText("Delete Button");
+
+            floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+
+        });
+
+
+        floorLocationsModifyButton.setOnAction(event ->{
+
+            alabel.setText("Modify Button");
+
+            floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
+
+
+        });
 
 
 
@@ -556,36 +624,73 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    if (building.getAdjacentsNodes() != null) {
+                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
-//                        building.getAdjacentsNodes().addAdjacentsToListView(locationConnectedLocationListView);
-
-
-                    }
 
                 }
 
             }
 
+
+        });
+
+        this.locationDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Floors Titled Pane Opened");
+
+                    if (building.getCurrentNodes() != null) {
+
+                        building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+
+                    }
+
+
+                }
+
+            }
+
+
+        });
+
+
+        locationConnectedLocationsAddButton.setOnAction(event -> {
+
+            alabel.setText("Add Connected Button");
+            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+
+        });
+
+        locationDestinationsAddButton.setOnAction(event -> {
+            alabel.setText("Add Destination Button");
+            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+        });
+
+        locationConnectedLocationsDeleteButton.setOnAction(event -> {
+
+            alabel.setText("Delete Destination Button");
+            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
         });
 
 
 
-        this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-        this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+            @Override
+            public void handle(MouseEvent event) {
 
-        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+                LOGGER.info("Setting start node to: " + building.getCurrentNodes());
 
+                building.setStartNode(building.getCurrentNodes());
 
+            }
 
+        });
     }
-
-
-
 
 
 
