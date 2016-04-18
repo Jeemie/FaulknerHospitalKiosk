@@ -39,6 +39,7 @@ public class AdminSubControllerLoader {
 
             AdminDashboardDestinationAddController controller = loader.getController();
             controller.setCurrentLocationNode(this.currentLocationNode);
+            controller.setCurrentLocationNode(this.currentLocationNode);
             controller.setParentController(this);
             controller.setListeners();
 
@@ -56,7 +57,6 @@ public class AdminSubControllerLoader {
 
         try {
 
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml"));
             Pane pane = loader.load();
@@ -64,9 +64,11 @@ public class AdminSubControllerLoader {
             currentNode = pane;
 
             AdminDashboardAddFloorController controller = loader.getController();
-            controller.setParentController(this);
+            controller.setCurrentBuilding(currentBuilding);
             controller.setListeners();
 
+
+            this.stackPane.getChildren().add(pane);
 
 
         } catch (IOException e) {
@@ -83,7 +85,7 @@ public class AdminSubControllerLoader {
 
     }
 
-    public void currentBuilding(Building currentBuilding) {
+    public void setCurrentBuilding(Building currentBuilding) {
 
         this.currentBuilding = currentBuilding;
 

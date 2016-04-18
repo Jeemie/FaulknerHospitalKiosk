@@ -152,6 +152,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App
             AdminLoginController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setListeners();
 
             return controller.isOkClicked();
             
