@@ -3,7 +3,6 @@ package Map;
 import Map.Exceptions.NoPathException;
 import org.slf4j.LoggerFactory;
 
-import javax.print.attribute.standard.PrinterResolution;
 import java.util.*;
 
 /**
@@ -25,28 +24,6 @@ public class AStar {
 
     }
 
-    /**
-     * Compute straight line distance between start and destination
-     *
-     * @param startNode
-     * @param destinationNode
-     * @return
-     */
-    public double computeHeuristicCost(LocationNode startNode, LocationNode destinationNode) {
-        double cost = 0.0;
-
-        // Check if start and destination nodes are on the same floor
-        if (startNode.getCurrentFloor().getFloor() == destinationNode.getCurrentFloor().getFloor()) {
-            cost = startNode.getDistanceBetweenNodes(destinationNode);
-        } else {
-            // TODO
-            // Destination is on a different floor
-            // Compute cost of startNode to nearest current floor elevator
-            System.out.println("Multifloor path.");
-            // Compute cost of SAME elevator of destination floor to destination node
-        }
-        return cost;
-    }
 
     /**
      *
@@ -60,142 +37,121 @@ public class AStar {
      *
      */
 
-    /**
-     *
-     * @param startNode
-     * @param destinationNode
-     */
-    public static void constructPath(LocationNode startNode, LocationNode destinationNode) {
 
-        // Node with lowest f(n) value has highest priority in the queue
+    //
+
+    /**
+     * Determines the shortest path between a start node and destination node.
+     * fScore the total cost of getting from the start node to the goal
+     * gScore is the cost of getting from the start node to that node
+     * Heuristic is determined by the straight line distance (computed with getDistanceBetweenNodes())
+     *  @param startNode Start destination in path
+     * @param destinationNode End destination in path
+     */
+    public static ArrayList<LocationNode> aStar(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+
+        LocationNode currentNode;
+        Double tentative_gScore;
 
         // The set of nodes already evaluated
-        PriorityQueue<LocationNode> visitedNodes = new PriorityQueue<>();
+        ArrayList<LocationNode> closedNodes = new ArrayList<>();
 
         // The set of currently discovered nodes still to be evaluated
-        PriorityQueue<LocationNode> openNodes = new PriorityQueue<>();
+        // Node with lowest f(n) value has highest priority in the queue
+        PriorityQueue<LocationNode> openNodes = new PriorityQueue<>(fComparator);
+
         // Initially, only the start node is known
         openNodes.add(startNode);
 
-        // For each node, which the destination can most efficiently be reached from
-
-
-        // If a node can be reached from many nodes,
-        // cameFrom will eventually contain the most efficient previous step
-
-        // cameFrom :=
-
-        // For each node, the cost of getting from the start node to that node
-
-        // gScore := map with default value of Inifinity
-
         // The cost of going from start to start is zero
+        startNode.setGscore(0.0);
 
-        // gScore[start] := 0
+        // For the first node, the total cost of getting from the start node to the goal
+        // by passing by that node is completely heuristic.
+        startNode.setFscore(startNode.getDistanceBetweenNodes(destinationNode));
 
-        // For each node, the total cost of getting from the start to the goal
-        // by passing by that node. That value is partly known, partly heuristic.
+        while(!openNodes.isEmpty()) {
 
-        //fScore := map with default value of Infinity
+            // the node in openSet having the lowest fScore value
+            currentNode = openNodes.peek();
 
-        // For the first node, that value is completey heuristic
-        //fScore[start] := heuristic_cost_estimate(start, goal)
+            if (currentNode.equals(destinationNode)) {
 
-        //while openSet is not empty
+                return reconstructPath(currentNode);
 
-        // current := the node in openSet having the lowest fScore[] value
-
-        //if current = goal
-            // return reconstruct_path(cameFrom, current)
-
-            // openSet.Remove(current)
-            // closedSet.Add(Current)
-            // for each neightbor of current
-                // if neighbor in closedSet
-                    // continue // Ignore the neighbor which is already evaluated
-                    // The distance from start to a neighbor
-                    // tenative_gScore := gScore[current] + dist_between(current, neighbor)
-                // if neighbor not in openSet // Discover a new node
-                    //oopenSet.Add(e
-
-
-
-
-
-
-
-        // Add start node to the queue
-
-// Q. where should Fscore/stored be computed?
-
-
-
-        // Compute estimated cost
-        // Compute exact cost
-        //
-        // ----- Main loop -----
-        // Exame node in
-    }
-
-
-   /*
-   public static void constructPath(LocationNode startNode, double cost) {
-
-        //distance from start to start is 0
-        node.minDistance = 0.;
-        //create node set nodeQueue
-        PriorityQueue<LocationNode> nodeQueue = new PriorityQueue<>();
-        nodeQueue.add(node);
-        //while nodeQueue is not empty
-        while (!nodeQueue.isEmpty()) {
-            //start node will be selected first
-            LocationNode u = nodeQueue.poll();
-            //for each neighbor e of u
-            for (LocationNode e : u.getAdjacentLocationNodes()) {
-                //double cost = e.getHeuristicCost();
-                double cost = e.getDistanceBetweenNodes()
-                //calculate the distance to that neighbor
-                double distanceThroughNeighbor = u.minDistance + cost + u.getDistanceBetweenNodes(e);
-                if (distanceThroughNeighbor < e.minDistance) {
-                    //replace path with a shorter path and remove node u to the node set
-                    nodeQueue.remove(u);
-                    e.minDistance = distanceThroughNeighbor;
-                    e.previous = u;
-                    nodeQueue.add(e);
-                }
             }
 
+            openNodes.remove(currentNode);
+            closedNodes.add(currentNode);
+
+            for (LocationNode neighbor : currentNode.getAdjacentLocationNodes()) {
+
+                // Check if neighbor is not traversable and/or not contained in closed set.
+                // Else skip to next neighbor.
+                if(neighbor != null && !closedNodes.contains(neighbor)) {
+
+
+                    // The distance from start to a neighbor
+                    tentative_gScore = currentNode.getGscore() + currentNode.getDistanceBetweenNodes(neighbor);
+
+                    // If new path to neighbor is shorter or neighbor is not in open set
+                    if (!openNodes.contains(neighbor)) {
+
+                        // Discover a new node
+                        // Set current node as previous for this neighbor
+                        neighbor.setCameFrom(currentNode);
+
+                        // Set g cost of neighbor (cost from start node to this node)
+                        neighbor.setGscore(currentNode.getFscore() + currentNode.getDistanceBetweenNodes(neighbor));
+
+                        // Add to open set
+                        openNodes.add(neighbor);
+
+                    }  else if (tentative_gScore < neighbor.getGscore()) {
+
+                        // This is a better path. Record it.
+                        neighbor.setCameFrom(currentNode);
+                        neighbor.setGscore(tentative_gScore);
+                        neighbor.setFscore(neighbor.getGscore() + neighbor.getDistanceBetweenNodes(destinationNode));
+
+                    }
+                }
+            }
         }
+
+        // Reconstructed path was not returned. No path exists
+        throw new NoPathException(startNode, destinationNode);
+
     }
-    */
 
-    public static List<LocationNode> getShortestPathTo(LocationNode target)
-    {
-        List<LocationNode> path = new ArrayList<LocationNode>();
 
-        for (LocationNode node = target; node != null; node=node.previous) {
-            path.add(node);
+    //TODO reset all set costs
+
+
+
+    //Comparator anonymous class implementation
+    public static Comparator<LocationNode> fComparator = new Comparator<LocationNode>(){
+
+        @Override
+        public int compare(LocationNode n1, LocationNode n2) {
+            return (int) (n1.getFscore() - n2.getFscore());
+        }
+    };
+
+
+
+    public static ArrayList<LocationNode> reconstructPath(LocationNode currentNode) {
+        ArrayList<LocationNode> total_path = new ArrayList<>();
+
+        while (currentNode != null) {
+
+            total_path.add(currentNode);
+            currentNode = currentNode.getCameFrom();
+
         }
 
-        Collections.reverse(path);
-        return path;
+        // Path from destination to start
+        return total_path;
     }
-
-
 
 }
-
-
-
-    /**
-     * TODO
-     *
-     * @param startNode
-     * @param destinationNode
-     * @return
-     */
-//    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
-//        return null;
-//    }
-
-

@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
 
-import static Map.AStar.constructPath;
-import static Map.AStar.getShortestPathTo;
+import static Map.AStar.aStar;
 
 /**
  * A class the represents a building.
@@ -103,11 +102,16 @@ public class Building extends Observable {
         }
 
 
-            constructPath(startNode, destinationNode); // run Dijkstra
-            System.out.println("Distance to " + destinationNode + ": " + destinationNode.minDistance);
+        try {
+            aStar(startNode, destinationNode);
+        } catch (NoPathException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Distance to " + destinationNode + ": " + destinationNode.minDistance);
 
             ArrayList<LocationNode> path = new ArrayList<>();
-            path.addAll(getShortestPathTo(destinationNode));
+            //path.addAll(getShortestPathTo(destinationNode));
             System.out.println("Path: " + path);
 
             LOGGER.info("Drawing Shortest Path");
@@ -119,7 +123,7 @@ public class Building extends Observable {
             }
         }
 
-    }
+
 
     /**
 
