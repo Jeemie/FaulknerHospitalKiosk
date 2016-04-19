@@ -36,6 +36,9 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
     //
     private ArrayList<LocationNodeEdge> sharedEdges;
 
+    // List of edges adjacent to this LocationNode
+    private ArrayList<LocationNodeEdge> edges;
+
     //
     private EnumMap<Destination, ArrayList<String>> associatedDestinations;
 
@@ -163,6 +166,31 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
     }
 
 
+    /**
+     * Draw all neighboring edges of this node
+     * @param pane
+     */
+    public void drawEdges(Pane pane) {
+
+        LOGGER.info("Drawing edges for the Node: " + this.toString());
+
+        // If any edges exist
+        if (this.edges.size() != 0) {
+
+            // Draw lines for edges
+            for (LocationNodeEdge edge : this.edges) {
+
+                edge.drawLine(pane);
+
+            }
+
+        }
+
+        setAssociatedPane(pane);
+
+    }
+
+
     @Override
     public String toString() {
 
@@ -176,4 +204,9 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
         return 0;
     }
 
+    public Location getLocation() {
+
+        return location;
+
+    }
 }
