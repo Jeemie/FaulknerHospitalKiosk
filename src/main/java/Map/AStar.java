@@ -24,28 +24,12 @@ public class AStar {
 
     }
 
-
-    /**
-     *
-     * g(n) represents the exact cost of the path from the starting point to any vertex n,
-     * and h(n) represents the heuristic estimated cost from vertex n to the goal.
-     * In the above diagrams, the yellow (h) represents vertices far from the goal
-     * and teal (g) represents vertices far from the starting point.
-     * A* balances the two as it moves from the starting point to the goal.
-     * Each time through the main loop, it examines the vertex n that has
-     * the lowest f(n) = g(n) + h(n).
-     *
-     */
-
-
-    //
-
     /**
      * Determines the shortest path between a start node and destination node.
      * fScore the total cost of getting from the start node to the goal
      * gScore is the cost of getting from the start node to that node
      * Heuristic is determined by the straight line distance (computed with getDistanceBetweenNodes())
-     *  @param startNode Start destination in path
+     * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
     public static ArrayList<LocationNode> aStar(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
@@ -90,7 +74,6 @@ public class AStar {
                 // Else skip to next neighbor.
                 if(neighbor != null && !closedNodes.contains(neighbor)) {
 
-
                     // The distance from start to a neighbor
                     tentative_gScore = currentNode.getGscore() + currentNode.getDistanceBetweenNodes(neighbor);
 
@@ -98,11 +81,14 @@ public class AStar {
                     if (!openNodes.contains(neighbor)) {
 
                         // Discover a new node
+
                         // Set current node as previous for this neighbor
                         neighbor.setCameFrom(currentNode);
 
                         // Set g cost of neighbor (cost from start node to this node)
-                        neighbor.setGscore(currentNode.getFscore() + currentNode.getDistanceBetweenNodes(neighbor));
+                        neighbor.setGscore(tentative_gScore);
+
+                        neighbor.setFscore(neighbor.getGscore() + neighbor.getDistanceBetweenNodes(destinationNode));
 
                         // Add to open set
                         openNodes.add(neighbor);
@@ -141,6 +127,7 @@ public class AStar {
 
 
     public static ArrayList<LocationNode> reconstructPath(LocationNode currentNode) {
+
         ArrayList<LocationNode> total_path = new ArrayList<>();
 
         while (currentNode != null) {
