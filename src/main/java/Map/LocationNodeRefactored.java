@@ -3,8 +3,12 @@ package Map;
 
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
+import Map.EventHandlers.LocationNodeRefactoredClickedEventHandler;
+import Map.EventHandlers.LocationNodeRefactoredDraggedEventHandler;
+import Map.Observers.FloorLocationNodeObserver;
 import Utils.ImageType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -28,7 +32,7 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
     private Location location;
 
     //
-    private Floor currentFloor;
+    private FloorLocationNodeObserver currentFloor;
 
     //
     private ImageType associatedImage;
@@ -44,7 +48,12 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
 
     //
     @JsonIgnore
-    private Image currentImage;
+    private Image labelImage;
+
+    //
+    @JsonIgnore
+    private Label imageLabel;
+
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeRefactored.class);
@@ -59,7 +68,7 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
 
     }
 
-    public LocationNodeRefactored(String name, Location location, Floor currentFloor, ImageType associatedImage) {
+    public LocationNodeRefactored(String name, Location location, FloorLocationNodeObserver currentFloor, ImageType associatedImage) {
 
         this.heuristicCost = 0;
         this.name = name;
@@ -69,6 +78,8 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
         this.associatedImage = associatedImage;
         this.sharedEdges = new ArrayList<>();
         this.associatedDestinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
+
+        this.addObserver(this.currentFloor);
 
     }
 
@@ -153,17 +164,33 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
 
     public void drawAdmin(Pane pane) {
 
-        if (pane.getChildren().contains(nodeCircle)) {
+        if (pane.getChildren().contains(this.imageLabel)) {
 
             return;
         }
 
-        pane.getChildren().add(this.currentImage);
+        pane.getChildren().add(this.imageLabel);
 
-        nodeCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
-        nodeCircle.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
+        imageLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeRefactoredClickedEventHandler(this));
+        imageLabel.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeRefactoredDraggedEventHandler(this));
 
     }
+
+    public void drawNormal(Pane pane) {
+
+        if (pane.getChildren().contains(this.imageLabel)) {
+            return;
+        }
+
+        pane.getChildren().add(this.imageLabel);
+
+    }
+
+    // TODO Maryann
+    public void drawEdgesAdmin(){}
+    public void drawEdgesNormal(){}
+    public void deleteNode(){}
+    public void addEdge(){}
 
 
     /**
