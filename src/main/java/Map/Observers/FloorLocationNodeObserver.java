@@ -1,6 +1,6 @@
 package Map.Observers;
 
-import Map.LocationNodeRefactored;
+import Map.LocationNode;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class FloorLocationNodeObserver implements Observer {
     private Pane locationNodeEdgePane;
 
     //
-    private ArrayList<LocationNodeRefactored> floorNodes;
+    private ArrayList<LocationNode> floorNodes;
 
     //
     private static final Logger LOGGER = LoggerFactory.getLogger(FloorLocationNodeObserver.class);
@@ -35,7 +35,7 @@ public class FloorLocationNodeObserver implements Observer {
 
         LOGGER.info("Updating LocationNode: " + o.toString());
 
-        LocationNodeRefactored currentLocationNode = ((LocationNodeRefactored) o);
+        LocationNode currentLocationNode = ((LocationNode) o);
 
         currentLocationNode.drawAdmin
 

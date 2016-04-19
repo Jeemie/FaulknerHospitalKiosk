@@ -1,7 +1,7 @@
 package Map.Observers;
 
 import Map.Location;
-import Map.LocationNodeRefactored;
+import Map.LocationNode;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,9 +12,9 @@ import java.util.Observer;
 public class LocationObserver implements Observer {
 
     private final Location observedLocation;
-    private final LocationNodeRefactored associatedLocationNode;
+    private final LocationNode associatedLocationNode;
 
-    public LocationObserver(Location observedLocation, LocationNodeRefactored associatedLocationNode) {
+    public LocationObserver(Location observedLocation, LocationNode associatedLocationNode) {
 
         this.observedLocation = observedLocation;
         this.associatedLocationNode = associatedLocationNode;
