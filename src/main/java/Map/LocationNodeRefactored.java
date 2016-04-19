@@ -54,6 +54,7 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
     @JsonIgnore
     private Label imageLabel;
 
+    private Pane associatedPane;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeRefactored.class);
@@ -77,6 +78,7 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
         this.currentFloor = currentFloor;
         this.associatedImage = associatedImage;
         this.sharedEdges = new ArrayList<>();
+        this.edges = new ArrayList<>();
         this.associatedDestinations = new EnumMap<Destination, ArrayList<String>>(Destination.class);
 
         this.addObserver(this.currentFloor);
@@ -186,18 +188,11 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
 
     }
 
-    // TODO Maryann
-    public void drawEdgesAdmin(){}
-    public void drawEdgesNormal(){}
-    public void deleteNode(){}
-    public void addEdge(){}
-
-
     /**
-     * Draw all neighboring edges of this node
+     * Draw all edges to neighbors of this node
      * @param pane
      */
-    public void drawEdges(Pane pane) {
+    public void drawEdgesAdmin(Pane pane){
 
         LOGGER.info("Drawing edges for the Node: " + this.toString());
 
@@ -207,16 +202,89 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
             // Draw lines for edges
             for (LocationNodeEdge edge : this.edges) {
 
-                edge.drawLine(pane);
+                pane =  edge.drawLine(pane);
 
             }
 
+            setAssociatedPane(pane);
+
+        }
+    }
+
+    /**
+     * Draw edges between nodes in path
+     * @param pane
+     * @param path
+     */
+    public void drawEdgesNormal(Pane pane, ArrayList<LocationNode> path) {
+
+        LocationNode current;
+        LocationNode next;
+
+        // For each node in the path
+        // Number of edges = number of nodes in path - 1
+        for (int i = 0; i < path.size() - 1; i++) {
+
+            current = path.get(i);
+            next = path.get(i+1);
+
+            // Find edge between specified nodes
+            for (LocationNodeEdge edge : current.getEdges()) {
+
+                if(edge.isEdgeBetweenNodes(current, next)) {
+
+                    // Found edge between two specified nodes
+                    pane = edge.drawLine(pane);
+                    break;
+
+                }
+            }
         }
 
         setAssociatedPane(pane);
 
     }
 
+    /**
+     * Maryann TODO
+     */
+    public void deleteNode() {
+
+
+
+    }
+
+    /**
+     * Add edge between this node and a neighboring node
+     * @param adjacentNode
+     */
+    public void addEdge(LocationNode adjacentNode) {
+
+        if (adjacentNode == null) {
+            // Adjacent Node does not exist
+            // TODO add exception
+        }
+
+        // Check if edge between nodes already exists
+        for(LocationNodeEdge edge : edges) {
+
+            if (edge.edgeExists(this, adjacentNode)) {
+
+                // Edge has already been added
+                //TODO add exception and/or logger message
+                return;
+
+            }
+        }
+
+        // Create new edge
+        LocationNodeEdge newEdge = new LocationNodeEdge(this, adjacentNode);
+
+        // Add new edge between nodes - add edges reference to both node's list of edges
+        edges.add(newEdge);
+        adjacentNode.getEdges().add(newEdge);
+
+    }
 
     @Override
     public String toString() {
@@ -236,4 +304,13 @@ public class LocationNodeRefactored extends Observable implements Comparable<Loc
         return location;
 
     }
+
+    public ArrayList<LocationNodeEdge> getEdges() {
+        return edges;
+    }
+
+    public void setAssociatedPane(Pane associatedPane) {
+        this.associatedPane = associatedPane;
+    }
+
 }
