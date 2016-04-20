@@ -12,14 +12,16 @@ import org.junit.Test;
  */
 public class MapTest {
 
-    private Map mMap = new Map();
+    private Map mMap;
     private Building mTestBuilding;
-    private Floor mFloor;
+    private Floor mFloor, mFloor2;
 
     @Before
     public void setup() {
         mTestBuilding = new Building();
-        mFloor = new Floor (1, mTestBuilding, "picName");
+        mFloor = new Floor (1, mTestBuilding, "Floor1_Final.png");
+        mFloor2 = new Floor (3, mTestBuilding, "Floor3_Final.png");
+        mMap = new Map(mFloor);
     }
 
     @Test
@@ -35,7 +37,7 @@ public class MapTest {
 
     @Test
     public void testInitMapComponents() {
-        mTestBuilding.addFloor(1, "picName");
+        mTestBuilding.addFloor(1, "Floor1_Final.png");
         Exception ex = null;
         try {
             mMap.initMapComponents(mTestBuilding);
@@ -47,14 +49,14 @@ public class MapTest {
 
     @Test
     public void testEmptyGetCurrentFloor() {
-        Assert.assertEquals(null, mMap.getNodeFloor());
+        Assert.assertEquals(mFloor, mMap.getCurrentFloor());
     }
 
     @Test
     public void testSetAndGetCurrentFloor() {
-        mMap.setCurrentFloor(mFloor);
+        mMap.setCurrentFloor(mFloor2);
 
-        Assert.assertEquals(1, mMap.getNodeFloor().getFloor());
+        Assert.assertEquals(mFloor2, mMap.getCurrentFloor());
     }
 
 
