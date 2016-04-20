@@ -267,9 +267,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         ArrayList<LocationNode> adjacentNodes = new ArrayList<>();
 
-        for (LocationNodeEdge edge : edges) {
+        for (LocationNodeEdge edge : this.edges) {
 
-            adjacentNodes.add(edge.getLocationNode2());
+            adjacentNodes.add(edge.getOtherNode(this));
 
         }
 
