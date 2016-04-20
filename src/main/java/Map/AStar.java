@@ -69,7 +69,7 @@ public class AStar {
 
     /**
      * Create path
-     * Assumes Destination.ELEVATOR is contained in list of edges
+     * Assumes DestinationType.ELEVATOR is contained in list of edges
      */
   /*  public static void constructMultiFloorPath(LocationNode node) {
         //distance from start to start is 0

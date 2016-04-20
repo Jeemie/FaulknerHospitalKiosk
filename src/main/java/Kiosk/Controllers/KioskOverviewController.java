@@ -1,8 +1,7 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Destination;
-import javafx.event.Event;
+import Map.Enums.DestinationType;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -73,7 +72,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
-        kioskApp.showDirectory(Destination.PHYSICIAN);
+        kioskApp.showDirectory(DestinationType.PHYSICIAN);
     }
 
 
@@ -83,7 +82,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-        kioskApp.showDirectory(Destination.DEPARTMENT);
+        kioskApp.showDirectory(DestinationType.DEPARTMENT);
     }
 
     /**
@@ -92,7 +91,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-        kioskApp.showDirectory(Destination.SERVICE);
+        kioskApp.showDirectory(DestinationType.SERVICE);
     }
 
 

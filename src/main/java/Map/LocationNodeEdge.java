@@ -1,29 +1,47 @@
 package Map;
 
+import Map.Enums.UpdateType;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Observable;
 
 /**
  * Created by matt on 4/18/16.
  */
-public class LocationNodeEdge {
+public class LocationNodeEdge extends Observable {
 
+    //
     private double weight;
+
     // Nodes to connect with edge
-    private LocationNode v;
-    private LocationNode w;
-    Line newLine;
+    private LocationNode locationNode1;
+
+    //
+    private LocationNode locationNode2;
+
+    //
+    private Line edgeLine;
+
+    // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeEdge.class);
 
     /**
      * Constructor to create edge and associated line between two nodes
-     * @param v Node to connect
-     * @param w Neighbor node to connect
+     * @param locationNode1 Node to connect
+     * @param locationNode2 Neighbor node to connect
      */
-    public LocationNodeEdge(LocationNode v, LocationNode w) {
+    public LocationNodeEdge(LocationNode locationNode1, LocationNode locationNode2) {
 
-        this.v = v;
-        this.w = w;
+        this.locationNode1 = locationNode1;
+        this.locationNode2 = locationNode2;
         this.weight = computeWeight();
+
+
+        this.addObserver(this.locationNode1);
+        this.addObserver(this.locationNode2);
 
     }
 
@@ -31,14 +49,24 @@ public class LocationNodeEdge {
      *
      * @param pane
      */
-    public Pane drawLine(Pane pane) {
+    public void drawEdge(Pane pane) {
 
-        this.newLine = new Line(this.v.getLocation().getX(), this.v.getLocation().getY(),
-                this.w.getLocation().getX(), this.v.getLocation().getY());
+        if (!pane.getChildren().contains(this.edgeLine)) {
 
-        pane.getChildren().add(this.newLine);
+            this.edgeLine = new Line(this.locationNode1.getLocation().getX(), this.locationNode1.getLocation().getY(),
+                    this.locationNode2.getLocation().getX(), this.locationNode2.getLocation().getY());
 
-        return pane;
+            pane.getChildren().add(this.edgeLine);
+
+        }
+
+
+        this.edgeLine.setStartX(this.locationNode1.getLocation().getX());
+        this.edgeLine.setStartY(this.locationNode1.getLocation().getY());
+        this.edgeLine.setEndX(this.locationNode2.getLocation().getX());
+        this.edgeLine.setEndY(this.locationNode2.getLocation().getY());
+
+        this.setWeight(computeWeight());
 
     }
 
@@ -46,25 +74,11 @@ public class LocationNodeEdge {
      *
      * @param pane
      */
-    public Pane removeLine(Pane pane) {
+    public void undrawEdge(Pane pane) {
 
-        pane.getChildren().remove(this.newLine);
+        pane.getChildren().remove(this.edgeLine);
 
-        this.newLine = null;
-
-        return pane;
-
-    }
-
-    /**
-     * Update edge when node is moved.
-     */
-    public void updateEdge() {
-
-        this.newLine = new Line(this.v.getLocation().getX(), this.v.getLocation().getY(),
-                this.w.getLocation().getX(), this.v.getLocation().getY());
-
-        this.weight = computeWeight();
+        this.edgeLine = null;
 
     }
 
@@ -76,8 +90,8 @@ public class LocationNodeEdge {
     public boolean edgeExists(LocationNode currentNode, LocationNode adjacentNode) {
 
         // Edge exists
-        return this.v.equals(currentNode) && this.w.equals(adjacentNode)
-                || this.w.equals(currentNode) && this.v.equals(adjacentNode);
+        return this.locationNode1.equals(currentNode) && this.locationNode2.equals(adjacentNode)
+                || this.locationNode2.equals(currentNode) && this.locationNode1.equals(adjacentNode);
     }
 
     /**
@@ -88,8 +102,8 @@ public class LocationNodeEdge {
     public boolean isEdgeBetweenNodes(LocationNode currentNode, LocationNode adjacentNode) {
 
         // This is the edge we are looking for
-// This is a different edge
-        return this.v.equals(currentNode) && this.w.equals(adjacentNode);
+        // This is a different edge
+        return this.locationNode1.equals(currentNode) && this.locationNode2.equals(adjacentNode);
     }
 
 
@@ -98,41 +112,33 @@ public class LocationNodeEdge {
      */
     public double computeWeight() {
 
-        return this.v.getDistanceBetweenNodes(this.w);
+        return this.locationNode1.getDistanceBetweenNodes(this.locationNode2);
 
     }
 
     public double getWeight() {
+
         return weight;
     }
 
     // Use when a node's location changes
     public void setWeight(double weight) {
+
         this.weight = weight;
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEEDGE);
+
     }
 
-    public LocationNode getV() {
-        return v;
+    public LocationNode getLocationNode1() {
+
+        return locationNode1;
     }
 
-    public void setV(LocationNode v) {
-        this.v = v;
-    }
+    public LocationNode getLocationNode2() {
 
-    public LocationNode getW() {
-        return w;
-    }
-
-    public void setW(LocationNode w) {
-        this.w = w;
-    }
-
-    public Line getNewLine() {
-        return newLine;
-    }
-
-    public void setNewLine(Line newLine) {
-        this.newLine = newLine;
+        return locationNode2;
     }
 
 }

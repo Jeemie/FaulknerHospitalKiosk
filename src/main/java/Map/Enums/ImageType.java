@@ -1,6 +1,11 @@
-package Utils;
+package Map.Enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ * TODO
+ */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ImageType {
 
     POINT(""),

@@ -71,11 +71,11 @@ public class BuildingTest {
         mTestBuilding.addFloor(1, "Floor1_Final.png");
         mTestBuilding.addNode(1, new Location(100, 100));
         mTestBuilding.addNode(1, new Location(200, 200));
-        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Destination.SERVICE, "Test Service1");
-        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Destination.SERVICE, "Test Service2");
+        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Map.DestinationType.SERVICE, "Test Service1");
+        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Map.DestinationType.SERVICE, "Test Service2");
 
-        Assert.assertTrue(mTestBuilding.getDestinations(Destination.SERVICE).contains("Test Service1"));
-        Assert.assertTrue(mTestBuilding.getDestinations(Destination.SERVICE).contains("Test Service2"));
+        Assert.assertTrue(mTestBuilding.getDestinations(Map.DestinationType.SERVICE).contains("Test Service1"));
+        Assert.assertTrue(mTestBuilding.getDestinations(Map.DestinationType.SERVICE).contains("Test Service2"));
     }
 
     /**
@@ -87,8 +87,8 @@ public class BuildingTest {
         mTestBuilding.addFloor(1, "Floor1_Final.png");
         mTestBuilding.addNode(1, new Location(100, 100));
         mTestBuilding.addNode(1, new Location(200, 200));
-        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Destination.DEPARTMENT, "Test Department");
-        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Destination.KIOSK, "Test Kiosk");
+        mTestBuilding.getFloor(1).getFloorNodes().get(0).addDestination(Map.DestinationType.DEPARTMENT, "Test Department");
+        mTestBuilding.getFloor(1).getFloorNodes().get(1).addDestination(Map.DestinationType.KIOSK, "Test Kiosk");
 
         Assert.assertTrue(mTestBuilding.getDestinations().contains("Test Department"));
         Assert.assertTrue(mTestBuilding.getDestinations().contains("Test Kiosk"));

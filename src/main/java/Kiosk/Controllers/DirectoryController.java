@@ -216,7 +216,7 @@ public class DirectoryController {
 //                "Tunick, Mitchell, MD",
 //                "Viola, Julianne, MD");
         counter = 0;
-        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+        currentNames.setAll(building.getDestinations(DestinationType.PHYSICIAN));
         listDirectory.setItems(currentNames);
 
     }
@@ -242,7 +242,7 @@ public class DirectoryController {
 //                "Suburban Eye Specialists ",
 //                "Taiclet Family Center");
         counter = 0;
-        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+        currentNames.setAll(building.getDestinations(DestinationType.DEPARTMENT));
         listDirectory.setItems(currentNames);
 
     }
@@ -324,25 +324,26 @@ public class DirectoryController {
             }
 
         }
+
     }
 
-    public void setList(Destination destinationType) {
+    public void setList(DestinationType destinationTypeType) {
 
-        switch (destinationType) {
+        switch (destinationTypeType) {
 
             case PHYSICIAN:
                 counter = 0;
-                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+                currentNames.setAll(building.getDestinations(DestinationType.PHYSICIAN));
                 listDirectory.setItems(currentNames);
 
             case DEPARTMENT:
                 counter = 0;
-                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+                currentNames.setAll(building.getDestinations(DestinationType.DEPARTMENT));
                 listDirectory.setItems(currentNames);
 
             case SERVICE:
                 counter = 0;
-                currentNames.setAll(building.getDestinations(Destination.SERVICE));
+                currentNames.setAll(building.getDestinations(DestinationType.SERVICE));
                 listDirectory.setItems(currentNames);
 
             default:

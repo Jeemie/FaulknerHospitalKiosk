@@ -34,8 +34,8 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationDepartment() {
-        mNode3A.addDestination(Destination.DEPARTMENT, "Optometry");
-        ArrayList<String> destinations = mNode3A.getDestinations(Destination.DEPARTMENT);
+        mNode3A.addDestination(Map.DestinationType.DEPARTMENT, "Optometry");
+        ArrayList<String> destinations = mNode3A.getDestinations(Map.DestinationType.DEPARTMENT);
         Assert.assertEquals(destinations.contains("Optometry"), true);
     }
 
@@ -44,8 +44,8 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationPhysician() {
-        mNode3B.addDestination(Destination.PHYSICIAN, "Dr. Lisa Grossi");
-        ArrayList<String> destinations = mNode3B.getDestinations(Destination.PHYSICIAN);
+        mNode3B.addDestination(Map.DestinationType.PHYSICIAN, "Dr. Lisa Grossi");
+        ArrayList<String> destinations = mNode3B.getDestinations(Map.DestinationType.PHYSICIAN);
         Assert.assertEquals(destinations.contains("Dr. Lisa Grossi"), true);
     }
 
@@ -54,8 +54,8 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddDestinationElevator() {
-        mNode3C.addDestination(Destination.ELEVATOR, "Elevator");
-        ArrayList<String> destinations = mNode3C.getDestinations(Destination.ELEVATOR);
+        mNode3C.addDestination(Map.DestinationType.ELEVATOR, "Elevator");
+        ArrayList<String> destinations = mNode3C.getDestinations(Map.DestinationType.ELEVATOR);
         Assert.assertEquals(destinations.contains("Elevator"), true);
     }
 
@@ -64,11 +64,11 @@ public class LocationNodeTest {
      */
     @Test
     public void testAddRemoveDestinationKiosk() {
-        mNode3D.addDestination(Destination.KIOSK, "Kiosk");
-        ArrayList<String> destinations = mNode3D.getDestinations(Destination.KIOSK);
+        mNode3D.addDestination(Map.DestinationType.KIOSK, "Kiosk");
+        ArrayList<String> destinations = mNode3D.getDestinations(Map.DestinationType.KIOSK);
         Assert.assertEquals(destinations.contains("Kiosk"), true);
-        mNode3D.removeDestination(Destination.KIOSK, "Kiosk");
-        destinations = mNode3D.getDestinations(Destination.KIOSK);
+        mNode3D.removeDestination(Map.DestinationType.KIOSK, "Kiosk");
+        destinations = mNode3D.getDestinations(Map.DestinationType.KIOSK);
         Assert.assertEquals(destinations.contains("Kiosk"), false);
     }
 

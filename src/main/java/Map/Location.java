@@ -1,5 +1,7 @@
 package Map;
 
+import Map.Enums.UpdateType;
+
 import java.util.Observable;
 
 /**
@@ -57,7 +59,7 @@ public class Location extends Observable {
         this.x = x;
 
         setChanged();
-        notifyObservers();
+        notifyObservers(UpdateType.LOCATIONNODEMOVED);
 
     }
 
@@ -71,7 +73,7 @@ public class Location extends Observable {
         this.y = y;
 
         setChanged();
-        notifyObservers();
+        notifyObservers(UpdateType.LOCATIONNODEMOVED);
 
     }
 

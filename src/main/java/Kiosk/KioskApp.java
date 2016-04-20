@@ -2,7 +2,6 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Building;
-import Map.Destination;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.LocationNode;
 import Map.Map;
@@ -235,7 +234,7 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      * 
      */
-    public boolean showDirectory(Destination destinationType) {
+    public boolean showDirectory(DestinationType destinationTypeType) {
 
         try {
             // Load DirectoryScreen
@@ -257,7 +256,7 @@ public class KioskApp extends Application {
             controller.setStartNode(startNode);
 
             //set the selected directory view to appear
-            controller.setList(destinationType);
+            controller.setList(destinationTypeType);
 
             return controller.isOkClicked();
             
