@@ -9,7 +9,7 @@ public enum RelativeDirection {
 
     STRAIGHT,
     RIGHT,
-    LEFT,
-    BACK;
+    BACK,
+    LEFT;
 
 }

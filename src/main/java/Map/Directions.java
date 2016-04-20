@@ -12,7 +12,7 @@ import static Map.Enums.RelativeDirection.*;
  */
 public class Directions {
 
-    List<LocationNode> path;
+    private List<LocationNode> path;
 
     public Directions(List<LocationNode> path) {
 
@@ -33,42 +33,31 @@ public class Directions {
      */
     public List<RelativeDirection> getRelativeDirections () {
 
-        //Created a RelativeDirection array which is to be returned
+        // Created a RelativeDirection array which is to be returned
         List<RelativeDirection> relativeDirections = new ArrayList<RelativeDirection>();
 
-        //Create three LocationNodes to create two CardinalDirections
+        // Create three LocationNodes to create two CardinalDirections
         LocationNode firstLNode, secondLNode, thirdLNode;
 
-        //Create two CardinalDirections to create one RelativeDirection
+        // Create two CardinalDirections to create one RelativeDirection
         CardinalDirection pastCDirection, currentCDirection;
 
-        //Create one RelativeDirection
+        // Create one RelativeDirection
         RelativeDirection currentRDirection;
 
-        //If there is only one node in the path or less, then return nothing.
+        // If there is only one node in the path or less, then return nothing.
         if (path.size() < 2) {
+
             return relativeDirections; //Return empty array
         }
 
         //Get the direction (only requires two nodes)
-        switch(path.get(0).getDirectionsTo(path.get(1))) {
-            case NORTH:
-                relativeDirections.add(STRAIGHT);
-                break;
-            case EAST:
-                relativeDirections.add(RIGHT);
-                break;
-            case WEST:
-                relativeDirections.add(LEFT);
-                break;
-            case SOUTH:
-                relativeDirections.add(BACK);
-        }
+        relativeDirections.add(RelativeDirection.values()[(path.get(0).getDirectionsTo(path.get(1)).ordinal())]);
 
-        //Will run once if path.size() is 3
-        //Go through the path, and create 1 RelativeDirection through 2 CardinalDirections
+        // Will run if path.size() is 3
+        // Go through the path, and create 1 RelativeDirection through 2 CardinalDirections
         // by using 3 LocationNodes each loop
-        for(int i = 1; i < path.size()-1; i++) {
+        for (int i = 1; i < (path.size() - 1); i++) {
 
             //Declare first three nodes
             firstLNode  = path.get(i-1);
