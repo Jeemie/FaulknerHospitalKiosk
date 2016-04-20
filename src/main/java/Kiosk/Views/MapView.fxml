@@ -43,7 +43,7 @@
               </ButtonBar>
          </children>
       </GridPane>
-        <Label alignment="CENTER" layoutX="906.0" layoutY="166.0" minWidth="283.0" prefHeight="47.0" prefWidth="127.0" text="Location" AnchorPane.rightAnchor="32.0">
+        <Label alignment="CENTER" layoutX="965.0" layoutY="111.0" minWidth="283.0" prefHeight="47.0" prefWidth="127.0" text="Location" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="111.0">
             <font>
                 <Font size="32.0" />
             </font>
@@ -90,5 +90,15 @@
                 <Font size="24.0" />
             </font>
         </Button>
+      <Label layoutX="965.0" layoutY="177.0" prefHeight="27.0" prefWidth="123.0" text="Current Floor:" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="177.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentFloorLabel" layoutX="1088.0" layoutY="177.0" prefHeight="17.0" prefWidth="161.0" text="Label" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="177.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
