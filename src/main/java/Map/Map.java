@@ -87,6 +87,7 @@ public class Map implements Observer {
 
             LOGGER.debug("Observer was updated but the argument was null: ", arg);
 
+            return;
         }
 
         LOGGER.info("Updating the Map");
@@ -113,7 +114,7 @@ public class Map implements Observer {
 
                 break;
 
-            case LOCATIONNODEMOVED:
+            case LOCATIONNODEPOSITION:
 
                 this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
                 this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
