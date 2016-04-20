@@ -1,26 +1,13 @@
 package Map;
 
 import Map.Enums.UpdateType;
-import Map.Exceptions.DefaultFileDoesNotExistException;
-import Map.Exceptions.FloorDoesNotExistException;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.ImageView;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.UUID;
-
-import static Map.ObjectToJsonToJava.loadFromFile;
 
 public class Map implements Observer {
 
@@ -35,13 +22,13 @@ public class Map implements Observer {
     //||\\ Current LocationNode //||\\
 
     //
-    private LocationNode currentLocatioNode;
+    private LocationNode currentLocationNode;
 
     //
-    private ObservableList<LocationNode> currentAdjacentLocatioNodes;
+    private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
     //
-    private ObservableList<Destination> currentLocatioNodeDestinations;
+    private ObservableList<Destination> currentLocationNodeDestinations;
 
 
     //||\\ Current Floor //||\\
@@ -95,9 +82,25 @@ public class Map implements Observer {
 
             case DESTINATIONCHANGE:
 
+
+                // remove current location node destinations from current floor destinations and building destinations
+                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+
+                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
+                this.currentLocationNodeDestinations.clear();
+                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+
+                // Add current location node destinations from current floor and building destinations
+                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+
                 break;
 
             case LOCATIONNODEMOVED:
+
+                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                this.
 
                 break;
 

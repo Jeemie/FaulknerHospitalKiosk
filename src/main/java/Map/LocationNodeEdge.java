@@ -131,6 +131,19 @@ public class LocationNodeEdge extends Observable {
 
     }
 
+
+    public LocationNode getOtherNode(LocationNode locationNode) {
+
+        if (this.locationNode1.equals(locationNode)) {
+
+            return this.locationNode1;
+        } else {
+
+            return this.locationNode2;
+        }
+
+    }
+
     public LocationNode getLocationNode1() {
 
         return locationNode1;

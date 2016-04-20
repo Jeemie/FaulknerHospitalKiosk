@@ -246,7 +246,15 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // TODO MARYANN
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
 
-        return null;
+        ArrayList<LocationNode> adjacentNodes = new ArrayList<>();
+
+        for (LocationNodeEdge edge : this.edges) {
+
+            adjacentNodes.add(edge.getOtherNode(this));
+
+        }
+
+        return adjacentNodes;
     }
 
     /**
