@@ -1,5 +1,6 @@
 package Kiosk.Controllers.AdminDashboardSubControllers;
 
+import Kiosk.Controllers.AdminDashboardController;
 import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Floor;
@@ -128,7 +129,7 @@ public class AdminDashboardAddFloorController {
                         fos.write(fileData);  // write out the file we want to save.
                         fos.close(); // close the output stream writer
 
-                    } catch(Exception exception) {
+                    } catch (Exception exception) {
 
                         LOGGER.info("a", exception);
 
@@ -136,6 +137,8 @@ public class AdminDashboardAddFloorController {
 
                     Floor newFloor = currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
                     newFloor.drawFloorAdmin(subViewLoader.getMapStackPane());
+
+
 
                     subViewLoader.removeFromStackPane();
 
@@ -162,7 +165,6 @@ public class AdminDashboardAddFloorController {
 
 
     }
-
 
 
     public void setSubViewLoader(SubViewLoader<AdminDashboardAddFloorController> subViewLoader) {
