@@ -312,7 +312,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         }
         //Angle is lower than 0 or higher than 360
         else {
-            cardinalDirection = ERR;
+            cardinalDirection = null;
         }
 
         return cardinalDirection;

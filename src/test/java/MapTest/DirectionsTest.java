@@ -1,6 +1,7 @@
 package MapTest;
 
 import Map.*;
+import Map.Enums.RelativeDirection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
