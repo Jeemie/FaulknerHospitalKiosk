@@ -1,6 +1,7 @@
 package Map;
 
 
+import Map.Enums.CardinalDirection;
 import Map.Enums.DestinationType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+
+import static Map.Enums.CardinalDirection.*;
 
 public class LocationNode extends Observable implements Observer, Comparable<LocationNode> {
 
@@ -244,6 +247,75 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
 
         return null;
+    }
+
+    /**
+     * This function returns a CardinalDirection which tells the relation of the location between
+     *   this node and the nextNode. It does this using angles.
+     *
+     * @param nextNode The node to which the the CardinalDirection should be calculated
+     * @return Enum CardinalDirection
+     */
+    public CardinalDirection getDirectionsTo(LocationNode nextNode) {
+
+        //Enum CardinalDirection which currently has NORTH, EAST, SOUTH, WEST
+        CardinalDirection cardinalDirection;
+
+        //x1, y1 is the position of the this node
+        double x1 = this.getLocation().getX();
+        double y1 = this.getLocation().getY();
+
+        //x2, y2 is the position of nextNode
+        double x2 = nextNode.getLocation().getX();
+        double y2 = nextNode.getLocation().getY();
+
+        //Get the difference between the x and y
+        double xDiff = x2-x1;
+        double yDiff = y2-y1;
+
+        //Calculate the angle between the nodes using atan() function
+        double angle = Math.toDegrees( Math.atan(yDiff/xDiff) );
+
+        //If nextNode is in the II quadrant (>= was set to deal with edge case)
+        if (xDiff < 0 && yDiff >= 0) {
+
+            angle = 180 + angle;
+
+        }
+        //If nextNode is in the III quadrant
+        else if (xDiff < 0 && yDiff < 0) {
+
+            angle = 180 + angle;
+
+        }
+        //If nextNode is in the IV quadrant
+        else if (xDiff >= 0 && yDiff < 0) {
+
+            angle  = 360 + angle;
+
+        }
+        //Angle is between 225-315, including 315
+        if((225 < angle) && (angle <= 315)){
+            cardinalDirection = NORTH;
+        }
+        //Angle is between 315-360, or 0-45, including 360, 0, and 45
+        else if (((315 < angle) && (angle <= 360)) || ((0 <= angle) && (angle <=45))) {
+            cardinalDirection = EAST;
+        }
+        //Angle is between 45-135, including 135
+        else if ((45 < angle) && (angle <= 135)) {
+            cardinalDirection = SOUTH;
+        }
+        //Angle is between 135-225, including 225
+        else if ((135 < angle) && (angle <= 225)) {
+            cardinalDirection = WEST;
+        }
+        //Angle is lower than 0 or higher than 360
+        else {
+            cardinalDirection = ERR;
+        }
+
+        return cardinalDirection;
     }
 
     public Location getLocation() {
