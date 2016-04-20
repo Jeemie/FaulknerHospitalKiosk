@@ -139,7 +139,10 @@ public class Floor extends Observable implements Observer {
     }
 
 
-    public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane, )
+    public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
+
+
+    }
 
 
 

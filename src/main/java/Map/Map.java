@@ -38,10 +38,10 @@ public class Map implements Observer {
     private LocationNode currentLocatioNode;
 
     //
-    private ObservableList<LocationNode> currentAdjacentLocatioNodes;
+    private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
     //
-    private ObservableList<Destination> currentLocatioNodeDestinations;
+    private ObservableList<Destination> currentLocationNodeDestinations;
 
 
     //||\\ Current Floor //||\\
@@ -95,9 +95,10 @@ public class Map implements Observer {
 
             case DESTINATIONCHANGE:
 
+
                 break;
 
-            case LOCATIONNODEMOVED:
+            case LOCATIONNODEREMOVED:
 
                 break;
 

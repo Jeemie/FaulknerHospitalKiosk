@@ -3,22 +3,27 @@ package Map;
 import Map.Exceptions.NoPathException;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 import java.util.*;
 
 /**
- * TODO
+ * Created by maryannoconnell on 4/20/16.
  */
-public class AStar {
+public class Dijkstras {
+
 
     private final Building building; // The building that will be associated with the AStar search
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Dijkstras.class); // Logger for this class
 
     /**
      * TODO
      *
      * @param building
      */
-    public AStar(Building building) {
+    public Dijkstras(Building building) {
 
         this.building = building;
 
@@ -28,11 +33,11 @@ public class AStar {
      * Determines the shortest path between a start node and destination node.
      * fScore the total cost of getting from the start node to the goal
      * gScore is the cost of getting from the start node to that node
-     * Heuristic is determined by the straight line distance (computed with getDistanceBetweenNodes())
+     * Heuristic is always 0
      * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
-    public static ArrayList<LocationNode> aStar(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+    public static ArrayList<LocationNode> dikstras(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
 
         LocationNode currentNode;
         Double tentative_gScore;
@@ -88,7 +93,7 @@ public class AStar {
                         // Set g cost of neighbor (cost from start node to this node)
                         neighbor.setgScore(tentative_gScore);
 
-                        neighbor.setfScore(neighbor.getgScore() + neighbor.getDistanceBetweenNodes(destinationNode));
+                        neighbor.setfScore(neighbor.getgScore());
 
                         // Add to open set
                         openNodes.add(neighbor);
@@ -98,7 +103,7 @@ public class AStar {
                         // This is a better path. Record it.
                         neighbor.setCameFrom(currentNode);
                         neighbor.setgScore(tentative_gScore);
-                        neighbor.setfScore(neighbor.getgScore() + neighbor.getDistanceBetweenNodes(destinationNode));
+                        neighbor.setfScore(neighbor.getgScore());
 
                     }
                 }
@@ -141,4 +146,7 @@ public class AStar {
         return total_path;
     }
 
+
 }
+
+
