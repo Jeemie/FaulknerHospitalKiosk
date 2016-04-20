@@ -7,6 +7,7 @@ import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Map.Enums.ImageType;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,16 +25,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     //
     private double heuristicCost;
 
-    //
+    // Name of this node
     private String name;
 
-    //
+    // Unique ID for this node
     private UUID uniqueID;
 
-    //
+    // Location of this node
     private Location location;
 
-    //
+    // Floor this node is located on
     private Floor currentFloor;
 
     //
@@ -45,6 +46,18 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     //
     private ArrayList<Destination> destinations;
 
+    @JsonIgnore
+    // the cost of getting from the start node to this node - changes during shortest path search
+    private double gScore;
+
+    @JsonIgnore
+    // the total cost of getting from the start node to the goal - changes during shortest path search
+    private double fScore;
+
+    @JsonIgnore
+    // the node this node came from - changes during shortest path search
+    private LocationNode cameFrom;
+
     //
     @JsonIgnore
     private Image currentImage;
@@ -52,6 +65,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     @JsonIgnore
     private Label imageLabel;
 
+    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
 
@@ -83,6 +97,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public void addDestination(Destination destination) {
 
         this.destinations.add(destination);
+
+        setChanged();
+        notifyObservers(UpdateType.DESTINATIONCHANGE);
 
     }
 
@@ -200,11 +217,14 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     }
 
     /**
-     * TODO Maryann
+     * Notify observers to remove this node from the list
      */
     public void deleteNode() {
 
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
 
+        return;
 
     }
 
@@ -243,7 +263,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
-    // TODO MARYANN
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
 
         ArrayList<LocationNode> adjacentNodes = new ArrayList<>();
@@ -358,4 +377,39 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         notifyObservers(arg);
     }
 
+    public double getfScore() {
+
+        return fScore;
+
+    }
+
+    public void setfScore(double fScore) {
+
+        this.fScore = fScore;
+
+    }
+
+    public double getgScore() {
+
+        return gScore;
+
+    }
+
+    public void setgScore(double gScore) {
+
+        this.gScore = gScore;
+
+    }
+
+    public LocationNode getCameFrom() {
+
+        return cameFrom;
+
+    }
+
+    public void setCameFrom(LocationNode cameFrom) {
+
+        this.cameFrom = cameFrom;
+
+    }
 }

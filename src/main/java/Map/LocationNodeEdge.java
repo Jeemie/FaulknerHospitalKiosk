@@ -6,6 +6,7 @@ import javafx.scene.shape.Line;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -60,7 +61,6 @@ public class LocationNodeEdge extends Observable {
 
         }
 
-
         this.edgeLine.setStartX(this.locationNode1.getLocation().getX());
         this.edgeLine.setStartY(this.locationNode1.getLocation().getY());
         this.edgeLine.setEndX(this.locationNode2.getLocation().getX());
@@ -69,6 +69,29 @@ public class LocationNodeEdge extends Observable {
         this.setWeight(computeWeight());
 
     }
+
+
+    /**
+     * Get the edge between two specified nodes
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public LocationNodeEdge getEdgeBetween(ArrayList<LocationNodeEdge> edges, LocationNode node1, LocationNode node2) {
+
+        for (LocationNodeEdge edge : edges) {
+
+            if (edge.isEdgeBetweenNodes(node1, node2)) {
+
+                return edge;
+
+            }
+        }
+
+        // No edge exists in specified list between the two specified nodes
+        return null;
+    }
+
 
     /**
      *

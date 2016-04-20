@@ -20,8 +20,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
-import static Map.AStar.constructPath;
-import static Map.AStar.getShortestPathTo;
 
 /**
  * A class the represents a building.

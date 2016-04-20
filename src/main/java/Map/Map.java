@@ -110,6 +110,7 @@ public class Map implements Observer {
                 this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
                 this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
+
                 break;
 
             case LOCATIONNODEMOVED:
