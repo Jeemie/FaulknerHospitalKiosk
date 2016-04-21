@@ -110,10 +110,18 @@ public class AStar {
 
     }
 
+    /**
+     * Reset F-costs, G-costs, and cameFrom for all nodes in closed and open node list
+     */
+    public static void resetCosts (ArrayList<LocationNode> closedSet, PriorityQueue<LocationNode> openSet) {
 
-    //TODO reset all set costs
+        for (LocationNode node: closedSet) {
 
-
+            node.setfScore(Double.POSITIVE_INFINITY);
+            node.setgScore(Double.POSITIVE_INFINITY);
+            node.setCameFrom(null);
+        }
+    }
 
     //Comparator anonymous class implementation
     public static Comparator<LocationNode> fComparator = new Comparator<LocationNode>(){

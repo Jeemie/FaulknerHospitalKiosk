@@ -91,6 +91,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         this.associatedImage = associatedImage;
         this.edges = new ArrayList<>();
         this.destinations = new ArrayList<>();
+        this.fScore = Double.POSITIVE_INFINITY;
+        this.gScore = Double.POSITIVE_INFINITY;
 
         this.addObserver(this.currentFloor);
 
