@@ -70,7 +70,7 @@ public class LocationNodeEdgeTest {
     public void testEdgeExistsTrue() {
 
         Assert.assertTrue(mEdge3.edgeExists(mNode1, mNode4));
-        Assert.assertTrue(mEdge3.edgeExists(mNode4, mNode5));
+        Assert.assertTrue(mEdge3.edgeExists(mNode4, mNode1));
 
     }
 
