@@ -139,6 +139,16 @@ public class Floor extends Observable implements Observer {
     }
 
 
+    public void removeLocationNode(LocationNode locationNode) {
+
+
+        this.locationNodes.remove(locationNode);
+        locationNode.deleteLocationNodeEdgeConnections();
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
+    }
+
     public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
 
 

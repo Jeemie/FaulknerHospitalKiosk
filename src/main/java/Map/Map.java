@@ -1,10 +1,10 @@
 package Map;
 
+import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -70,10 +70,15 @@ public class Map implements Observer {
     private ObservableList<Destination> currentBuildingDestinations;
 
 
-
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
+
+    /**
+     * TODO
+     *
+     * @param name
+     */
     public Map(String name) {
 
         this.name = name;
@@ -113,13 +118,50 @@ public class Map implements Observer {
 
 
     public void addFloor(String name, ImageType imageType) {
-        
+
+        if (this.currentBuilding == null) {
+
+            LOGGER.debug("Floor could not be added because the currentBuilding was null");
+
+            return;
+        }
+
+        this.currentBuilding.addFloor(name, imageType);
 
     }
 
-    public void addLocatioNode(String name, Location location, ImageType imageType) {
+    public void addLocationNode(String name, Location location, ImageType imageType) {
 
-        this.currentFloor.addLocationNode();
+        if (this.currentFloor == null) {
+
+            LOGGER.debug("LocationNode could not be added because the currentFloor was null");
+
+            return;
+        }
+
+        this.currentFloor.addLocationNode(name, location, imageType);
+
+    }
+
+    public void addDestination(String name, DestinationType destinationType) {
+
+        if (this.currentLocationNode == null) {
+
+            LOGGER.debug("Destination could not be added because the currentLocationNode was null");
+
+            return;
+        }
+
+        this.currentLocationNode.addDestination(name, destinationType);
+
+    }
+
+    public void removeLocationNode() {
+
+        // TODO add null checks
+
+
+        this.currentFloor.removeLocationNode(this.currentLocationNode);
 
     }
 
@@ -149,7 +191,7 @@ public class Map implements Observer {
         // Check to see if the argument is null
         if (arg == null) {
 
-            LOGGER.debug("Observer was updated but the argument was null: ", arg);
+            LOGGER.debug("Observer was updated but the argument was null");
 
             return;
         }
@@ -196,6 +238,14 @@ public class Map implements Observer {
             case FLOORADDED:
 
                 // TODO
+                break;
+
+
+            case LOCATIONNODEREMOVED:
+
+                this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+                this.currentLocationNode = null;
+
                 break;
 
 
