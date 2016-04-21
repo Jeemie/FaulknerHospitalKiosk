@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +60,52 @@ public class AdminLoginController {
 
             }
 
+        });
+
+        this.adminPasswordField.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    LOGGER.info("Attempting to login");
+
+                    if (adminPasswordField.getText().equals("password") && adminUsernameTextField.getText().equals("Admin")) {
+
+                        LOGGER.info("Logging in");
+
+                        kioskApp.showAdminControls();
+
+                    } else {
+
+                        LOGGER.info("Incorrect Username or Password");
+
+                    }
+                }
+            }
+        });
+
+        this.adminUsernameTextField.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    LOGGER.info("Attempting to login");
+
+                    if (adminPasswordField.getText().equals("password") && adminUsernameTextField.getText().equals("Admin")) {
+
+                        LOGGER.info("Logging in");
+
+                        kioskApp.showAdminControls();
+
+                    } else {
+
+                        LOGGER.info("Incorrect Username or Password");
+
+                    }
+                }
+            }
         });
 
         this.cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

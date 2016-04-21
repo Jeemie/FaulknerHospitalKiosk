@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Controller for the admin dashboard view
@@ -38,6 +42,10 @@ public class AdminDashboardController {
 
     @FXML
     private ScrollPane mapScrollPane;
+
+    @FXML
+    private SplitPane aSplitPane;
+
 
     @FXML
     private Label alabel;
@@ -205,12 +213,13 @@ public class AdminDashboardController {
         setLocationTabListeners();
         deleteThis();
 
+
     }
 
     private void deleteThis() {
 
 
-        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
+        //this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
 
         try {
             LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
@@ -417,6 +426,19 @@ public class AdminDashboardController {
 
         });
 
+        aSplitPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                building.addFloorsToListView(buildingFloorsListView);
+                building.getCurrentFloor().addLocationToListView(floorLocationsListView);
+                building.addBuildingDestinationsToListView(buildingDestinationsListView);
+                building.getCurrentFloor().addDestinationsToListView(floorDestinationsListView);
+                building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
+                building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+            }
+        });
+
+
         this.buildingFloorsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -428,21 +450,23 @@ public class AdminDashboardController {
 
                     building.addFloorsToListView(buildingFloorsListView);
 
+
                 }
 
             }
 
         });
 
-        this.buildingFloorsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            this.buildingFloorsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
                 ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
                 building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                //building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                //building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
             }
 
         });
@@ -691,7 +715,6 @@ public class AdminDashboardController {
 
         });
     }
-
 
 
 
