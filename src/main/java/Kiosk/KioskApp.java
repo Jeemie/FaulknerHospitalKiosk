@@ -27,8 +27,8 @@ public class KioskApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    protected Map faulknerMap;
-    private Building hospitalBuilding;
+    protected Map faulknerHospitalMap;
+//    private Building hospitalBuilding;
     private LocationNode startNode;
     private URL filePath;
 
@@ -40,32 +40,32 @@ public class KioskApp extends Application {
 
         this.primaryStage = primaryStage;
 
-        this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
-        try {
-
-            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
-
-        } catch (DefaultFileDoesNotExistException e) {
-            // Create new default file
-            try {
-
-                File newFile = new File(this.filePath.toURI());
-                newFile.createNewFile();
-
-            } catch (URISyntaxException exception) {
-
-                exception.printStackTrace();
-
-            } catch (IOException exception) {
-
-                exception.printStackTrace();
-
-            }
-
-        }
-
-
-        this.hospitalBuilding = Map.initMapComponents(this.hospitalBuilding);
+//        this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+//        try {
+//
+//            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+//
+//        } catch (DefaultFileDoesNotExistException e) {
+//            // Create new default file
+//            try {
+//
+//                File newFile = new File(this.filePath.toURI());
+//                newFile.createNewFile();
+//
+//            } catch (URISyntaxException exception) {
+//
+//                exception.printStackTrace();
+//
+//            } catch (IOException exception) {
+//
+//                exception.printStackTrace();
+//
+//            }
+//
+//        }
+//
+//
+//        this.hospitalBuilding = Map.initMapComponents(this.hospitalBuilding);
 
 
         this.primaryStage.setTitle("Pathfinding Application");
@@ -138,6 +138,7 @@ public class KioskApp extends Application {
      * 
      */
     public boolean showAdminLogin() {
+
         try {
             // Load AdminLogin
             FXMLLoader loader = new FXMLLoader();
@@ -188,7 +189,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
+//            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
 //            return controller.isOkClicked();
@@ -227,7 +228,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
+//            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
             return controller.isOkClicked();
@@ -266,7 +267,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(hospitalBuilding);
+//            controller.setBuilding(hospitalBuilding);
             controller.setStartNode(startNode);
 
             //set the selected directory view to appear
@@ -307,7 +308,7 @@ public class KioskApp extends Application {
             MapViewController controller = loader.getController();
 
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
+//            controller.setBuilding(this.hospitalBuilding);
             controller.setStartNode(startNode);
             controller.setDestinationNode(destinationNode);
 

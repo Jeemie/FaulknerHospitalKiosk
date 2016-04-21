@@ -1,5 +1,6 @@
 package Map.Exceptions;
 
+
 import Map.LocationNode;
 
 /**

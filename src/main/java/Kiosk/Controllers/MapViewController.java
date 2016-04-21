@@ -124,7 +124,7 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 counter = 0;
-                mMainHost.drawShortestPath(startNode, destinationNode);
+//                mMainHost.drawShortestPath(startNode, destinationNode);
 
             }
 
@@ -155,14 +155,14 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 getCounterFloor--;
-                try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
-                    if(counter<1){
-                        counter =1;
-                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+//                    if(counter<1){
+//                        counter =1;
+//                    }
+//                } catch (FloorDoesNotExistException e) {
+//                    e.printStackTrace();
+//                }
                 System.out.println(getCounterFloor);
 
             }
@@ -199,14 +199,14 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
                 getCounterFloor++;
-                try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
-                    if(counter>4){
-                        counter =4;
-                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+//                    if(counter>4){
+//                        counter =4;
+//                    }
+//                } catch (FloorDoesNotExistException e) {
+//                    e.printStackTrace();
+//                }
                 System.out.println(getCounterFloor);
                // building.drawShortestPath(startNode, destinationNode);
 
@@ -279,7 +279,7 @@ public class MapViewController {
         running = false;
         //timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+//        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
     }
 
     public void setStartNode(LocationNode startNode) {
