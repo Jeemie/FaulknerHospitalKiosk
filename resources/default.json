@@ -1,1 +1,8 @@
-{}
+{
+  "uniqueID" : "3f130fea-79f9-4df6-b334-553907643db1",
+  "name" : "Faulkner Hospital",
+  "mapBuildings" : [ ],
+  "currentLocationNode" : null,
+  "currentFloor" : null,
+  "currentBuilding" : null
+}

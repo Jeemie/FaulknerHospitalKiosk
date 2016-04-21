@@ -63,6 +63,7 @@ public class Floor extends Observable implements Observer {
     //
     private ArrayList<LocationNode> locationNodes;
 
+    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class);
 

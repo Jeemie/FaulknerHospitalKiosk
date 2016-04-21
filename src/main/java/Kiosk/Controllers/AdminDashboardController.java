@@ -16,6 +16,10 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -290,39 +294,35 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                // TODO Added saving
-
                 LOGGER.info("Attempting to save changes to the map");
 
 
-//                try {
-//                    /**
-//                     *
-//                     *This is for OSx use this while testing.
-//                     *
-//                     *this.savefilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
-//                     */
-//                    this.saveFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                }
-//
-//
-//                try {
-//
-//                    building.saveToFile(saveFilePath);
-//
-//                    LOGGER.info("Changes were saved");
-//
-//                } catch (IOException e) {
-//
-//                    LOGGER.error("An error occurred while saving changes to the map", e);
-//
-//                } catch (URISyntaxException e) {
-//
-//                    LOGGER.error("An error occurred while saving changes to the map", e);
-//
-//                }
+                try {
+
+                    this.saveFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
+                } catch (MalformedURLException e) {
+
+                    e.printStackTrace();
+                }
+
+               try {
+
+                   File saveFile = new File(saveFilePath.toURI());
+
+                   faulknerHospitalMap.saveToFile(saveFile);
+
+                    LOGGER.info("Changes were saved");
+
+              } catch (IOException e) {
+
+                   LOGGER.error("An error occurred while saving changes to the map", e);
+
+              } catch (URISyntaxException e) {
+
+                   LOGGER.error("An error occurred while saving changes to the map", e);
+
+                }
 
             }
 

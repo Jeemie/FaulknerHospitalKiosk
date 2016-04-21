@@ -5,9 +5,7 @@ import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +25,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Map.class)
 public class Map implements Observer {
 
     // Unique ID for this Map
@@ -42,12 +41,14 @@ public class Map implements Observer {
     //
     private LocationNode currentLocationNode;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<Destination> currentLocationNodeDestinations;
 
 
@@ -56,24 +57,29 @@ public class Map implements Observer {
     //
     private Floor currentFloor;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<LocationNode> currentFloorLocatioNodes;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<Destination> currentFloorDestinations;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private Pane currentFloorLocationNodePane;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private Pane currentFloorEdgePane;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ImageView currentFloorImage;
 
 
@@ -82,16 +88,19 @@ public class Map implements Observer {
     //
     private Building currentBuilding;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<Floor> currentBuildingFloors;
 
-    @JsonIgnore
+
     //
+    @JsonIgnore
     private ObservableList<Destination> currentBuildingDestinations;
 
-    @JsonIgnore
+
     // Logger for this class
+    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
     /**

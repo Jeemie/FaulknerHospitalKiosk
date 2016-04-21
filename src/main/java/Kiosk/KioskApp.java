@@ -97,8 +97,12 @@ public class KioskApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-//            System.out.println(getClass().getResource("stylesheet.css"));
+
+            // Debugger works better when full screen is off
+            primaryStage.setFullScreen(false);
+            //primaryStage.setFullScreen(true);
+//
+//          System.out.println(getClass().getResource("stylesheet.css"));
 //            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {

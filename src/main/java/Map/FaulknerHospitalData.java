@@ -1,32 +1,36 @@
-/*
+
 package Map;
 
-*/
+
+import Map.Enums.ImageType;
+import Map.Exceptions.FloorDoesNotExistException;
+
 /**
  * Created by maryannoconnell on 4/21/16.
- *//*
+ */
 
 public class FaulknerHospitalData {
 
-
-    */
-/**
+    /**
+     * // TODO refactor - currently used to create any empty building
      * Data for starter map
-     * @return
-     *//*
+     */
 
-    public static Building starterMap() throws FloorDoesNotExistException {
-        Building mMainHospital = new Building();
+    public static Map starterMap(Map map) throws FloorDoesNotExistException {
 
-        mMainHospital = new Building();
+        // Add main hospital building to map
+        map.addBuilding("Faulkner Hospital");
+
+        // Get newly added main hospital building for use with manual data entry
+        Building mMainHospital = map.getMapBuildings().get(0);
 
         // Floors
-        mMainHospital.addFloor(1, "Floor1_Final.png");
-        mMainHospital.addFloor(2, "Floor2_Final.png");
-        mMainHospital.addFloor(3, "Floor3_Final.png");
-        mMainHospital.addFloor(4, "Floor4_Final.png");
+        mMainHospital.addFloor("Floor 1", ImageType.FLOOR);
+        mMainHospital.addFloor("Floor 2", ImageType.FLOOR);
+        mMainHospital.addFloor("Floor 3", ImageType.FLOOR);
+        mMainHospital.addFloor("Floor 4", ImageType.FLOOR);
 
-
+/*
         //FLOOR 1
         mMainHospital.getFloor(1).addNode(new Location(10, 10)); //get(0) Audiology
         mMainHospital.getFloor(1).addNode(new Location(20, 20)); //get(1) Cardiac
@@ -369,10 +373,12 @@ public class FaulknerHospitalData {
         mMainHospital.getFloor(4).getLocationNodes().get(21).addDestination(Destination.ELEVATOR, "Hillside Elevator");
         mMainHospital.getFloor(4).getLocationNodes().get(22).addDestination(Destination.ELEVATOR, "Atrium Elevator");
 
-        return mMainHospital;
+
+    */
+
+         return map;
     }
-    *//*
 
 
 }
-*/
+
