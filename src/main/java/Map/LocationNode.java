@@ -46,6 +46,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     //
     private ArrayList<Destination> destinations;
 
+    // Variables for Dijkstra's and A* search:
+
     @JsonIgnore
     // the cost of getting from the start node to this node - changes during shortest path search
     private double gScore;
