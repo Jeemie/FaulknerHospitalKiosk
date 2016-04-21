@@ -7,10 +7,7 @@ import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -34,7 +31,11 @@ public class MapViewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
     @FXML
+    private Label currentFloorLabel;
+
+    @FXML
     private TextField searchTextBox;
+
     @FXML
     private StackPane imageStackPane;
 
@@ -130,6 +131,8 @@ public class MapViewController {
 
         });
 
+        currentFloorLabel.setText(String.valueOf(getCounterFloor));
+
 
         searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -155,6 +158,9 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 getCounterFloor--;
+                if (getCounterFloor >= 1) {
+                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
+                } else { getCounterFloor = 1;}
                 try {
                     mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
                     if(counter<1){
@@ -199,6 +205,9 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
                 getCounterFloor++;
+                if (getCounterFloor <= 7) {
+                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
+                } else {getCounterFloor = 7;}
                 try {
                     mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
                     if(counter>4){

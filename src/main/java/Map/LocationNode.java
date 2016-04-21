@@ -34,6 +34,12 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
     @JsonIgnore
     public double minDistance = Double.POSITIVE_INFINITY;
     @JsonIgnore
+    private double gScore;  // Cost of path from the start node to last node on path
+    @JsonIgnore
+    private double fScore;  // Total cost of getting from the start to the destination. Partly known, partly heuristic.
+    @JsonIgnore
+    private LocationNode cameFrom;
+    @JsonIgnore
     private static NodeObserver observer = new NodeObserver(); // Observer Object watching all LocationNode objects
     @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class); // Logger for this class
@@ -67,6 +73,9 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         this.currentFloor = currentFloor;
         this.adjacentLines = new ArrayList<>();
         this.nodeCircle = new Circle(this.location.getX(), this.location.getY(), 5.0);
+        this.fScore = Double.POSITIVE_INFINITY;
+        this.gScore = Double.POSITIVE_INFINITY;
+        this.cameFrom = null;
 
         observer.observeNode(this);  //starts observing new LocationNode object
 
@@ -525,7 +534,29 @@ public class LocationNode extends Observable implements Comparable<LocationNode>
         listView.setItems(ObservedLocation);
     }
 
+    public double getGscore() {
+        return gScore;
+    }
 
+    public void setGscore(double gScore) {
+        this.gScore = gScore;
+    }
+
+    public double getFscore() {
+        return fScore;
+    }
+
+    public void setFscore(double fScore) {
+        this.fScore = fScore;
+    }
+
+    public LocationNode getCameFrom() {
+        return cameFrom;
+    }
+
+    public void setCameFrom(LocationNode cameFrom) {
+        this.cameFrom = cameFrom;
+    }
     public Circle getNodeCircle() {
 
         return nodeCircle;
