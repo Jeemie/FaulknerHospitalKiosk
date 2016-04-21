@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,6 @@ public class DirectoryController {
 
     private Building building;
     private LocationNode startNode;
-//    private LocationNode destinationNode;
 
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
@@ -107,26 +107,30 @@ public class DirectoryController {
             @Override
             public void handle(MouseEvent event) {
 
-                if (event.getClickCount() == 2) {
-                    ArrayList<Floor> floors = building.getFloors();
+                // Double Clicking!
+                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (event.getClickCount() == 2) {
 
-                    for (Floor f : floors) {
+                        // Array of all the floors so we can check each floor for the directory selection.
+                        ArrayList<Floor> floors = building.getFloors();
 
-                        ArrayList<LocationNode> nodes = f.getFloorNodes();
+                        // These for loops will index through all available floor  and all availible LocationNodes
+                        // to see which floor the selection is stored
+                        for (Floor f : floors) {
+                            ArrayList<LocationNode> nodes = f.getFloorNodes();
+                            for (LocationNode n : nodes) {
 
-                        for (LocationNode n : nodes) {
+                                // This statement is called when we find the node which corresponds to the selection
+                                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
-                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+                                    timer.cancel();
+                                    running = false;
+                                    timerThread.interrupt();
+                                    kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
 
-                                timer.cancel();
-                                running = false;
-                                timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
-
+                                }
                             }
-
                         }
-
                     }
                 }
             }
@@ -195,28 +199,12 @@ public class DirectoryController {
      */
     @FXML
     private void handlePhysicians() {
-//        currentNames.setAll (
-//                "Byrne, Jennifer, RN, CPNP",
-//                "Dann, Harriet, MD",
-//                "Frangieh, George, MD",
-//                "Greenberg, James Adam, MD",
-//                "Grossi, Lisa, RN, MS, CPNP",
-//                "Keller, Elisabeth, MD",
-//                "Malone, Linda, DNP, RN, CPNP",
-//                "Micley, Bruce, MD",
-//                "Miner, Julie, MD",
-//                "Morrison, Beverly, MD",
-//                "Nadarajah, Sarah, WHNP",
-//                "O'Connor, Elizabeth, MD",
-//                "Patten, James, MD",
-//                "Saluti, Andrew, DO",
-//                "Scheff, David, MD",
-//                "Smith, Shannon, MD",
-//                "Stacks, Robert, MD",
-//                "Tunick, Mitchell, MD",
-//                "Viola, Julianne, MD");
+
         counter = 0;
-        currentNames.setAll(building.getDestinations(DestinationType.PHYSICIAN));
+
+        //Removes previous listings and sorts the list of Care Providers.
+        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
 
     }
@@ -227,22 +215,11 @@ public class DirectoryController {
      */
     @FXML
     private void handleDepartments() {
-//        currentNames.setAll (
-//                "Audiology ",
-//                "Cardiac Rehabilitation",
-//                "Center for Preoperative Evaluation",
-//                "Emergency Department",
-//                "Eye Care Specialists ",
-//                "GI Endoscopy",
-//                "Laboratory",
-//                "Obstetrics and Gynecology Associates",
-//                "Patient Financial Services",
-//                "Radiology",
-//                "Roslindale Pediatric Associates ",
-//                "Suburban Eye Specialists ",
-//                "Taiclet Family Center");
         counter = 0;
-        currentNames.setAll(building.getDestinations(DestinationType.DEPARTMENT));
+
+        //Removes previous listings and sorts the list of Care Providers.
+        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
 
     }
@@ -253,26 +230,11 @@ public class DirectoryController {
      */
     @FXML
     private void handleServices() {
-//        currentNames.setAll (
-//                "Admitting/Registration",
-//                "ATM",
-//                "Atrium Café",
-//                "Atrium Elevators",
-//                "Atrium/Main Entrance",
-//                "Cafeteria",
-//                "Chapel and Chaplaincy Services",
-//                "Day Surgery",
-//                "Gift Shop",
-//                "Hillside Elevators",
-//                "Information",
-//                "Kiosk Location",
-//                "Patient Registration",
-//                "Patient Relations",
-//                "Starbucks",
-//                "Valet Parking",
-//                "Volunteer Services");
         counter = 0;
-        currentNames.setAll(building.getDestinations());
+
+        //Removes previous listings and sorts the list of Departments.
+        currentNames.setAll(building.getDestinations(Destination.SERVICE));
+        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
     }
 
@@ -306,12 +268,15 @@ public class DirectoryController {
 
         ArrayList<Floor> floors = building.getFloors();
 
+        // These for loops will index through all available floor to see which floor the double clicked
+        // selection is stored
         for (Floor f : floors) {
 
             ArrayList<LocationNode> nodes = f.getFloorNodes();
 
             for (LocationNode n : nodes) {
 
+                // This statement is called when we find the node which corresponds to the selection
                 if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
 
                     timer.cancel();
@@ -324,33 +289,50 @@ public class DirectoryController {
             }
 
         }
-
     }
 
-    public void setList(DestinationType destinationTypeType) {
+    public void setList(Destination destinationType) {
 
-        switch (destinationTypeType) {
+        switch (destinationType) {
 
             case PHYSICIAN:
+
                 counter = 0;
-                currentNames.setAll(building.getDestinations(DestinationType.PHYSICIAN));
+
+                //Removes previous listings and sorts the list of Care Providers.
+                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
+                break;
 
             case DEPARTMENT:
+
                 counter = 0;
-                currentNames.setAll(building.getDestinations(DestinationType.DEPARTMENT));
+
+                //Removes previous listings and sorts the list of Departments
+                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
+                break;
 
             case SERVICE:
+
                 counter = 0;
-                currentNames.setAll(building.getDestinations(DestinationType.SERVICE));
+
+                //Removes previous listings and sorts the list of Services
+                currentNames.setAll(building.getDestinations(Destination.SERVICE));
+                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
                 listDirectory.setItems(currentNames);
+                break;
 
             default:
-                counter = 0;
-                currentNames.setAll(building.getDestinations());
-                listDirectory.setItems(currentNames);
 
+                counter = 0;
+
+                //Removes previous listings and sorts the list all destinations
+                currentNames.setAll(building.getDestinations());
+                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
+                listDirectory.setItems(currentNames);
         }
 
     }

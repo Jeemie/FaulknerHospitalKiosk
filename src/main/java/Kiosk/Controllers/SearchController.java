@@ -4,6 +4,7 @@ import Map.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
@@ -11,11 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.xml.ws.handler.Handler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import java.util.stream.Collectors;
 
@@ -282,33 +287,33 @@ public class SearchController {
     }
 
     @FXML
-    public void sortResult(DestinationType destinationTypeType) {
+    public void sortResult(Destination destinationType) {
 
 
-        if (destinationTypeType == DestinationType.PHYSICIAN) {
+        if (destinationType == Destination.PHYSICIAN) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.PHYSICIAN));
+            destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
         }
 
-        if (destinationTypeType == DestinationType.DEPARTMENT) {
+        if (destinationType == Destination.DEPARTMENT) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.DEPARTMENT));
+            destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
         }
 
-        if (destinationTypeType == DestinationType.SERVICE) {
+        if (destinationType == Destination.SERVICE) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.SERVICE));
+            destinations.setAll(building.getDestinations(Destination.SERVICE));
             searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
@@ -320,21 +325,21 @@ public class SearchController {
     @FXML
     private void sortPhysicians() {
 
-        sortResult(DestinationType.PHYSICIAN);
+        sortResult(Destination.PHYSICIAN);
 
     }
 
     @FXML
     private void sortDepartments() {
 
-        sortResult(DestinationType.DEPARTMENT);
+        sortResult(Destination.DEPARTMENT);
 
     }
 
     @FXML
     private void sortServices() {
 
-        sortResult(DestinationType.SERVICE);
+        sortResult(Destination.SERVICE);
 
     }
 }

@@ -1,7 +1,7 @@
 package Kiosk.Controllers.EventHandlers;
 
 import Map.Building;
-import Map.Enums.BuildingState;
+import Map.BuildingState;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;

@@ -6,12 +6,12 @@ import Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader;
 import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.*;
-import Map.Enums.BuildingState;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -210,11 +210,11 @@ public class AdminDashboardController {
     private void deleteThis() {
 
 
-        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(DestinationType.BATHROOM,"triet");
+        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
 
         try {
             LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
-            node3A.addDestination(DestinationType.KIOSK, "Kiosk3");
+            node3A.addDestination(Destination.KIOSK, "Kiosk3");
         } catch (FloorDoesNotExistException e) {
             e.printStackTrace();
         }
@@ -666,13 +666,13 @@ public class AdminDashboardController {
         });
 
         locationDestinationsAddButton.setOnAction(event -> {
-            alabel.setText("Add DestinationType Button");
+            alabel.setText("Add Destination Button");
             this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
         });
 
         locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
-            alabel.setText("Delete DestinationType Button");
+            alabel.setText("Delete Destination Button");
             this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
         });
 
