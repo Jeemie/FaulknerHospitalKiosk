@@ -1,14 +1,15 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Enums.DestinationType;
+import Map.Destination;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class KioskOverviewController {
 
@@ -16,9 +17,15 @@ public class KioskOverviewController {
     // Reference to the main application.
     private KioskApp kioskApp;
 
+    private KeyCombination adminHotkey = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
     @FXML
     private TextField searchTextBox;
 
+    private int counter;
+
+    @FXML
+    private Label dontTouchMe;
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -36,17 +43,41 @@ public class KioskOverviewController {
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
                     kioskApp.showSearch(searchTextBox.getText());
 
                 }
+                if (event.getCode().equals(KeyCode.INSERT)) {
+
+                    kioskApp.showAdminLogin();
+
+                }
+                if (adminHotkey.match(event)) {
+
+                    kioskApp.showAdminLogin();
+
+                }
+
 
             }
 
+
         });
 
+        searchTextBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter +=1 ;
+
+                if (counter == 10){
+
+                    dontTouchMe.setText("Fuck youuu");
+                }
+            }
+        });
     }
 
     /**
@@ -72,7 +103,12 @@ public class KioskOverviewController {
      */
     @FXML
     private void handlePhysicians() {
-        kioskApp.showDirectory(DestinationType.PHYSICIAN);
+
+
+
+
+
+//        kioskApp.showDirectory(Destination.PHYSICIAN);
     }
 
 
@@ -82,7 +118,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-        kioskApp.showDirectory(DestinationType.DEPARTMENT);
+//        kioskApp.showDirectory(Destination.DEPARTMENT);
     }
 
     /**
@@ -91,7 +127,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-        kioskApp.showDirectory(DestinationType.SERVICE);
+//        kioskApp.showDirectory(Destination.SERVICE);
     }
 
 

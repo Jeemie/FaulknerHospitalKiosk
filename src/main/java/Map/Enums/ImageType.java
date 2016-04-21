@@ -1,6 +1,7 @@
 package Map.Enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 /**
  * TODO
@@ -13,7 +14,8 @@ public enum ImageType {
     STAIRS(""),
     ELEVATOR(""),
     WAITINGROOM(""),
-    FLOOR("");
+    FLOOR(""),
+    SERVICE("");
 
     private String resourceFileName;
 

@@ -9,7 +9,9 @@ import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Map.Enums.ImageType;
 import Map.Exceptions.NodeDoesNotExistException;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -21,10 +23,8 @@ import java.util.*;
 
 import static Map.Enums.CardinalDirection.*;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=LocationNode.class)
 public class LocationNode extends Observable implements Observer, Comparable<LocationNode> {
-
-    //
-    private double heuristicCost;
 
     // Name of this node
     private String name;
@@ -38,13 +38,13 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Floor this node is located on
     private Floor currentFloor;
 
-    //
+    // Type of image icon to display with this
     private ImageType associatedImage;
 
-    //
+    // Edges from this node to adjacent nodes
     private ArrayList<LocationNodeEdge> edges;
 
-    //
+    // Destinations at this node
     private ArrayList<Destination> destinations;
 
     // Variables for Dijkstra's and A* search:
@@ -61,7 +61,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // the node this node came from - changes during shortest path search
     private LocationNode cameFrom;
 
-    //
     @JsonIgnore
     private Image currentImage;
 
@@ -84,7 +83,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public LocationNode(String name, Location location, Floor currentFloor, ImageType associatedImage) {
 
-        this.heuristicCost = 0;
         this.name = name;
         this.uniqueID = UUID.randomUUID();
         this.location = location;
@@ -97,16 +95,19 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.addObserver(this.currentFloor);
 
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEADDED);
     }
 
     /**
-     * Add a destination to this node
+     * TODO
      *
-     * @param destination
+     * @param destinationType
+     * @param name
      */
-    public void addDestination(Destination destination) {
+    public void addDestination(DestinationType destinationType, String name) {
 
-        this.destinations.add(destination);
+        this.destinations.add(new Destination(name, destinationType, this));
 
         setChanged();
         notifyObservers(UpdateType.DESTINATIONCHANGE);
@@ -252,16 +253,43 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+
+    public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
+
+        locationNodePane.getChildren().remove(this.imageLabel);
+
+        for (LocationNodeEdge edge : this.edges) {
+
+            edge.undrawEdge(locationNodeEdgePane);
+
+        }
+
+
+        this.imageLabel = null;
+        this.currentImage = null;
+    }
+
     /**
-     * Notify observers to remove this node from the list
+     * TODO - please fix; fails testDeleteLocationNodeEdgeConnections(); The edge list is not empty after this runs
      */
-    public void deleteNode() {
+    public void deleteLocationNodeEdgeConnections() {
 
-        setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
+        for (LocationNodeEdge edge : this.edges) {
 
-        return;
+            edge.getOtherNode(this).removeEdgeConnection(edge);
 
+        }
+
+    }
+
+    /**
+     * TODO
+     *
+     * @param edge
+     */
+    public void removeEdgeConnection(LocationNodeEdge edge) {
+
+        this.edges.remove(edge);
     }
 
     /**
@@ -387,6 +415,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         return location;
     }
 
+    @JsonGetter
     public ArrayList<LocationNodeEdge> getEdges() {
 
         return edges;
@@ -412,6 +441,30 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         setChanged();
         notifyObservers(arg);
+    }
+
+    @JsonGetter
+    public String getName() {
+
+        return name;
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public Floor getCurrentFloor() {
+
+        return currentFloor;
+    }
+
+    @JsonGetter
+    public ImageType getAssociatedImage() {
+
+        return associatedImage;
     }
 
     public double getfScore() {

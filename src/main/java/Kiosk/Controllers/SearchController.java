@@ -4,6 +4,7 @@ import Map.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Kiosk.KioskApp;
@@ -11,11 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.xml.ws.handler.Handler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import java.util.stream.Collectors;
 
@@ -115,28 +120,28 @@ public class SearchController {
             @Override
             public void handle(MouseEvent event) {
 
-                if(event.getClickCount() == 2) {
-                    ArrayList<Floor> floors = building.getFloors();
-
-                    for (Floor f : floors) {
-
-                        ArrayList<LocationNode> nodes = f.getFloorNodes();
-
-                        for (LocationNode n : nodes) {
-
-                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                                timer.cancel();
-                                running = false;
-                                timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
-
-                            }
-
-                        }
-
-                    }
-                }
+//                if(event.getClickCount() == 2) {
+//                    ArrayList<Floor> floors = building.getFloors();
+//
+//                    for (Floor f : floors) {
+//
+//                        ArrayList<LocationNode> nodes = f.getFloorNodes();
+//
+//                        for (LocationNode n : nodes) {
+//
+//                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                                timer.cancel();
+//                                running = false;
+//                                timerThread.interrupt();
+//                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
+//
+//                            }
+//
+//                        }
+//
+//                    }
+//                }
             }
 
         });
@@ -241,34 +246,34 @@ public class SearchController {
     @FXML
     private void handleForward() {
 
-        ArrayList<Floor> floors = building.getFloors();
-
-        for (Floor f : floors) {
-
-            ArrayList<LocationNode> nodes = f.getFloorNodes();
-
-            for (LocationNode n : nodes) {
-
-                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                    timer.cancel();
-                    atimer.cancel();
-                    running = false;
-                    timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
-
-                }
-
-            }
-
-        }
+//        ArrayList<Floor> floors = building.getFloors();
+//
+//        for (Floor f : floors) {
+//
+//            ArrayList<LocationNode> nodes = f.getFloorNodes();
+//
+//            for (LocationNode n : nodes) {
+//
+//                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                    timer.cancel();
+//                    atimer.cancel();
+//                    running = false;
+//                    timerThread.interrupt();
+//                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+//
+//                }
+//
+//            }
+//
+//        }
 
     }
 
     @FXML
     public void displayResult(String value) {
 
-        destinations.setAll(building.getDestinations());
+//        destinations.setAll(building.getDestinations());
 
         searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
 
@@ -282,59 +287,59 @@ public class SearchController {
     }
 
     @FXML
-    public void sortResult(DestinationType destinationTypeType) {
+    public void sortResult(Destination destinationType) {
 
 
-        if (destinationTypeType == DestinationType.PHYSICIAN) {
-
-            counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.PHYSICIAN));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
-            listDirectory.setItems(searchResults);
-
-        }
-
-        if (destinationTypeType == DestinationType.DEPARTMENT) {
-
-            counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.DEPARTMENT));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
-            listDirectory.setItems(searchResults);
-
-        }
-
-        if (destinationTypeType == DestinationType.SERVICE) {
-
-            counter = 0;
-            destinations.setAll(building.getDestinations(DestinationType.SERVICE));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
-            listDirectory.setItems(searchResults);
-
-        }
+//        if (destinationType == Destination.PHYSICIAN) {
+//
+//            counter = 0;
+//            destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
+//            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+//            searchResults.setAll(searchResult);
+//            listDirectory.setItems(searchResults);
+//
+//        }
+//
+//        if (destinationType == Destination.DEPARTMENT) {
+//
+//            counter = 0;
+//            destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
+//            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+//            searchResults.setAll(searchResult);
+//            listDirectory.setItems(searchResults);
+//
+//        }
+//
+//        if (destinationType == Destination.SERVICE) {
+//
+//            counter = 0;
+//            destinations.setAll(building.getDestinations(Destination.SERVICE));
+//            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+//            searchResults.setAll(searchResult);
+//            listDirectory.setItems(searchResults);
+//
+//        }
 
     }
 
     @FXML
     private void sortPhysicians() {
 
-        sortResult(DestinationType.PHYSICIAN);
+//        sortResult(Destination.PHYSICIAN);
 
     }
 
     @FXML
     private void sortDepartments() {
 
-        sortResult(DestinationType.DEPARTMENT);
+//        sortResult(Destination.DEPARTMENT);
 
     }
 
     @FXML
     private void sortServices() {
 
-        sortResult(DestinationType.SERVICE);
+//        sortResult(Destination.SERVICE);
 
     }
 }

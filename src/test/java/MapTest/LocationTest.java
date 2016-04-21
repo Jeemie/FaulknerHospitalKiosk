@@ -30,10 +30,4 @@ public class LocationTest {
         assertEquals(testLocation1.getDistanceBetween(testLocation2), 10, 0.001);
     }
 
-
-
-
-
-
-
 }

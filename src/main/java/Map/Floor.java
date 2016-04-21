@@ -40,24 +40,30 @@ public class Floor extends Observable implements Observer {
     // The location that is currently selected
     private LocationNode currentlySelectedLocationNode;
 
+    @JsonIgnore
     //
     private ObservableList<LocationNode> currentlySelectedAdjacentLocationNodes;
 
+    @JsonIgnore
     //
     private ObservableList<String> currentlySelectedLocationNodeDestinatioms;
 
+    @JsonIgnore
     // The pane where all the location nodes exist
     private Pane locationNodePane;
 
+    @JsonIgnore
     // The pane where all the location node edges exist
     private Pane locationNodeEdgePane;
 
+    @JsonIgnore
     // The image of the floor
     private Image floorImage;
 
     // A list of location nodes which exists on teh floor
     private ArrayList<LocationNode> locationNodes;
 
+    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class);
 
@@ -86,7 +92,11 @@ public class Floor extends Observable implements Observer {
         this.currentBuilding = currentBuilding;
         this.locationNodePane = new Pane();
         this.locationNodeEdgePane = new Pane();
-        this.floorImage = new Image(this.getClass().getResource(imageType.getResourceFileName()).toString());
+        //TODO correct image loading
+        //this.floorImage = new Image(this.getClass().getResource(imageType.getResourceFileName()).toString());
+
+        // TODO delete - Temp fix for testing:
+        this.floorImage = null;
         this.locationNodes = new ArrayList<>();
 
         this.addObserver(this.currentBuilding);
@@ -172,6 +182,14 @@ public class Floor extends Observable implements Observer {
         return floorDestinations;
     }
 
+    public void removeLocationNode(LocationNode locationNode) {
+
+        this.locationNodes.remove(locationNode);
+        locationNode.deleteLocationNodeEdgeConnections();
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
+    }
 
     /* STUFF I ADDED PLZ REVIEW */
     /**
@@ -302,9 +320,20 @@ public class Floor extends Observable implements Observer {
         return locationNodeEdgePane;
     }
 
+
+    @JsonGetter
+    public String getFloorName() {
+        return floorName;
+    }
+
     @JsonGetter
     public UUID getUniqueID() {
         return uniqueID;
+    }
+
+    @JsonGetter
+    public ImageType getImageType() {
+        return imageType;
     }
 
     @JsonGetter
@@ -312,11 +341,14 @@ public class Floor extends Observable implements Observer {
         return currentBuilding;
     }
 
-    //TODO update
-    public void removeLocationNode(LocationNode node) {
+    @JsonGetter
+    public LocationNode getCurrentlySelectedLocationNode() {
+        return currentlySelectedLocationNode;
+    }
 
-        this.locationNodes.remove(node);
-
+    @JsonGetter
+    public ArrayList<LocationNode> getLocationNodes() {
+        return locationNodes;
     }
 
     @Override
@@ -343,5 +375,4 @@ getImagePath
 setImagePath
 
  */
-
 }
