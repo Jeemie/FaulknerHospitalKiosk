@@ -63,11 +63,6 @@ public class KioskApp extends Application {
                 File newFile = new File(this.filePath.toURI());
                 newFile.createNewFile();
 
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                // Add square brackets to newly created file
-                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString("{}");
-
                 this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
                 this.faulknerHospitalMap = FaulknerHospitalData.starterMap(this.faulknerHospitalMap);
 
