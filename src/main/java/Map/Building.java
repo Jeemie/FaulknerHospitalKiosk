@@ -47,6 +47,7 @@ public class Building extends Observable implements Observer {
      * Jackson Constructor
      */
     public Building() {
+
         super();
     }
 
