@@ -1,6 +1,7 @@
 package Map.Enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 /**
  * TODO

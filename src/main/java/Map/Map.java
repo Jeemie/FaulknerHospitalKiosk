@@ -3,6 +3,11 @@ package Map;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
+import Map.Exceptions.FloorDoesNotExistException;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
@@ -11,17 +16,21 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.UUID;
 
 public class Map implements Observer {
 
+    // Unique ID for this Map
+    private UUID uniqueID;
 
-    //
     private String name;
 
-    //
     private ArrayList<Building> mapBuildings;
 
 
@@ -30,9 +39,11 @@ public class Map implements Observer {
     //
     private LocationNode currentLocationNode;
 
+    @JsonIgnore
     //
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
+    @JsonIgnore
     //
     private ObservableList<Destination> currentLocationNodeDestinations;
 
@@ -42,18 +53,23 @@ public class Map implements Observer {
     //
     private Floor currentFloor;
 
+    @JsonIgnore
     //
     private ObservableList<LocationNode> currentFloorLocatioNodes;
 
+    @JsonIgnore
     //
     private ObservableList<Destination> currentFloorDestinations;
 
+    @JsonIgnore
     //
     private Pane currentFloorLocationNodePane;
 
+    @JsonIgnore
     //
     private Pane currentFloorEdgePane;
 
+    @JsonIgnore
     //
     private ImageView currentFloorImage;
 
@@ -63,24 +79,30 @@ public class Map implements Observer {
     //
     private Building currentBuilding;
 
+    @JsonIgnore
     //
     private ObservableList<Floor> currentBuildingFloors;
 
+    @JsonIgnore
     //
     private ObservableList<Destination> currentBuildingDestinations;
 
-
+    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
-
     /**
-     * TODO
-     *
-     * @param name
+     * Jackson Constructor
      */
+    public Map() {
+
+        super();
+        
+    }
+
     public Map(String name) {
 
+        this.uniqueID = UUID.randomUUID();
         this.name = name;
         this.mapBuildings = new ArrayList<>();
         this.currentLocationNode = null;
@@ -260,17 +282,66 @@ public class Map implements Observer {
 
     }
 
+    /**
+     * Save this map to a JSON file
+     * @param file The JSON file you want to save to
+     */
+    public void saveToFile(File file) throws IOException, URISyntaxException {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, this);
+        LOGGER.info("Saving the map to the file: " + file.toString());
 
+    }
 
+    /**
+     * Load a map from a JSON file
+     * @param file The JSON file you want to load from
+     */
+    public Map loadFromFile(File file) throws IOException, FloorDoesNotExistException {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        LOGGER.info("Loading the map from the file: " + file.toString());
 
+        return objectMapper.readValue(file, Map.class);
+    }
 
+    @JsonGetter
+    public UUID getUniqueID() {
 
+        return uniqueID;
+    }
 
+    @JsonGetter
+    public String getName() {
 
+        return name;
+    }
 
+    @JsonGetter
 
+    public ArrayList<Building> getMapBuildings() {
+        return mapBuildings;
+    }
+
+    @JsonGetter
+    public LocationNode getCurrentLocationNode() {
+
+        return currentLocationNode;
+    }
+
+    @JsonGetter
+    public Floor getCurrentFloor() {
+
+        return currentFloor;
+    }
+
+    @JsonGetter
+    public Building getCurrentBuilding() {
+
+        return currentBuilding;
+    }
 
     public ObservableList<LocationNode> getCurrentAdjacentLocationNodes() {
 

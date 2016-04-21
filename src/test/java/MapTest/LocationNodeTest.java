@@ -1,6 +1,7 @@
 package MapTest;
 
 import Map.*;
+import Map.Exceptions.NodeDoesNotExistException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,8 +64,8 @@ public class LocationNodeTest {
      * Add new kiosk destination to specified location, then remove kiosk destination
      */
     @Test
-    public void testAddRemoveDestinationKiosk() {
-        mNode3D.addDestination(Map.DestinationType.KIOSK, "Kiosk");
+    public void testAddRemoveDestinationKiosk()  throws NodeDoesNotExistException  {
+        mNode3D.addDestination(new Destination("Kiosk3", this, DestinationType.KIOSK);
         ArrayList<String> destinations = mNode3D.getDestinations(Map.DestinationType.KIOSK);
         Assert.assertEquals(destinations.contains("Kiosk"), true);
         mNode3D.removeDestination(Map.DestinationType.KIOSK, "Kiosk");
@@ -76,10 +77,10 @@ public class LocationNodeTest {
      * Add adjacent nodes
      */
     @Test
-    public void testAddAdjacentNodes() {
-        mNode3A.addAdjacentNode(mNode3B);
-        mNode3A.addAdjacentNode(mNode3C);
-        mNode3A.addAdjacentNode(mNode3D);
+    public void testAddAdjacentNodes() throws NodeDoesNotExistException {
+        mNode3A.addEdge(mNode3B);
+        mNode3A.addEdge(mNode3C);
+        mNode3A.addEdge(mNode3D);
         ArrayList<LocationNode> adjEyeCareNodes = mNode3A.getAdjacentLocationNodes();
         ArrayList<LocationNode> expectedVals = new ArrayList<>();
         expectedVals.add(mNode3B);
@@ -92,10 +93,10 @@ public class LocationNodeTest {
      * Remove an adjacent node
      */
     @Test
-    public void testRemoveAdjacentNode() {
-        mNode3A.addAdjacentNode(mNode3B);
-        mNode3A.addAdjacentNode(mNode3C);
-        mNode3A.addAdjacentNode(mNode3D);
+    public void testRemoveAdjacentNode() throws NodeDoesNotExistException {
+        mNode3A.addEdge(mNode3B);
+        mNode3A.addEdge(mNode3C);
+        mNode3A.addEdge(mNode3D);
         ArrayList<LocationNode> adjEyeCareNodes = mNode3A.getAdjacentLocationNodes();
         ArrayList<LocationNode> expectedVals = new ArrayList<>();
         expectedVals.add(mNode3B);
