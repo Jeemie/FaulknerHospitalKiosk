@@ -7,6 +7,7 @@ import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.LocationNode;
 import Map.Map;
+import Map.FaulknerHospitalData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -61,6 +62,12 @@ public class KioskApp extends Application {
                 File newFile = new File(this.filePath.toURI());
                 newFile.createNewFile();
 
+
+
+                this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
+                this.faulknerHospitalMap = FaulknerHospitalData.starterMap(this.faulknerHospitalMap);
+
+
             } catch (URISyntaxException exception) {
 
                 exception.printStackTrace();
@@ -69,6 +76,9 @@ public class KioskApp extends Application {
 
                 exception.printStackTrace();
 
+            } catch (FloorDoesNotExistException e1) {
+
+                e1.printStackTrace();
             }
         }
 
