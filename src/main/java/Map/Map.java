@@ -201,6 +201,7 @@ public class Map {
         mMainHospital.getFloor(1).getLocationNodes().get(13).addDestination(Destination.SERVICE, "Valet Parking");
 
         mMainHospital.getFloor(1).getLocationNodes().get(14).addDestination(Destination.KIOSK, "Kiosk");
+        (mMainHospital.getFloor(1)).setStartNode(mMainHospital.getFloor(1).getLocationNodes().get(14));
 
         mMainHospital.getFloor(1).getLocationNodes().get(15).addDestination(Destination.BATHROOM, "Floor 1 Bathroom");
 
