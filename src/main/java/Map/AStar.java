@@ -5,24 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static java.util.Collections.reverse;
+
 /**
  * TODO
  */
 public class AStar {
 
-    private final Building building; // The building that will be associated with the AStar search
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
-
-    /**
-     * TODO
-     *
-     * @param building
-     */
-    public AStar(Building building) {
-
-        this.building = building;
-
-    }
 
     /**
      * Determines the shortest path between a start node and destination node.
@@ -60,6 +50,8 @@ public class AStar {
             currentNode = openNodes.peek();
 
             if (currentNode.equals(destinationNode)) {
+
+                resetCosts(closedNodes, openNodes);
 
                 return reconstructPath(currentNode);
 
@@ -105,6 +97,7 @@ public class AStar {
             }
         }
 
+        resetCosts(closedNodes, openNodes);
         // Reconstructed path was not returned. No path exists
         throw new NoPathException(startNode, destinationNode);
 
@@ -112,6 +105,8 @@ public class AStar {
 
     /**
      * Reset F-costs, G-costs, and cameFrom for all nodes in closed and open node list
+     * @param closedSet  LocationNodes that have already been evaluated
+     * @param openSet Final node when path was found, or remaining nodes if node was not found
      */
     public static void resetCosts (ArrayList<LocationNode> closedSet, PriorityQueue<LocationNode> openSet) {
 
@@ -132,8 +127,11 @@ public class AStar {
         }
     };
 
-
-
+    /**
+     * Reconstruct the shortest path found by dijkstras()
+     * @param currentNode Current node is the goal node after the path was discovered
+     * @return List of location nodes in path
+     */
     public static ArrayList<LocationNode> reconstructPath(LocationNode currentNode) {
 
         ArrayList<LocationNode> total_path = new ArrayList<>();
@@ -145,7 +143,9 @@ public class AStar {
 
         }
 
-        // Path from destination to start
+        reverse(total_path);
+
+        // Path from start to destination
         return total_path;
     }
 
