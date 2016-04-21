@@ -95,16 +95,19 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.addObserver(this.currentFloor);
 
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEADDED);
     }
 
     /**
-     * Add a destination to this node
+     * TODO
      *
-     * @param destination
+     * @param name
+     * @param destinationType
      */
-    public void addDestination(Destination destination) {
+    public void addDestination(String name, DestinationType destinationType) {
 
-        this.destinations.add(destination);
+        this.destinations.add(new Destination(name, destinationType, this));
 
         setChanged();
         notifyObservers(UpdateType.DESTINATIONCHANGE);
@@ -250,16 +253,43 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+
+    public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
+
+        locationNodePane.getChildren().remove(this.imageLabel);
+
+        for (LocationNodeEdge edge : this.edges) {
+
+            edge.undrawEdge(locationNodeEdgePane);
+
+        }
+
+
+        this.imageLabel = null;
+        this.currentImage = null;
+    }
+
     /**
-     * Notify observers to remove this node from the list
+     * TODO
      */
-    public void deleteNode() {
+    public void deleteLocationNodeEdgeConnections() {
 
-        setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
+        for (LocationNodeEdge edge : this.edges) {
 
-        return;
+            edge.getOtherNode(this).removeEdgeConnection(edge);
 
+        }
+
+    }
+
+    /**
+     * TODO
+     *
+     * @param edge
+     */
+    public void removeEdgeConnection(LocationNodeEdge edge) {
+
+        this.edges.remove(edge);
     }
 
     /**
