@@ -1,30 +1,28 @@
 package Kiosk.Controllers;
 
-import Map.*;
+import Kiosk.KioskApp;
+import Map.Building;
+import Map.Destination;
+import Map.Floor;
+import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import Kiosk.KioskApp;
-import javafx.scene.control.*;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.xml.ws.handler.Handler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import java.util.stream.Collectors;
-
-import static java.lang.Thread.sleep;
 
 public class SearchController {
 
@@ -275,7 +273,7 @@ public class SearchController {
 
         destinations.setAll(building.getDestinations());
 
-        searchResult = destinations.stream().filter(a -> a.contains(value)).collect(Collectors.toList());
+        searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
 
         inValue = value;
 
@@ -294,7 +292,7 @@ public class SearchController {
 
             counter = 0;
             destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
@@ -304,7 +302,7 @@ public class SearchController {
 
             counter = 0;
             destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
@@ -314,7 +312,7 @@ public class SearchController {
 
             counter = 0;
             destinations.setAll(building.getDestinations(Destination.SERVICE));
-            searchResult = destinations.stream().filter(a -> a.contains(inValue)).collect(Collectors.toList());
+            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
