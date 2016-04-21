@@ -107,12 +107,18 @@ public class LocationNodeEdgeTest {
 
     }
 
+    /**
+     * Compute the edge weight (straight line distance) between two nodes
+     */
     @Test
     public void testComputeWeight() {
 
 
     }
 
+    /**
+     * Given an edge and one known node, get the other node
+     */
     @Test
     public void testGetOtherNode() {
 
