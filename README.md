@@ -4,6 +4,26 @@
 
 ## Kiosk Project for Faulkner Hospital
 
+This is a program for the Faulkner Hospital located in Boston MA. It's to be incorporated in a kiosk for visitors to use in order to aid them in commuting to their destination as finding your way through a hospital may be difficult for some people. 
+
+This program will incorporate the following (but not limited to) features:
+
+** Feature List **
+-Draw a path to your destinations
+-Ability to choose your destinations from a predefined list including bathrooms and food services
+-Ability to search for your destination
+-Choose multiple destinations
+-Print out textual directions so you won't have to remember the path
+-A beautiful and clean interface so that you won't be overwhelmed
+
+**Admin Feature List**
+-Use credentials to login
+-Ability to add new floors/locations
+-Ability to modify current floors/locations
+-Ability to choose a starting location
+-A beautiful interface to ensure proper management
+-A log to store login attempts
+
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
