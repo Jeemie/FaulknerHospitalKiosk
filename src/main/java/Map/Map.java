@@ -1,5 +1,6 @@
 package Map;
 
+import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,6 +90,36 @@ public class Map implements Observer {
         this.currentBuilding = null;
         this.currentBuildingFloors = FXCollections.observableArrayList();
         this.currentFloorDestinations = FXCollections.observableArrayList();
+
+    }
+
+
+
+
+
+    // TODO fill in
+    public void addBuilding(String name) {
+
+        Building newBuilding = new Building();
+
+
+
+
+
+        this.currentBuilding = newBuilding;
+        this.mapBuildings.add(newBuilding);
+
+    }
+
+
+    public void addFloor(String name, ImageType imageType) {
+        
+
+    }
+
+    public void addLocatioNode(String name, Location location, ImageType imageType) {
+
+        this.currentFloor.addLocationNode();
 
     }
 
