@@ -2,6 +2,7 @@
 package Map;
 
 
+import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Exceptions.FloorDoesNotExistException;
 
@@ -25,24 +26,25 @@ public class FaulknerHospitalData {
         Building mMainHospital = map.getMapBuildings().get(0);
 
         // Floors
-        mMainHospital.addFloor("Floor 1", ImageType.FLOOR);
-        mMainHospital.addFloor("Floor 2", ImageType.FLOOR);
-        mMainHospital.addFloor("Floor 3", ImageType.FLOOR);
-        mMainHospital.addFloor("Floor 4", ImageType.FLOOR);
+        mMainHospital.addFloor("Floor 1", ImageType.FLOOR); // Index 0
+        mMainHospital.addFloor("Floor 2", ImageType.FLOOR); // Index 1
+        mMainHospital.addFloor("Floor 3", ImageType.FLOOR); // Index 2
+        mMainHospital.addFloor("Floor 4", ImageType.FLOOR); // Index 3
+
+
+        //FLOOR 1
+        mMainHospital.getFloors().get(0).addLocationNode("Audiology", new Location(10, 10), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
+        mMainHospital.getFloors().get(0).addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
+        mMainHospital.getFloors().get(0).addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
 
 /*
-        //FLOOR 1
-        mMainHospital.getFloor(1).addNode(new Location(10, 10)); //get(0) Audiology
-        mMainHospital.getFloor(1).addNode(new Location(20, 20)); //get(1) Cardiac
-        mMainHospital.getFloor(1).addNode(new Location(1036, 885)); //get(2) Preop
-        mMainHospital.getFloor(1).addNode(new Location(1380, 906)); //get(3) ER
-        mMainHospital.getFloor(1).addNode(new Location(1249, 640)); //get(4) GI
-        mMainHospital.getFloor(1).addNode(new Location(30, 30)); //get(5) Lab
-        mMainHospital.getFloor(1).addNode(new Location(1230, 934)); //get(6) Finance
-        mMainHospital.getFloor(1).addNode(new Location(900, 900)); //get(7) Radiology
-        mMainHospital.getFloor(1).addNode(new Location(1150, 906)); //get(8) Test
-        mMainHospital.getFloor(1).addNode(new Location(1308, 945)); //get(9) Family
-
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
         mMainHospital.getFloor(1).addNode(new Location(40, 40)); //get(11) Admit
         mMainHospital.getFloor(1).addNode(new Location(1210, 1145)); //get(12) Cafe
@@ -51,18 +53,19 @@ public class FaulknerHospitalData {
         mMainHospital.getFloor(1).addNode(new Location(1140, 934)); //get(15) Bathroom
         mMainHospital.getFloor(1).addNode(new Location(1089, 376)); //get(16) H Elevatoe
         mMainHospital.getFloor(1).addNode(new Location(1054, 1000)); //get(17) A Elevatoe
+*/
+        mMainHospital.getFloors().get(0).getLocationNodes().get(0).addDestination(DestinationType.DEPARTMENT, "Audiology");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(1).addDestination(DestinationType.DEPARTMENT, "Cardiac Rehabilitation");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(2).addDestination(DestinationType.DEPARTMENT, "Center for Preoperative Evaluation");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(3).addDestination(DestinationType.DEPARTMENT, "Emergency Room");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(4).addDestination(DestinationType.DEPARTMENT, "GI Endoscopy");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(5).addDestination(DestinationType.DEPARTMENT, "Laboratory");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(6).addDestination(DestinationType.DEPARTMENT, "Patient Financial Services");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(7).addDestination(DestinationType.DEPARTMENT, "Radiology");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(8).addDestination(DestinationType.DEPARTMENT, "Special Testing");
+        mMainHospital.getFloors().get(0).getLocationNodes().get(9).addDestination(DestinationType.DEPARTMENT, "Taiclet Family Center");
 
-        mMainHospital.getFloor(1).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Audiology");
-        mMainHospital.getFloor(1).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Cardiac Rehabilitation");
-        mMainHospital.getFloor(1).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Center for Preoperative Evaluation");
-        mMainHospital.getFloor(1).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Emergency Room");
-        mMainHospital.getFloor(1).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "GI Endoscopy");
-        mMainHospital.getFloor(1).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Laboratory");
-        mMainHospital.getFloor(1).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Patient Financial Services");
-        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Radiology");
-        mMainHospital.getFloor(1).getLocationNodes().get(8).addDestination(Destination.DEPARTMENT, "Special Testing");
-        mMainHospital.getFloor(1).getLocationNodes().get(9).addDestination(Destination.DEPARTMENT, "Taiclet Family Center");
-
+        /*
         mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Information");
         mMainHospital.getFloor(1).getLocationNodes().get(11).addDestination(Destination.SERVICE, "Admitting/Registration");
         mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Atrium Cafe");

@@ -14,7 +14,8 @@ public enum ImageType {
     STAIRS(""),
     ELEVATOR(""),
     WAITINGROOM(""),
-    FLOOR("");
+    FLOOR(""),
+    SERVICE("");
 
     private String resourceFileName;
 
