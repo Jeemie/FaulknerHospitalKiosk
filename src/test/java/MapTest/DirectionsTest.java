@@ -1,6 +1,8 @@
 package MapTest;
 
 import Map.*;
+import Map.Enums.ImageType;
+import Map.Enums.RelativeDirection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,33 +23,33 @@ public class DirectionsTest {
     public void setup() {
         mTestBuilding = new Building();
 
-        mFloor3 = new Floor(3, mTestBuilding, "Floor3_Final.png");
+        mFloor3 = new Floor("Floor 3", ImageType.FLOOR, mTestBuilding);
 
         mpath = new ArrayList<LocationNode>();
 
-        mpath.add(new LocationNode(0, new Location(0, 50), mFloor3));
-        mpath.add(new LocationNode(0, new Location(0, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(0, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(10, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(20, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(20, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 20), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(15, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(5, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(2, 0), mFloor3));
+        mpath.add(new LocationNode("Hallway", new Location(0, 50), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(0, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(0, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(10, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(20, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(20, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(30, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(30, 20), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(30, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(15, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(5, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("Hallway", new Location(2, 0), mFloor3, ImageType.POINT));
 
         mpath2 = new ArrayList<LocationNode>();
 
-        mpath2.add(new LocationNode(0, new Location(10, 20), mFloor3)); //Should just be Right
-        mpath2.add(new LocationNode(0, new Location(10, 40), mFloor3));
-        mpath2.add(new LocationNode(0, new Location(15, 40), mFloor3));
+        mpath2.add(new LocationNode("Hallway", new Location(10, 20), mFloor3, ImageType.POINT)); //Should just be Right
+        mpath2.add(new LocationNode("Hallway", new Location(10, 40), mFloor3, ImageType.POINT));
+        mpath2.add(new LocationNode("Hallway", new Location(15, 40), mFloor3, ImageType.POINT));
 
         mpath3 = new ArrayList<LocationNode>();
 
-        mpath3.add(new LocationNode(0, new Location(0, 50), mFloor3)); //Should just be Straight
-        mpath3.add(new LocationNode(0, new Location(0, 40), mFloor3));
+        mpath3.add(new LocationNode("Hallway", new Location(0, 50), mFloor3, ImageType.POINT)); //Should just be Straight
+        mpath3.add(new LocationNode("Hallway", new Location(0, 40), mFloor3, ImageType.POINT));
 
     }
 
@@ -67,7 +69,7 @@ public class DirectionsTest {
         mRelativeDirections.add(RelativeDirection.STRAIGHT);
         mRelativeDirections.add(RelativeDirection.STRAIGHT);
 
-        Directions result = mTestBuilding.getDirections(mpath);
+        Directions result = new Directions(mpath2);
 
         Assert.assertEquals(mRelativeDirections, result.getRelativeDirections());
     }
@@ -76,7 +78,7 @@ public class DirectionsTest {
     public void testGetRelativeDirectionsTwo() {
 
         List<RelativeDirection> mRelativeDirections = new ArrayList<RelativeDirection>();
-        Directions result = mTestBuilding.getDirections(mpath2);
+        Directions result = new Directions(mpath2);
 
         mRelativeDirections.add(RelativeDirection.BACK);
         mRelativeDirections.add(RelativeDirection.LEFT);
@@ -87,7 +89,7 @@ public class DirectionsTest {
     public void testGetRelativeDirectionsSTRAIGHT() {
 
         List<RelativeDirection> mRelativeDirections = new ArrayList<RelativeDirection>();
-        Directions result = mTestBuilding.getDirections(mpath3);
+        Directions result = new Directions(mpath2);
 
         mRelativeDirections.add(RelativeDirection.STRAIGHT);
         Assert.assertEquals(mRelativeDirections, result.getRelativeDirections());
@@ -109,7 +111,7 @@ public class DirectionsTest {
         mTextualDirections.add("Take the 2nd Left.");
         mTextualDirections.add("Keep going forward, and you'll reach your destination!");
 
-        Directions result = mTestBuilding.getDirections(mpath);
+        Directions result = new Directions(mpath);
 
         Assert.assertEquals(mTextualDirections, result.getTextualDirections());
     }
@@ -118,7 +120,7 @@ public class DirectionsTest {
     public void testGetTextualDirectionsTwo() {
 
         List<String> mTextualDirections = new ArrayList<String>();
-        Directions result = mTestBuilding.getDirections(mpath2);
+        Directions result = new Directions(mpath2);
 
         mTextualDirections.add("Take the next Left.");
         Assert.assertEquals(mTextualDirections, result.getTextualDirections());
@@ -128,7 +130,7 @@ public class DirectionsTest {
     public void testGetTextualDirectionsSTRAIGHT() {
 
         List<String> mTextualDirections = new ArrayList<String>();
-        Directions result = mTestBuilding.getDirections(mpath3);
+        Directions result = new Directions(mpath2);
 
         mTextualDirections.add("Go forward until you reach your destination.");
         Assert.assertEquals(mTextualDirections, result.getTextualDirections());
