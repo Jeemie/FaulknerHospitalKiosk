@@ -3,6 +3,8 @@ package Map;
 import Map.Enums.UpdateType;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
@@ -65,6 +67,10 @@ public class Map implements Observer {
 
 
 
+    // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
+
+
 
 
 
@@ -75,6 +81,16 @@ public class Map implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+
+        // Check to see if the argument is null
+        if (arg == null) {
+
+            LOGGER.debug("Observer was updated but the argument was null: ", arg);
+
+            return;
+        }
+
+        LOGGER.info("Updating the Map");
 
         UpdateType updateType = ((UpdateType) arg);
 
@@ -98,13 +114,30 @@ public class Map implements Observer {
 
                 break;
 
-            case LOCATIONNODEMOVED:
+            case LOCATIONNODEPOSITION:
 
                 this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-                this.
+                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
 
                 break;
 
+            case LOCATIONNODEADDED:
+
+                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                // TODO decide whether or not we are going to redraw the entire floor
+                break;
+
+            case FLOORADDED:
+
+                // TODO
+                break;
+
+
+            default:
+
+                break;
 
 
 

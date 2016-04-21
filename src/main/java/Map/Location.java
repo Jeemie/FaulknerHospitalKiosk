@@ -59,7 +59,7 @@ public class Location extends Observable {
         this.x = x;
 
         setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEMOVED);
+        notifyObservers(UpdateType.LOCATIONNODEPOSITION);
 
     }
 
@@ -73,7 +73,7 @@ public class Location extends Observable {
         this.y = y;
 
         setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEMOVED);
+        notifyObservers(UpdateType.LOCATIONNODEPOSITION);
 
     }
 
