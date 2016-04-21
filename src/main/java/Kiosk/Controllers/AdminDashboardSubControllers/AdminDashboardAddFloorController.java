@@ -1,6 +1,5 @@
 package Kiosk.Controllers.AdminDashboardSubControllers;
 
-import Kiosk.Controllers.AdminDashboardController;
 import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Floor;
@@ -119,7 +118,7 @@ public class AdminDashboardAddFloorController {
                         dis.close(); // close the data input stream
 
                         File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" + "Floor" +
-                                floorNum + ".png");
+                                floorNum + ".jpg");
 
                         newFloorImage.createNewFile();
 
