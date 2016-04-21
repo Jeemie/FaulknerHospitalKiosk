@@ -165,9 +165,7 @@ public class Floor extends Observable implements Observer {
     }
 
 
-
-
-
-
-
+    public String getFloorName() {
+        return floorName;
+    }
 }

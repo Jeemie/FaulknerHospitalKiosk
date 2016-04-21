@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static Map.Enums.DestinationType.PHYSICIAN;
+
 
 public class DirectoryController {
 
