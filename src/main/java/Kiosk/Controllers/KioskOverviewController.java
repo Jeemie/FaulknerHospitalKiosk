@@ -108,7 +108,7 @@ public class KioskOverviewController {
 
 
 
-        kioskApp.showDirectory(Destination.PHYSICIAN);
+//        kioskApp.showDirectory(Destination.PHYSICIAN);
     }
 
 
@@ -118,7 +118,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-        kioskApp.showDirectory(Destination.DEPARTMENT);
+//        kioskApp.showDirectory(Destination.DEPARTMENT);
     }
 
     /**
@@ -127,7 +127,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-        kioskApp.showDirectory(Destination.SERVICE);
+//        kioskApp.showDirectory(Destination.SERVICE);
     }
 
 

@@ -1,12 +1,15 @@
 package Map;
 
 import Map.Enums.UpdateType;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -69,6 +72,36 @@ public class Map implements Observer {
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
+
+    public Map(String name) {
+
+        this.name = name;
+        this.mapBuildings = new ArrayList<>();
+        this.currentLocationNode = null;
+        this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
+        this.currentLocationNodeDestinations = FXCollections.observableArrayList();
+        this.currentFloor = null;
+        this.currentFloorLocatioNodes = FXCollections.observableArrayList();
+        this.currentFloorDestinations = FXCollections.observableArrayList();
+        this.currentFloorLocationNodePane = new Pane();
+        this.currentFloorEdgePane = new Pane();
+        this.currentFloorImage = new ImageView();
+        this.currentBuilding = null;
+        this.currentBuildingFloors = FXCollections.observableArrayList();
+        this.currentFloorDestinations = FXCollections.observableArrayList();
+
+    }
+
+
+
+
+
+    public void setupAdminStackPane(StackPane stackPane) {
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
+
+    }
 
 
 
@@ -144,6 +177,63 @@ public class Map implements Observer {
 
         }
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ObservableList<LocationNode> getCurrentAdjacentLocationNodes() {
+
+        return currentAdjacentLocationNodes;
+    }
+
+    public ObservableList<Destination> getCurrentLocationNodeDestinations() {
+
+        return currentLocationNodeDestinations;
+    }
+
+    public ObservableList<LocationNode> getCurrentFloorLocatioNodes() {
+
+        return currentFloorLocatioNodes;
+    }
+
+    public ObservableList<Destination> getCurrentFloorDestinations() {
+
+        return currentFloorDestinations;
+    }
+
+    public Pane getCurrentFloorLocationNodePane() {
+
+        return currentFloorLocationNodePane;
+    }
+
+    public Pane getCurrentFloorEdgePane() {
+
+        return currentFloorEdgePane;
+    }
+
+    public ImageView getCurrentFloorImage() {
+
+        return currentFloorImage;
+    }
+
+    public ObservableList<Floor> getCurrentBuildingFloors() {
+
+        return currentBuildingFloors;
+    }
+
+    public ObservableList<Destination> getCurrentBuildingDestinations() {
+
+        return currentBuildingDestinations;
     }
 
 }

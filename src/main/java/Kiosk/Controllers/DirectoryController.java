@@ -108,31 +108,31 @@ public class DirectoryController {
             public void handle(MouseEvent event) {
 
                 // Double Clicking!
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
-                    if (event.getClickCount() == 2) {
-
-                        // Array of all the floors so we can check each floor for the directory selection.
-                        ArrayList<Floor> floors = building.getFloors();
-
-                        // These for loops will index through all available floor  and all availible LocationNodes
-                        // to see which floor the selection is stored
-                        for (Floor f : floors) {
-                            ArrayList<LocationNode> nodes = f.getFloorNodes();
-                            for (LocationNode n : nodes) {
-
-                                // This statement is called when we find the node which corresponds to the selection
-                                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                                    timer.cancel();
-                                    running = false;
-                                    timerThread.interrupt();
-                                    kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
-
-                                }
-                            }
-                        }
-                    }
-                }
+//                if(event.getButton().equals(MouseButton.PRIMARY)) {
+//                    if (event.getClickCount() == 2) {
+//
+//                        // Array of all the floors so we can check each floor for the directory selection.
+//                        ArrayList<Floor> floors = building.getFloors();
+//
+//                        // These for loops will index through all available floor  and all availible LocationNodes
+//                        // to see which floor the selection is stored
+//                        for (Floor f : floors) {
+//                            ArrayList<LocationNode> nodes = f.getFloorNodes();
+//                            for (LocationNode n : nodes) {
+//
+//                                // This statement is called when we find the node which corresponds to the selection
+//                                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                                    timer.cancel();
+//                                    running = false;
+//                                    timerThread.interrupt();
+//                                    kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
+//
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
 
         });
@@ -203,7 +203,7 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Care Providers.
-        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+//        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
 
@@ -218,7 +218,7 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Care Providers.
-        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+//        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
 
@@ -233,7 +233,7 @@ public class DirectoryController {
         counter = 0;
 
         //Removes previous listings and sorts the list of Departments.
-        currentNames.setAll(building.getDestinations(Destination.SERVICE));
+//        currentNames.setAll(building.getDestinations(Destination.SERVICE));
         currentNames.sort(String.CASE_INSENSITIVE_ORDER);
         listDirectory.setItems(currentNames);
     }
@@ -266,74 +266,74 @@ public class DirectoryController {
     @FXML
     private void handleForward() {
 
-        ArrayList<Floor> floors = building.getFloors();
-
-        // These for loops will index through all available floor to see which floor the double clicked
-        // selection is stored
-        for (Floor f : floors) {
-
-            ArrayList<LocationNode> nodes = f.getFloorNodes();
-
-            for (LocationNode n : nodes) {
-
-                // This statement is called when we find the node which corresponds to the selection
-                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                    timer.cancel();
-                    running = false;
-                    timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
-
-                }
-
-            }
-
-        }
+//        ArrayList<Floor> floors = building.getFloors();
+//
+//        // These for loops will index through all available floor to see which floor the double clicked
+//        // selection is stored
+//        for (Floor f : floors) {
+//
+//            ArrayList<LocationNode> nodes = f.getFloorNodes();
+//
+//            for (LocationNode n : nodes) {
+//
+//                // This statement is called when we find the node which corresponds to the selection
+//                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                    timer.cancel();
+//                    running = false;
+//                    timerThread.interrupt();
+//                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+//
+//                }
+//
+//            }
+//
+//        }
     }
 
     public void setList(Destination destinationType) {
 
-        switch (destinationType) {
-
-            case PHYSICIAN:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Care Providers.
-                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
-                break;
-
-            case DEPARTMENT:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Departments
-                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
-                break;
-
-            case SERVICE:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Services
-                currentNames.setAll(building.getDestinations(Destination.SERVICE));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
-                break;
-
-            default:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list all destinations
-                currentNames.setAll(building.getDestinations());
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
-        }
+//        switch (destinationType) {
+//
+//            case PHYSICIAN:
+//
+//                counter = 0;
+//
+//                //Removes previous listings and sorts the list of Care Providers.
+//                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
+//                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
+//                listDirectory.setItems(currentNames);
+//                break;
+//
+//            case DEPARTMENT:
+//
+//                counter = 0;
+//
+//                //Removes previous listings and sorts the list of Departments
+//                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
+//                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
+//                listDirectory.setItems(currentNames);
+//                break;
+//
+//            case SERVICE:
+//
+//                counter = 0;
+//
+//                //Removes previous listings and sorts the list of Services
+//                currentNames.setAll(building.getDestinations(Destination.SERVICE));
+//                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
+//                listDirectory.setItems(currentNames);
+//                break;
+//
+//            default:
+//
+//                counter = 0;
+//
+//                //Removes previous listings and sorts the list all destinations
+//                currentNames.setAll(building.getDestinations());
+//                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
+//                listDirectory.setItems(currentNames);
+//        }
 
     }
 

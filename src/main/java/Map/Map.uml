@@ -6,19 +6,19 @@
     <node x="764.0" y="2467.0">Map.Exceptions.FloorDoesNotExistException</node>
     <node x="530.0" y="2467.0">Map.ObjectToJsonToJava</node>
     <node x="606.6898989898992" y="23.0">Map.Enums.BuildingState</node>
-    <node x="326.9999999999998" y="321.0">Map.LocationNodeEdge</node>
+    <node x="326.9999999999998" y="321.0">LocationNodeEdge</node>
     <node x="1462.4999999999998" y="409.0">Map.Location</node>
-    <node x="0.0" y="398.0">Map.Destination</node>
+    <node x="0.0" y="398.0">Destination</node>
     <node x="1487.4242424242427" y="0.0">Map.Enums.ImageType</node>
     <node x="1768.5232323232326" y="1817.0">Map.Map</node>
-    <node x="673.4999999999998" y="858.0">Map.LocationNode</node>
+    <node x="673.4999999999998" y="858.0">LocationNode</node>
     <node x="920.2499999999998" y="66.0">Utils.FixedSizedStack</node>
     <node x="324.0" y="2467.0">Map.Enums.RelativeDirection</node>
     <node x="963.8333333333333" y="1960.0">Map.Exceptions.NoPathException</node>
     <node x="1155.4999999999998" y="464.0">Map.EventHandlers.LocationNodeDraggedEventHandler</node>
     <node x="2423.832323232323" y="0.0">Map.Enums.CardinalDirection</node>
     <node x="1186.8333333333333" y="2259.0">Map.Dijkstras</node>
-    <node x="1749.5" y="299.0">Map.Floor</node>
+    <node x="1749.5" y="299.0">Floor</node>
     <node x="669.8333333333331" y="1948.5">Map.Directions</node>
     <node x="0.0" y="2467.0">Map.Enums.UpdateType</node>
     <node x="907.8333333333333" y="2259.0">Map.AStar</node>
@@ -28,25 +28,25 @@
   </nodes>
   <notes />
   <edges>
-    <edge source="Map.LocationNode" target="Map.Location">
+    <edge source="LocationNode" target="Map.Location">
       <point x="188.60000000000002" y="-444.5" />
       <point x="1333.6" y="778.0" />
       <point x="1595.9999999999998" y="778.0" />
       <point x="0.0" y="114.5" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.Enums.ImageType">
+    <edge source="LocationNode" target="Map.Enums.ImageType">
       <point x="0.0" y="-444.5" />
       <point x="1144.9999999999998" y="279.0" />
       <point x="1546.6742424242427" y="279.0" />
       <point x="-59.25" y="114.5" />
     </edge>
-    <edge source="Map.Floor" target="Map.LocationNode">
+    <edge source="Floor" target="LocationNode">
       <point x="43.25" y="224.5" />
       <point x="2052.25" y="818.0" />
       <point x="1585.0666666666664" y="818.0" />
       <point x="440.0666666666666" y="-444.5" />
     </edge>
-    <edge source="Map.Map" target="Map.Destination">
+    <edge source="Map.Map" target="Destination">
       <point x="-183.0" y="-191.0" />
       <point x="1799.0232323232326" y="1787.0" />
       <point x="255.50025252525302" y="1787.0" />
@@ -54,37 +54,37 @@
       <point x="51.16666666666674" y="838.0" />
       <point x="-102.33333333333326" y="125.5" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.Floor">
+    <edge source="LocationNode" target="Floor">
       <point x="251.4666666666667" y="-444.5" />
       <point x="1396.4666666666665" y="788.0" />
       <point x="1792.75" y="788.0" />
       <point x="-216.25" y="224.5" />
     </edge>
-    <edge source="Map.Dijkstras" target="Map.LocationNode">
+    <edge source="Map.Dijkstras" target="LocationNode">
       <point x="0.0" y="-81.5" />
       <point x="1316.3333333333333" y="1797.0" />
       <point x="1223.583333333333" y="1797.0" />
       <point x="78.58333333333337" y="444.5" />
     </edge>
-    <edge source="Map.Directions" target="Map.LocationNode">
+    <edge source="Map.Directions" target="LocationNode">
       <point x="0.0" y="-59.5" />
       <point x="806.8333333333331" y="1797.0" />
       <point x="909.2499999999998" y="1797.0" />
       <point x="-235.74999999999997" y="444.5" />
     </edge>
-    <edge source="Map.EventHandlers.LocationNodeClickedEventHandler" target="Map.LocationNode">
+    <edge source="Map.EventHandlers.LocationNodeClickedEventHandler" target="LocationNode">
       <point x="76.75" y="70.5" />
       <point x="1038.2499999999998" y="838.0" />
       <point x="1082.1333333333332" y="838.0" />
       <point x="-62.866666666666674" y="-444.5" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.EventHandlers.LocationNodeClickedEventHandler">
+    <edge source="LocationNode" target="Map.EventHandlers.LocationNodeClickedEventHandler">
       <point x="-125.73333333333335" y="-444.5" />
       <point x="1019.2666666666664" y="778.0" />
       <point x="884.7499999999998" y="778.0" />
       <point x="-76.75" y="70.5" />
     </edge>
-    <edge source="Map.Floor" target="Map.Building">
+    <edge source="Floor" target="Map.Building">
       <point x="129.75" y="-224.5" />
       <point x="2138.75" y="279.0" />
       <point x="2158.575" y="279.0" />
@@ -104,23 +104,23 @@
       <point x="2258.775" y="259.0" />
       <point x="33.40000000000009" y="48.0" />
     </edge>
-    <edge source="Map.Destination" target="Map.Enums.DestinationType">
+    <edge source="Destination" target="Map.Enums.DestinationType">
       <point x="0.0" y="-125.5" />
       <point x="0.0" y="91.5" />
     </edge>
-    <edge source="Map.Exceptions.NoPathException" target="Map.LocationNode">
+    <edge source="Map.Exceptions.NoPathException" target="LocationNode">
       <point x="0.0" y="-48.0" />
       <point x="1110.8333333333333" y="1797.0" />
       <point x="1066.4166666666665" y="1797.0" />
       <point x="-78.58333333333331" y="444.5" />
     </edge>
-    <edge source="Map.LocationNodeEdge" target="Map.LocationNode">
+    <edge source="LocationNodeEdge" target="LocationNode">
       <point x="153.66666666666663" y="202.5" />
       <point x="711.1666666666664" y="788.0" />
       <point x="956.3999999999997" y="788.0" />
       <point x="-188.60000000000002" y="-444.5" />
     </edge>
-    <edge source="Map.Map" target="Map.Floor">
+    <edge source="Map.Map" target="Floor">
       <point x="61.0" y="-191.0" />
       <point x="2043.0232323232326" y="1797.0" />
       <point x="2095.8323232323232" y="1797.0" />
@@ -128,13 +128,13 @@
       <point x="2225.25" y="838.0" />
       <point x="216.25" y="224.5" />
     </edge>
-    <edge source="Map.Floor" target="Map.Enums.ImageType">
+    <edge source="Floor" target="Map.Enums.ImageType">
       <point x="-129.75" y="-224.5" />
       <point x="1879.25" y="279.0" />
       <point x="1665.1742424242427" y="279.0" />
       <point x="59.25" y="114.5" />
     </edge>
-    <edge source="Map.Destination" target="Map.LocationNode">
+    <edge source="Destination" target="LocationNode">
       <point x="102.33333333333326" y="125.5" />
       <point x="255.83333333333326" y="818.0" />
       <point x="767.7999999999997" y="818.0" />
@@ -158,25 +158,25 @@
       <point x="0.0" y="-81.5" />
       <point x="-73.5" y="48.0" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.EventHandlers.LocationNodeDraggedEventHandler">
+    <edge source="LocationNode" target="Map.EventHandlers.LocationNodeDraggedEventHandler">
       <point x="62.866666666666674" y="-444.5" />
       <point x="1207.8666666666663" y="838.0" />
       <point x="1227.2499999999998" y="838.0" />
       <point x="-71.75" y="59.5" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.LocationNodeEdge">
+    <edge source="LocationNode" target="LocationNodeEdge">
       <point x="-314.33333333333337" y="-444.5" />
       <point x="830.6666666666664" y="808.0" />
       <point x="403.83333333333303" y="808.0" />
       <point x="-153.66666666666666" y="202.5" />
     </edge>
-    <edge source="Map.LocationNode" target="Map.Destination">
+    <edge source="LocationNode" target="Destination">
       <point x="-440.0666666666667" y="-444.5" />
       <point x="704.933333333333" y="828.0" />
       <point x="153.5" y="828.0" />
       <point x="0.0" y="125.5" />
     </edge>
-    <edge source="Map.AStar" target="Map.LocationNode">
+    <edge source="Map.AStar" target="LocationNode">
       <point x="-86.33333333333326" y="-81.5" />
       <point x="951.0" y="2239.0" />
       <point x="659.3333333333331" y="2239.0" />
@@ -184,7 +184,7 @@
       <point x="752.0833333333331" y="1797.0" />
       <point x="-392.91666666666663" y="444.5" />
     </edge>
-    <edge source="Map.Map" target="Map.LocationNode">
+    <edge source="Map.Map" target="LocationNode">
       <point x="-122.0" y="-191.0" />
       <point x="1860.0232323232326" y="1777.0" />
       <point x="1380.7499999999998" y="1777.0" />
@@ -194,7 +194,7 @@
       <point x="0.0" y="-70.5" />
       <point x="-41.25" y="48.5" />
     </edge>
-    <edge source="Map.EventHandlers.LocationNodeDraggedEventHandler" target="Map.LocationNode">
+    <edge source="Map.EventHandlers.LocationNodeDraggedEventHandler" target="LocationNode">
       <point x="71.75" y="59.5" />
       <point x="1370.7499999999998" y="768.0" />
       <point x="1270.7333333333331" y="768.0" />

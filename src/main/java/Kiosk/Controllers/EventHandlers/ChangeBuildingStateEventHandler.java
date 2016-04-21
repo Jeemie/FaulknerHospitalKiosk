@@ -1,7 +1,7 @@
 package Kiosk.Controllers.EventHandlers;
 
 import Map.Building;
-import Map.BuildingState;
+import Map.Enums.BuildingState;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class ChangeBuildingStateEventHandler implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event) {
 
-        building.setState(state);
+//        building.setState(state);
 
         LOGGER.info("Building " + building.toString() + " State changed to " +  state.toString());
 
