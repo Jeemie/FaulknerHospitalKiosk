@@ -8,13 +8,11 @@ import Map.LocationNode;
 import Map.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -308,8 +306,8 @@ public class KioskApp extends Application {
 
             controller.setKioskApp(this);
             controller.setBuilding(this.hospitalBuilding);
-            controller.setStartNode(startNode);
             controller.setDestinationNode(destinationNode);
+            controller.setStartNode(startNode);
 
 
 

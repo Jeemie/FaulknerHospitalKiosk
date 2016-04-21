@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapViewController {
+public class MapViewController{
 
     // Reference to the main application.
 
@@ -112,6 +112,9 @@ public class MapViewController {
     };
 
 
+
+
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -119,19 +122,36 @@ public class MapViewController {
     @FXML
     private void initialize() {
 
+
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
+
+
+
+        //destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+//        System.out.println(destinationNode.getLocation().getX());
+//
+//        System.out.println(destinationNode.getLocation().getY());
+
         confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
                 counter = 0;
-                mMainHost.drawShortestPath(startNode, destinationNode);
+                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+                //mMainHost.drawShortestPath(startNode, destinationNode);
+                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
             }
 
         });
 
-        currentFloorLabel.setText(String.valueOf(getCounterFloor));
+
+
 
 
         searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -173,6 +193,8 @@ public class MapViewController {
 
             }
         });
+
+
 
 
         scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
