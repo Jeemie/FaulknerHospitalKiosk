@@ -7,12 +7,12 @@ import Map.LocationNode;
  */
 public class NoPathException extends Exception {
 
-    private final LocationNode starLocationNode;
+    private final LocationNode startLocationNode;
     private final LocationNode destinatonLocationNode;
 
-    public NoPathException(LocationNode starLocationNode, LocationNode destinatonLocationNode) {
+    public NoPathException(LocationNode startLocationNode, LocationNode destinatonLocationNode) {
 
-        this.starLocationNode = starLocationNode;
+        this.startLocationNode = startLocationNode;
         this.destinatonLocationNode = destinatonLocationNode;
 
     }

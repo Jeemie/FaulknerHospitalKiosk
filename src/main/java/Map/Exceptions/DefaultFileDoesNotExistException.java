@@ -8,6 +8,8 @@ import Map.Map;
 public class DefaultFileDoesNotExistException extends Throwable {
 
     public DefaultFileDoesNotExistException() {
+
         System.err.println("Default file does not exist.");
+
     }
 }

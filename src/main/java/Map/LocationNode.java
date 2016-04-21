@@ -7,6 +7,7 @@ import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Map.Enums.ImageType;
+import Map.Exceptions.NodeDoesNotExistException;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.control.Label;
@@ -98,6 +99,11 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+    /**
+     * Add a destination to this node
+     *
+     * @param destination
+     */
     public void addDestination(Destination destination) {
 
         this.destinations.add(destination);
@@ -107,7 +113,11 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
-
+    /**
+     * Remove a destination from this node
+     *
+     * @param destination
+     */
     public void removeDestination(Destination destination) {
 
         this.destinations.remove(destination);
@@ -117,6 +127,12 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+    /**
+     * Get all of the destinations of the specified destination type at this node
+     *
+     * @param destinationType
+     * @return ArrayList of destinations of specified type
+     */
     public ArrayList<Destination> getDestinations(DestinationType destinationType) {
 
         ArrayList<Destination> nodeDestinations = new ArrayList<>();
@@ -134,11 +150,22 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         return nodeDestinations;
     }
 
+    /**
+     * Get all destinations at the node
+     *
+     * @return ArrayList of destinations
+     */
     public ArrayList<Destination> getDestinations() {
 
         return this.destinations;
     }
 
+    /**
+     * Compute the straight line distance between two nodes
+     *
+     * @param destinationLocationNode The destination to calculate the distance to from this node
+     * @return Computed distance
+     */
     public double getDistanceBetweenNodes(LocationNode destinationLocationNode) {
 
         // location of destination node
@@ -148,6 +175,11 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         return this.location.getDistanceBetween(destinationLocation);
     }
 
+    /**
+     * Draw all of the nodes as they should appear for the Administrative Dashboard View
+     *
+     * @param pane
+     */
     public void drawAdmin(Pane pane) {
 
 
@@ -236,11 +268,12 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    public void addEdge(LocationNode adjacentNode) {
+    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
 
         if (adjacentNode == null) {
+
             // Adjacent Node does not exist
-            // TODO add exception
+            throw new NodeDoesNotExistException("Specified adjacent node does not exist.");
         }
 
         // Check if edge between nodes already exists
@@ -249,9 +282,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             if (edge.edgeExists(this, adjacentNode)) {
 
                 // Edge has already been added
-                //TODO add exception and/or logger message
-                return;
+                LOGGER.error("Cannot add new edge. Edge already exists.");
 
+                return;
             }
         }
 
