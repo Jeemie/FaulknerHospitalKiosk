@@ -3,6 +3,7 @@ package Map;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -97,7 +100,7 @@ public class Map implements Observer {
     public Map() {
 
         super();
-        
+
     }
 
     public Map(String name) {
@@ -296,25 +299,76 @@ public class Map implements Observer {
 
     /**
      * Load a map from a JSON file
-     * @param file The JSON file you want to load from
+     * @param specifiedFilePath The JSON file you want to load from
      */
-    public Map loadFromFile(File file) throws IOException, FloorDoesNotExistException {
+    public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
 
+        Map mMap = new Map();
+        URL defaultFilePath = null;
+
+        // Set up an ObjectMapper for deserialization
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        LOGGER.info("Loading the map from the file: " + file.toString());
 
-        return objectMapper.readValue(file, Map.class);
+        try {
+
+            defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            //specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        try {
+
+            File specifiedFile = new File(specifiedFilePath.toURI());
+
+            File defaultFile = new File(defaultFilePath.toURI());
+
+            if (specifiedFile.exists() && specifiedFile.length() > 0) {
+
+                // Load specified file
+
+                mMap = objectMapper.readValue(specifiedFile, Map.class);
+                LOGGER.info("Loaded map from file " + specifiedFile.toString());
+
+            } else if (defaultFile.exists()) {
+
+                // Load default file
+                mMap = objectMapper.readValue(defaultFile, Map.class);
+                LOGGER.info("Loaded map from file " + defaultFile.toString());
+
+                if (defaultFile.length() <= 2) {
+
+                    LOGGER.warn("Loaded file is empty.");
+                    // TODO uncomment after startMap is refactored
+                    // mMap = FaulknerHospitalData.starterMap();
+                }
+            } else {
+
+                throw new DefaultFileDoesNotExistException();
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } catch (URISyntaxException e) {
+
+            e.printStackTrace();
+        }
+
+        return mMap;
     }
 
     //TODO
     /**
      * Reinitialize null fields in Map object and subclass objects after loading from file
-     * @param map Map to reinitialize
      */
-    public Map initMapComponents(Map map) {
+    public Map initMapComponents() {
 
-        return map;
+        return this;
     }
 
     @JsonGetter
