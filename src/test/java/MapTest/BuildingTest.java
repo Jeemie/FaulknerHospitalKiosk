@@ -1,13 +1,10 @@
 package MapTest;
 
 import Map.*;
-import Map.Enums.ImageType;
-import Map.Exceptions.FloorDoesNotExistException;
+import Map.Enums.String;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.awt.*;
 
 public class BuildingTest {
 

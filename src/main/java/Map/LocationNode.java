@@ -3,10 +3,10 @@ package Map;
 
 import Map.Enums.CardinalDirection;
 import Map.Enums.DestinationType;
+import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
-import Map.Enums.ImageType;
 import Map.Exceptions.NodeDoesNotExistException;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -105,7 +105,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * @param destinationType
      * @param name
      */
-    public void addDestination(DestinationType destinationType, String name) {
+    public void addDestination(String name, DestinationType destinationType) {
 
         this.destinations.add(new Destination(name, destinationType, this));
 
@@ -409,6 +409,18 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         return cardinalDirection;
     }
+
+
+    public boolean onSameFloor(LocationNode otherLocationNode) {
+
+        return this.currentFloor.equals(otherLocationNode.getCurrentFloor());
+    }
+
+
+
+
+
+    //||\\ Getters and Setters //||\\
 
     public Location getLocation() {
 

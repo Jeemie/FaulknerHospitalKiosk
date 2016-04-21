@@ -1,11 +1,8 @@
 package MapTest;
 
 import Map.*;
-import Map.Enums.ImageType;
-import Map.Enums.RelativeDirection;
-import org.junit.Assert;
+import Map.Enums.String;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;

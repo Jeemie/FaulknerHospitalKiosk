@@ -1,8 +1,7 @@
 package MapTest;
 
 import Map.Building;
-import Map.*;
-import Map.Destination;
+import Map.;
 import Map.Enums.ImageType;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
@@ -15,7 +14,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static Map.AStar.aStar;
+import Map.SearchAlgorithms.AStar.aStar;
 
 /**
  * Created by maryannoconnell on 4/17/16.
@@ -43,7 +42,7 @@ public class AStarTest {
     @Test
     public void testSingleEdgePath() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
+        mTestBuilding.addFloor("floor1", "Floor1_Final.png");
         mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
         mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
 

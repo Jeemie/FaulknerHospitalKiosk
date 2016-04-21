@@ -1,11 +1,9 @@
 package Kiosk;
 
 import Kiosk.Controllers.*;
-import Map.Building;
 import Map.Destination;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
-import Map.LocationNode;
 import Map.Map;
 import Map.FaulknerHospitalData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +30,6 @@ public class KioskApp extends Application {
     private BorderPane rootLayout;
     protected Map faulknerHospitalMap;
     //    private Building hospitalBuilding;
-    private LocationNode startNode;
     private URL filePath;
 
 
@@ -210,6 +207,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
 //            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
@@ -289,7 +287,7 @@ public class KioskApp extends Application {
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
 //            controller.setBuilding(hospitalBuilding);
-            controller.setStartNode(startNode);
+//            controller.setStartNode(startNode);
 
             //set the selected directory view to appear
             controller.setList(destinationType);
@@ -309,7 +307,7 @@ public class KioskApp extends Application {
      *
      */
     // TODO: showMap should have parameter for chosen destination from previous screen
-    public boolean showMap(LocationNode startNode, LocationNode destinationNode) {
+    public boolean showMap() {
 
         try {
             // Load MapView
@@ -330,8 +328,8 @@ public class KioskApp extends Application {
 
             controller.setKioskApp(this);
 //            controller.setBuilding(this.hospitalBuilding);
-            controller.setStartNode(startNode);
-            controller.setDestinationNode(destinationNode);
+//            controller.setStartNode(startNode);
+//            controller.setDestinationNode(destinationNode);
 
 
 
@@ -369,12 +367,6 @@ public class KioskApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
 
     }
 

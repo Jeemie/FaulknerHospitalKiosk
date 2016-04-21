@@ -1,21 +1,13 @@
 package Map;
 
-import Map.Enums.ImageType;
-import Map.Exceptions.FloorDoesNotExistException;
+import Map.Enums.UpdateType;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,7 +16,6 @@ import java.util.UUID;
 /**
  * A class that represents a building.
  */
-
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Building.class)
 public class Building extends Observable implements Observer {
 
@@ -62,16 +53,24 @@ public class Building extends Observable implements Observer {
         this.floors = new ArrayList<Floor>();
         this.currentMap = currentMap;
 
+        this.addObserver(this.currentMap);
+
+
+        LOGGER.info("A new Building was created");
+
+//        setChanged();
+//        notifyObservers(UpdateType.BUILDINGADDED);
+
     }
 
     /**
      * Add a new floor to this building
      * Note : this method assumes each floor in a building has a unique name
      * @param floorName Name for new floor
-     * @param imageType Type of image to associate with new floor
+     * @param resourceFileName Image you want to associate with the floor.
      * @return New floor added to this building
      */
-    public Floor addFloor(String floorName, ImageType imageType) {
+    public void addFloor(String floorName, String resourceFileName) {
 
         for (Floor floor : floors) {
 
@@ -81,19 +80,18 @@ public class Building extends Observable implements Observer {
                 LOGGER.info("A floor with the name " + floorName + " already exists in this building.");
 
                 // Return the existing floor
-                return floor;
+                return;
             }
 
         }
 
-        Floor newFloor = new Floor(floorName, imageType, this);
+        Floor newFloor = new Floor(floorName, resourceFileName, this);
 
         floors.add(newFloor);
 
         setChanged();
-        notifyObservers();
+        notifyObservers(UpdateType.FLOORADDED);
 
-        return newFloor;
 
     }
 

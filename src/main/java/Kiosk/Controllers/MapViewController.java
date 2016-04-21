@@ -2,8 +2,6 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Building;
-import Map.Exceptions.FloorDoesNotExistException;
-import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,8 +26,8 @@ public class MapViewController {
     private boolean okClicked = false;
     private KioskApp kioskApp;
     private Building mMainHost;
-    private LocationNode startNode;
-    private LocationNode destinationNode;
+//    private LocationNode startNode;
+//    private LocationNode destinationNode;
     private int numThreads = 0;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
@@ -270,21 +268,21 @@ public class MapViewController {
         this.mMainHost = building;
     }
 
-    public void setDestinationNode(LocationNode destinationNode){
-
-/*      atimer.cancel();
-        atimer.purge();
-        timer.cancel();
-        timer.purge();*/
-        running = false;
-        //timerThread.interrupt();
-        this.destinationNode = destinationNode;
-//        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
-    }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
-    }
+//    public void setDestinationNode(LocationNode destinationNode){
+//
+///*      atimer.cancel();
+//        atimer.purge();
+//        timer.cancel();
+//        timer.purge();*/
+//        running = false;
+//        //timerThread.interrupt();
+//        this.destinationNode = destinationNode;
+////        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+//    }
+//
+//    public void setStartNode(LocationNode startNode) {
+//
+//        this.startNode = startNode;
+//    }
 
 }

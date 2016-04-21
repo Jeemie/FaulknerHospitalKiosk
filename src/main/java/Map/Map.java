@@ -5,6 +5,10 @@ import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
+import Map.Exceptions.NoPathException;
+import Map.SearchAlgorithms.AStar;
+import Map.SearchAlgorithms.Dijkstras;
+import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
@@ -28,12 +32,21 @@ import java.util.UUID;
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Map.class)
 public class Map implements Observer {
 
+    private String name;
+
     // Unique ID for this Map
     private UUID uniqueID;
 
-    private String name;
+    private LocationNode startLocationNode;
 
     private ArrayList<Building> mapBuildings;
+
+    private ISearchAlgorithm searchAlgorithm;
+
+
+    //||\\ Current Destination //||\\
+
+    private Destination currentDestination;
 
 
     //||\\ Current LocationNode //||\\
@@ -60,7 +73,7 @@ public class Map implements Observer {
 
     //
     @JsonIgnore
-    private ObservableList<LocationNode> currentFloorLocatioNodes;
+    private ObservableList<LocationNode> currentFloorLocationNodes;
 
 
     //
@@ -112,16 +125,22 @@ public class Map implements Observer {
 
     }
 
+    /*
+    TODO create exception to throw when adding something to the map when something of the sametype already has that name
+    */
+
     public Map(String name) {
 
-        this.uniqueID = UUID.randomUUID();
         this.name = name;
+        this.uniqueID = UUID.randomUUID();
+        this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
+        this.searchAlgorithm = new AStar();
         this.currentLocationNode = null;
         this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
         this.currentLocationNodeDestinations = FXCollections.observableArrayList();
         this.currentFloor = null;
-        this.currentFloorLocatioNodes = FXCollections.observableArrayList();
+        this.currentFloorLocationNodes = FXCollections.observableArrayList();
         this.currentFloorDestinations = FXCollections.observableArrayList();
         this.currentFloorLocationNodePane = new Pane();
         this.currentFloorEdgePane = new Pane();
@@ -132,18 +151,21 @@ public class Map implements Observer {
 
     }
 
-
-
-
-
-    // TODO fill in
     public void addBuilding(String name) {
 
+        for (Building building : this.mapBuildings) {
+
+            if (building.getName().equals(name)) {
+
+                LOGGER.debug("There is already a building with the name: ", name);
+
+                return;
+            }
+
+        }
+
+
         Building newBuilding = new Building(name, this);
-
-
-
-
 
         this.currentBuilding = newBuilding;
         this.mapBuildings.add(newBuilding);
@@ -151,7 +173,7 @@ public class Map implements Observer {
     }
 
 
-    public void addFloor(String name, ImageType imageType) {
+    public void addFloor(String name, String resourceFileName) {
 
         if (this.currentBuilding == null) {
 
@@ -160,7 +182,7 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentBuilding.addFloor(name, imageType);
+        this.currentBuilding.addFloor(name, resourceFileName);
 
     }
 
@@ -186,16 +208,41 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentLocationNode.addDestination(destinationType, name);
+        this.currentLocationNode.addDestination(name, destinationType);
+
+    }
+
+    public void removeDestination() {
+
+        // TODO fill in
+        // TODO create debug message
 
     }
 
     public void removeLocationNode() {
 
-        // TODO add null checks
+        if (this.currentFloor == null) {
 
+            // TODO create debug message
+
+            return;
+        }
+
+        if (this.currentLocationNode == null) {
+
+            // TODO create debug message
+
+            return;
+        }
 
         this.currentFloor.removeLocationNode(this.currentLocationNode);
+
+    }
+
+    public void removeFloor() {
+
+        // TODO fill in
+        // TODO create debug message
 
     }
 
@@ -213,6 +260,22 @@ public class Map implements Observer {
 
 
 
+    public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
+
+        return this.searchAlgorithm.getPath(this.startLocationNode, destination);
+    }
+
+    public void useAStar() {
+
+        this.searchAlgorithm = new AStar();
+
+    }
+
+    public void useDijkstras() {
+
+        this.searchAlgorithm = new Dijkstras();
+
+    }
 
 
 
@@ -269,9 +332,8 @@ public class Map implements Observer {
                 // TODO decide whether or not we are going to redraw the entire floor
                 break;
 
-            case FLOORADDED:
+            case FLOORADDED: 
 
-                // TODO
                 break;
 
 
@@ -371,6 +433,12 @@ public class Map implements Observer {
         return mMap;
     }
 
+
+
+    //||\\ Getters And Setters //||\\
+
+
+
     //TODO
     /**
      * Reinitialize null fields in Map object and subclass objects after loading from file
@@ -395,6 +463,7 @@ public class Map implements Observer {
     @JsonGetter
 
     public ArrayList<Building> getMapBuildings() {
+
         return mapBuildings;
     }
 
@@ -426,9 +495,9 @@ public class Map implements Observer {
         return currentLocationNodeDestinations;
     }
 
-    public ObservableList<LocationNode> getCurrentFloorLocatioNodes() {
+    public ObservableList<LocationNode> getCurrentFloorLocationNodes() {
 
-        return currentFloorLocatioNodes;
+        return currentFloorLocationNodes;
     }
 
     public ObservableList<Destination> getCurrentFloorDestinations() {
@@ -460,5 +529,60 @@ public class Map implements Observer {
 
         return currentBuildingDestinations;
     }
+
+    public void setStartLocationNode(LocationNode locationNode) {
+
+        this.startLocationNode = locationNode;
+    }
+
+    public void setCurrentDestination(Destination destination) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = destination;
+        this.currentLocationNode = currentDestination.getCurrentLocationNode();
+        this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    public void setCurrentLocationNode(LocationNode locationNode) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = null;
+        this.currentLocationNode = locationNode;
+        this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    public void setCurrentFloor(Floor floor) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = null;
+        this.currentLocationNode = null;
+        this.currentFloor = floor;
+        this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    public void setCurrentBuilding(Building building) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = null;
+        this.currentLocationNode = null;
+        this.currentFloor = null;
+        this.currentBuilding = building;
+
+    }
+
+
 
 }

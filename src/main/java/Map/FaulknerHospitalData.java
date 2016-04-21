@@ -22,27 +22,32 @@ public class FaulknerHospitalData {
         // Add main hospital building to map
         map.addBuilding("Faulkner Hospital");
 
-        // Get newly added main hospital building for use with manual data entry
-        Building mMainHospital = map.getMapBuildings().get(0);
-
         // Floors
-        mMainHospital.addFloor("Floor 1", ImageType.FLOOR); // Index 0
-        mMainHospital.addFloor("Floor 2", ImageType.FLOOR); // Index 1
-        mMainHospital.addFloor("Floor 3", ImageType.FLOOR); // Index 2
-        mMainHospital.addFloor("Floor 4", ImageType.FLOOR); // Index 3
+        map.addFloor("Floor 1", "Floor1_Final.png"); // Index 0
 
+        System.out.println("Floor added");
 
         //FLOOR 1
-        mMainHospital.getFloors().get(0).addLocationNode("Audiology", new Location(10, 10), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
-        mMainHospital.getFloors().get(0).addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
-        mMainHospital.getFloors().get(0).addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
+        map.addLocationNode("Audiology", new Location(10, 10), ImageType.WAITINGROOM);
+        map.addDestination("Audiology", DestinationType.DEPARTMENT);
+        map.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
+        map.addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
+        map.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
+        map.addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
+        map.addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
+        map.addDestination("Emergency Room", DestinationType.DEPARTMENT);
+        map.addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
+        map.addDestination("GI Endoscopy", DestinationType.DEPARTMENT);
+        map.addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
+        map.addDestination("Laboratory", DestinationType.DEPARTMENT);
+        map.addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
+        map.addDestination("Patient Financial Services", DestinationType.DEPARTMENT);
+        map.addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
+        map.addDestination("Radiology", DestinationType.DEPARTMENT);
+        map.addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
+        map.addDestination("Special Testing", DestinationType.DEPARTMENT);
+        map.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
+        map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
 /*
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
@@ -54,16 +59,6 @@ public class FaulknerHospitalData {
         mMainHospital.getFloor(1).addNode(new Location(1089, 376)); //get(16) H Elevatoe
         mMainHospital.getFloor(1).addNode(new Location(1054, 1000)); //get(17) A Elevatoe
 */
-        mMainHospital.getFloors().get(0).getLocationNodes().get(0).addDestination(DestinationType.DEPARTMENT, "Audiology");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(1).addDestination(DestinationType.DEPARTMENT, "Cardiac Rehabilitation");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(2).addDestination(DestinationType.DEPARTMENT, "Center for Preoperative Evaluation");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(3).addDestination(DestinationType.DEPARTMENT, "Emergency Room");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(4).addDestination(DestinationType.DEPARTMENT, "GI Endoscopy");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(5).addDestination(DestinationType.DEPARTMENT, "Laboratory");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(6).addDestination(DestinationType.DEPARTMENT, "Patient Financial Services");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(7).addDestination(DestinationType.DEPARTMENT, "Radiology");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(8).addDestination(DestinationType.DEPARTMENT, "Special Testing");
-        mMainHospital.getFloors().get(0).getLocationNodes().get(9).addDestination(DestinationType.DEPARTMENT, "Taiclet Family Center");
 
         /*
         mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Information");
@@ -384,4 +379,3 @@ public class FaulknerHospitalData {
 
 
 }
-

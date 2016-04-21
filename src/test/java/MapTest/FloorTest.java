@@ -2,7 +2,7 @@ package MapTest;
 
 import Map.*;
 import Map.Enums.DestinationType;
-import Map.Enums.ImageType;
+import Map.Enums.String;
 import Map.Exceptions.FloorDoesNotExistException;
 import org.junit.Assert;
 import org.junit.Before;

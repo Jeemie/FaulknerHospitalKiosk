@@ -1,6 +1,7 @@
 package Map;
 
 import Map.Enums.DestinationType;
+
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import com.fasterxml.jackson.annotation.*;
@@ -12,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.ImageView;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -32,29 +31,10 @@ public class Floor extends Observable implements Observer {
     private UUID uniqueID;
 
     //
-    private ImageType imageType;
+    private String resourceFileName;
 
     //
     private Building currentBuilding;
-
-    //
-    private LocationNode currentlySelectedLocationNode;
-
-    @JsonIgnore
-    //
-    private ObservableList<LocationNode> currentlySelectedAdjacentLocationNodes;
-
-    @JsonIgnore
-    //
-    private ObservableList<String> currentlySelectedLocationNodeDestinatioms;
-
-    @JsonIgnore
-    //
-    private Pane locationNodePane;
-
-    @JsonIgnore
-    //
-    private Pane locationNodeEdgePane;
 
     @JsonIgnore
     //
@@ -81,22 +61,17 @@ public class Floor extends Observable implements Observer {
      * TODO
      *
      * @param floorName
-     * @param imageType
+     * @param resourceFileName
      * @param currentBuilding
      */
-    public Floor(String floorName, ImageType imageType, Building currentBuilding) {
+    public Floor(String floorName, String resourceFileName, Building currentBuilding) {
 
         this.floorName = floorName;
         this.uniqueID = UUID.randomUUID();
-        this.imageType = imageType;
+        this.resourceFileName = resourceFileName;
         this.currentBuilding = currentBuilding;
-        this.currentlySelectedLocationNode = null;
-        this.currentlySelectedAdjacentLocationNodes = FXCollections.observableArrayList();
-        this.currentlySelectedLocationNodeDestinatioms = FXCollections.observableArrayList();
-        this.locationNodePane = new Pane();
-        this.locationNodeEdgePane = new Pane();
         //TODO correct image loading
-        //this.floorImage = new Image(this.getClass().getResource(imageType.getResourceFileName()).toString());
+        //this.floorImage = new Image(this.getClass().getResource(resourceFileName.getResourceFileName()).toString());
 
         // TODO delete - Temp fix for testing:
         this.floorImage = null;
@@ -197,18 +172,13 @@ public class Floor extends Observable implements Observer {
     }
 
     @JsonGetter
-    public ImageType getImageType() {
-        return imageType;
+    public String getResourceFileName() {
+        return resourceFileName;
     }
 
     @JsonGetter
     public Building getCurrentBuilding() {
         return currentBuilding;
-    }
-
-    @JsonGetter
-    public LocationNode getCurrentlySelectedLocationNode() {
-        return currentlySelectedLocationNode;
     }
 
     @JsonGetter

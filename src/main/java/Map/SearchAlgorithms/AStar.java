@@ -1,5 +1,6 @@
-package Map;
+package Map.SearchAlgorithms;
 
+import Map.*;
 import Map.Exceptions.NoPathException;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ import static java.util.Collections.reverse;
 /**
  * TODO
  */
-public class AStar {
+public class AStar implements ISearchAlgorithm {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
 
@@ -22,7 +23,8 @@ public class AStar {
      * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
-    public static ArrayList<LocationNode> aStar(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
+            NoPathException {
 
         LocationNode currentNode;
         Double tentative_gScore;

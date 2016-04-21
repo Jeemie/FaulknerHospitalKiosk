@@ -1,5 +1,6 @@
-package Map;
+package Map.SearchAlgorithms;
 
+import Map.*;
 import Map.Exceptions.NoPathException;
 import org.slf4j.LoggerFactory;
 
@@ -7,14 +8,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import java.util.*;
-
 import static java.util.Collections.reverse;
 
 /**
  * Created by maryannoconnell on 4/20/16.
  */
-public class Dijkstras {
+public class Dijkstras implements ISearchAlgorithm {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Dijkstras.class); // Logger for this class
 
@@ -26,7 +25,8 @@ public class Dijkstras {
      * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
-    public static ArrayList<LocationNode> dikstras(LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
+            NoPathException {
 
         LocationNode currentNode;
         Double tentative_gScore;

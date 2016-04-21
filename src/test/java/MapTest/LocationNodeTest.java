@@ -1,6 +1,11 @@
 package MapTest;
 
-import Map.*;
+import Map.Building;
+import Map.Floor;
+import Map.LocationNode;
+import Map.LocationNodeEdge;
+import Map.Location;
+import Map.Destination;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Exceptions.NodeDoesNotExistException;
@@ -24,7 +29,7 @@ public class LocationNodeTest {
     public void setUp() throws Exception {
 
         Building mMainHospital = new Building();
-        Floor mFloor3 = new Floor("Floor 3", ImageType.FLOOR, mMainHospital);
+        Floor mFloor3 = new Floor("Floor 3", "Floor1_Final.png", mMainHospital);
         Location mLocation3B = new Location(10, 10);
 
         mNode3A = new LocationNode("3A", mLocation3B, mFloor3, ImageType.POINT);
@@ -39,7 +44,7 @@ public class LocationNodeTest {
     @Test
     public void testAddDestinationDepartment() {
 
-        mNode3A.addDestination(DestinationType.DEPARTMENT, "Optometry");
+        mNode3A.addDestination("Optometry", DestinationType.DEPARTMENT);
         ArrayList<Destination> destinations = mNode3A.getDestinations(DestinationType.DEPARTMENT);
 
         Assert.assertEquals(destinations.get(0).toString(), "Optometry");
@@ -51,7 +56,7 @@ public class LocationNodeTest {
   @Test
     public void testAddDestinationPhysician() {
 
-        mNode3B.addDestination(DestinationType.PHYSICIAN, "Dr. Lisa Grossi");
+        mNode3B.addDestination("Dr. Lisa Grossi", DestinationType.PHYSICIAN);
         ArrayList<Destination> destinations = mNode3B.getDestinations(DestinationType.PHYSICIAN);
 
       Assert.assertEquals(destinations.get(0).toString(), "Dr. Lisa Grossi");
@@ -63,7 +68,7 @@ public class LocationNodeTest {
     @Test
     public void testAddDestinationElevator() {
 
-        mNode3C.addDestination(DestinationType.ELEVATOR, "Elevator");
+        mNode3C.addDestination("Elevator", DestinationType.ELEVATOR);
         ArrayList<Destination> destinations = mNode3C.getDestinations(DestinationType.ELEVATOR);
 
         Assert.assertEquals(destinations.get(0).toString(), "Elevator");
@@ -75,7 +80,7 @@ public class LocationNodeTest {
     @Test
     public void testAddRemoveDestinationKiosk()  throws NodeDoesNotExistException  {
 
-        mNode3D.addDestination(DestinationType.KIOSK, "Kiosk");
+        mNode3D.addDestination("Kiosk", DestinationType.KIOSK);
         ArrayList<Destination> destinations = mNode3D.getDestinations(DestinationType.KIOSK);
         Assert.assertEquals(destinations.get(0).toString(), "Kiosk");
         mNode3D.removeDestination(destinations.get(0));

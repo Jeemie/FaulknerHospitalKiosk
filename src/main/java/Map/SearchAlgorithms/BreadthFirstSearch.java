@@ -1,10 +1,11 @@
-package Map;
+package Map.SearchAlgorithms;
 
 /**
  * Created by maryannoconnell on 4/20/16.
  */
 
 import Map.Exceptions.NoPathException;
+import Map.LocationNode;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -12,7 +13,7 @@ import java.util.PriorityQueue;
 /**
  * Breadth first search pathfinding
  */
-public class BreadthFirstSearch {
+public class BreadthFirstSearch implements ISearchAlgorithm {
 
     /**
      * Find a path from specified start node to specified destination node
@@ -22,7 +23,8 @@ public class BreadthFirstSearch {
      * @param destinationNode
      * @return List of nodes from in path from startNode to destinationNode
      */
-    public static ArrayList<LocationNode> bfs (LocationNode startNode, LocationNode destinationNode) throws NoPathException {
+    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
+            NoPathException {
 
         LocationNode currentNode;
 

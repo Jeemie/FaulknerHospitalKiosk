@@ -1,11 +1,12 @@
 package Kiosk.Controllers;
 
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController;
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
-import Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader;
 //import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
-import Map.*;
+import Map.Map;
+import Map.Destination;
+import Map.LocationNode;
+import Map.LocationNodeEdge;
+import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -32,12 +33,23 @@ public class AdminDashboardController {
     private KioskApp kioskApp;
 
 
+    // TODO possibly rethink
+    private FixedSizedStack<Destination> previouslyClickedDestinations = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<LocationNodeEdge> previouslyClickedEdges = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<LocationNode> previouslyClickedLocationNodes = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<Destination> previouslyClickedFloors = new FixedSizedStack<>(10);
+
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
     @FXML
     private ScrollPane mapScrollPane;
 
+    // TODO find out use and rename
     @FXML
     private Label alabel;
     @FXML
@@ -197,57 +209,13 @@ public class AdminDashboardController {
 
     public void setListeners() {
 
-        makeShitHappen();
         // Setup Listeners
         setCoreFunctionalityListeners();
-
-
-
-
-
-        setBuildingTabListeners1();
-        setFloorTabListeners1();
-        setLocationTabListeners1();
-//        deleteThis();
+        setBuildingTabListeners();
+        setFloorTabListeners();
+        setLocationTabListeners();
 
     }
-
-    private void makeShitHappen() {
-
-        this.faulknerHospitalMap = new Map("Faulkner Hospital");
-
-    }
-
-
-
-//    private void deleteThis() {
-//
-//
-//        this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
-//
-//        try {
-//            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
-//            node3A.addDestination(Destination.KIOSK, "Kiosk3");
-//        } catch (FloorDoesNotExistException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        for (Floor floor: this.building.getFloors()) {
-//            floor.setFloorImage(getClass().getResource(String.valueOf(floor.getImagePath())));
-//            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
-//                for (LocationNode node : floor.getFloorNodes()) {
-//                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
-//                    node.initObserver();
-//                    node.initAdjacentLines();
-//                }
-//            }
-//            floor.drawFloorAdmin(this.mapStackPane);
-//        }
-//
-//
-//    }
-
 
 
 
@@ -403,7 +371,7 @@ public class AdminDashboardController {
 
     }
 
-    private void setBuildingTabListeners1() {
+    private void setBuildingTabListeners() {
 
         // TODO do something with the building tab
 
@@ -507,7 +475,7 @@ public class AdminDashboardController {
 
     }
 
-    private void setFloorTabListeners1() {
+    private void setFloorTabListeners() {
 
         // Setup Building Accordion
         this.floorAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
@@ -552,7 +520,7 @@ public class AdminDashboardController {
 
         });
 
-        this.floorLocationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorLocatioNodes());
+        this.floorLocationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorLocationNodes());
 
         this.floorDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -607,7 +575,7 @@ public class AdminDashboardController {
 
     }
 
-    private void setLocationTabListeners1() {
+    private void setLocationTabListeners() {
 
 
         // Setup Building Accordion
