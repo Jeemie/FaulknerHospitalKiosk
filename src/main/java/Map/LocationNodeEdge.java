@@ -77,7 +77,7 @@ public class LocationNodeEdge extends Observable {
      * @param node2
      * @return
      */
-    public LocationNodeEdge getEdgeBetween(ArrayList<LocationNodeEdge> edges, LocationNode node1, LocationNode node2) {
+    public static LocationNodeEdge getEdgeBetween(ArrayList<LocationNodeEdge> edges, LocationNode node1, LocationNode node2) {
 
         for (LocationNodeEdge edge : edges) {
 
@@ -106,7 +106,9 @@ public class LocationNodeEdge extends Observable {
     }
 
     /**
-     * Check if edge already exists
+     * Check if edge already exists (prevents duplicate edges from being added)
+     * (Order in which nodes are specified does not matter)
+     *
      * @param currentNode LocationNode (this) from calling class
      * @param adjacentNode Adjacent node to check
      */
@@ -118,14 +120,14 @@ public class LocationNodeEdge extends Observable {
     }
 
     /**
-     * Check if specified edge is between two specified nodes
+     * Check if specified edge is between two specified nodes (Order in which nodes are specified matters)
+     *
      * @param currentNode Node from currentNode's list of edges
      * @param adjacentNode Node to check
+     * @return True, if this is the edge we are looking for; False, if this is a different edge
      */
     public boolean isEdgeBetweenNodes(LocationNode currentNode, LocationNode adjacentNode) {
 
-        // This is the edge we are looking for
-        // This is a different edge
         return this.locationNode1.equals(currentNode) && this.locationNode2.equals(adjacentNode);
     }
 
@@ -144,7 +146,6 @@ public class LocationNodeEdge extends Observable {
         return weight;
     }
 
-    // Use when a node's location changes
     public void setWeight(double weight) {
 
         this.weight = weight;
@@ -154,15 +155,19 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-
+    /**
+     * When given one of this edge's nodes, get the other node associated with the edge
+     * @param locationNode The given node
+     * @return The other node connected by this edge
+     */
     public LocationNode getOtherNode(LocationNode locationNode) {
 
         if (this.locationNode1.equals(locationNode)) {
 
-            return this.locationNode1;
+            return this.locationNode2;
         } else {
 
-            return this.locationNode2;
+            return this.locationNode1;
         }
 
     }
