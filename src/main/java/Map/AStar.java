@@ -51,9 +51,11 @@ public class AStar {
 
             if (currentNode.equals(destinationNode)) {
 
+                ArrayList<LocationNode> path = reconstructPath(currentNode);
+
                 resetCosts(closedNodes, openNodes);
 
-                return reconstructPath(currentNode);
+                return path;
 
             }
 
