@@ -22,7 +22,7 @@ import java.util.Observer;
 import java.util.UUID;
 
 /**
- * A class the represents a building.
+ * A class that represents a building.
  */
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Building.class)
@@ -120,5 +120,29 @@ public class Building extends Observable implements Observer {
     public String toString() {
 
         return this.name;
+    }
+
+    @JsonGetter
+    public String getName() {
+
+        return name;
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public ArrayList<Floor> getFloors() {
+
+        return floors;
+    }
+
+    @JsonGetter
+    public Map getCurrentMap() {
+
+        return currentMap;
     }
 }

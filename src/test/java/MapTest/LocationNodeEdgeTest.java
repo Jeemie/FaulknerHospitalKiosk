@@ -13,18 +13,6 @@ import java.util.ArrayList;
  */
 public class LocationNodeEdgeTest {
 
-
-
-    // LocationNodeEdge getEdgeBetween(ArrayList<LocationNodeEdge> edges, LocationNode node1, LocationNode node2)
-
-    // boolean edgeExists(LocationNode currentNode, LocationNode adjacentNode)
-
-    // boolean isEdgeBetweenNodes(LocationNode currentNode, LocationNode adjacentNode)
-
-    // double computeWeight()
-
-    // public LocationNode getOtherNode(LocationNode locationNode)
-
     LocationNode mNode1, mNode2, mNode3, mNode4, mNode5, mNode6;
 
     LocationNodeEdge mEdge1, mEdge2, mEdge3, mEdge4, mEdge5, mEdge6;
@@ -103,7 +91,8 @@ public class LocationNodeEdgeTest {
     @Test
     public void testIsEdgeBetweenNodes() {
 
-
+        Assert.assertTrue(mEdge1.isEdgeBetweenNodes(mNode1, mNode2));
+        Assert.assertFalse(mEdge1.isEdgeBetweenNodes(mNode2, mNode1));
 
     }
 
@@ -113,6 +102,9 @@ public class LocationNodeEdgeTest {
     @Test
     public void testComputeWeight() {
 
+        double expected = 100;
+
+        Assert.assertEquals(mEdge5.computeWeight(), expected, .001);
 
     }
 
@@ -120,9 +112,20 @@ public class LocationNodeEdgeTest {
      * Given an edge and one known node, get the other node
      */
     @Test
-    public void testGetOtherNode() {
+    public void testGetOtherNode1() {
+
+        Assert.assertEquals(mNode2, mEdge1.getOtherNode(mNode1));
 
     }
 
+    /**
+     * Given an edge and one known node, get the other node
+     */
+    @Test
+    public void testGetOtherNode2() {
+
+        Assert.assertEquals(mNode1, mEdge1.getOtherNode(mNode2));
+
+    }
 
 }

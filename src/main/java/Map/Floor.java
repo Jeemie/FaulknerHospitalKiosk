@@ -24,10 +24,9 @@ import java.util.UUID;
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
 public class Floor extends Observable implements Observer {
 
-    //
+
     private String floorName;
 
-    //
     private UUID uniqueID;
 
     //
@@ -39,18 +38,23 @@ public class Floor extends Observable implements Observer {
     //
     private LocationNode currentlySelectedLocationNode;
 
+    @JsonIgnore
     //
     private ObservableList<LocationNode> currentlySelectedAdjacentLocationNodes;
 
+    @JsonIgnore
     //
     private ObservableList<String> currentlySelectedLocationNodeDestinatioms;
 
+    @JsonIgnore
     //
     private Pane locationNodePane;
 
+    @JsonIgnore
     //
     private Pane locationNodeEdgePane;
 
+    @JsonIgnore
     //
     private Image floorImage;
 
@@ -165,7 +169,33 @@ public class Floor extends Observable implements Observer {
     }
 
 
+    @JsonGetter
     public String getFloorName() {
         return floorName;
+    }
+
+    @JsonGetter
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    @JsonGetter
+    public ImageType getImageType() {
+        return imageType;
+    }
+
+    @JsonGetter
+    public Building getCurrentBuilding() {
+        return currentBuilding;
+    }
+
+    @JsonGetter
+    public LocationNode getCurrentlySelectedLocationNode() {
+        return currentlySelectedLocationNode;
+    }
+
+    @JsonGetter
+    public ArrayList<LocationNode> getLocationNodes() {
+        return locationNodes;
     }
 }
