@@ -8,6 +8,7 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.LocationNode;
 import Map.Map;
 import Map.FaulknerHospitalData;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,7 +63,10 @@ public class KioskApp extends Application {
                 File newFile = new File(this.filePath.toURI());
                 newFile.createNewFile();
 
+                ObjectMapper objectMapper = new ObjectMapper();
 
+                // Add square brackets to newly created file
+                objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString("{}");
 
                 this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
                 this.faulknerHospitalMap = FaulknerHospitalData.starterMap(this.faulknerHospitalMap);
