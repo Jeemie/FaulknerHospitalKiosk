@@ -127,7 +127,7 @@ public class Map implements Observer {
     // TODO fill in
     public void addBuilding(String name) {
 
-        Building newBuilding = new Building();
+        Building newBuilding = new Building(name, this);
 
 
 
@@ -174,7 +174,7 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentLocationNode.addDestination(name, destinationType);
+        this.currentLocationNode.addDestination(destinationType, name);
 
     }
 
@@ -305,6 +305,16 @@ public class Map implements Observer {
         LOGGER.info("Loading the map from the file: " + file.toString());
 
         return objectMapper.readValue(file, Map.class);
+    }
+
+    //TODO
+    /**
+     * Reinitialize null fields in Map object and subclass objects after loading from file
+     * @param map Map to reinitialize
+     */
+    public Map initMapComponents(Map map) {
+
+        return map;
     }
 
     @JsonGetter

@@ -102,10 +102,10 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     /**
      * TODO
      *
-     * @param name
      * @param destinationType
+     * @param name
      */
-    public void addDestination(String name, DestinationType destinationType) {
+    public void addDestination(DestinationType destinationType, String name) {
 
         this.destinations.add(new Destination(name, destinationType, this));
 
@@ -270,7 +270,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     }
 
     /**
-     * TODO
+     * TODO - please fix; fails testDeleteLocationNodeEdgeConnections(); The edge list is not empty after this runs
      */
     public void deleteLocationNodeEdgeConnections() {
 

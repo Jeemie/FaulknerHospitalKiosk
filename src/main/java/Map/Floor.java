@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.ImageView;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -92,7 +94,11 @@ public class Floor extends Observable implements Observer {
         this.currentlySelectedLocationNodeDestinatioms = FXCollections.observableArrayList();
         this.locationNodePane = new Pane();
         this.locationNodeEdgePane = new Pane();
-        this.floorImage = new Image(this.getClass().getResource(imageType.getResourceFileName()).toString());
+        //TODO correct image loading
+        //this.floorImage = new Image(this.getClass().getResource(imageType.getResourceFileName()).toString());
+
+        // TODO delete - Temp fix for testing:
+        this.floorImage = null;
         this.locationNodes = new ArrayList<>();
 
         this.addObserver(this.currentBuilding);

@@ -1,6 +1,7 @@
 package MapTest;
 
 import Map.*;
+import Map.Enums.ImageType;
 import Map.Enums.RelativeDirection;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,40 +19,40 @@ public class DirectionsTest {
     private Floor mFloor3;
     List<LocationNode> mpath, mpath2, mpath3;
 
-    //@Before
-   /* public void setup() {
+    @Before
+   public void setup() {
         mTestBuilding = new Building();
 
-        mFloor3 = new Floor(3, mTestBuilding, "Floor3_Final.png");
+        mFloor3 = new Floor("Floor 3", ImageType.FLOOR, mTestBuilding);
 
         mpath = new ArrayList<LocationNode>();
 
-        mpath.add(new LocationNode(0, new Location(0, 50), mFloor3));
-        mpath.add(new LocationNode(0, new Location(0, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(0, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(10, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(20, 30), mFloor3));
-        mpath.add(new LocationNode(0, new Location(20, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 40), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 20), mFloor3));
-        mpath.add(new LocationNode(0, new Location(30, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(15, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(5, 0), mFloor3));
-        mpath.add(new LocationNode(0, new Location(2, 0), mFloor3));
+        mpath.add(new LocationNode("node1", new Location(0, 50), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node2", new Location(0, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node3", new Location(0, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node4", new Location(10, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node5", new Location(20, 30), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node6", new Location(20, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node7", new Location(30, 40), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node8", new Location(30, 20), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node9", new Location(30, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node10", new Location(15, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node11", new Location(5, 0), mFloor3, ImageType.POINT));
+        mpath.add(new LocationNode("node11", new Location(2, 0), mFloor3, ImageType.POINT));
 
         mpath2 = new ArrayList<LocationNode>();
 
-        mpath2.add(new LocationNode(0, new Location(10, 20), mFloor3)); //Should just be Right
-        mpath2.add(new LocationNode(0, new Location(10, 40), mFloor3));
-        mpath2.add(new LocationNode(0, new Location(15, 40), mFloor3));
+        mpath2.add(new LocationNode("node12", new Location(10, 20), mFloor3, ImageType.POINT)); //Should just be Right
+        mpath2.add(new LocationNode("node13", new Location(10, 40), mFloor3, ImageType.POINT));
+        mpath2.add(new LocationNode("node14", new Location(15, 40), mFloor3, ImageType.POINT));
 
         mpath3 = new ArrayList<LocationNode>();
 
-        mpath3.add(new LocationNode(0, new Location(0, 50), mFloor3)); //Should just be Straight
-        mpath3.add(new LocationNode(0, new Location(0, 40), mFloor3));
+        mpath3.add(new LocationNode("node15", new Location(0, 50), mFloor3, ImageType.POINT)); //Should just be Straight
+        mpath3.add(new LocationNode("node16", new Location(0, 40), mFloor3, ImageType.POINT));
 
     }
-
+/*
     @Test
     public void testGetRelativeDirections() {
         List<RelativeDirection> mRelativeDirections = new ArrayList<RelativeDirection>();
@@ -93,11 +94,12 @@ public class DirectionsTest {
         mRelativeDirections.add(RelativeDirection.STRAIGHT);
         Assert.assertEquals(mRelativeDirections, result.getRelativeDirections());
     }
-
-    *//**
+*/
+    /**
      * Testing the notifications. Note that these are very likely to change, so these test-cases
      * must be updated.
-     *//*
+     */
+    /*
     @Test
     public void testGetTextualDirections() {
         mTestBuilding = new Building();
