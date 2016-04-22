@@ -51,6 +51,34 @@ public class FaulknerHospitalData {
         f1.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
         f1.getLocationNodes().get(9).addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
+
+
+
+
+        Floor f2 = map.getCurrentBuilding().getFloors().get(1);
+
+        //FLOOR 1
+        f2.addLocationNode("Bathroom", new Location(10, 10), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(0).addDestination("Audiology", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(1).addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(2).addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
+        f2.addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(3).addDestination("Emergency Room", DestinationType.DEPARTMENT);
+        f2.addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(4).addDestination("GI Endoscopy", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(5).addDestination("Laboratory", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
+        f2.getLocationNodes().get(6).addDestination("Patient Financial Services", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(7).addDestination("Radiology", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(8).addDestination("Special Testing", DestinationType.DEPARTMENT);
+        f2.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
+        f2.getLocationNodes().get(9).addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
+
 /*
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
         mMainHospital.getFloor(1).addNode(new Location(40, 40)); //get(11) Admit
