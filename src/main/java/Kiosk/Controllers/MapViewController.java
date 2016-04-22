@@ -128,6 +128,9 @@ public class MapViewController{
 
 
 
+
+
+
         //destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
 //        System.out.println(destinationNode.getLocation().getX());
 //
@@ -139,11 +142,20 @@ public class MapViewController{
             public void handle(MouseEvent event) {
 
                 counter = 0;
+
                 destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
                 scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
-                //mMainHost.drawShortestPath(startNode, destinationNode);
-                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+//                //mMainHost.drawShortestPath(startNode, destinationNode);
+//                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+
+                mMainHost.drawShortestPath(startNode, destinationNode);
+                imageStackPane.setMaxHeight(mMainHost.getyMax());
+                imageStackPane.setMinHeight(mMainHost.getyMin());
+                imageStackPane.setMaxWidth(mMainHost.getxMax());
+                imageStackPane.setMinWidth(mMainHost.getyMin());
+                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
                 currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
             }
@@ -182,7 +194,7 @@ public class MapViewController{
                     currentFloorLabel.setText(String.valueOf(getCounterFloor));
                 } else { getCounterFloor = 1;}
                 try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
                     if(counter<1){
                         counter =1;
                     }
@@ -231,7 +243,7 @@ public class MapViewController{
                     currentFloorLabel.setText(String.valueOf(getCounterFloor));
                 } else {getCounterFloor = 7;}
                 try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
                     if(counter>4){
                         counter =4;
                     }
@@ -310,7 +322,8 @@ public class MapViewController{
         running = false;
         //timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
+        destinationNode.getCurrentFloor().drawFloorAdmin(this.imageStackPane);
+
     }
 
     public void setStartNode(LocationNode startNode) {

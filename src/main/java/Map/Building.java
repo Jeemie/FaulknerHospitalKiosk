@@ -56,6 +56,8 @@ public class Building extends Observable {
         this.startNode = startNode;
     }
 
+    private double xMin, xMax,yMin,yMax;
+
     /**
      * Default constructor for the building class.
      */
@@ -121,8 +123,36 @@ public class Building extends Observable {
                 path.get(i).drawAdjacentNode(path.get(i + 1).getCurrentFloor().getNodePane(), path.get(i + 1));
 
             }
-        }
 
+        yMin = path.get(0).getLocation().getY();
+        xMin = path.get(0).getLocation().getX();
+        yMax = path.get(0).getLocation().getY();
+        xMax = path.get(0).getLocation().getX();
+
+            for( int i =0 ; i <= path.size();i++){
+                if (path.get(i-1).getCurrentFloor().equals(path.get(i).getCurrentFloor())){
+                    double xnum =  path.get(i).getLocation().getX();
+                    double ynum =  path.get(i).getLocation().getY();
+                    if(xnum<xMin){
+                        xMin=xnum;
+                    }
+                    if(xnum>xMax){
+                        xMax=xnum;
+                    }
+                    if(ynum<yMin){
+                        yMin =ynum;
+                    }
+                    if(ynum>yMax){
+                        yMax =ynum;
+                    }
+                }
+                else{
+                    break;
+                }
+            }
+        System.out.println(xMax);
+        System.out.println(yMax);
+        }
 
 
     /**
@@ -396,5 +426,37 @@ public class Building extends Observable {
 
     public void setCurrentNodes(LocationNode currentNodes) {
         this.currentNodes = currentNodes;
+    }
+
+    public double getxMin() {
+        return xMin;
+    }
+
+    public void setxMin(double xMin) {
+        this.xMin = xMin;
+    }
+
+    public double getxMax() {
+        return xMax;
+    }
+
+    public void setxMax(double xMax) {
+        this.xMax = xMax;
+    }
+
+    public double getyMin() {
+        return yMin;
+    }
+
+    public void setyMin(double yMin) {
+        this.yMin = yMin;
+    }
+
+    public double getyMax() {
+        return yMax;
+    }
+
+    public void setyMax(double yMax) {
+        this.yMax = yMax;
     }
 }
