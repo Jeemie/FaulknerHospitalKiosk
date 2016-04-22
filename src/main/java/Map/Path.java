@@ -36,7 +36,7 @@ public class Path {
 
     public Path(ImageView imageView, Pane nodePane, Pane edgePane, ArrayList<LocationNode> locationNodes) {
 
-        this.currentIndex = -1;
+        this.currentIndex = 0;
         this.originalPath = locationNodes;
         this.imageView = imageView;
         this.nodePane = nodePane;

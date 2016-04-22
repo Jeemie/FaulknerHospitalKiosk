@@ -8,6 +8,7 @@ import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
 import Map.SearchAlgorithms.AStar;
+import Map.SearchAlgorithms.BreadthFirstSearch;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.annotation.*;
@@ -149,7 +150,7 @@ public class Map implements Observer {
         this.uniqueID = UUID.randomUUID();
         this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
-        this.searchAlgorithm = new AStar();
+        this.searchAlgorithm = new BreadthFirstSearch();
         this.currentMapState = MapState.NORMAL;
         this.directoryList = FXCollections.observableArrayList();
         this.currentLocationNode = null;

@@ -317,14 +317,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.iconLabel.setGraphic(this.iconImageView);
 
-        this.iconLabel.setLayoutX(this.location.getX() + (this.iconLabel.getPrefWidth() / 2));
-        this.iconLabel.setLayoutY(this.location.getY() + (this.iconLabel.getPrefHeight() / 2));
+        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2));
+        this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2));
 
         pane.getChildren().add(this.iconLabel);
 
     }
 
     public void drawNormal(Pane pane, ImageType imageType, int x, int y) {
+
+        LOGGER.info("Attempting to draw ");
 
         if (pane.getChildren().contains(this.iconLabel)) {
 
