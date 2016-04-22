@@ -38,7 +38,8 @@ public class AdminSubControllerLoader {
             currentNode = pane;
 
             AdminDashboardDestinationAddController controller = loader.getController();
-//            controller.setCurrentLocationNode(this.currentLocationNode);
+            controller.setCurrentLocationNode(this.currentLocationNode);
+            controller.setCurrentLocationNode(this.currentLocationNode);
             controller.setParentController(this);
             controller.setListeners();
 

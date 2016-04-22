@@ -1,5 +1,6 @@
 package Map;
 
+import Map.Enums.DestinationType;
 import Map.Enums.UpdateType;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -102,6 +103,19 @@ public class Building extends Observable implements Observer {
         for (Floor floor : this.floors) {
 
             buildingDestinations.addAll(floor.getFloorDestinations());
+
+        }
+
+        return buildingDestinations;
+    }
+
+    public ArrayList<Destination> getBuildingDestinations(DestinationType destinationType) {
+
+        ArrayList<Destination> buildingDestinations = new ArrayList<>();
+
+        for (Floor floor : this.floors) {
+
+            buildingDestinations.addAll(floor.getFloorDestinations(destinationType));
 
         }
 

@@ -1,6 +1,7 @@
 package Kiosk.Controllers.AdminDashboardSubControllers;
 
 import Map.Building;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Floor;
 import javafx.event.EventHandler;
@@ -92,54 +93,57 @@ public class AdminDashboardAddFloorController {
 
                 int floorNum = Integer.parseInt(floorNumberTextField.getText());
 
-//                try {
-//
+                try {
+
+                    throw new FloorDoesNotExistException(1);
 //                    currentBuilding.getFloor(floorNum);
-//
-//                } catch (FloorDoesNotExistException e) {
-//
-//                    LOGGER.info("Floor " + floorNum + " does not exist, a new floor will be created");
-//
-//                    URL url;
-//                    URLConnection con;
-//                    DataInputStream dis;
-//                    FileOutputStream fos;
-//                    byte[] fileData;
-//                    try {
-//
-//                        url = new URL(selectFloorFileTextField.getText()); //File Location goes here
-//                        con = url.openConnection(); // open the url connection.
-//                        dis = new DataInputStream(con.getInputStream());
-//                        fileData = new byte[con.getContentLength()];
-//
-//                        for (int q = 0; q < fileData.length; q++) {
-//                            fileData[q] = dis.readByte();
-//                        }
-//                        dis.close(); // close the data input stream
-//
-//                        File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" + "Floor" +
-//                                floorNum + ".png");
-//
-//                        newFloorImage.createNewFile();
-//
-//                        LOGGER.info(newFloorImage.getAbsolutePath());
-//
-//                        fos = new FileOutputStream(newFloorImage); //FILE Save Location goes here
-//                        fos.write(fileData);  // write out the file we want to save.
-//                        fos.close(); // close the output stream writer
-//
-//                    } catch(Exception exception) {
-//
-//                        LOGGER.info("a", exception);
-//
-//                    }
-//
+
+                } catch (FloorDoesNotExistException e) {
+
+                    LOGGER.info("Floor " + floorNum + " does not exist, a new floor will be created");
+
+                    URL url;
+                    URLConnection con;
+                    DataInputStream dis;
+                    FileOutputStream fos;
+                    byte[] fileData;
+                    try {
+
+                        url = new URL(selectFloorFileTextField.getText()); //File Location goes here
+                        con = url.openConnection(); // open the url connection.
+                        dis = new DataInputStream(con.getInputStream());
+                        fileData = new byte[con.getContentLength()];
+
+                        for (int q = 0; q < fileData.length; q++) {
+                            fileData[q] = dis.readByte();
+                        }
+                        dis.close(); // close the data input stream
+
+                        File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" + "Floor" +
+                                floorNum + ".jpg");
+
+                        newFloorImage.createNewFile();
+
+                        LOGGER.info(newFloorImage.getAbsolutePath());
+
+                        fos = new FileOutputStream(newFloorImage); //FILE Save Location goes here
+                        fos.write(fileData);  // write out the file we want to save.
+                        fos.close(); // close the output stream writer
+
+                    } catch (Exception exception) {
+
+                        LOGGER.info("a", exception);
+
+                    }
+
 //                    Floor newFloor = currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
 //                    newFloor.drawFloorAdmin(subViewLoader.getMapStackPane());
-//
-//                    subViewLoader.removeFromStackPane();
-//
-//                }
+
+
+
+                    subViewLoader.removeFromStackPane();
+
+                }
 
 
             }
@@ -162,7 +166,6 @@ public class AdminDashboardAddFloorController {
 
 
     }
-
 
 
     public void setSubViewLoader(SubViewLoader<AdminDashboardAddFloorController> subViewLoader) {

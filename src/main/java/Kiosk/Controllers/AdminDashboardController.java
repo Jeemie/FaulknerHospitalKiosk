@@ -280,21 +280,21 @@ public class AdminDashboardController {
                     e.printStackTrace();
                 }
 
-               try {
+                try {
 
-                   File saveFile = new File(saveFilePath.toURI());
+                    File saveFile = new File(saveFilePath.toURI());
 
-                   faulknerHospitalMap.saveToFile(saveFile);
+                    faulknerHospitalMap.saveToFile(saveFile);
 
                     LOGGER.info("Changes were saved");
 
-              } catch (IOException e) {
+                } catch (IOException e) {
 
-                   LOGGER.error("An error occurred while saving changes to the map", e);
+                    LOGGER.error("An error occurred while saving changes to the map", e);
 
-              } catch (URISyntaxException e) {
+                } catch (URISyntaxException e) {
 
-                   LOGGER.error("An error occurred while saving changes to the map", e);
+                    LOGGER.error("An error occurred while saving changes to the map", e);
 
                 }
 

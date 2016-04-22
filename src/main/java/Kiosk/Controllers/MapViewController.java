@@ -2,13 +2,14 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Building;
+import Map.Exceptions.FloorDoesNotExistException;
+import Map.LocationNode;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.Group;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -19,20 +20,32 @@ import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapViewController {
+public class MapViewController{
 
     // Reference to the main application.
 
     private boolean okClicked = false;
     private KioskApp kioskApp;
     private Building mMainHost;
-//    private LocationNode startNode;
-//    private LocationNode destinationNode;
+    private LocationNode startNode;
+    private LocationNode destinationNode;
     private int numThreads = 0;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
     @FXML
+    private Label currentFloorLabel;
+
+    @FXML
     private TextField searchTextBox;
+    @FXML
+    private Button zoomIn;
+    @FXML
+    private Button zoomOut;
+
+    @FXML
+    private Slider slider;
+
     @FXML
     private StackPane imageStackPane;
 
@@ -51,6 +64,7 @@ public class MapViewController {
     @FXML
 
     private ListView Direction;
+    Group zoomGroup;
 
 
     public Timer timer;
@@ -109,6 +123,9 @@ public class MapViewController {
     };
 
 
+
+
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -116,17 +133,62 @@ public class MapViewController {
     @FXML
     private void initialize() {
 
+
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
+
+        slider.setMin(0.5);
+        slider.setMax(1.5);
+        slider.setValue(1.0);
+        slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
+
+        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
+        Group contentGroup = new Group();
+        zoomGroup = new Group();
+        contentGroup.getChildren().add(zoomGroup);
+        zoomGroup.getChildren().add(scrollPane.getContent());
+        scrollPane.setContent(contentGroup);
+
+
+
+
+
+
+
+
+        //destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+//        System.out.println(destinationNode.getLocation().getX());
+//
+//        System.out.println(destinationNode.getLocation().getY());
+
         confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
                 counter = 0;
+
+//                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+//                //mMainHost.drawShortestPath(startNode, destinationNode);
+//                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+
 //                mMainHost.drawShortestPath(startNode, destinationNode);
+//                imageStackPane.setMaxHeight(mMainHost.getyMax());
+//                imageStackPane.setMinHeight(mMainHost.getyMin());
+//                imageStackPane.setMaxWidth(mMainHost.getxMax());
+//                imageStackPane.setMinWidth(mMainHost.getyMin());
+                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
             }
 
         });
+
+
+
 
 
         searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -153,18 +215,24 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 getCounterFloor--;
-//                try {
-//                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                if (getCounterFloor >= 1) {
+                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
+                } else { getCounterFloor = 1;}
+                try {
+//                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
+                    throw new FloorDoesNotExistException(1);
 //                    if(counter<1){
 //                        counter =1;
 //                    }
-//                } catch (FloorDoesNotExistException e) {
-//                    e.printStackTrace();
-//                }
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(getCounterFloor);
 
             }
         });
+
+
 
 
         scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -197,14 +265,20 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
                 getCounterFloor++;
-//                try {
-//                    mMainHost.getFloor(getCounterFloor).drawFloorAdmin(imageStackPane);
+                if (getCounterFloor <= 7) {
+                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
+                } else {getCounterFloor = 7;}
+                try {
+//                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
+
+                    throw new FloorDoesNotExistException(1);
+
 //                    if(counter>4){
 //                        counter =4;
 //                    }
-//                } catch (FloorDoesNotExistException e) {
-//                    e.printStackTrace();
-//                }
+                } catch (FloorDoesNotExistException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(getCounterFloor);
                // building.drawShortestPath(startNode, destinationNode);
 
@@ -213,6 +287,29 @@ public class MapViewController {
         });
 
 
+    }
+
+    @FXML
+    void zoomIn(ActionEvent event) {
+        double sliderVal = slider.getValue();
+        slider.setValue(sliderVal += 0.1);
+    }
+
+    @FXML
+    void zoomOut(ActionEvent event) {
+
+        double sliderVal = slider.getValue();
+        slider.setValue(sliderVal + -0.1);
+    }
+
+    private void zoom(double scaleValue) {
+
+        double scrollH = scrollPane.getHvalue();
+        double scrollV = scrollPane.getVvalue();
+        zoomGroup.setScaleX(scaleValue);
+        zoomGroup.setScaleY(scaleValue);
+        scrollPane.setHvalue(scrollH);
+        scrollPane.setVvalue(scrollV);
     }
 
 
@@ -268,21 +365,22 @@ public class MapViewController {
         this.mMainHost = building;
     }
 
-//    public void setDestinationNode(LocationNode destinationNode){
-//
-///*      atimer.cancel();
-//        atimer.purge();
-//        timer.cancel();
-//        timer.purge();*/
-//        running = false;
-//        //timerThread.interrupt();
-//        this.destinationNode = destinationNode;
-////        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
-//    }
-//
-//    public void setStartNode(LocationNode startNode) {
-//
-//        this.startNode = startNode;
-//    }
+    public void setDestinationNode(LocationNode destinationNode){
+
+/*      atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();*/
+        running = false;
+        //timerThread.interrupt();
+        this.destinationNode = destinationNode;
+//        destinationNode.getCurrentFloor().drawFloorAdmin(this.imageStackPane);
+
+    }
+
+    public void setStartNode(LocationNode startNode) {
+
+        this.startNode = startNode;
+    }
 
 }

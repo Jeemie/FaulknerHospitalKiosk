@@ -51,6 +51,10 @@ public class Map implements Observer {
 
     private MapState currentMapState;
 
+    // TODO DELETE EVENTUALLY
+    @JsonIgnore
+    private ObservableList<Destination> directoryList;
+
 
     //||\\ Current Destination //||\\
 
@@ -145,6 +149,7 @@ public class Map implements Observer {
         this.mapBuildings = new ArrayList<>();
         this.searchAlgorithm = new AStar();
         this.currentMapState = MapState.NORMAL;
+        this.directoryList = FXCollections.observableArrayList();
         this.currentLocationNode = null;
         this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
         this.currentLocationNodeDestinations = FXCollections.observableArrayList();
@@ -264,6 +269,42 @@ public class Map implements Observer {
 
         // TODO fill in
         // TODO create debug message
+
+    }
+
+    public void physicianDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
+
+        }
+
+    }
+
+    public void departmentDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.DEPARTMENT));
+
+        }
+
+    }
+
+    public void serviceDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations());
+
+        }
 
     }
 
@@ -692,6 +733,11 @@ public class Map implements Observer {
 
     private void locationNodeUpdater(LocationNode newLocationNode) {
 
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
+
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
 
             LOGGER.info("Rebuilding current location node destinations and connected location nodes");
@@ -721,6 +767,11 @@ public class Map implements Observer {
     }
 
     private void floorChangeUpdater(Floor newFloor) {
+
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
 
         if ((this.currentFloor == null) || (!this.currentFloor.equals(newFloor))) {
 
@@ -759,5 +810,10 @@ public class Map implements Observer {
     public MapState getCurrentMapState() {
 
         return currentMapState;
+    }
+
+    public ObservableList<Destination> getDirectoryList() {
+
+        return directoryList;
     }
 }

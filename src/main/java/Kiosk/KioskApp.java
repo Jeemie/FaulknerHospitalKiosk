@@ -2,6 +2,7 @@ package Kiosk;
 
 import Kiosk.Controllers.*;
 import Map.Destination;
+import Map.Enums.DestinationType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
@@ -29,7 +30,6 @@ public class KioskApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     protected Map faulknerHospitalMap;
-    //    private Building hospitalBuilding;
     private URL filePath;
 
 
@@ -88,8 +88,8 @@ public class KioskApp extends Application {
 
         initRootLayout();
 
-//        showKioskOverview();
-        showAdminControls();
+        showKioskOverview();
+//        showAdminControls();
     }
 
     /**
@@ -159,32 +159,35 @@ public class KioskApp extends Application {
      *
      */
     public boolean showAdminLogin() {
+        showAdminControls();
 
-        try {
-            // Load AdminLogin
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
-            AnchorPane page = loader.load();
+//        try {
+//            // Load AdminLogin
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
+//            AnchorPane page = loader.load();
+//
+//            // Replace KioskOverview with AdminLogin
+//            primaryStage.setTitle("Admin Login");
+//            primaryStage.getScene().setRoot(page);
+///*            Scene scene = new Scene(page);
+//            primaryStage.setScene(scene);
+//            primaryStage.setFullScreen(true);
+//            primaryStage.show();*/
+//
+//            // Give controller access to Main App
+//            AdminLoginController controller = loader.getController();
+//            controller.setKioskApp(this);
+//            controller.setListeners();
+//
+//            return controller.isOkClicked();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
-            // Replace KioskOverview with AdminLogin
-            primaryStage.setTitle("Admin Login");
-            primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
-
-            // Give controller access to Main App
-            AdminLoginController controller = loader.getController();
-            controller.setKioskApp(this);
-            controller.setListeners();
-
-            return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -265,35 +268,24 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      *
      */
-    public boolean showDirectory(Destination destinationType) {
+    public boolean showDirectory(DestinationType destinationType) {
 
         try {
-            // Load DirectoryScreen
 
+            // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
             AnchorPane page = loader.load();
 
-            //Replace KioskOverview with userUI3.
-            primaryStage.setTitle("Directories");
+            primaryStage.setTitle("Directory");
             primaryStage.getScene().setRoot(page);
-//            Scene scene = new Scene(page, width, height);
-//            primaryStage.setScene(scene);
-//            primaryStage.setFullScreen(false);
-//            primaryStage.setFullScreen(true);
-            //primaryStage.show();
-
-
-
 
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
-//            controller.setBuilding(hospitalBuilding);
-//            controller.setStartNode(startNode);
-
-            //set the selected directory view to appear
-            controller.setList(destinationType);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+            controller.setupListeners();
+            controller.setStartSelection(destinationType);
 
             return controller.isOkClicked();
 
