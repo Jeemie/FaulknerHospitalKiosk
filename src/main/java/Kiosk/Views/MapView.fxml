@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -43,7 +44,7 @@
               </ButtonBar>
          </children>
       </GridPane>
-        <Label alignment="CENTER" layoutX="965.0" layoutY="111.0" minWidth="283.0" prefHeight="47.0" prefWidth="127.0" text="Location" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="111.0">
+        <Label alignment="CENTER" layoutX="1005.0" layoutY="111.0" minWidth="283.0" prefHeight="47.0" prefWidth="127.0" text="Location" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="111.0">
             <font>
                 <Font size="32.0" />
             </font>
@@ -90,7 +91,7 @@
                 <Font size="24.0" />
             </font>
         </Button>
-      <Label layoutX="965.0" layoutY="177.0" prefHeight="27.0" prefWidth="123.0" text="Current Floor:" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="177.0">
+      <Label layoutX="1085.0" layoutY="175.0" prefHeight="27.0" prefWidth="123.0" text="Current Floor:" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="175.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -100,5 +101,8 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button fx:id="zoomIn" layoutX="40.0" layoutY="672.0" mnemonicParsing="false" onAction="#zoomIn" text="+" />
+      <Button fx:id="zoomOut" layoutX="207.0" layoutY="672.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="27.0" prefWidth="27.0" text="-" />
+      <Slider fx:id="slider" layoutX="67.0" layoutY="678.0" />
     </children>
 </AnchorPane>

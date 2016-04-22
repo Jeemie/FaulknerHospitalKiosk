@@ -5,8 +5,10 @@ import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.LocationNode;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,12 +31,20 @@ public class MapViewController{
     private LocationNode destinationNode;
     private int numThreads = 0;
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
     @FXML
     private Label currentFloorLabel;
 
     @FXML
     private TextField searchTextBox;
+    @FXML
+    private Button zoomIn;
+    @FXML
+    private Button zoomOut;
+
+    @FXML
+    private Slider slider;
 
     @FXML
     private StackPane imageStackPane;
@@ -54,6 +64,7 @@ public class MapViewController{
     @FXML
 
     private ListView Direction;
+    Group zoomGroup;
 
 
     public Timer timer;
@@ -125,6 +136,20 @@ public class MapViewController{
 
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
+
+        slider.setMin(0.5);
+        slider.setMax(1.5);
+        slider.setValue(1.0);
+        slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
+
+        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
+        Group contentGroup = new Group();
+        zoomGroup = new Group();
+        contentGroup.getChildren().add(zoomGroup);
+        zoomGroup.getChildren().add(scrollPane.getContent());
+        scrollPane.setContent(contentGroup);
+
+
 
 
 
@@ -258,6 +283,29 @@ public class MapViewController{
         });
 
 
+    }
+
+    @FXML
+    void zoomIn(ActionEvent event) {
+        double sliderVal = slider.getValue();
+        slider.setValue(sliderVal += 0.1);
+    }
+
+    @FXML
+    void zoomOut(ActionEvent event) {
+
+        double sliderVal = slider.getValue();
+        slider.setValue(sliderVal + -0.1);
+    }
+
+    private void zoom(double scaleValue) {
+
+        double scrollH = scrollPane.getHvalue();
+        double scrollV = scrollPane.getVvalue();
+        zoomGroup.setScaleX(scaleValue);
+        zoomGroup.setScaleY(scaleValue);
+        scrollPane.setHvalue(scrollH);
+        scrollPane.setVvalue(scrollV);
     }
 
 
