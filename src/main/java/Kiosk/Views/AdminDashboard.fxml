@@ -73,7 +73,9 @@
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                     <children>
-                                                        <Button fx:id="setStartNode" layoutX="106.0" layoutY="86.0" mnemonicParsing="false" text="Start Location" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                                                        <Button fx:id="setStartNode" layoutX="106.0" layoutY="86.0" mnemonicParsing="false" text="Set Start Location" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                                          <Button fx:id="dijkstrasButton" layoutX="119.0" layoutY="455.0" mnemonicParsing="false" text="Use Dijkstras" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                                          <Button fx:id="astarButton" layoutX="119.0" layoutY="390.0" mnemonicParsing="false" text="Use AStar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                                                     </children></AnchorPane>
                                             </content>
                                         </TitledPane>

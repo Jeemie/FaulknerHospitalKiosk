@@ -1,6 +1,7 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
+import Map.Map;
 import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.LocationNode;
@@ -25,14 +26,18 @@ public class MapViewController{
     // Reference to the main application.
 
     private boolean okClicked = false;
+
+    private Map faulknerHospitalMap;
+
     private KioskApp kioskApp;
-    private Building mMainHost;
-    private LocationNode startNode;
-    private LocationNode destinationNode;
+
+
+
     private int numThreads = 0;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
+
     @FXML
     private Label currentFloorLabel;
 
@@ -169,7 +174,7 @@ public class MapViewController{
                 counter = 0;
 
 //                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
 //                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
 //                //mMainHost.drawShortestPath(startNode, destinationNode);
 //                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
@@ -181,7 +186,7 @@ public class MapViewController{
 //                imageStackPane.setMaxWidth(mMainHost.getxMax());
 //                imageStackPane.setMinWidth(mMainHost.getyMin());
                 //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
             }
 
@@ -361,26 +366,5 @@ public class MapViewController{
         kioskApp.reset();
     }
 
-    public void setBuilding(Building building) {
-        this.mMainHost = building;
-    }
-
-    public void setDestinationNode(LocationNode destinationNode){
-
-/*      atimer.cancel();
-        atimer.purge();
-        timer.cancel();
-        timer.purge();*/
-        running = false;
-        //timerThread.interrupt();
-        this.destinationNode = destinationNode;
-//        destinationNode.getCurrentFloor().drawFloorAdmin(this.imageStackPane);
-
-    }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
-    }
 
 }

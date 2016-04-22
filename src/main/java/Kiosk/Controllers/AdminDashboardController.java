@@ -57,9 +57,6 @@ public class AdminDashboardController {
     private Label selectedButtonLabel;
 
     @FXML
-    private Button setStartNode;
-
-    @FXML
     private StackPane mapStackPane;
 
     @FXML
@@ -112,6 +109,15 @@ public class AdminDashboardController {
     // Destinations Titled Pane //
     @FXML
     private TitledPane buildingMiscTitledPane;
+
+    @FXML
+    private Button setStartNode;
+
+    @FXML
+    private Button astarButton;
+
+    @FXML
+    private Button dijkstrasButton;
 
 
 
@@ -490,6 +496,32 @@ public class AdminDashboardController {
 
         });
 
+        this.astarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Switching to AStart Algorithm");
+
+                faulknerHospitalMap.useAStar();
+
+            }
+
+        });
+
+        this.dijkstrasButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Switching to Diskstra's Algorithm");
+
+                faulknerHospitalMap.useDijkstras();
+
+            }
+
+        });
+
 
     }
 
@@ -691,12 +723,9 @@ public class AdminDashboardController {
         });
 
 
-        locationConnectedLocationsAddButton.setOnAction(event -> {
-
-            selectedButtonLabel.setText("Add Connected Button");
-//            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.ADDADJACENTNODE));
-
-        });
+        locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.ADDADJACENTNODE, "Add Connected " +
+                        "Button", this.selectedButtonLabel));
 
         locationDestinationsAddButton.setOnAction(event -> {
             selectedButtonLabel.setText("Add Destination Button");

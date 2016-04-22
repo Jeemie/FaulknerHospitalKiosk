@@ -5,6 +5,7 @@ import Map.Map;
 import Map.LocationNode;
 import Map.Location;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
@@ -41,22 +42,25 @@ public class LocationNodeDraggedEventHandler implements EventHandler<MouseEvent>
 
         Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
 
+        currentMap.setCurrentLocationNode(this.locationNode);
+
         if (currentMap.getCurrentMapState().equals(MapState.MOVENODE)) {
 
             LOGGER.info("Moving LocationNode " + this.locationNode.toString());
 
-            Location circleLocation = this.locationNode.getLocation();
+            Location labelLocation = this.locationNode.getLocation();
 
-            double offsetX = event.getSceneX() - circleLocation.getX();
-            double offsetY = event.getSceneY() - circleLocation.getY();
-            double newTranslateX = ((ImageView)(event.getSource())).getTranslateX() + offsetX;
-            double newTranslateY = ((ImageView)(event.getSource())).getTranslateY() + offsetY;
+            double offsetX = event.getSceneX() - labelLocation.getX();
+            double offsetY = event.getSceneY() - labelLocation.getY();
 
-            ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
-            ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
+            double newTranslateX = ((Label)(event.getSource())).getTranslateX() + offsetX;
+            double newTranslateY = ((Label)(event.getSource())).getTranslateY() + offsetY;
 
-            circleLocation.setX(event.getSceneX());
-            circleLocation.setY(event.getSceneY());
+//            ((Label)(event.getSource())).setTranslateX(newTranslateX);
+//            ((Label)(event.getSource())).setTranslateY(newTranslateY);
+
+            labelLocation.setX(event.getSceneX());
+            labelLocation.setY(event.getSceneY());
 
         }
 

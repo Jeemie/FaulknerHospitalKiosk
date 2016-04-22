@@ -483,6 +483,13 @@ public class Map implements Observer {
 
                 break;
 
+            case LOCATIONNODEEDGE:
+
+                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+                this.locationNodeUpdater(this.currentLocationNode);
+
+                break;
+
 
             default:
 

@@ -69,6 +69,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     private ImageView iconImageView;
 
     @JsonIgnore
+    private Label iconLabel;
+
+    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
 
@@ -87,6 +90,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         this.name = name;
         this.uniqueID = UUID.randomUUID();
         this.location = location;
+        this.location.addObserver(this);
         this.currentFloor = currentFloor;
         this.associatedImage = associatedImage;
         this.edges = new ArrayList<>();
@@ -184,15 +188,24 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      */
     public void drawAdmin(Pane pane) {
 
+        if (pane.getChildren().contains(this.iconLabel)) {
+
+            this.iconLabel.setLayoutX(this.location.getX());
+            this.iconLabel.setLayoutY(this.location.getY());
+
+            return;
+        }
 
         // TODO setup labels with images
-
+        this.iconLabel = new Label(this.name);
 
         try {
 
             Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
                     this.associatedImage.getResourceFileName()).toString());
 
+            this.iconLabel.setPrefWidth(icon.getWidth());
+            this.iconLabel.setPrefHeight(icon.getHeight());
 
             this.iconImageView = new ImageView(icon);
 
@@ -202,19 +215,20 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         }
 
+        iconLabel.setGraphic(this.iconImageView);
 
-        this.iconImageView.setX(this.location.getX());
-        this.iconImageView.setY(this.location.getY());
+        this.iconLabel.setLayoutX(this.location.getX());
+        this.iconLabel.setLayoutY(this.location.getY());
 
-        if (pane.getChildren().contains(this.iconImageView)) {
+        if (pane.getChildren().contains(this.iconLabel)) {
 
             return;
         }
 
-        pane.getChildren().add(this.iconImageView);
+        pane.getChildren().add(this.iconLabel);
 
-        this.iconImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
-        this.iconImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
+        this.iconLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
+        this.iconLabel.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
 
     }
 
@@ -225,10 +239,10 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      */
     public void drawEdgesAdmin(Pane locationNodeEdgePane) {
 
-        LOGGER.info("Drawing edges for the Node: " + this.toString());
-
         // If any edges exist
         if (this.edges.size() != 0) {
+
+            LOGGER.info("Drawing edges for the Node: " + this.toString());
 
             // Draw lines for edges
             for (LocationNodeEdge edge : this.edges) {
@@ -238,6 +252,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             }
 
         }
+
     }
 
     /**
@@ -344,7 +359,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         adjacentNode.getEdges().add(newEdge);
 
         setChanged();
-        notifyObservers();
+        notifyObservers(UpdateType.LOCATIONNODEEDGE);
 
     }
 

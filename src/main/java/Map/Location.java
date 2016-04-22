@@ -94,6 +94,11 @@ public class Location extends Observable {
         return result;
     }
 
+    public void addNewObserver(LocationNode locationNode) {
+
+        this.addObserver(locationNode);
+    }
+
 
 
 }

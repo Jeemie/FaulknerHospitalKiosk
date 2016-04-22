@@ -195,10 +195,6 @@ public class LocationNodeEdge extends Observable {
     public void setWeight(double weight) {
 
         this.weight = weight;
-
-        setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEEDGE);
-
     }
 
     /**

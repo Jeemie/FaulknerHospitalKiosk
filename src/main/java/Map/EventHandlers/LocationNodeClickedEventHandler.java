@@ -1,6 +1,7 @@
 package Map.EventHandlers;
 
 import Map.Enums.MapState;
+import Map.Exceptions.NodeDoesNotExistException;
 import Map.LocationNode;
 import Map.Map;
 import Utils.FixedSizedStack;
@@ -8,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.AbstractMap;
 
 /**
  * Created by Matt on 4/18/2016.
@@ -46,6 +49,15 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
         Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
 
 
+        java.util.Map.Entry<LocationNode, MapState> lastAction = null;
+
+        if (previousActions.size() > 0 ) {
+
+            lastAction = previousActions.peek();
+
+        }
+
+
         LOGGER.info("Location Node: " + this.locationNode.toString() + "was clicked with the state: " +
                 currentMap.getCurrentMapState().toString());
 
@@ -65,6 +77,36 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 break;
 
+            case ADDADJACENTNODE:
+
+                currentMap.setCurrentLocationNode(this.locationNode);
+
+                if (previousActions.isEmpty()) {
+
+                    break;
+                }
+
+                LOGGER.info(previousActions.toString());
+
+                if (lastAction != null && lastAction.getValue() == MapState.ADDADJACENTNODE) {
+
+                    LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
+                            lastAction.getKey().toString());
+
+                    try {
+
+                        this.locationNode.addEdge(lastAction.getKey());
+
+                    } catch (NodeDoesNotExistException e) {
+
+                        LOGGER.error("Unable to create an edge ", e);
+
+                    }
+
+                }
+
+                break;
+
 
 
 
@@ -73,6 +115,11 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                 break;
 
         }
+
+        java.util.Map.Entry<LocationNode, MapState> entry =
+                new AbstractMap.SimpleEntry<LocationNode, MapState>(this.locationNode, currentMap.getCurrentMapState());
+
+        previousActions.push(entry);
 
         currentMap.setCurrentMapState(MapState.ADMIN);
 
