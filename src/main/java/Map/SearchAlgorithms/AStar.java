@@ -11,7 +11,8 @@ import static java.util.Collections.reverse;
 /**
  * TODO
  */
-public class AStar implements ISearchAlgorithm {
+//public class AStar implements ISearchAlgorithm {
+public class AStar {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
 
@@ -23,7 +24,7 @@ public class AStar implements ISearchAlgorithm {
      * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
-    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
+    public static ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
             NoPathException {
 
         LocationNode currentNode;

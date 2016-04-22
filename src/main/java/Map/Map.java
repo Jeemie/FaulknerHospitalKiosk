@@ -383,7 +383,9 @@ public class Map implements Observer {
 
         try {
 
-            path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+            //path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+
+            path = AStar.getPath(this.startLocationNode, this.currentLocationNode);
 
         } catch (NoPathException e) {
 
@@ -418,11 +420,14 @@ public class Map implements Observer {
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
     }
 
+   /*
     public void useAStar() {
+
 
         this.searchAlgorithm = new AStar();
 
     }
+    */
 
     public void useDijkstras() {
 
