@@ -3,6 +3,7 @@ package Kiosk.Controllers;
 //import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
 import Kiosk.KioskApp;
 import Map.Map;
+import Map.Floor;
 import Map.Destination;
 import Map.LocationNode;
 import Map.LocationNodeEdge;
@@ -417,10 +418,10 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-//                ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
-//                building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
-//                building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-//                building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
+                Floor currentFloor = ((Floor) buildingFloorsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentFloor(currentFloor);
+
             }
 
         });
@@ -471,9 +472,24 @@ public class AdminDashboardController {
 
 
         this.buildingDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentBuildingDestinations());
+        this.buildingDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                Destination currentDestination = ((Destination) buildingDestinationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
+
+        });
 
 
     }
+
+
+
 
     private void setFloorTabListeners() {
 
@@ -521,25 +537,44 @@ public class AdminDashboardController {
         });
 
         this.floorLocationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorLocationNodes());
+        this.floorLocationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LocationNode currentLocationNode = ((LocationNode) floorLocationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentLocationNode(currentLocationNode);
+
+            }
+
+        });
 
         this.floorDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
-                if (newValue) {
+                LOGGER.info("Building Floors Titled Pane Opened");
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
-
-//                    if (building.getCurrentFloor() != null) {
-//
-//                        building.getCurrentFloor().addDestinationsToListView(floorDestinationsListView);
-//
-//
-//                    }
-                }
             }
+
         });
+
+        this.floorDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorDestinations());
+        this.floorDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                Destination currentDestination = ((Destination) floorDestinationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
+
+        });
+
 
         floorLocationsAddButton.setOnAction(event ->{
 
@@ -617,6 +652,19 @@ public class AdminDashboardController {
 
         });
 
+
+        this.locationConnectedLocationListView.setItems(this.faulknerHospitalMap.getCurrentAdjacentLocationNodes());
+        this.locationConnectedLocationListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                // TODO
+
+            }
+
+        });
+
         this.locationDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -637,6 +685,20 @@ public class AdminDashboardController {
 
             }
 
+
+        });
+
+        this.locationDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentLocationNodeDestinations());
+        this.locationDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                Destination currentDestination = ((Destination) locationDestinationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
 
         });
 

@@ -147,9 +147,21 @@ public class Map implements Observer {
         this.currentFloorImage = new ImageView();
         this.currentBuilding = null;
         this.currentBuildingFloors = FXCollections.observableArrayList();
-        this.currentFloorDestinations = FXCollections.observableArrayList();
+        this.currentBuildingDestinations = FXCollections.observableArrayList();
 
     }
+
+
+
+//    private void setCurrentChangeListeners() {
+//
+//        this.currentBuilding.
+//
+//
+//    }
+
+
+
 
     public void addBuilding(String name) {
 
@@ -301,18 +313,22 @@ public class Map implements Observer {
 
             case DESTINATIONCHANGE:
 
+                // TODO cleanup by only modifying one destination
+                this.currentBuildingDestinations.clear();
+                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
-                // remove current location node destinations from current floor destinations and building destinations
-                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
-                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
-
-                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
-                this.currentLocationNodeDestinations.clear();
-                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
-
-                // Add current location node destinations from current floor and building destinations
-                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
-                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+//
+//                // remove current location node destinations from current floor destinations and building destinations
+//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+//
+//                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
+//                this.currentLocationNodeDestinations.clear();
+//                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+//
+//                // Add current location node destinations from current floor and building destinations
+//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
 
                 break;
@@ -326,13 +342,16 @@ public class Map implements Observer {
 
             case LOCATIONNODEADDED:
 
-                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+//                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+//                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
 
                 // TODO decide whether or not we are going to redraw the entire floor
                 break;
 
-            case FLOORADDED: 
+            case FLOORADDED:
+
+                this.currentBuildingFloors.clear();
+                this.currentBuildingFloors.addAll(this.currentBuilding.getFloors());
 
                 break;
 
@@ -341,6 +360,13 @@ public class Map implements Observer {
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
                 this.currentLocationNode = null;
+
+                break;
+
+            case BUILDINGADDED:
+
+                this.currentBuildingDestinations.clear();
+                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
                 break;
 
@@ -540,12 +566,37 @@ public class Map implements Observer {
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
 
+        LOGGER.info("set current destination:" + destination.toString());
+
         this.currentDestination = destination;
+
+        this.locationNodeUpdater(currentDestination.getCurrentLocationNode());
         this.currentLocationNode = currentDestination.getCurrentLocationNode();
+
+
         this.currentFloor = currentLocationNode.getCurrentFloor();
         this.currentBuilding = currentFloor.getCurrentBuilding();
 
     }
+
+//    private void destinationChangeUpdater(Destination newDestination) {
+//
+//        if ((this.currentDestination == null) || (!this.currentDestination.equals(newDestination))) {
+//
+//            this.currentFloorDestinations.clear();
+//            this.currentFloorDestinations.addAll(newDestination.getFloorDestinations());
+//
+//            LOGGER.info("Updating current floor destinations: " + currentFloorDestinations.size());
+//
+//            this.currentFloorLocationNodes.clear();
+//            this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
+//
+//
+//            LOGGER.info("Updating current floor location nodes: " +  currentFloorLocationNodes.size());
+//
+//        }
+//
+//    }
 
     public void setCurrentLocationNode(LocationNode locationNode) {
 
@@ -559,15 +610,49 @@ public class Map implements Observer {
 
     }
 
+    private void locationNodeUpdater(LocationNode newLocationNode) {
+
+        if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
+
+            LOGGER.info("Rebuilding current location node destinations and connected location nodes");
+
+            this.currentLocationNodeDestinations.clear();
+            this.currentLocationNodeDestinations.addAll(newLocationNode.getDestinations());
+
+            this.currentAdjacentLocationNodes.clear();
+            this.currentAdjacentLocationNodes.addAll(newLocationNode.getAdjacentLocationNodes());
+
+        }
+
+    }
+
     public void setCurrentFloor(Floor floor) {
 
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
 
+        this.floorChangeUpdater(floor);
+
         this.currentDestination = null;
         this.currentLocationNode = null;
         this.currentFloor = floor;
         this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    private void floorChangeUpdater(Floor newFloor) {
+
+        if ((this.currentFloor == null) || (!this.currentFloor.equals(newFloor))) {
+
+            LOGGER.info("Rebuilding current floor destinations and location nodes");
+
+            this.currentFloorDestinations.clear();
+            this.currentFloorDestinations.addAll(newFloor.getFloorDestinations());
+
+            this.currentFloorLocationNodes.clear();
+            this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
+
+        }
 
     }
 
@@ -582,7 +667,5 @@ public class Map implements Observer {
         this.currentBuilding = building;
 
     }
-
-
 
 }

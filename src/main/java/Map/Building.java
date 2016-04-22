@@ -95,6 +95,19 @@ public class Building extends Observable implements Observer {
 
     }
 
+    public ArrayList<Destination> getBuildingDestinations() {
+
+        ArrayList<Destination> buildingDestinations = new ArrayList<>();
+
+        for (Floor floor : this.floors) {
+
+            buildingDestinations.addAll(floor.getFloorDestinations());
+
+        }
+
+        return buildingDestinations;
+    }
+
     /**
      * Remove a floor from this building
      * @param oldFloor Floor to remove from building

@@ -58,10 +58,12 @@ public class KioskApp extends Application {
             try {
 
                 File newFile = new File(this.filePath.toURI());
-                newFile.createNewFile();
+                //newFile.createNewFile();
 
                 this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
                 this.faulknerHospitalMap = FaulknerHospitalData.starterMap(this.faulknerHospitalMap);
+
+                throw new IOException();
 
 
             } catch (URISyntaxException exception) {
@@ -86,7 +88,8 @@ public class KioskApp extends Application {
 
         initRootLayout();
 
-        showKioskOverview();
+//        showKioskOverview();
+        showAdminControls();
     }
 
     /**

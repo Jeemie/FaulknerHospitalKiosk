@@ -1,7 +1,7 @@
 package MapTest;
 
 import Map.Building;
-import Map.;
+import Map.*;
 import Map.Enums.ImageType;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;

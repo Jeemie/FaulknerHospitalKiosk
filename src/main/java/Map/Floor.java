@@ -160,6 +160,11 @@ public class Floor extends Observable implements Observer {
 
     }
 
+    @Override
+    public String toString() {
+
+        return this.floorName;
+    }
 
     @JsonGetter
     public String getFloorName() {
