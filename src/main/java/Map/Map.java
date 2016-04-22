@@ -336,7 +336,7 @@ public class Map implements Observer {
 
     public void setupNormalStackPane(StackPane stackPane) {
 
-        
+
 
 
     }
