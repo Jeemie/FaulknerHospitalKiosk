@@ -138,16 +138,17 @@ public class MapViewController{
         scrollPane.setVvalue(0.5);
 
         slider.setMin(0.5);
-        slider.setMax(1.5);
-        slider.setValue(1.0);
+        slider.setMax(2.5);
+        slider.setValue(1.5);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
-
-        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
         Group contentGroup = new Group();
         zoomGroup = new Group();
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(scrollPane.getContent());
         scrollPane.setContent(contentGroup);
+
+
+
 
 
 
@@ -175,11 +176,14 @@ public class MapViewController{
 //                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
 //                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
+
                 mMainHost.drawShortestPath(startNode, destinationNode);
                 imageStackPane.setMaxHeight(mMainHost.getyMax());
                 imageStackPane.setMinHeight(mMainHost.getyMin());
                 imageStackPane.setMaxWidth(mMainHost.getxMax());
                 imageStackPane.setMinWidth(mMainHost.getyMin());
+                //mMainHost.drawShortestPath(startNode, destinationNode);
+
                 //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
                 currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
@@ -370,7 +374,7 @@ public class MapViewController{
         running = false;
         //timerThread.interrupt();
         this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorAdmin(this.imageStackPane);
+        destinationNode.getCurrentFloor().drawFloorNormal(this.imageStackPane);
 
     }
 

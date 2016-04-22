@@ -1,6 +1,9 @@
 package Map;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,7 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Observable;
 import java.util.UUID;
 
@@ -194,8 +196,11 @@ public class Floor extends Observable{
 
         this.nodePane.getChildren().clear();
         this.nodePane = new Pane();
+        floorImage.fitWidthProperty().bind(stackPane.prefWidthProperty());
+        floorImage.fitHeightProperty().bind(stackPane.prefHeightProperty());
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
+       // System.out.println(this.stackPane.getWidth());
 
         this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -249,6 +254,7 @@ public class Floor extends Observable{
         this.nodePane.setPrefHeight(floorImage.getX());
         this.nodePane.setPrefWidth(floorImage.getY());
         stackPane.getChildren().addAll(this.floorImage, this.nodePane);
+
 
     }
 

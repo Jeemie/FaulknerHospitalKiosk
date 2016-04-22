@@ -56,7 +56,9 @@ public class Building extends Observable {
         this.startNode = startNode;
     }
 
-    private double xMin, xMax,yMin,yMax;
+
+
+    private double xMin, xMax,yMin,Ymax;
 
     /**
      * Default constructor for the building class.
@@ -126,7 +128,7 @@ public class Building extends Observable {
 
         yMin = path.get(0).getLocation().getY();
         xMin = path.get(0).getLocation().getX();
-        yMax = path.get(0).getLocation().getY();
+        Ymax = path.get(0).getLocation().getY();
         xMax = path.get(0).getLocation().getX();
 
             for( int i =0 ; i <= path.size();i++){
@@ -142,8 +144,8 @@ public class Building extends Observable {
                     if(ynum<yMin){
                         yMin =ynum;
                     }
-                    if(ynum>yMax){
-                        yMax =ynum;
+                    if(ynum>Ymax){
+                        Ymax =ynum;
                     }
                 }
                 else{
@@ -151,7 +153,7 @@ public class Building extends Observable {
                 }
             }
         System.out.println(xMax);
-        System.out.println(yMax);
+        System.out.println(Ymax);
         }
 
 
@@ -453,10 +455,10 @@ public class Building extends Observable {
     }
 
     public double getyMax() {
-        return yMax;
+        return Ymax;
     }
 
     public void setyMax(double yMax) {
-        this.yMax = yMax;
+        this.Ymax = yMax;
     }
 }

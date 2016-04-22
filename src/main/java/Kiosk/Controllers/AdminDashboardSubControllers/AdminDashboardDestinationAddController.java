@@ -1,22 +1,17 @@
 package Kiosk.Controllers.AdminDashboardSubControllers;
 
-import Kiosk.Controllers.AdminDashboardController;
-import Kiosk.KioskApp;
 import Map.Destination;
 import Map.LocationNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * Created by matt on 4/14/16.
@@ -40,6 +35,10 @@ public class AdminDashboardDestinationAddController {
 
     @FXML
     private Button createDestinationButton;
+
+    /*Define ID in action Tabs*/
+
+    @FXML
 
     public void setListeners() {
 

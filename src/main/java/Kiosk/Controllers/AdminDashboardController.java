@@ -11,8 +11,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
@@ -23,10 +24,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Controller for the admin dashboard view
@@ -154,6 +151,9 @@ public class AdminDashboardController {
     @FXML
     private Accordion locationAccordion;
 
+    @FXML
+    private  Accordion actionAccordion;
+
 
     // Connected Locations Titled Pane //
     @FXML
@@ -187,6 +187,53 @@ public class AdminDashboardController {
     @FXML
     private TitledPane locationInformationTitledPane;
 
+    /****************************Start Action Define *************************************/
+    /*Define Tab*/
+    @FXML
+    private Tab actionTab;
+
+    /*Define TitlePane*/
+    @FXML
+    private TitledPane actionAddLocationIconsTitlePane;
+    @FXML
+    private  TitledPane actionAddDestinationsTitlePane;
+    @FXML
+    private TitledPane actionAddFloorsTitlePane;
+
+    /*Define Button*/
+    @FXML
+    private Button locationIconConfirmButton;
+    @FXML
+    private Button locationIconCancelButton;
+    @FXML
+    private Button departmentOkButton;
+    @FXML
+    private Button departmentCancelButton ;
+    @FXML
+    private Button addFloorOKButton;
+    @FXML
+    private Button addFloorCancelButton;
+    @FXML
+    private Button floorOpenFile;
+
+    /*Define Choicebox*/
+    @FXML
+    private ChoiceBox departmentBox ;
+
+    @FXML
+    private  ChoiceBox locationIconBox;
+
+    /*Define TextField*/
+    @FXML
+    private TextField departmentField;
+
+    @FXML
+    private TextField floorNumberField;
+
+    @FXML
+    private  TextField floorNumberPath;
+
+/****************************End Action Define *************************************/
 
 
     @FXML
@@ -207,11 +254,14 @@ public class AdminDashboardController {
     public void setListeners() {
 
         // Setup Listeners
+
         setCoreFunctionalityListeners();
         setBuildingTabListeners();
+        setActionTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
         deleteThis();
+
 
 
     }
@@ -326,32 +376,47 @@ public class AdminDashboardController {
 
         });
 
-        // Setup Zoom Slider
-        this.zoomSlider.setMax(1.5);
-        this.zoomSlider.setMin(0.5);
-        this.zoomSlider.setValue(1.0);
-        this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
+        this.aSplitPane.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.F1)) {
+                    LOGGER.info("Attempting to back to NORMAL");
+                    building.setState(BuildingState.NORMAL);
 
-                LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
 
-                // TODO fix zooming
 
-//                double scrollH = mapScrollPane.getHvalue();
-//                double scrollV = mapScrollPane.getVvalue();
-//
-//                LOGGER.info("" + scrollH);
-//                LOGGER.info("" + scrollV);
-//                zoomSlider.setScaleX(newValue.doubleValue());
-//                zoomSlider.setScaleY(newValue.doubleValue());
-//                mapScrollPane.setHvalue(scrollH);
-//                mapScrollPane.setVvalue(scrollV);
-
+                }
             }
-
         });
+
+
+
+//        // Setup Zoom Slider
+//        this.zoomSlider.setMax(1.5);
+//        this.zoomSlider.setMin(0.5);
+//        this.zoomSlider.setValue(1.0);
+//        this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
+//
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//
+//                LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
+//
+//                // TODO fix zooming
+//
+////                double scrollH = mapScrollPane.getHvalue();
+////                double scrollV = mapScrollPane.getVvalue();
+////
+////                LOGGER.info("" + scrollH);
+////                LOGGER.info("" + scrollV);
+////                zoomSlider.setScaleX(newValue.doubleValue());
+////                zoomSlider.setScaleY(newValue.doubleValue());
+////                mapScrollPane.setHvalue(scrollH);
+////                mapScrollPane.setVvalue(scrollV);
+//
+//            }
+//
+//        });
 
 
 
@@ -449,6 +514,7 @@ public class AdminDashboardController {
                     LOGGER.info("Building Floors Titled Pane Opened");
 
                     building.addFloorsToListView(buildingFloorsListView);
+
 
 
                 }
@@ -691,14 +757,18 @@ public class AdminDashboardController {
 
         locationDestinationsAddButton.setOnAction(event -> {
             alabel.setText("Add Destination Button");
-            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
-        });
+            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            this.
+                        }
+                    }
 
-        locationConnectedLocationsDeleteButton.setOnAction(event -> {
+                    locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
-            alabel.setText("Delete Destination Button");
-            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
-        });
+                        alabel.setText("Delete Destination Button");
+                        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+                    });
 
 
 
@@ -715,6 +785,87 @@ public class AdminDashboardController {
 
         });
     }
+
+    private void setActionTabListeners() {
+
+
+        // Setup Action Accordion
+        this.actionAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
+
+            @Override
+            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
+
+                if (newValue != null) {
+
+                    LOGGER.info("In the Action tab the " + newValue.getText() + " Titled Pane has been expanded");
+
+                } else {
+
+                    LOGGER.info("In the Action tab the " + oldValue.getText() + " Titled Pane has been closed");
+
+                }
+
+            }
+
+        });
+
+        this.actionAddDestinationsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Action Add  Destionation Titled Pane Opened");
+
+                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
+
+
+                }
+
+            }
+
+
+        });
+
+        this.actionAddFloorsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Action Add Floor Titled Pane Opened");
+
+
+
+
+                }
+
+            }
+
+
+        });
+        this.actionAddLocationIconsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Action Add Icon Titled Pane Opened");
+
+
+
+                }
+
+            }
+
+
+        });
+    }
+
+
 
 
 
