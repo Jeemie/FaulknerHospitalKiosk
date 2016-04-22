@@ -277,7 +277,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
                     break;
 
                 }
+
             }
+
         }
 
     }
@@ -296,8 +298,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
                     ImageType.STARTLOCATION.getResourceFileName()).toString());
 
-            this.iconLabel.setPrefWidth(icon.getWidth());
-            this.iconLabel.setPrefHeight(icon.getHeight());
+//            this.iconLabel.setPrefWidth(icon.getWidth());
+//            this.iconLabel.setPrefHeight(icon.getHeight());
 
             this.iconImageView = new ImageView(icon);
 
@@ -307,12 +309,57 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         }
 
-        iconLabel.setGraphic(this.iconImageView);
+        this.iconImageView.setFitWidth(20);
+        this.iconImageView.setPreserveRatio(true);
 
-        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2));
-        this.iconLabel.setLayoutY(this.location.getY() - this.iconLabel.getPrefHeight());
+        this.iconLabel.setPrefWidth(this.iconImageView.getFitWidth());
+        this.iconLabel.setPrefHeight(this.iconImageView.getFitHeight());
+
+        this.iconLabel.setGraphic(this.iconImageView);
+
+        this.iconLabel.setLayoutX(this.location.getX() + (this.iconLabel.getPrefWidth() / 2));
+        this.iconLabel.setLayoutY(this.location.getY() + (this.iconLabel.getPrefHeight() / 2));
 
         pane.getChildren().add(this.iconLabel);
+
+    }
+
+    public void drawNormal(Pane pane, ImageType imageType, int x, int y) {
+
+        if (pane.getChildren().contains(this.iconLabel)) {
+
+            return;
+        }
+
+        this.iconLabel = new Label();
+
+        try {
+
+            Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                    imageType).toString());
+
+            this.iconImageView = new ImageView(icon);
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the Location Node: " + this.toString(), e);
+
+        }
+
+        LOGGER.info("Drawing");
+        this.iconImageView.setFitWidth(20);
+        this.iconImageView.setPreserveRatio(true);
+
+        this.iconLabel.setPrefWidth(this.iconImageView.getFitWidth());
+        this.iconLabel.setPrefHeight(this.iconImageView.getFitHeight());
+
+        this.iconLabel.setGraphic(this.iconImageView);
+
+        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / x));
+        this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / y));
+
+        pane.getChildren().add(this.iconLabel);
+
 
     }
 

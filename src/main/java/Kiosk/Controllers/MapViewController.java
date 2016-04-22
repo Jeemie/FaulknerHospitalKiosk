@@ -228,20 +228,7 @@ public class MapViewController{
             @Override
             public void handle(MouseEvent event) {
 
-                getCounterFloor--;
-                if (getCounterFloor >= 1) {
-                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
-                } else { getCounterFloor = 1;}
-                try {
-//                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
-                    throw new FloorDoesNotExistException(1);
-//                    if(counter<1){
-//                        counter =1;
-//                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(getCounterFloor);
+                faulknerHospitalMap.pathPreviousFloor();
 
             }
         });
@@ -278,23 +265,8 @@ public class MapViewController{
 
             @Override
             public void handle(MouseEvent event) {
-                getCounterFloor++;
-                if (getCounterFloor <= 7) {
-                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
-                } else {getCounterFloor = 7;}
-                try {
-//                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
 
-                    throw new FloorDoesNotExistException(1);
-
-//                    if(counter>4){
-//                        counter =4;
-//                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(getCounterFloor);
-               // building.drawShortestPath(startNode, destinationNode);
+                faulknerHospitalMap.pathNextFloor();
 
             }
 

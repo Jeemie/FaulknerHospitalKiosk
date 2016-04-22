@@ -55,6 +55,8 @@ public class Map implements Observer {
     @JsonIgnore
     private ObservableList<Destination> directoryList;
 
+    private Path currentPath;
+
 
     //||\\ Current Destination //||\\
 
@@ -392,12 +394,10 @@ public class Map implements Observer {
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
 
-        this.startLocationNode.getCurrentFloor().drawFloor(this.currentFloorImage);
+        this.currentPath = new Path(this.currentFloorImage, this.currentFloorLocationNodePane, this.currentFloorEdgePane,
+                path);
 
-        this.currentFloorLocationNodePane.getChildren().clear();
-        this.startLocationNode.drawStartNode(this.currentFloorLocationNodePane);
-
-        this.currentFloorEdgePane.getChildren().clear();
+        this.currentPath.setup();
 
     }
 
@@ -426,6 +426,18 @@ public class Map implements Observer {
     public void useDijkstras() {
 
         this.searchAlgorithm = new Dijkstras();
+
+    }
+
+    public void pathNextFloor() {
+
+        this.currentPath.drawNextFloor();
+
+    }
+
+    public void pathPreviousFloor() {
+
+
 
     }
 
@@ -852,4 +864,5 @@ public class Map implements Observer {
 
         return directoryList;
     }
+
 }
