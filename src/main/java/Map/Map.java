@@ -1,5 +1,6 @@
 package Map;
 
+import Map.Enums.MapState;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
@@ -15,8 +16,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
@@ -45,6 +48,8 @@ public class Map implements Observer {
     private ArrayList<Building> mapBuildings;
 
     private ISearchAlgorithm searchAlgorithm;
+
+    private MapState currentMapState;
 
 
     //||\\ Current Destination //||\\
@@ -139,6 +144,7 @@ public class Map implements Observer {
         this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
         this.searchAlgorithm = new AStar();
+        this.currentMapState = MapState.NORMAL;
         this.currentLocationNode = null;
         this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
         this.currentLocationNodeDestinations = FXCollections.observableArrayList();
@@ -262,10 +268,15 @@ public class Map implements Observer {
     }
 
 
-
-
-
+    /**
+     * TODO
+     *
+     * @param stackPane
+     */
     public void setupAdminStackPane(StackPane stackPane) {
+
+
+        this.currentMapState = MapState.ADMIN;
 
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
@@ -274,7 +285,6 @@ public class Map implements Observer {
         this.currentFloorImage.setPreserveRatio(true);
         this.currentFloorImage.setSmooth(true);
         this.currentFloorImage.setCache(true);
-
         this.currentFloorImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
 
             @Override
@@ -299,6 +309,35 @@ public class Map implements Observer {
             }
 
         });
+
+        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentMapState == MapState.ADDNODE) {
+
+                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
+
+
+                    Location newLocation = new Location(event.getX(), event.getY());
+
+//                    addLocationNode();
+
+                }
+
+
+            }
+
+        });
+
+    }
+
+
+    public void setupNormalStackPane(StackPane stackPane) {
+
+        
+
 
     }
 
@@ -413,6 +452,12 @@ public class Map implements Observer {
 
         }
 
+    }
+
+    @Override
+    public String toString() {
+
+        return this.name;
     }
 
     /**
@@ -705,4 +750,14 @@ public class Map implements Observer {
 
     }
 
+    public void setCurrentMapState(MapState currentMapState) {
+
+        this.currentMapState = currentMapState;
+
+    }
+
+    public MapState getCurrentMapState() {
+
+        return currentMapState;
+    }
 }

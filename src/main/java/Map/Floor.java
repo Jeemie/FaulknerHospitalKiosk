@@ -182,13 +182,9 @@ public class Floor extends Observable implements Observer {
      */
     public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
 
-
-        LOGGER.info(this.resourceFileName);
-//        getClass().getResource(".../resources/" + this.resourceFileName).toString();
-
         try {
 
-            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
                     this.resourceFileName).toString());
 
         } catch (MalformedURLException e) {
@@ -209,7 +205,7 @@ public class Floor extends Observable implements Observer {
         for (LocationNode locationNode : locationNodes) {
 
             locationNode.drawAdmin(LocationNodePane);
-//            locationNode.drawEdgesAdmin(EdgePane);
+            locationNode.drawEdgesAdmin(EdgePane);
 
         }
 
@@ -231,7 +227,7 @@ public class Floor extends Observable implements Observer {
             @Override
             public void handle(MouseEvent event) {
 
-                if (currentBuilding.getState() == BuildingState.ADDNODE) {
+                if (currentBuilding.getState() == MapState.ADDNODE) {
 
                     LOGGER.info("APPLESAUCE1");
 
@@ -350,7 +346,7 @@ Methods that I left out from old class
 updateFloorAdmin() //Covered by drawFloorAdmin I believe.
 drawFloorNormal() //draws the floor using stackPane
 setFloorImage() //How to do this without stackPane, not sure where to draw it on
-BuildingState getState()
+MapState getState()
 BuildignState setState()   //As I understand it state is not being set using the Building
 get and set startnode functions
 getFloorObserver we don't have observer object.

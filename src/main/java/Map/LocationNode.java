@@ -221,9 +221,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     /**
      * Draw all edges to neighbors of this node
      *
-     * @param pane
+     * @param locationNodeEdgePane
      */
-    public void drawEdgesAdmin(Pane pane) {
+    public void drawEdgesAdmin(Pane locationNodeEdgePane) {
 
         LOGGER.info("Drawing edges for the Node: " + this.toString());
 
@@ -233,7 +233,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             // Draw lines for edges
             for (LocationNodeEdge edge : this.edges) {
 
-                edge.drawEdge(pane);
+                edge.drawEdgeAdmin(locationNodeEdgePane);
 
             }
 

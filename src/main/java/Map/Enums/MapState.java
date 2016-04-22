@@ -5,8 +5,9 @@ import Map.Map;
 /**
  * Represents how you can modify the current building.
  */
-public enum  BuildingState {
+public enum MapState {
     NORMAL,
+    ADMIN,
     ADDNODE,
     REMOVENODE,
     ADDADJACENTNODE,

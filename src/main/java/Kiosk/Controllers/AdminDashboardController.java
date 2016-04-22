@@ -1,7 +1,9 @@
 package Kiosk.Controllers;
 
-//import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
+//import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
+import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
+import Map.Enums.MapState;
 import Map.Map;
 import Map.Floor;
 import Map.Destination;
@@ -52,7 +54,8 @@ public class AdminDashboardController {
 
     // TODO find out use and rename
     @FXML
-    private Label alabel;
+    private Label selectedButtonLabel;
+
     @FXML
     private Button setStartNode;
 
@@ -230,6 +233,8 @@ public class AdminDashboardController {
 
             @Override
             public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.setCurrentMapState(MapState.NORMAL);
 
                 // TODO Add saving prompt if changes have been made
 
@@ -576,36 +581,19 @@ public class AdminDashboardController {
         });
 
 
-        floorLocationsAddButton.setOnAction(event ->{
-
-            alabel.setText("Add Button");
-
-//            floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-//                    new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
-
-        });
+        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.ADDNODE, "Add Button",
+                        this.selectedButtonLabel));
 
 
-        floorLocationsDeleteButton.setOnAction(event ->{
-
-            alabel.setText("Delete Button");
-
-//            floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-//                    new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
-
-        });
+        this.floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVENODE, "Delete Button",
+                        this.selectedButtonLabel));
 
 
-        floorLocationsModifyButton.setOnAction(event ->{
-
-            alabel.setText("Modify Button");
-
-//            floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-//                    new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
-
-
-        });
-
+        this.floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.MOVENODE, "Modify Button",
+                        this.selectedButtonLabel));
 
 
     }
@@ -705,20 +693,20 @@ public class AdminDashboardController {
 
         locationConnectedLocationsAddButton.setOnAction(event -> {
 
-            alabel.setText("Add Connected Button");
-//            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+            selectedButtonLabel.setText("Add Connected Button");
+//            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.ADDADJACENTNODE));
 
         });
 
         locationDestinationsAddButton.setOnAction(event -> {
-            alabel.setText("Add Destination Button");
-//            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.MODIFYDESTINATIONS));
+            selectedButtonLabel.setText("Add Destination Button");
+//            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
         });
 
         locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
-            alabel.setText("Delete Destination Button");
-//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+            selectedButtonLabel.setText("Delete Destination Button");
+//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
         });
 
 

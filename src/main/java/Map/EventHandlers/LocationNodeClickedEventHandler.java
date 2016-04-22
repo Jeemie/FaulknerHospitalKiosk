@@ -1,7 +1,8 @@
 package Map.EventHandlers;
 
-import Map.Enums.BuildingState;
+import Map.Enums.MapState;
 import Map.LocationNode;
+import Map.Map;
 import Utils.FixedSizedStack;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -18,7 +19,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
     private final LocationNode locationNode;
 
     // Stack of the past 10 node click actions
-    private static FixedSizedStack<java.util.Map.Entry<LocationNode, BuildingState>> previousActions = new
+    private static FixedSizedStack<java.util.Map.Entry<LocationNode, MapState>> previousActions = new
             FixedSizedStack<>(10);
 
     // Logger for this class
@@ -40,6 +41,34 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
     @Override
     public void handle(MouseEvent event) {
+
+
+        Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
+
+
+        LOGGER.info("Location Node: " + this.locationNode.toString() + "was clicked with the state: " +
+                currentMap.getCurrentMapState().toString());
+
+
+
+        switch (currentMap.getCurrentMapState()) {
+
+            case ADMIN:
+
+                currentMap.setCurrentLocationNode(this.locationNode);
+
+                break;
+
+
+
+
+            default:
+
+                break;
+
+        }
+
+        currentMap.setCurrentMapState(MapState.ADMIN);
 
     }
 

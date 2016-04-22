@@ -23,7 +23,7 @@ public class FaulknerHospitalData {
         map.addBuilding("Faulkner Hospital");
 
         // Floors
-        map.addFloor("Floor 1", "Floor1_Final.png"); // Index 0
+        map.addFloor("Floor 1", "floor1.png"); // Index 0
 
         System.out.println("Floor added");
 

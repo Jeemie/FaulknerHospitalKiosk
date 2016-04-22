@@ -1,7 +1,11 @@
 package Map.EventHandlers;
 
+import Map.Enums.MapState;
+import Map.Map;
 import Map.LocationNode;
+import Map.Location;
 import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +38,27 @@ public class LocationNodeDraggedEventHandler implements EventHandler<MouseEvent>
 
     @Override
     public void handle(MouseEvent event) {
+
+        Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
+
+        if (currentMap.getCurrentMapState().equals(MapState.MOVENODE)) {
+
+            LOGGER.info("Moving LocationNode " + this.locationNode.toString());
+
+            Location circleLocation = this.locationNode.getLocation();
+
+            double offsetX = event.getSceneX() - circleLocation.getX();
+            double offsetY = event.getSceneY() - circleLocation.getY();
+            double newTranslateX = ((ImageView)(event.getSource())).getTranslateX() + offsetX;
+            double newTranslateY = ((ImageView)(event.getSource())).getTranslateY() + offsetY;
+
+            ((ImageView)(event.getSource())).setTranslateX(newTranslateX);
+            ((ImageView)(event.getSource())).setTranslateY(newTranslateY);
+
+            circleLocation.setX(event.getSceneX());
+            circleLocation.setY(event.getSceneY());
+
+        }
 
     }
 

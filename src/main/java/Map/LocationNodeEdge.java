@@ -66,6 +66,31 @@ public class LocationNodeEdge extends Observable {
 
     }
 
+
+    public void drawEdgeAdmin(Pane locationNodeEdgePane) {
+
+        // TODO setup edge clicking
+
+        if (!locationNodeEdgePane.getChildren().contains(this.edgeLine)) {
+
+            this.edgeLine = new Line(this.locationNode1.getLocation().getX(), this.locationNode1.getLocation().getY(),
+                    this.locationNode2.getLocation().getX(), this.locationNode2.getLocation().getY());
+            this.edgeLine.setStrokeWidth(3);
+
+            locationNodeEdgePane.getChildren().add(this.edgeLine);
+
+        }
+
+        this.edgeLine.setStartX(this.locationNode1.getLocation().getX());
+        this.edgeLine.setStartY(this.locationNode1.getLocation().getY());
+        this.edgeLine.setEndX(this.locationNode2.getLocation().getX());
+        this.edgeLine.setEndY(this.locationNode2.getLocation().getY());
+
+        this.setWeight(computeWeight());
+
+
+    }
+
     /**
      *
      * @param pane
