@@ -168,61 +168,66 @@ public class Map {
 
 
         //FLOOR 1
-        mMainHospital.getFloor(1).addNode(new Location(20, 10)); //get(0) Audiology
-        mMainHospital.getFloor(1).addNode(new Location(20, 20)); //get(1) Cardiac
-        mMainHospital.getFloor(1).addNode(new Location(20, 30)); //get(2) Preop
-        mMainHospital.getFloor(1).addNode(new Location(20, 40)); //get(3) ER
-        mMainHospital.getFloor(1).addNode(new Location(20, 50)); //get(4) GI
-        mMainHospital.getFloor(1).addNode(new Location(20, 60)); //get(5) Lab
-        mMainHospital.getFloor(1).addNode(new Location(20, 70)); //get(6) Finance
-        mMainHospital.getFloor(1).addNode(new Location(20, 80)); //get(7) Radiology
-        mMainHospital.getFloor(1).addNode(new Location(20, 90)); //get(8) Test
-        mMainHospital.getFloor(1).addNode(new Location(20, 100)); //get(9) Family
-        mMainHospital.getFloor(1).addNode(new Location(20, 110)); //get(10) Info
-        mMainHospital.getFloor(1).addNode(new Location(20, 120)); //get(11) Admit
-        mMainHospital.getFloor(1).addNode(new Location(20, 130)); //get(12) Cafe
-        mMainHospital.getFloor(1).addNode(new Location(20, 140)); //get(13) Valet
-        mMainHospital.getFloor(1).addNode(new Location(20, 150)); //get(14) kiosk
-        mMainHospital.getFloor(1).addNode(new Location(20, 160)); //get(15) Bathroom
-        mMainHospital.getFloor(1).addNode(new Location(20, 170)); //get(16) H Elevatoe
-        mMainHospital.getFloor(1).addNode(new Location(20, 180)); //get(17) A Elevatoe
+        mMainHospital.getFloor(1).addNode(new Location(20, 10));        //get(0) Audiology
+        mMainHospital.getFloor(1).addNode(new Location(20, 20));        //get(1) Cardiac
+        mMainHospital.getFloor(1).addNode(new Location(1501, 497));     //get(2) Preop
+        mMainHospital.getFloor(1).addNode(new Location(1042, 471));     //get(3) ER
+        mMainHospital.getFloor(1).addNode(new Location(1203, 832));     //get(4) GI
+        mMainHospital.getFloor(1).addNode(new Location(1274, 435));     //get(5) Finance
+        mMainHospital.getFloor(1).addNode(new Location(1699.0, 482.0)); //get(6) Radiology
+        mMainHospital.getFloor(1).addNode(new Location(1258, 471));     //get(7) Test
+        mMainHospital.getFloor(1).addNode(new Location(1124, 420));     //get(8) Family
+        mMainHospital.getFloor(1).addNode(new Location(20, 120));       //get(9) Admit
+        mMainHospital.getFloor(1).addNode(new Location(1298, 130));     //get(10) Cafe
+        mMainHospital.getFloor(1).addNode(new Location(20, 140));       //get(11) Valet
+        mMainHospital.getFloor(1).addNode(new Location(1437, 233.0));   //get(12) kiosk
+        mMainHospital.getFloor(1).addNode(new Location(1381, 420));     //get(13) Bathroom
+        mMainHospital.getFloor(1).addNode(new Location(1413, 1195));    //get(14) H Elevatoe
+        mMainHospital.getFloor(1).addNode(new Location(1454, 339));     //get(15) A Elevatoe
+        mMainHospital.getFloor(1).addNode(new Location(1464, 1100));    //get(16) Hillside Stairs
+        mMainHospital.getFloor(1).addNode(new Location(1527, 343));     //get(17) Atrium Stairs
 
         mMainHospital.getFloor(1).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Audiology");
         mMainHospital.getFloor(1).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Cardiac Rehabilitation");
         mMainHospital.getFloor(1).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Center for Preoperative Evaluation");
         mMainHospital.getFloor(1).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Emergency Room");
         mMainHospital.getFloor(1).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "GI Endoscopy");
-        mMainHospital.getFloor(1).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Laboratory");
-        mMainHospital.getFloor(1).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Patient Financial Services");
-        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Radiology");
-        mMainHospital.getFloor(1).getLocationNodes().get(8).addDestination(Destination.DEPARTMENT, "Special Testing");
-        mMainHospital.getFloor(1).getLocationNodes().get(9).addDestination(Destination.DEPARTMENT, "Taiclet Family Center");
+        mMainHospital.getFloor(1).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Patient Financial Services");
+        mMainHospital.getFloor(1).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Radiology");
+        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Special Testing");
+        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Laboratory");
+        mMainHospital.getFloor(1).getLocationNodes().get(8).addDestination(Destination.DEPARTMENT, "Taiclet Family Center");
 
-        mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Information");
-        mMainHospital.getFloor(1).getLocationNodes().get(11).addDestination(Destination.SERVICE, "Admitting/Registration");
-        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Atrium Cafe");
-        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Starbucks");
-        mMainHospital.getFloor(1).getLocationNodes().get(13).addDestination(Destination.SERVICE, "Valet Parking");
 
-        mMainHospital.getFloor(1).getLocationNodes().get(14).addDestination(Destination.KIOSK, "Kiosk");
-        (mMainHospital.getFloor(1)).setStartNode(mMainHospital.getFloor(1).getLocationNodes().get(14));
+        mMainHospital.getFloor(1).getLocationNodes().get(9).addDestination(Destination.SERVICE, "Admitting/Registration");
+        mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Atrium Cafe");
+        mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Starbucks");
+        mMainHospital.getFloor(1).getLocationNodes().get(11).addDestination(Destination.SERVICE, "Valet Parking");
 
-        mMainHospital.getFloor(1).getLocationNodes().get(15).addDestination(Destination.BATHROOM, "Floor 1 Bathroom");
+        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.KIOSK, " Floor 1Kiosk");
+        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Information");
+        (mMainHospital.getFloor(1)).setStartNode(mMainHospital.getFloor(1).getLocationNodes().get(12));
 
-        mMainHospital.getFloor(1).getLocationNodes().get(16).addDestination(Destination.ELEVATOR, "Hillside Elevator");
-        mMainHospital.getFloor(1).getLocationNodes().get(17).addDestination(Destination.ELEVATOR, "Atrium Elevator");
+        mMainHospital.getFloor(1).getLocationNodes().get(13).addDestination(Destination.BATHROOM, "Floor 1 Bathroom");
 
+        mMainHospital.getFloor(1).getLocationNodes().get(14).addDestination(Destination.ELEVATOR, "Hillside Elevator");
+        mMainHospital.getFloor(1).getLocationNodes().get(15).addDestination(Destination.ELEVATOR, "Atrium Elevator");
+
+         mMainHospital.getFloor(1).getLocationNodes().get(16).addDestination(Destination.STAIR, "Hillside Stairs");
+         mMainHospital.getFloor(1).getLocationNodes().get(17).addDestination(Destination.STAIR, "Atrium Stairs");
 
         //FLOOR 2
-        mMainHospital.getFloor(2).addNode(new Location(20, 10)); //get(0) 2A
-        mMainHospital.getFloor(2).addNode(new Location(20, 20)); //get(1) 2B
-        mMainHospital.getFloor(2).addNode(new Location(20, 30)); //get(2) Physical Therapy
-        mMainHospital.getFloor(2).addNode(new Location(20, 40)); //get(3) Psychiatry
-        mMainHospital.getFloor(2).addNode(new Location(20, 50)); //get(4) Addiction recovery
-        mMainHospital.getFloor(2).addNode(new Location(20, 60)); //get(5) rehab
-        mMainHospital.getFloor(2).addNode(new Location(20, 70)); //get(6) bathroom
-        mMainHospital.getFloor(2).addNode(new Location(20, 80)); //get(7) H Elevatoe
-        mMainHospital.getFloor(2).addNode(new Location(20, 90)); //get(8) A Elevatoe
+        mMainHospital.getFloor(2).addNode(new Location(1371, 81.0));        //get(0) 2A
+        mMainHospital.getFloor(2).addNode(new Location(1617, 81.0));        //get(1) 2B
+        mMainHospital.getFloor(2).addNode(new Location(1724, 557.0));        //get(2) Physical Therapy
+        mMainHospital.getFloor(2).addNode(new Location(1414, 1242.0));        //get(3) Psychiatry
+        mMainHospital.getFloor(2).addNode(new Location(20, 50));        //get(4) Addiction recovery
+        mMainHospital.getFloor(2).addNode(new Location(20, 60));        //get(5) rehab
+        mMainHospital.getFloor(2).addNode(new Location(1614, 171.0));        //get(6) bathroom
+        mMainHospital.getFloor(2).addNode(new Location(1413, 1195));    //get(7) H Elevatoe
+        mMainHospital.getFloor(2).addNode(new Location(1454, 339));      //get(8) A Elevatoe
+        mMainHospital.getFloor(2).addNode(new Location(1464, 1100));    //get(9) Hillside Stairs
+        mMainHospital.getFloor(2).addNode(new Location(1527, 343));     //get(10) Atrium Stairs
 
         mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Otolarngology");
         mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Corrales, Carleton Eduardo, MD");
@@ -249,6 +254,8 @@ public class Map {
 
         mMainHospital.getFloor(2).getLocationNodes().get(7).addDestination(Destination.ELEVATOR, "Hillside Elevator");
         mMainHospital.getFloor(2).getLocationNodes().get(8).addDestination(Destination.ELEVATOR, "Atrium Elevator");
+        mMainHospital.getFloor(2).getLocationNodes().get(9).addDestination(Destination.STAIR, "Hillside Stairs");
+        mMainHospital.getFloor(2).getLocationNodes().get(10).addDestination(Destination.STAIR, "Atrium Stairs");
 
 
         /* Unknown Locction
@@ -275,26 +282,28 @@ public class Map {
         mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Stewart, Carl, MEd, LADC I");
         mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Trumble, Julia, LICSW");
         mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Yudkoff, Benjamin, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Issa, Mohammed, MD");
-*/
+        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Issa, Mohammed, MD"); */
 
         //FLOOR 3
-        mMainHospital.getFloor(3).addNode(new Location(10, 10));//get(0) 3A
-        mMainHospital.getFloor(3).addNode(new Location(10, 20));//get(1) 3B
-        mMainHospital.getFloor(3).addNode(new Location(10, 30));//get(2) 3C
-        mMainHospital.getFloor(3).addNode(new Location(10, 40));//get(3) ATM
-        mMainHospital.getFloor(3).addNode(new Location(10, 50));//get(4) Auditorium
-        mMainHospital.getFloor(3).addNode(new Location(10, 60));//get(5) Cafeteria
-        mMainHospital.getFloor(3).addNode(new Location(10, 70));//get(6) Chapel
-        mMainHospital.getFloor(3).addNode(new Location(10, 80));//get(7) Gift Shop
+        mMainHospital.getFloor(3).addNode(new Location(1402, 202));     //get(0) 3A
+        mMainHospital.getFloor(3).addNode(new Location(1534, 202));     //get(1) 3B
+        mMainHospital.getFloor(3).addNode(new Location(1594, 229));     //get(2) 3C
+        mMainHospital.getFloor(3).addNode(new Location(10, 40));        //get(3) ATM
+        mMainHospital.getFloor(3).addNode(new Location(1347, 700));     //get(4) Auditorium
+        mMainHospital.getFloor(3).addNode(new Location(1492, 637));     //get(5) Cafeteria
+        mMainHospital.getFloor(3).addNode(new Location(1333, 1380));    //get(6) Chapel
+        mMainHospital.getFloor(3).addNode(new Location(1449, 940));     //get(7) Gift Shop
         mMainHospital.getFloor(3).addNode(new Location(10, 90));//get(8) Patient Relations
-        mMainHospital.getFloor(3).addNode(new Location(10, 100));//get(9) Volunteer Services
-        mMainHospital.getFloor(3).addNode(new Location(10, 110));//get(10) Kiosk
-        mMainHospital.getFloor(3).addNode(new Location(10, 120));//get(11) Bathrooms near atrium
-        mMainHospital.getFloor(3).addNode(new Location(10, 130));//get(12) Bathrooms near kiosk
-        mMainHospital.getFloor(3).addNode(new Location(10, 140));//get(13) Bathrooms near auditorium
-        mMainHospital.getFloor(3).addNode(new Location(10, 150));//get(14) H Elevatoe
-        mMainHospital.getFloor(3).addNode(new Location(10, 160));//get(15) A Elevatoe
+        mMainHospital.getFloor(3).addNode(new Location(1601, 1380));    //get(9) Volunteer Services
+        mMainHospital.getFloor(3).addNode(new Location(1469, 1359));    //get(10) Kiosk
+        mMainHospital.getFloor(3).addNode(new Location(1445, 240));     //get(11) Bathrooms near atrium left
+        mMainHospital.getFloor(3).addNode(new Location(1490, 240));     //get(12) Bathrooms near atrium right
+        mMainHospital.getFloor(3).addNode(new Location(1295, 606));       //get(13) Bathrooms near kiosk
+        mMainHospital.getFloor(3).addNode(new Location(1391, 1276));       //get(14) Bathrooms near auditorium
+        mMainHospital.getFloor(3).addNode(new Location(1413, 1195));    //get(15) H Elevatoe
+        mMainHospital.getFloor(3).addNode(new Location(1454, 339));     //get(16) A Elevatoe
+        mMainHospital.getFloor(3).addNode(new Location(1464, 1100));    //get(17) Hillside Stairs
+        mMainHospital.getFloor(3).addNode(new Location(1527, 343));     //get(18) Atrium Stairs
 
         mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Roslindale Pediatric Associates");
         mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Byrne, Jennifer, RN, CPNP");
@@ -333,13 +342,17 @@ public class Map {
 
         mMainHospital.getFloor(3).getLocationNodes().get(10).addDestination(Destination.KIOSK, "Kiosk");
 
-        mMainHospital.getFloor(3).getLocationNodes().get(11).addDestination(Destination.BATHROOM, "Floor 3 Bathroom");
-        mMainHospital.getFloor(3).getLocationNodes().get(12).addDestination(Destination.BATHROOM, "Floor 3 Bathroom");
-        mMainHospital.getFloor(3).getLocationNodes().get(13).addDestination(Destination.BATHROOM, "Floor 3 Bathroom");
+        mMainHospital.getFloor(3).getLocationNodes().get(11).addDestination(Destination.BATHROOM, "Floor 3 Atrium Left Bathroom");
+        mMainHospital.getFloor(3).getLocationNodes().get(12).addDestination(Destination.BATHROOM, "Floor 3 Atrium RightBathroom");
+        mMainHospital.getFloor(3).getLocationNodes().get(13).addDestination(Destination.BATHROOM, "Floor 3 Auditorium Bathroom");
+        mMainHospital.getFloor(3).getLocationNodes().get(14).addDestination(Destination.BATHROOM, "Floor 3 Hillside Bathroom");
 
-        mMainHospital.getFloor(3).getLocationNodes().get(14).addDestination(Destination.ELEVATOR, " Hillside Elevator");
-        mMainHospital.getFloor(3).getLocationNodes().get(15).addDestination(Destination.ELEVATOR, "Atrium Elevatoe");
+        mMainHospital.getFloor(3).getLocationNodes().get(15).addDestination(Destination.ELEVATOR, " Hillside Elevator");
+        mMainHospital.getFloor(3).getLocationNodes().get(16).addDestination(Destination.ELEVATOR, "Atrium Elevatoe");
+        mMainHospital.getFloor(3).getLocationNodes().get(17).addDestination(Destination.STAIR, "Hillside Stairs");
+        mMainHospital.getFloor(3).getLocationNodes().get(18).addDestination(Destination.STAIR, "Atrium Stairs");
 
+         /*
 
         //FLOOR 4
         mMainHospital.getFloor(4).addNode(new Location(40, 10));//get(0) 4A
@@ -506,8 +519,8 @@ public class Map {
 
         mMainHospital.getFloor(4).getLocationNodes().get(20).addDestination(Destination.ELEVATOR, "Hillside Elevator");
         mMainHospital.getFloor(4).getLocationNodes().get(21).addDestination(Destination.ELEVATOR, "Atrium Elevator");
-
-
+*/
+/*/
         //FLOOR 5
         mMainHospital.getFloor(5).addNode(new Location(40, 10));//get(0) 5South
         mMainHospital.getFloor(5).addNode(new Location(40, 20));//get(1) 5North
@@ -644,7 +657,7 @@ public class Map {
 
 
 
-
+*/
         return mMainHospital;
     }
 

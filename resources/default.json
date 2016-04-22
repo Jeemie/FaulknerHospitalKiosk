@@ -1,1 +1,993 @@
-{}
+{
+  "uniqueID" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+  "floors" : [ {
+    "uniqueID" : "6d889ed1-8437-4435-b107-69477a7297a1",
+    "floor" : 1,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ {
+      "uniqueID" : "a4c1df26-c98e-40a1-a1be-492a62d0db7d",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1501.0,
+        "y" : 497.0
+      },
+      "adjacentLocationNodes" : [ {
+        "uniqueID" : "a9455855-f79d-406a-a438-8fdc584c47c3",
+        "heuristicCost" : 0.0,
+        "location" : {
+          "x" : 1482.0,
+          "y" : 498.0
+        },
+        "adjacentLocationNodes" : [ {
+          "uniqueID" : "e0e895ff-f192-46d9-beae-22c3504d9c25",
+          "heuristicCost" : 0.0,
+          "location" : {
+            "x" : 1480.0,
+            "y" : 461.0
+          },
+          "adjacentLocationNodes" : [ {
+            "uniqueID" : "d9b0d9b8-8a35-4461-bed9-54de129ce168",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 1377.0,
+              "y" : 456.0
+            },
+            "adjacentLocationNodes" : [ {
+              "uniqueID" : "9a3bc7b1-2a5f-43eb-837c-77cb1a395115",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1274.0,
+                "y" : 456.0
+              },
+              "adjacentLocationNodes" : [ {
+                "uniqueID" : "74243c3f-1585-423f-a060-fe7cbf2b55c1",
+                "heuristicCost" : 0.0,
+                "location" : {
+                  "x" : 1257.0,
+                  "y" : 456.0
+                },
+                "adjacentLocationNodes" : [ {
+                  "uniqueID" : "2a74ebf2-6d18-46e1-bdb3-205ab7fed9af",
+                  "heuristicCost" : 0.0,
+                  "location" : {
+                    "x" : 1182.0,
+                    "y" : 455.0
+                  },
+                  "adjacentLocationNodes" : [ {
+                    "uniqueID" : "76350a19-4319-44da-8d11-f95a2e15cc03",
+                    "heuristicCost" : 0.0,
+                    "location" : {
+                      "x" : 1177.0,
+                      "y" : 811.0
+                    },
+                    "adjacentLocationNodes" : [ {
+                      "uniqueID" : "832eeaa6-1495-431a-81e7-c0a88b0f423e",
+                      "heuristicCost" : 0.0,
+                      "location" : {
+                        "x" : 1204.0,
+                        "y" : 813.0
+                      },
+                      "adjacentLocationNodes" : [ {
+                        "uniqueID" : "38d7f527-c1dc-4e06-878a-1dd6ff568f33",
+                        "heuristicCost" : 0.0,
+                        "location" : {
+                          "x" : 1483.0,
+                          "y" : 812.0
+                        },
+                        "adjacentLocationNodes" : [ {
+                          "uniqueID" : "d2bcabe1-af3d-449a-ae30-c6d87101e794",
+                          "heuristicCost" : 0.0,
+                          "location" : {
+                            "x" : 1482.0,
+                            "y" : 1100.0
+                          },
+                          "adjacentLocationNodes" : [ {
+                            "uniqueID" : "1d80c2e9-5905-453e-980d-dde36ddc2abf",
+                            "heuristicCost" : 0.0,
+                            "location" : {
+                              "x" : 1478.0,
+                              "y" : 1193.0
+                            },
+                            "adjacentLocationNodes" : [ {
+                              "uniqueID" : "fe37804b-9732-4e99-851e-041b3c81c26a",
+                              "heuristicCost" : 0.0,
+                              "location" : {
+                                "x" : 1413.0,
+                                "y" : 1195.0
+                              },
+                              "adjacentLocationNodes" : [ "1d80c2e9-5905-453e-980d-dde36ddc2abf" ],
+                              "destinations" : {
+                                "ELEVATOR" : [ "Hillside Elevator" ]
+                              },
+                              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                              "gscore" : "Infinity",
+                              "fscore" : "Infinity",
+                              "buildingDestinations" : [ "Hillside Elevator" ]
+                            }, "d2bcabe1-af3d-449a-ae30-c6d87101e794" ],
+                            "destinations" : { },
+                            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                            "gscore" : "Infinity",
+                            "fscore" : "Infinity",
+                            "buildingDestinations" : [ ]
+                          }, {
+                            "uniqueID" : "19362808-4763-4b51-88cb-0afd24b3629e",
+                            "heuristicCost" : 0.0,
+                            "location" : {
+                              "x" : 1464.0,
+                              "y" : 1100.0
+                            },
+                            "adjacentLocationNodes" : [ "d2bcabe1-af3d-449a-ae30-c6d87101e794" ],
+                            "destinations" : {
+                              "STAIR" : [ "Hillside Stairs" ]
+                            },
+                            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                            "gscore" : "Infinity",
+                            "fscore" : "Infinity",
+                            "buildingDestinations" : [ "Hillside Stairs" ]
+                          }, "38d7f527-c1dc-4e06-878a-1dd6ff568f33" ],
+                          "destinations" : { },
+                          "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                          "gscore" : "Infinity",
+                          "fscore" : "Infinity",
+                          "buildingDestinations" : [ ]
+                        }, "832eeaa6-1495-431a-81e7-c0a88b0f423e", "a9455855-f79d-406a-a438-8fdc584c47c3", {
+                          "uniqueID" : "33958aaf-247d-4add-b586-1d7899af049a",
+                          "heuristicCost" : 0.0,
+                          "location" : {
+                            "x" : 1646.0,
+                            "y" : 814.0
+                          },
+                          "adjacentLocationNodes" : [ "38d7f527-c1dc-4e06-878a-1dd6ff568f33", {
+                            "uniqueID" : "e82c381d-9c39-4256-a206-878a0dd284eb",
+                            "heuristicCost" : 0.0,
+                            "location" : {
+                              "x" : 1651.0,
+                              "y" : 863.0
+                            },
+                            "adjacentLocationNodes" : [ "33958aaf-247d-4add-b586-1d7899af049a" ],
+                            "destinations" : { },
+                            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                            "gscore" : "Infinity",
+                            "fscore" : "Infinity",
+                            "buildingDestinations" : [ ]
+                          }, {
+                            "uniqueID" : "53a767c7-8600-41bd-a4e8-7ecd1d6276b0",
+                            "heuristicCost" : 0.0,
+                            "location" : {
+                              "x" : 1650.0,
+                              "y" : 466.0
+                            },
+                            "adjacentLocationNodes" : [ "33958aaf-247d-4add-b586-1d7899af049a", {
+                              "uniqueID" : "6fe76ee2-96ce-46dc-8aba-69eb642d4168",
+                              "heuristicCost" : 0.0,
+                              "location" : {
+                                "x" : 1699.0,
+                                "y" : 482.0
+                              },
+                              "adjacentLocationNodes" : [ "53a767c7-8600-41bd-a4e8-7ecd1d6276b0" ],
+                              "destinations" : {
+                                "DEPARTMENT" : [ "Radiology" ]
+                              },
+                              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                              "gscore" : "Infinity",
+                              "fscore" : "Infinity",
+                              "buildingDestinations" : [ "Radiology" ]
+                            }, "e0e895ff-f192-46d9-beae-22c3504d9c25" ],
+                            "destinations" : { },
+                            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                            "gscore" : "Infinity",
+                            "fscore" : "Infinity",
+                            "buildingDestinations" : [ ]
+                          } ],
+                          "destinations" : { },
+                          "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                          "gscore" : "Infinity",
+                          "fscore" : "Infinity",
+                          "buildingDestinations" : [ ]
+                        } ],
+                        "destinations" : { },
+                        "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                        "gscore" : "Infinity",
+                        "fscore" : "Infinity",
+                        "buildingDestinations" : [ ]
+                      }, {
+                        "uniqueID" : "8284fa7d-bb07-42ad-a1a7-c161afc392ad",
+                        "heuristicCost" : 0.0,
+                        "location" : {
+                          "x" : 1203.0,
+                          "y" : 832.0
+                        },
+                        "adjacentLocationNodes" : [ "832eeaa6-1495-431a-81e7-c0a88b0f423e" ],
+                        "destinations" : {
+                          "DEPARTMENT" : [ "GI Endoscopy" ]
+                        },
+                        "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                        "gscore" : "Infinity",
+                        "fscore" : "Infinity",
+                        "buildingDestinations" : [ "GI Endoscopy" ]
+                      }, "76350a19-4319-44da-8d11-f95a2e15cc03" ],
+                      "destinations" : { },
+                      "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                      "gscore" : "Infinity",
+                      "fscore" : "Infinity",
+                      "buildingDestinations" : [ ]
+                    }, "2a74ebf2-6d18-46e1-bdb3-205ab7fed9af" ],
+                    "destinations" : { },
+                    "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                    "gscore" : "Infinity",
+                    "fscore" : "Infinity",
+                    "buildingDestinations" : [ ]
+                  }, {
+                    "uniqueID" : "60320fb2-2288-46d3-9b32-aa537e1c21f9",
+                    "heuristicCost" : 0.0,
+                    "location" : {
+                      "x" : 1125.0,
+                      "y" : 455.0
+                    },
+                    "adjacentLocationNodes" : [ "2a74ebf2-6d18-46e1-bdb3-205ab7fed9af", {
+                      "uniqueID" : "c6560bb3-acf2-4c40-9506-5d576392aa6d",
+                      "heuristicCost" : 0.0,
+                      "location" : {
+                        "x" : 1124.0,
+                        "y" : 420.0
+                      },
+                      "adjacentLocationNodes" : [ "60320fb2-2288-46d3-9b32-aa537e1c21f9" ],
+                      "destinations" : {
+                        "DEPARTMENT" : [ "Taiclet Family Center" ]
+                      },
+                      "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                      "gscore" : "Infinity",
+                      "fscore" : "Infinity",
+                      "buildingDestinations" : [ "Taiclet Family Center" ]
+                    }, {
+                      "uniqueID" : "2f72fb0b-4a9b-4d2e-83c3-1d2f50fc39e7",
+                      "heuristicCost" : 0.0,
+                      "location" : {
+                        "x" : 1065.0,
+                        "y" : 454.0
+                      },
+                      "adjacentLocationNodes" : [ "60320fb2-2288-46d3-9b32-aa537e1c21f9", {
+                        "uniqueID" : "97abf25b-274c-4321-9ca7-77a9523589f4",
+                        "heuristicCost" : 0.0,
+                        "location" : {
+                          "x" : 1042.0,
+                          "y" : 471.0
+                        },
+                        "adjacentLocationNodes" : [ "2f72fb0b-4a9b-4d2e-83c3-1d2f50fc39e7" ],
+                        "destinations" : {
+                          "DEPARTMENT" : [ "Emergency Room" ]
+                        },
+                        "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                        "gscore" : "Infinity",
+                        "fscore" : "Infinity",
+                        "buildingDestinations" : [ "Emergency Room" ]
+                      } ],
+                      "destinations" : { },
+                      "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                      "gscore" : "Infinity",
+                      "fscore" : "Infinity",
+                      "buildingDestinations" : [ ]
+                    } ],
+                    "destinations" : { },
+                    "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                    "gscore" : "Infinity",
+                    "fscore" : "Infinity",
+                    "buildingDestinations" : [ ]
+                  }, "74243c3f-1585-423f-a060-fe7cbf2b55c1" ],
+                  "destinations" : { },
+                  "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                  "gscore" : "Infinity",
+                  "fscore" : "Infinity",
+                  "buildingDestinations" : [ ]
+                }, {
+                  "uniqueID" : "efe243be-a783-418a-9470-bf84f8d6f2ad",
+                  "heuristicCost" : 0.0,
+                  "location" : {
+                    "x" : 1258.0,
+                    "y" : 471.0
+                  },
+                  "adjacentLocationNodes" : [ "74243c3f-1585-423f-a060-fe7cbf2b55c1" ],
+                  "destinations" : {
+                    "DEPARTMENT" : [ "Special Testing", "Laboratory" ]
+                  },
+                  "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                  "gscore" : "Infinity",
+                  "fscore" : "Infinity",
+                  "buildingDestinations" : [ "Special Testing", "Laboratory" ]
+                }, "9a3bc7b1-2a5f-43eb-837c-77cb1a395115" ],
+                "destinations" : { },
+                "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                "gscore" : "Infinity",
+                "fscore" : "Infinity",
+                "buildingDestinations" : [ ]
+              }, {
+                "uniqueID" : "308e0a6c-0ac5-4503-b055-1e6baf6590ca",
+                "heuristicCost" : 0.0,
+                "location" : {
+                  "x" : 1274.0,
+                  "y" : 435.0
+                },
+                "adjacentLocationNodes" : [ "9a3bc7b1-2a5f-43eb-837c-77cb1a395115" ],
+                "destinations" : {
+                  "DEPARTMENT" : [ "Patient Financial Services" ]
+                },
+                "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                "gscore" : "Infinity",
+                "fscore" : "Infinity",
+                "buildingDestinations" : [ "Patient Financial Services" ]
+              }, "d9b0d9b8-8a35-4461-bed9-54de129ce168" ],
+              "destinations" : { },
+              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+              "gscore" : "Infinity",
+              "fscore" : "Infinity",
+              "buildingDestinations" : [ ]
+            }, {
+              "uniqueID" : "6b5b1b74-b22a-4cbd-8c86-a2fb2589be0c",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1381.0,
+                "y" : 420.0
+              },
+              "adjacentLocationNodes" : [ "d9b0d9b8-8a35-4461-bed9-54de129ce168" ],
+              "destinations" : {
+                "BATHROOM" : [ "Floor 1 Bathroom" ]
+              },
+              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+              "gscore" : "Infinity",
+              "fscore" : "Infinity",
+              "buildingDestinations" : [ "Floor 1 Bathroom" ]
+            }, "e0e895ff-f192-46d9-beae-22c3504d9c25" ],
+            "destinations" : { },
+            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+            "gscore" : "Infinity",
+            "fscore" : "Infinity",
+            "buildingDestinations" : [ ]
+          }, "a9455855-f79d-406a-a438-8fdc584c47c3", "53a767c7-8600-41bd-a4e8-7ecd1d6276b0", {
+            "uniqueID" : "e16498a8-e0c5-4403-89f7-e224df42726d",
+            "heuristicCost" : 0.0,
+            "location" : {
+              "x" : 1479.0,
+              "y" : 338.0
+            },
+            "adjacentLocationNodes" : [ "e0e895ff-f192-46d9-beae-22c3504d9c25", {
+              "uniqueID" : "8cfffc7a-51e9-4ed8-84a1-85592142bf24",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1454.0,
+                "y" : 339.0
+              },
+              "adjacentLocationNodes" : [ "e16498a8-e0c5-4403-89f7-e224df42726d" ],
+              "destinations" : {
+                "ELEVATOR" : [ "Atrium Elevator" ]
+              },
+              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+              "gscore" : "Infinity",
+              "fscore" : "Infinity",
+              "buildingDestinations" : [ "Atrium Elevator" ]
+            }, {
+              "uniqueID" : "411b0b4b-4215-471e-a169-788d76d0ed96",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1527.0,
+                "y" : 343.0
+              },
+              "adjacentLocationNodes" : [ "e16498a8-e0c5-4403-89f7-e224df42726d" ],
+              "destinations" : {
+                "STAIR" : [ "Atrium Stairs" ]
+              },
+              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+              "gscore" : "Infinity",
+              "fscore" : "Infinity",
+              "buildingDestinations" : [ "Atrium Stairs" ]
+            }, {
+              "uniqueID" : "c753ee5c-96c0-48f8-a6bd-2fd1a4ff5573",
+              "heuristicCost" : 0.0,
+              "location" : {
+                "x" : 1480.0,
+                "y" : 248.0
+              },
+              "adjacentLocationNodes" : [ "e16498a8-e0c5-4403-89f7-e224df42726d", {
+                "uniqueID" : "102e58ba-bb7b-4df7-85be-514385721a08",
+                "heuristicCost" : 0.0,
+                "location" : {
+                  "x" : 1437.0,
+                  "y" : 233.0
+                },
+                "adjacentLocationNodes" : [ "c753ee5c-96c0-48f8-a6bd-2fd1a4ff5573", {
+                  "uniqueID" : "0abcb7a1-2cd7-4211-8ca7-89467b0a9d03",
+                  "heuristicCost" : 0.0,
+                  "location" : {
+                    "x" : 1481.0,
+                    "y" : 175.0
+                  },
+                  "adjacentLocationNodes" : [ "102e58ba-bb7b-4df7-85be-514385721a08", "c753ee5c-96c0-48f8-a6bd-2fd1a4ff5573", {
+                    "uniqueID" : "d1d1b13f-185c-485a-a950-2e53ac0597d1",
+                    "heuristicCost" : 0.0,
+                    "location" : {
+                      "x" : 1298.0,
+                      "y" : 130.0
+                    },
+                    "adjacentLocationNodes" : [ "0abcb7a1-2cd7-4211-8ca7-89467b0a9d03" ],
+                    "destinations" : {
+                      "SERVICE" : [ "Atrium Cafe", "Starbucks" ]
+                    },
+                    "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                    "gscore" : "Infinity",
+                    "fscore" : "Infinity",
+                    "buildingDestinations" : [ "Atrium Cafe", "Starbucks" ]
+                  } ],
+                  "destinations" : { },
+                  "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                  "gscore" : "Infinity",
+                  "fscore" : "Infinity",
+                  "buildingDestinations" : [ ]
+                } ],
+                "destinations" : {
+                  "KIOSK" : [ " Floor 1Kiosk" ],
+                  "SERVICE" : [ "Information" ]
+                },
+                "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+                "gscore" : "Infinity",
+                "fscore" : "Infinity",
+                "buildingDestinations" : [ " Floor 1Kiosk", "Information" ]
+              }, "0abcb7a1-2cd7-4211-8ca7-89467b0a9d03" ],
+              "destinations" : { },
+              "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+              "gscore" : "Infinity",
+              "fscore" : "Infinity",
+              "buildingDestinations" : [ ]
+            } ],
+            "destinations" : { },
+            "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+            "gscore" : "Infinity",
+            "fscore" : "Infinity",
+            "buildingDestinations" : [ ]
+          } ],
+          "destinations" : { },
+          "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+          "gscore" : "Infinity",
+          "fscore" : "Infinity",
+          "buildingDestinations" : [ ]
+        }, "a4c1df26-c98e-40a1-a1be-492a62d0db7d", "38d7f527-c1dc-4e06-878a-1dd6ff568f33" ],
+        "destinations" : { },
+        "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+        "gscore" : "Infinity",
+        "fscore" : "Infinity",
+        "buildingDestinations" : [ ]
+      } ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Center for Preoperative Evaluation" ]
+      },
+      "currentFloor" : "6d889ed1-8437-4435-b107-69477a7297a1",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Center for Preoperative Evaluation" ]
+    }, "97abf25b-274c-4321-9ca7-77a9523589f4", "8284fa7d-bb07-42ad-a1a7-c161afc392ad", "308e0a6c-0ac5-4503-b055-1e6baf6590ca", "6fe76ee2-96ce-46dc-8aba-69eb642d4168", "efe243be-a783-418a-9470-bf84f8d6f2ad", "c6560bb3-acf2-4c40-9506-5d576392aa6d", "d1d1b13f-185c-485a-a950-2e53ac0597d1", "102e58ba-bb7b-4df7-85be-514385721a08", "6b5b1b74-b22a-4cbd-8c86-a2fb2589be0c", "fe37804b-9732-4e99-851e-041b3c81c26a", "8cfffc7a-51e9-4ed8-84a1-85592142bf24", "19362808-4763-4b51-88cb-0afd24b3629e", "411b0b4b-4215-471e-a169-788d76d0ed96", "e0e895ff-f192-46d9-beae-22c3504d9c25", "e16498a8-e0c5-4403-89f7-e224df42726d", "c753ee5c-96c0-48f8-a6bd-2fd1a4ff5573", "0abcb7a1-2cd7-4211-8ca7-89467b0a9d03", "53a767c7-8600-41bd-a4e8-7ecd1d6276b0", "e82c381d-9c39-4256-a206-878a0dd284eb", "33958aaf-247d-4add-b586-1d7899af049a", "38d7f527-c1dc-4e06-878a-1dd6ff568f33", "832eeaa6-1495-431a-81e7-c0a88b0f423e", "76350a19-4319-44da-8d11-f95a2e15cc03", "d9b0d9b8-8a35-4461-bed9-54de129ce168", "9a3bc7b1-2a5f-43eb-837c-77cb1a395115", "74243c3f-1585-423f-a060-fe7cbf2b55c1", "2a74ebf2-6d18-46e1-bdb3-205ab7fed9af", "60320fb2-2288-46d3-9b32-aa537e1c21f9", "2f72fb0b-4a9b-4d2e-83c3-1d2f50fc39e7", "d2bcabe1-af3d-449a-ae30-c6d87101e794", "1d80c2e9-5905-453e-980d-dde36ddc2abf", "a9455855-f79d-406a-a438-8fdc584c47c3" ],
+    "relativePath" : "floor1.png",
+    "startNode" : "102e58ba-bb7b-4df7-85be-514385721a08"
+  }, {
+    "uniqueID" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+    "floor" : 2,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ {
+      "uniqueID" : "e26b562d-b14a-41e9-8b7d-49335c6de4a2",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1371.0,
+        "y" : 81.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Corrales, Carleton Eduardo, MD", "Prince, Anthony, MD", "Roditi, Rachel, MD" ],
+        "DEPARTMENT" : [ "Otolarngology" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Corrales, Carleton Eduardo, MD", "Prince, Anthony, MD", "Roditi, Rachel, MD", "Otolarngology" ]
+    }, {
+      "uniqueID" : "93604ad9-3b7a-4b08-8071-7ded18df44a8",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1617.0,
+        "y" : 81.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Carty, Matthew, MD", "Caterson, Stephanie, MD", "Chun, Yoon Sun, MD", "Hajj, Micheline, RN", "Halvorson, Eric, MD", "Hergrueter, Charles, MD", "Ingram, Abbie, PA-C", "Lafleur, Emily, PA-C", "Lahair, Tracy, PA-C" ],
+        "DEPARTMENT" : [ "Plastic Surgery" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Carty, Matthew, MD", "Caterson, Stephanie, MD", "Chun, Yoon Sun, MD", "Hajj, Micheline, RN", "Halvorson, Eric, MD", "Hergrueter, Charles, MD", "Ingram, Abbie, PA-C", "Lafleur, Emily, PA-C", "Lahair, Tracy, PA-C", "Plastic Surgery" ]
+    }, {
+      "uniqueID" : "76a3c6b5-5ac9-4aae-97e2-7f107fc70972",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1724.0,
+        "y" : 557.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Physical Therapy" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Physical Therapy" ]
+    }, {
+      "uniqueID" : "f54e5bc5-a52e-4592-a2a7-d430de7445b8",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1414.0,
+        "y" : 1242.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "DEPARTMENT" : [ "Psychology" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Psychology" ]
+    }, {
+      "uniqueID" : "281246af-51ea-4e8f-9d77-be6ccb3647e7",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1614.0,
+        "y" : 171.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 2 Bathroom " ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Floor 2 Bathroom " ]
+    }, {
+      "uniqueID" : "73bda852-0fad-432b-9c3a-b2c75f90135b",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1413.0,
+        "y" : 1195.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "ELEVATOR" : [ "Hillside Elevator" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Hillside Elevator" ]
+    }, {
+      "uniqueID" : "d1febc58-8300-4e9d-8e3a-e1dc64d98e09",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1454.0,
+        "y" : 339.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "ELEVATOR" : [ "Atrium Elevator" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Atrium Elevator" ]
+    }, {
+      "uniqueID" : "7726958b-00ee-4e12-a3bc-8d6913ad4c8a",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1464.0,
+        "y" : 1100.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "STAIR" : [ "Hillside Stairs" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Hillside Stairs" ]
+    }, {
+      "uniqueID" : "dc5eabe6-4cba-46e1-a8a5-df4bf1d59297",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1527.0,
+        "y" : 343.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "STAIR" : [ "Atrium Stairs" ]
+      },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Atrium Stairs" ]
+    }, {
+      "uniqueID" : "e5c6f256-932d-416a-9b25-1ac9b43050c8",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1455.0,
+        "y" : 215.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ ]
+    }, {
+      "uniqueID" : "bfa068ea-b4d9-41cc-88c4-37efbc3eaf6e",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1524.0,
+        "y" : 231.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ ]
+    }, {
+      "uniqueID" : "6699fcc7-0e99-4472-a0f7-9882aed10d96",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1430.0,
+        "y" : 1054.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ ]
+    }, {
+      "uniqueID" : "4318e86f-9efe-494b-b0d0-7b330a00e47f",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1411.0,
+        "y" : 1136.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : { },
+      "currentFloor" : "60349dcc-1c18-4c1e-b2e3-45aaf18f00f2",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ ]
+    } ],
+    "relativePath" : "floor2.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+    "floor" : 3,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ {
+      "uniqueID" : "5ebfddf1-27af-49f1-9256-a5c7a93eebb0",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1402.0,
+        "y" : 202.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD" ],
+        "DEPARTMENT" : [ "Roslindale Pediatric Associates" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates" ]
+    }, {
+      "uniqueID" : "86b484a6-bcda-410d-9f7b-1b6aa738cbc4",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1534.0,
+        "y" : 202.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD" ],
+        "DEPARTMENT" : [ "Eye Care Specialists", "Suburban Eye Specialists" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists" ]
+    }, {
+      "uniqueID" : "5334f0fe-41b9-47d1-97dd-937768203f41",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1594.0,
+        "y" : 229.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "PHYSICIAN" : [ "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD" ],
+        "DEPARTMENT" : [ "Obstetrics and Gynecology Associates" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates" ]
+    }, {
+      "uniqueID" : "9c3fcd1b-4ea4-49bd-b519-9201e68f490e",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 40.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "ATM" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "ATM" ]
+    }, {
+      "uniqueID" : "9230f867-277d-404d-b302-7b50b93e1be7",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1347.0,
+        "y" : 700.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Huvos Auditorium" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Huvos Auditorium" ]
+    }, {
+      "uniqueID" : "e678ee2f-58cc-4be5-913d-f9d3d26be3f6",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1492.0,
+        "y" : 637.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Cafeteria" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Cafeteria" ]
+    }, {
+      "uniqueID" : "6734c941-03de-41c2-b677-d5ba2158a3bb",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1333.0,
+        "y" : 1380.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Chapel" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Chapel" ]
+    }, {
+      "uniqueID" : "9de71d30-a221-4bb6-b23a-373e9414abbe",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1449.0,
+        "y" : 940.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Gift Shop" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Gift Shop" ]
+    }, {
+      "uniqueID" : "3f0c5d96-e224-40c7-85a9-7107c9a6aea4",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 10.0,
+        "y" : 90.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Patient Relations" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Patient Relations" ]
+    }, {
+      "uniqueID" : "e36e2b73-c2f5-44d7-a591-75ea322029be",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1601.0,
+        "y" : 1380.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "SERVICE" : [ "Volunteer Services" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Volunteer Services" ]
+    }, {
+      "uniqueID" : "aafc3d6d-b6a1-4be8-9372-26f62661390e",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1469.0,
+        "y" : 1359.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "KIOSK" : [ "Kiosk" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Kiosk" ]
+    }, {
+      "uniqueID" : "ba334864-0e14-485c-a8ad-9b920c8dffe8",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1445.0,
+        "y" : 240.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 3 Atrium Left Bathroom" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Floor 3 Atrium Left Bathroom" ]
+    }, {
+      "uniqueID" : "a0519247-9fd2-46d6-9ef7-c273d7dbc03b",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1490.0,
+        "y" : 240.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 3 Atrium RightBathroom" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Floor 3 Atrium RightBathroom" ]
+    }, {
+      "uniqueID" : "62bcf5a2-96d7-4e3b-91c1-7d61eddc007a",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1295.0,
+        "y" : 606.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 3 Auditorium Bathroom" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Floor 3 Auditorium Bathroom" ]
+    }, {
+      "uniqueID" : "c8527127-ed2d-465a-b36f-010c6c9a586a",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1391.0,
+        "y" : 1276.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "BATHROOM" : [ "Floor 3 Hillside Bathroom" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Floor 3 Hillside Bathroom" ]
+    }, {
+      "uniqueID" : "076d0116-9dc0-4912-b761-4f8cee76d045",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1413.0,
+        "y" : 1195.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "ELEVATOR" : [ " Hillside Elevator" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ " Hillside Elevator" ]
+    }, {
+      "uniqueID" : "ebb65980-8f75-447c-829e-6bfc24057c89",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1454.0,
+        "y" : 339.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "ELEVATOR" : [ "Atrium Elevatoe" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Atrium Elevatoe" ]
+    }, {
+      "uniqueID" : "9168ee59-8cf3-4a40-9c78-eb97a3065040",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1464.0,
+        "y" : 1100.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "STAIR" : [ "Hillside Stairs" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Hillside Stairs" ]
+    }, {
+      "uniqueID" : "3487596e-354b-4c6a-8897-fa2c404c2a31",
+      "heuristicCost" : 0.0,
+      "location" : {
+        "x" : 1527.0,
+        "y" : 343.0
+      },
+      "adjacentLocationNodes" : [ ],
+      "destinations" : {
+        "STAIR" : [ "Atrium Stairs" ]
+      },
+      "currentFloor" : "38b2a877-3042-41bc-9cb1-ef41bb5638aa",
+      "gscore" : "Infinity",
+      "fscore" : "Infinity",
+      "buildingDestinations" : [ "Atrium Stairs" ]
+    } ],
+    "relativePath" : "floor3.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "0f6ad49e-5784-41c0-8367-b224f20f258f",
+    "floor" : 4,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ ],
+    "relativePath" : "floor4.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "a2a49290-1ea0-4d4c-bea2-ac75b0e050a2",
+    "floor" : 5,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ ],
+    "relativePath" : "floor5.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "ca543c5f-dfc6-489f-a7f7-2d3db7aabb2b",
+    "floor" : 6,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ ],
+    "relativePath" : "floor6.png",
+    "startNode" : null
+  }, {
+    "uniqueID" : "6bbfc15c-af20-47b4-bc08-614b78203596",
+    "floor" : 7,
+    "currentBuilding" : "08deb229-922b-4666-aea7-5d9d6bcb94ab",
+    "locationNodes" : [ ],
+    "relativePath" : "floor7.png",
+    "startNode" : null
+  } ],
+  "xMin" : 0.0,
+  "xMax" : 0.0,
+  "yMin" : 0.0,
+  "yMax" : 0.0,
+  "destinations" : [ "Center for Preoperative Evaluation", "Emergency Room", "GI Endoscopy", "Patient Financial Services", "Radiology", "Special Testing", "Laboratory", "Taiclet Family Center", "Atrium Cafe", "Starbucks", " Floor 1Kiosk", "Information", "Floor 1 Bathroom", "Hillside Elevator", "Atrium Elevator", "Hillside Stairs", "Atrium Stairs", "Corrales, Carleton Eduardo, MD", "Prince, Anthony, MD", "Roditi, Rachel, MD", "Otolarngology", "Carty, Matthew, MD", "Caterson, Stephanie, MD", "Chun, Yoon Sun, MD", "Hajj, Micheline, RN", "Halvorson, Eric, MD", "Hergrueter, Charles, MD", "Ingram, Abbie, PA-C", "Lafleur, Emily, PA-C", "Lahair, Tracy, PA-C", "Plastic Surgery", "Physical Therapy", "Psychology", "Floor 2 Bathroom ", "Hillside Elevator", "Atrium Elevator", "Hillside Stairs", "Atrium Stairs", "Byrne, Jennifer, RN, CPNP", "Grossi, Lisa, RN, MS, CPNP", "Keller, Elisabeth, MD", "Malone, Linda, DNP, RN, CPNP", "Morrison, Beverly, MD", "O'Connor, Elizabeth, MD", "Saluti, Andrew, DO", "Scheff, David, MD", "Stacks, Robert, MD", "Tunick, Mitchell, MD", "Viola, Julianne, MD", "Roslindale Pediatric Associates", "Dann, Harriet, MD", "Frangieh, George, MD", "Micley, Bruce, MD", "Patten, James, MD", "Eye Care Specialists", "Suburban Eye Specialists", "Greenberg, James Adam, MD", "Miner, Julie, MD", "Nadarajah, Sarah, WHNP", "Schueler, Leila, MD", "Smith, Shannon, MD", "Obstetrics and Gynecology Associates", "ATM", "Huvos Auditorium", "Cafeteria", "Chapel", "Gift Shop", "Patient Relations", "Volunteer Services", "Kiosk", "Floor 3 Atrium Left Bathroom", "Floor 3 Atrium RightBathroom", "Floor 3 Auditorium Bathroom", "Floor 3 Hillside Bathroom", " Hillside Elevator", "Atrium Elevatoe", "Hillside Stairs", "Atrium Stairs" ]
+}
