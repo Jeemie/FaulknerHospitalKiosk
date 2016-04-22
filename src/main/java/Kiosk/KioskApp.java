@@ -320,8 +320,9 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
-
             controller.setKioskApp(this);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+            controller.setListeners();
 //            controller.setBuilding(this.hospitalBuilding);
 //            controller.setStartNode(startNode);
 //            controller.setDestinationNode(destinationNode);

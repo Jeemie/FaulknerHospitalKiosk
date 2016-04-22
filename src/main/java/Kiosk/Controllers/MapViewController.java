@@ -2,9 +2,7 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Map;
-import Map.Building;
 import Map.Exceptions.FloorDoesNotExistException;
-import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,9 +40,11 @@ public class MapViewController{
     private Label currentFloorLabel;
 
     @FXML
-    private TextField searchTextBox;
+    private TextField searchTextField;
+
     @FXML
     private Button zoomIn;
+
     @FXML
     private Button zoomOut;
 
@@ -58,7 +58,7 @@ public class MapViewController{
     private Button confirmButton;
 
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane zoomScrollPane;
 
     @FXML
     private Button changeFloorButtonUp;
@@ -67,9 +67,15 @@ public class MapViewController{
     private Button changeFloorButtonDown;
 
     @FXML
-
     private ListView Direction;
-    Group zoomGroup;
+
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private Button cancelButton;
+
+    private Group zoomGroup;
 
 
     public Timer timer;
@@ -138,21 +144,22 @@ public class MapViewController{
     @FXML
     private void initialize() {
 
+//        setListeners();
 
-        scrollPane.setHvalue(0.5);
-        scrollPane.setVvalue(0.5);
+        zoomScrollPane.setHvalue(0.5);
+        zoomScrollPane.setVvalue(0.5);
 
         slider.setMin(0.5);
         slider.setMax(1.5);
         slider.setValue(1.0);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
-        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
+        // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
         Group contentGroup = new Group();
         zoomGroup = new Group();
         contentGroup.getChildren().add(zoomGroup);
-        zoomGroup.getChildren().add(scrollPane.getContent());
-        scrollPane.setContent(contentGroup);
+        zoomGroup.getChildren().add(zoomScrollPane.getContent());
+        zoomScrollPane.setContent(contentGroup);
 
 
 
@@ -174,8 +181,8 @@ public class MapViewController{
                 counter = 0;
 
 //                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-//                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+//                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
 //                //mMainHost.drawShortestPath(startNode, destinationNode);
 //                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
 //                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
@@ -196,7 +203,7 @@ public class MapViewController{
 
 
 
-        searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
@@ -205,8 +212,8 @@ public class MapViewController{
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    LOGGER.info("Blah " + searchTextBox.getText());
-                    kioskApp.showSearch(searchTextBox.getText());
+                    LOGGER.info("Blah " + searchTextField.getText());
+                    kioskApp.showSearch(searchTextField.getText());
 
                 } else {
 
@@ -215,6 +222,8 @@ public class MapViewController{
                 }
             }
         });
+
+
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -240,7 +249,7 @@ public class MapViewController{
 
 
 
-        scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
@@ -291,16 +300,23 @@ public class MapViewController{
 
         });
 
+    }
+
+
+    public void setListeners() {
+
+        this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+
 
     }
 
-    @FXML
+//    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal += 0.1);
     }
 
-    @FXML
+//    @FXML
     void zoomOut(ActionEvent event) {
 
         double sliderVal = slider.getValue();
@@ -309,12 +325,12 @@ public class MapViewController{
 
     private void zoom(double scaleValue) {
 
-        double scrollH = scrollPane.getHvalue();
-        double scrollV = scrollPane.getVvalue();
+        double scrollH = zoomScrollPane.getHvalue();
+        double scrollV = zoomScrollPane.getVvalue();
         zoomGroup.setScaleX(scaleValue);
         zoomGroup.setScaleY(scaleValue);
-        scrollPane.setHvalue(scrollH);
-        scrollPane.setVvalue(scrollV);
+        zoomScrollPane.setHvalue(scrollH);
+        zoomScrollPane.setVvalue(scrollV);
     }
 
 
@@ -366,5 +382,9 @@ public class MapViewController{
         kioskApp.reset();
     }
 
+    public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
 
+        this.faulknerHospitalMap = faulknerHospitalMap;
+
+    }
 }

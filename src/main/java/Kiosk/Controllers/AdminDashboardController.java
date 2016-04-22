@@ -744,10 +744,8 @@ public class AdminDashboardController {
 
             @Override
             public void handle(MouseEvent event) {
-//
-//                LOGGER.info("Setting start node to: " + building.getCurrentNodes());
-//
-//                building.setStartNode(building.getCurrentNodes());
+
+                faulknerHospitalMap.setStartLocationNode(faulknerHospitalMap.getCurrentLocationNode());
 
             }
 

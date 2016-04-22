@@ -14,6 +14,7 @@ public enum ImageType {
     ELEVATOR("/icons/elevator.png"),
     WAITINGROOM("/icons/doctor.png"),
     SERVICE("/icons/gift.png"),
+    STARTLOCATION("/icons/startlocation.png"),
     KIOSK("/icons/kiosk.png");
 
     private String resourceFileName;

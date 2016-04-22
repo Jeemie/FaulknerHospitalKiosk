@@ -374,6 +374,33 @@ public class Map implements Observer {
 
     }
 
+    public void setupPathStackPane(StackPane stackPane) {
+
+        ArrayList<LocationNode> path;
+
+        try {
+
+            path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+
+        } catch (NoPathException e) {
+
+            LOGGER.error("Unable to get a path", e);
+
+            return;
+        }
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
+
+        this.startLocationNode.getCurrentFloor().drawFloor(this.currentFloorImage);
+
+        this.currentFloorLocationNodePane.getChildren().clear();
+        this.startLocationNode.drawStartNode(this.currentFloorLocationNodePane);
+
+        this.currentFloorEdgePane.getChildren().clear();
+
+    }
+
 
     public void setupNormalStackPane(StackPane stackPane) {
 
@@ -683,6 +710,8 @@ public class Map implements Observer {
     }
 
     public void setStartLocationNode(LocationNode locationNode) {
+
+        LOGGER.info(locationNode.toString());
 
         this.startLocationNode = locationNode;
     }

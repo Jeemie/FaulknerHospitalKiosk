@@ -209,8 +209,42 @@ public class Floor extends Observable implements Observer {
 
         }
 
+    }
 
+    public void drawFloorNormal(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
 
+        try {
+
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
+                    this.resourceFileName).toString());
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
+
+        }
+
+        imageView.setImage(this.floorImage);
+
+        LocationNodePane.getChildren().clear();
+        EdgePane.getChildren().clear();
+
+    }
+
+    public void drawFloor(ImageView imageView) {
+
+        try {
+
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
+                    this.resourceFileName).toString());
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
+
+        }
+
+        imageView.setImage(this.floorImage);
 
     }
 

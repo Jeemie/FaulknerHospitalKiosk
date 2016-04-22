@@ -196,8 +196,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             return;
         }
 
-        // TODO setup labels with images
-        this.iconLabel = new Label(this.name);
+        this.iconLabel = new Label();
 
         try {
 
@@ -219,11 +218,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.iconLabel.setLayoutX(this.location.getX());
         this.iconLabel.setLayoutY(this.location.getY());
-
-        if (pane.getChildren().contains(this.iconLabel)) {
-
-            return;
-        }
 
         pane.getChildren().add(this.iconLabel);
 
@@ -287,6 +281,42 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         }
 
     }
+
+    public void drawStartNode(Pane pane) {
+
+        if (pane.getChildren().contains(this.iconLabel)) {
+
+            return;
+        }
+
+        this.iconLabel = new Label();
+
+        try {
+
+            Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                    ImageType.STARTLOCATION.getResourceFileName()).toString());
+
+            this.iconLabel.setPrefWidth(icon.getWidth());
+            this.iconLabel.setPrefHeight(icon.getHeight());
+
+            this.iconImageView = new ImageView(icon);
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the Location Node: " + this.toString(), e);
+
+        }
+
+        iconLabel.setGraphic(this.iconImageView);
+
+        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2));
+        this.iconLabel.setLayoutY(this.location.getY() - this.iconLabel.getPrefHeight());
+
+        pane.getChildren().add(this.iconLabel);
+
+    }
+
+
 
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
@@ -548,5 +578,10 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.cameFrom = cameFrom;
 
+    }
+
+    public boolean isSameFloor(LocationNode locationNode) {
+
+        return this.currentFloor.equals(locationNode.getCurrentFloor());
     }
 }

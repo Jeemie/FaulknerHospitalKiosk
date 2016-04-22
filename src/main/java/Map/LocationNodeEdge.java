@@ -71,6 +71,11 @@ public class LocationNodeEdge extends Observable {
 
         // TODO setup edge clicking
 
+        if (!locationNode1.isSameFloor(locationNode2)) {
+
+            return;
+        }
+
         if (!locationNodeEdgePane.getChildren().contains(this.edgeLine)) {
 
             this.edgeLine = new Line(this.locationNode1.getLocation().getX(), this.locationNode1.getLocation().getY(),
@@ -96,6 +101,11 @@ public class LocationNodeEdge extends Observable {
      * @param pane
      */
     public void drawEdge(Pane pane) {
+
+        if (!locationNode1.isSameFloor(locationNode2)) {
+
+            return;
+        }
 
         if (!pane.getChildren().contains(this.edgeLine)) {
 
