@@ -9,11 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.ImageView;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -180,30 +182,47 @@ public class Floor extends Observable implements Observer {
      */
     public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
 
-        // I'm not sure whether I'm doing this right but here goes:
-        //  Also how do I draw the imageView without the pane?
 
-        // Reset LocationNodePane and EdgePane
-        LocationNodePane.getChildren().clear();
-        LocationNodePane = new Pane();
+        LOGGER.info(this.resourceFileName);
+//        getClass().getResource(".../resources/" + this.resourceFileName).toString();
 
-        EdgePane.getChildren().clear();
-        EdgePane = new Pane();
+        try {
 
-        // Loop through the location nodes, and then draw the locations and the edges
-        //   in their respective panes
-        for(LocationNode l: locationNodes) {
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                    this.resourceFileName).toString());
 
-            l.drawAdmin(LocationNodePane);
-            l.drawEdgesAdmin(EdgePane);
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
 
         }
 
+        imageView.setImage(this.floorImage);
+
+        // Reset LocationNodePane and EdgePane
+        LocationNodePane.getChildren().clear();
+
+        EdgePane.getChildren().clear();
+
+        // Loop through the location nodes, and then draw the locations and the edges
+        //   in their respective panes
+        for (LocationNode locationNode : locationNodes) {
+
+            locationNode.drawAdmin(LocationNodePane);
+//            locationNode.drawEdgesAdmin(EdgePane);
+
+        }
+
+
+
+
+    }
+
         // marked the Floor as changed
-        setChanged();
+//        setChanged();
 
         // trigger notification
-        notifyObservers(UpdateType.FLOORADDED); //TODO is this update correct?
+//        notifyObservers(UpdateType.FLOORADDED); //TODO is this update correct?
 
         //There was also an event handler which handled a mouse click event:
         /*
@@ -229,7 +248,7 @@ public class Floor extends Observable implements Observer {
         });
 
          */
-    }
+//    }
 
 
     /**
@@ -297,14 +316,6 @@ public class Floor extends Observable implements Observer {
         return this.locationNodes;
     }
 
-    public Pane getLocationNodePane() {
-        return locationNodePane;
-    }
-
-    public Pane getLocationNodeEdgePane() {
-        return locationNodeEdgePane;
-    }
-
 
     @JsonGetter
     public String getFloorName() {
@@ -329,12 +340,6 @@ public class Floor extends Observable implements Observer {
     @JsonGetter
     public ArrayList<LocationNode> getLocationNodes() {
         return locationNodes;
-    }
-
-    @Override
-    public String toString() {
-
-        return uniqueID.toString();
     }
 
 /*

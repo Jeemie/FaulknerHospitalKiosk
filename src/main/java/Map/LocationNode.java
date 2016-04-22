@@ -12,13 +12,17 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import static Map.Enums.CardinalDirection.*;
@@ -62,10 +66,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     private LocationNode cameFrom;
 
     @JsonIgnore
-    private Image currentImage;
-
-    @JsonIgnore
-    private Label imageLabel;
+    private ImageView iconImageView;
 
     @JsonIgnore
     // Logger for this class
@@ -186,15 +187,34 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         // TODO setup labels with images
 
-        if (pane.getChildren().contains(this.imageLabel)) {
+
+        try {
+
+            Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                    this.associatedImage.getResourceFileName()).toString());
+
+
+            this.iconImageView = new ImageView(icon);
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the Location Node: " + this.toString(), e);
+
+        }
+
+
+        this.iconImageView.setX(this.location.getX());
+        this.iconImageView.setY(this.location.getY());
+
+        if (pane.getChildren().contains(this.iconImageView)) {
 
             return;
         }
 
-        pane.getChildren().add(this.imageLabel);
+        pane.getChildren().add(this.iconImageView);
 
-        this.imageLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
-        this.imageLabel.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
+        this.iconImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
+        this.iconImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
 
     }
 
@@ -256,7 +276,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.imageLabel);
+        locationNodePane.getChildren().remove(this.iconImageView);
 
         for (LocationNodeEdge edge : this.edges) {
 
@@ -265,8 +285,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         }
 
 
-        this.imageLabel = null;
-        this.currentImage = null;
+        this.iconImageView = null;
+
     }
 
     /**

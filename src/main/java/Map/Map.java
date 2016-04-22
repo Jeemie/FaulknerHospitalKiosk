@@ -11,8 +11,11 @@ import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -266,6 +269,36 @@ public class Map implements Observer {
 
         stackPane.getChildren().clear();
         stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
+
+
+        this.currentFloorImage.setPreserveRatio(true);
+        this.currentFloorImage.setSmooth(true);
+        this.currentFloorImage.setCache(true);
+
+        this.currentFloorImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+
+                LOGGER.info("Image Bounds changed, updating pane bounds");
+                LOGGER.info("Old Image Bounds: " + newValue.toString());
+                LOGGER.info("New Image Bounds: " + newValue.toString());
+
+                currentFloorLocationNodePane.setPrefWidth(newValue.getWidth());
+                currentFloorLocationNodePane.setPrefHeight(newValue.getHeight());
+
+
+                LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
+
+                currentFloorEdgePane.setPrefWidth(newValue.getWidth());
+                currentFloorEdgePane.setPrefHeight(newValue.getHeight());
+
+                LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
+
+
+            }
+
+        });
 
     }
 
@@ -573,7 +606,7 @@ public class Map implements Observer {
         this.locationNodeUpdater(currentDestination.getCurrentLocationNode());
         this.currentLocationNode = currentDestination.getCurrentLocationNode();
 
-
+        this.floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
         this.currentBuilding = currentFloor.getCurrentBuilding();
 
@@ -604,7 +637,9 @@ public class Map implements Observer {
         // TODO possible highlight the current LocationNode
 
         this.currentDestination = null;
+        locationNodeUpdater(locationNode);
         this.currentLocationNode = locationNode;
+        floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
         this.currentBuilding = currentFloor.getCurrentBuilding();
 
@@ -651,6 +686,8 @@ public class Map implements Observer {
 
             this.currentFloorLocationNodes.clear();
             this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
+
+            newFloor.drawFloorAdmin(this.currentFloorImage, this.currentFloorLocationNodePane, this.currentFloorEdgePane);
 
         }
 

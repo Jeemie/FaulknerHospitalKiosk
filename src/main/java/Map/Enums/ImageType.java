@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ImageType {
 
-    POINT(""),
-    BATHROOM(""),
-    STAIRS(""),
-    ELEVATOR(""),
-    WAITINGROOM(""),
-    SERVICE(""),
-    KIOSK("");
+    POINT("/icons/gift.png"),
+    BATHROOM("/icons/bathroom.png"),
+    STAIRS("/icons/stair.png"),
+    ELEVATOR("/icons/elevator.png"),
+    WAITINGROOM("/icons/doctor.png"),
+    SERVICE("/icons/gift.png"),
+    KIOSK("/icons/kiosk.png");
 
     private String resourceFileName;
 
