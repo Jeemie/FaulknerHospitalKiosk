@@ -109,26 +109,24 @@ public class Path {
         this.edgePane.getChildren().clear();
         this.nodePane.getChildren().clear();
 
-        this.startLocationNode.drawStartNode(this.nodePane);
-
         if (this.startLocationNode.equals(temp.get(0))) {
 
-            this.startLocationNode.drawNormal(this.nodePane, ImageType.STARTLOCATION, 2, 2);
+            this.startLocationNode.drawNormal(this.nodePane, ImageType.STARTLOCATION, -10, 0);
 
         } else {
 
-            temp.get(0).drawNormal(this.nodePane, temp.get(0).getAssociatedImage(), 2, 2);
+            temp.get(0).drawNormal(this.nodePane, temp.get(0).getAssociatedImage(), -10, 0);
 
         }
 
 
         if (this.destinationLocationNode.equals(temp.get(temp.size() - 1))) {
 
-            this.destinationLocationNode.drawNormal(this.nodePane, ImageType.DESTINATION, 2, 1);
+            this.destinationLocationNode.drawNormal(this.nodePane, ImageType.DESTINATION, -10, 20);
 
         } else {
 
-            temp.get(temp.size() - 1).drawNormal(this.nodePane, temp.get(temp.size() - 1).getAssociatedImage(), 2, 2);
+            temp.get(temp.size() - 1).drawNormal(this.nodePane, temp.get(temp.size() - 1).getAssociatedImage(), -10, 0);
 
         }
 

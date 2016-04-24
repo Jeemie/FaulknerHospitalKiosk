@@ -326,8 +326,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void drawNormal(Pane pane, ImageType imageType, int x, int y) {
 
-        LOGGER.info("Attempting to draw ");
-
         if (pane.getChildren().contains(this.iconLabel)) {
 
             return;
@@ -338,7 +336,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         try {
 
             Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
-                    imageType).toString());
+                    imageType.getResourceFileName()).toString());
 
             this.iconImageView = new ImageView(icon);
 
@@ -348,7 +346,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         }
 
-        LOGGER.info("Drawing");
         this.iconImageView.setFitWidth(20);
         this.iconImageView.setPreserveRatio(true);
 
@@ -357,8 +354,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         this.iconLabel.setGraphic(this.iconImageView);
 
-        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / x));
-        this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / y));
+        this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() + x));
+        this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() + y));
 
         pane.getChildren().add(this.iconLabel);
 
