@@ -42,7 +42,7 @@ public class FaulknerHospitalData {
         map.setCurrentFloor(f1);
 
         f1.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
-        f1.getLocationNodes().get(0).addDestination("Audiology", DestinationType.DEPARTMENT);
+        f1.getLocationNodes().get(0).addDestination("Audiology Destination", DestinationType.DEPARTMENT);
         f1.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
         f1.getLocationNodes().get(1).addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
         f1.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
@@ -73,11 +73,12 @@ public class FaulknerHospitalData {
 
         } catch (NodeDoesNotExistException e) {
 
+            System.err.println("Couldn't draw path from Audiology to Cardiac Rehabilatation\n");
             e.printStackTrace();
         }
 
         // FLOOR 2
-
+/*
         f2.addLocationNode("Bathroom", new Location(10, 10), ImageType.WAITINGROOM);
         f2.getLocationNodes().get(0).addDestination("Audiology", DestinationType.DEPARTMENT);
         f2.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
@@ -98,7 +99,7 @@ public class FaulknerHospitalData {
         f2.getLocationNodes().get(8).addDestination("Special Testing", DestinationType.DEPARTMENT);
         f2.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
         f2.getLocationNodes().get(9).addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
-
+*/
 /*
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
         mMainHospital.getFloor(1).addNode(new Location(40, 40)); //get(11) Admit

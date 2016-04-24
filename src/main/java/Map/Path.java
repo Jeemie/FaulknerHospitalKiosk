@@ -50,7 +50,6 @@ public class Path {
     public void  setup() {
 
         ArrayList<LocationNode> tempPath = new ArrayList<>();
-        tempPath.add(this.originalPath.get(0));
 
         for (LocationNode l : this.originalPath) {
 
