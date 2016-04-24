@@ -39,6 +39,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Location of this node
     private Location location;
 
+    @JsonIgnore
     // Floor this node is located on
     private Floor currentFloor;
 

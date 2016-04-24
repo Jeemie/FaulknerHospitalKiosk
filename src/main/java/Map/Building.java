@@ -26,9 +26,12 @@ public class Building extends Observable implements Observer {
     // A randomly generated UUID associated with the current building
     private UUID uniqueID;
 
+    // TODO Change
+    @JsonIgnore
     // A list of all of the floors in the building
     private ArrayList<Floor> floors;
 
+    @JsonIgnore
     // Map this building belongs to
     private Map currentMap;
 
@@ -160,15 +163,16 @@ public class Building extends Observable implements Observer {
         return uniqueID;
     }
 
-    @JsonGetter
+    @JsonIgnore
     public ArrayList<Floor> getFloors() {
 
         return floors;
     }
 
-    @JsonGetter
+    @JsonIgnore
     public Map getCurrentMap() {
 
         return currentMap;
     }
+
 }

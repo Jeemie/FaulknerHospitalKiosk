@@ -37,6 +37,7 @@ public class Floor extends Observable implements Observer {
     //
     private String resourceFileName;
 
+    @JsonIgnore
     // The building that the floor is associated with
     private Building currentBuilding;
 
@@ -44,6 +45,7 @@ public class Floor extends Observable implements Observer {
     // The image of the floor
     private Image floorImage;
 
+    @JsonIgnore
     // A list of location nodes which exists on teh floor
     private ArrayList<LocationNode> locationNodes;
 

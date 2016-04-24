@@ -8,7 +8,6 @@ import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
 import Map.SearchAlgorithms.AStar;
-import Map.SearchAlgorithms.BreadthFirstSearch;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.annotation.*;
@@ -47,6 +46,9 @@ public class Map implements Observer {
     private LocationNode startLocationNode;
 
     private ArrayList<Building> mapBuildings;
+
+    // Building UUIDs for serialization
+    private ArrayList<UUID> buildingIdList;
 
     private ISearchAlgorithm searchAlgorithm;
 
@@ -150,6 +152,7 @@ public class Map implements Observer {
         this.uniqueID = UUID.randomUUID();
         this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
+        this.buildingIdList = new ArrayList<>();
         this.searchAlgorithm = new AStar();
         this.currentMapState = MapState.NORMAL;
         this.directoryList = FXCollections.observableArrayList();
@@ -198,6 +201,7 @@ public class Map implements Observer {
 
         this.currentBuilding = newBuilding;
         this.mapBuildings.add(newBuilding);
+        this.buildingIdList.add(newBuilding.getUniqueID());
 
     }
 
@@ -874,4 +878,7 @@ public class Map implements Observer {
         return directoryList;
     }
 
+    public ArrayList<UUID> getBuildingIdList() {
+        return buildingIdList;
+    }
 }
