@@ -503,7 +503,7 @@ public class AdminDashboardController {
 
                 LOGGER.info("Switching to AStart Algorithm");
 
-//                faulknerHospitalMap.useAStar();
+                faulknerHospitalMap.useAStar();
 
             }
 

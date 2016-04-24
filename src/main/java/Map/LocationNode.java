@@ -410,6 +410,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
+    // TODO Fix
     public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
 
         if (adjacentNode == null) {
@@ -437,8 +438,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         edges.add(newEdge);
         adjacentNode.getEdges().add(newEdge);
 
-        setChanged();
-        notifyObservers(UpdateType.LOCATIONNODEEDGE);
+        //setChanged();
+        //notifyObservers(UpdateType.LOCATIONNODEEDGE);
 
     }
 

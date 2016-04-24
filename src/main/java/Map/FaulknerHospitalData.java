@@ -5,6 +5,7 @@ package Map;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Exceptions.FloorDoesNotExistException;
+import Map.Exceptions.NodeDoesNotExistException;
 
 /**
  * Created by maryannoconnell on 4/21/16.
@@ -17,22 +18,32 @@ public class FaulknerHospitalData {
      * Data for starter map
      */
 
-    public static Map starterMap(Map map) throws FloorDoesNotExistException {
+    public static Map starterMap() throws FloorDoesNotExistException {
 
-        // Add main hospital building to map
+        Map map = new Map("Faulkner Hospital Map");
+
+        // ----- MAIN HOSPITAL -----
+
+        // Add main hospital building to map and set it as current building
         map.addBuilding("Faulkner Hospital");
+        Building mMainHospital = map.getMapBuildings().get(0);
+        map.setCurrentBuilding(mMainHospital);
 
-        // Floors
+        // Main Hospital Building Floors
         map.addFloor("Floor 1", "floor1.png"); // Index 0
-
-        System.out.println("Floor added");
+        map.addFloor("Floor 2", "floor2.png"); // Index 1
 
         Floor f1 = map.getCurrentBuilding().getFloors().get(0);
+        Floor f2 = map.getCurrentBuilding().getFloors().get(1);
 
-        //FLOOR 1
-        f1.addLocationNode("Audiology", new Location(10, 10), ImageType.WAITINGROOM);
+        // FLOOR 1
+
+        // Set current floor, then set start node
+        map.setCurrentFloor(f1);
+
+        f1.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
         f1.getLocationNodes().get(0).addDestination("Audiology", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
+        f1.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
         f1.getLocationNodes().get(1).addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
         f1.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
         f1.getLocationNodes().get(2).addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
@@ -51,13 +62,22 @@ public class FaulknerHospitalData {
         f1.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
         f1.getLocationNodes().get(9).addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
+        // TODO change to Kiosk - starting at a waiting room currently
+        map.setStartLocationNode(f1.getLocationNodes().get(0));
 
+        //TODO replace with actual values
+        // Random edges for testing:
+        try {
+            // Add edge from Audiology to Cardiac Rehabilitation
+            (f1.getLocationNodes().get(0)).addEdge(f1.getLocationNodes().get(1));
 
+        } catch (NodeDoesNotExistException e) {
 
+            e.printStackTrace();
+        }
 
-        Floor f2 = map.getCurrentBuilding().getFloors().get(1);
+        // FLOOR 2
 
-        //FLOOR 1
         f2.addLocationNode("Bathroom", new Location(10, 10), ImageType.WAITINGROOM);
         f2.getLocationNodes().get(0).addDestination("Audiology", DestinationType.DEPARTMENT);
         f2.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);

@@ -150,7 +150,7 @@ public class Map implements Observer {
         this.uniqueID = UUID.randomUUID();
         this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
-        this.searchAlgorithm = new BreadthFirstSearch();
+        this.searchAlgorithm = new AStar();
         this.currentMapState = MapState.NORMAL;
         this.directoryList = FXCollections.observableArrayList();
         this.currentLocationNode = null;
@@ -384,8 +384,8 @@ public class Map implements Observer {
         try {
 
             //path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+            path = (new AStar()).getPath(this.startLocationNode, this.currentLocationNode);
 
-            path = AStar.getPath(this.startLocationNode, this.currentLocationNode);
 
         } catch (NoPathException e) {
 
@@ -420,14 +420,14 @@ public class Map implements Observer {
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
     }
 
-   /*
+
     public void useAStar() {
 
 
         this.searchAlgorithm = new AStar();
 
     }
-    */
+
 
     public void useDijkstras() {
 
@@ -591,12 +591,14 @@ public class Map implements Observer {
 
         try {
 
+
             File specifiedFile = new File(specifiedFilePath.toURI());
 
             File defaultFile = new File(defaultFilePath.toURI());
 
-            if (specifiedFile.exists() && specifiedFile.length() > 0) {
-
+            //TODO uncomment after deserializer is complete - load from starter map for now
+            //if (specifiedFile.exists() && specifiedFile.length() > 0) {
+            if(false) {
                 // Load specified file
 
                 mMap = objectMapper.readValue(specifiedFile, Map.class);
@@ -605,14 +607,15 @@ public class Map implements Observer {
             } else if (defaultFile.exists()) {
 
                 // Load default file
-                mMap = objectMapper.readValue(defaultFile, Map.class);
-                LOGGER.info("Loaded map from file " + defaultFile.toString());
+                //TODO uncomment after deserializer is complete - load from starter map for now
+                //mMap = objectMapper.readValue(defaultFile, Map.class);
+                //LOGGER.info("Loaded map from file " + defaultFile.toString());
 
                 if (defaultFile.length() <= 2) {
 
                     LOGGER.warn("Loaded file is empty.");
-                    // TODO uncomment after startMap is refactored
-                    // mMap = FaulknerHospitalData.starterMap();
+
+                     mMap = FaulknerHospitalData.starterMap();
                 }
             } else {
 

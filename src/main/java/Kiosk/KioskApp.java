@@ -1,22 +1,18 @@
 package Kiosk;
 
 import Kiosk.Controllers.*;
-import Map.Destination;
 import Map.Enums.DestinationType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.FaulknerHospitalData;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -58,25 +54,22 @@ public class KioskApp extends Application {
             try {
 
                 File newFile = new File(this.filePath.toURI());
-                //newFile.createNewFile();
+                newFile.createNewFile();
 
                 this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
-                this.faulknerHospitalMap = FaulknerHospitalData.starterMap(this.faulknerHospitalMap);
-
-                throw new IOException();
-
+                this.faulknerHospitalMap = FaulknerHospitalData.starterMap();
 
             } catch (URISyntaxException exception) {
+
+                exception.printStackTrace();
+
+            } catch (FloorDoesNotExistException exception) {
 
                 exception.printStackTrace();
 
             } catch (IOException exception) {
 
                 exception.printStackTrace();
-
-            } catch (FloorDoesNotExistException e1) {
-
-                e1.printStackTrace();
             }
         }
 

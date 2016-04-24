@@ -8,20 +8,23 @@ import Map.Exceptions.NoPathException;
 import Map.Exceptions.NodeDoesNotExistException;
 import Map.Location;
 import Map.LocationNode;
+import Map.SearchAlgorithms.AStar;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import Map.SearchAlgorithms.AStar.aStar;
 
 /**
  * Created by maryannoconnell on 4/17/16.
  */
 public class AStarTest {
 
+    private AStar mAstar;
+    private Map mTestMap;
     private Building mTestBuilding, mTestSecondBuilding;
+    private Floor mFloor1, mFloor2, mFloorA;
     private LocationNode startNode;
     private LocationNode destinationNode;
     private LocationNode connectionNode1, connectionNode2, connectionNode3, connectionNode4, connectionNode5;
@@ -32,8 +35,40 @@ public class AStarTest {
     @Before
     public void setUp() {
 
-        mTestBuilding = new Building("test building1", new Map("test map1"));
-        mTestSecondBuilding = new Building("test building2", new Map("test map2"));
+        // Create new AStar object - default constructor is empty
+        mAstar = new AStar();
+
+        // Create new map
+        mTestMap = new Map("test map");
+
+        // Add buildings to map
+        mTestMap.addBuilding("test building1");
+        mTestMap.addBuilding("test building2");
+
+        // Get buildings from map and assign values to building test variables
+        ArrayList<Building> mBuildings = mTestMap.getMapBuildings();
+        mTestBuilding = mBuildings.get(0);
+        mTestSecondBuilding = mBuildings.get(1);
+
+        // Add floor method in Map class adds floor to the current building
+        // Set first test building as current building then add floors
+        mTestMap.setCurrentBuilding(mTestBuilding);
+        mTestMap.addFloor("floor1", "floor1.png");
+        mTestMap.addFloor("floor2", "floor2.png");
+
+        // Get building floors and assign values to floor test variables
+        ArrayList<Floor> mFloors = mTestMap.getCurrentBuilding().getFloors();
+        mFloor1 = mFloors.get(0);
+        mFloor2 = mFloors.get(1);
+
+        // Set second test building as current building then add a floor
+        // Using arbitrary floor image for testing purposes
+        mTestMap.setCurrentBuilding(mTestSecondBuilding);
+        mTestMap.addFloor("floorA", "floor4.png");
+
+        // Get second building floor and assign value to floor test variable
+        mFloorA = mTestMap.getCurrentBuilding().getFloors().get(0);
+
     }
 
     /**
@@ -42,21 +77,27 @@ public class AStarTest {
     @Test
     public void testSingleEdgePath() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        mTestBuilding.addFloor("floor1", "Floor1_Final.png");
-        mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
-        mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
-        destinationNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
+
+        // Add location nodes to current floor
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+        mTestMap.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
+
+        // Get list of location nodes from floor 1 of the current building and assign to test variables
+        startNode = mTestMap.getCurrentFloor().getLocationNodes().get(0);
+        destinationNode = mTestMap.getCurrentFloor().getLocationNodes().get(1);
 
         startNode.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path from start to destination
         expectedPath.add(startNode);
         expectedPath.add(destinationNode);
-
 
         Assert.assertEquals(expectedPath, actualPath);
     }
@@ -67,21 +108,28 @@ public class AStarTest {
     @Test
     public void testSinglePath() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
 
-        mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
-        mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
-        mFloor.addLocationNode("node3", new Location(0, 2), ImageType.POINT);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
-        destinationNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(2);
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
+
+        // Add location nodes to current floor
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+        mTestMap.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node3", new Location(0, 1), ImageType.POINT);
+
+        // Get list of location nodes from floor 1 of the current building and assign to test variables
+        startNode = mTestMap.getCurrentFloor().getLocationNodes().get(0);
+        connectionNode1 = mTestMap.getCurrentFloor().getLocationNodes().get(1);
+        destinationNode = mTestMap.getCurrentFloor().getLocationNodes().get(2);
 
         // Edges
         startNode.addEdge(connectionNode1);
         connectionNode1.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path from start to destination
         expectedPath.add(startNode);
@@ -97,34 +145,47 @@ public class AStarTest {
     @Test
     public void testTwoPaths() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
-        // Start node - index 0
-        mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
-        // Junction between two paths - index 1
-        mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
-        // Path one connection node - index 2
-        mFloor.addLocationNode("node3", new Location(0, 2), ImageType.POINT);
-        // Path two connection nodes - indices 3-5
-        mFloor.addLocationNode("node4", new Location(1, 1), ImageType.POINT);
-        mFloor.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
-        mFloor.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
-        // Destination node - index 6
-        mFloor.addLocationNode("node7", new Location(0, 3), ImageType.POINT);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
+
+        // Add location nodes to current floor
+        // Start node - index 0
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+
+        // Junction between two paths - index 1
+        mTestMap.addLocationNode("node1", new Location(0, 1), ImageType.POINT);
+
+        // Path one connection node - index 2
+        mTestMap.addLocationNode("node2", new Location(0, 2), ImageType.POINT);
+
+        // Path two connection nodes - indices 3-5
+        mTestMap.addLocationNode("node4", new Location(1, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
+        mTestMap.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
+
+        // Destination node - index 6
+        mTestMap.addLocationNode("node1", new Location(0, 3), ImageType.POINT);
+
+        // Get the current floor's location, then assign values to test location node variables
+        ArrayList<LocationNode> mNodes = mTestMap.getCurrentFloor().getLocationNodes();
+
+        startNode = mNodes.get(0);
 
         // Junction
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
+        connectionNode1 = mNodes.get(1);
 
         // Path one connection node
-        connectionNode2 = mTestBuilding.getFloors().get(0).getLocationNodes().get(2);
+        connectionNode2 = mNodes.get(2);
 
         // Path two connection nodes
-        connectionNode3 = mTestBuilding.getFloors().get(0).getLocationNodes().get(3);
-        connectionNode4 = mTestBuilding.getFloors().get(0).getLocationNodes().get(4);
-        connectionNode5 = mTestBuilding.getFloors().get(0).getLocationNodes().get(5);
+        connectionNode3 = mNodes.get(3);
+        connectionNode4 = mNodes.get(4);
+        connectionNode5 = mNodes.get(5);
 
-        destinationNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(6);
+        destinationNode = mNodes.get(6);
 
         // Edges
         startNode.addEdge(connectionNode1);
@@ -141,7 +202,7 @@ public class AStarTest {
         connectionNode4.addEdge(connectionNode5);
         connectionNode5.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path (path 1) from start to destination
 
@@ -160,35 +221,47 @@ public class AStarTest {
     @Test
     public void testOrder() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
+
+        // Add location nodes to current floor
         // Start node - index 0
-        mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
-        // Junction between two paths - index 1
-        mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
-        // Path one connection node - index 2
-        mFloor.addLocationNode("node3", new Location(0, 2), ImageType.POINT);
-        // Path two connection nodes - indices 3-5
-        mFloor.addLocationNode("node4", new Location(1, 1), ImageType.POINT);
-        mFloor.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
-        mFloor.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
-        // Destination node - index 6
-        mFloor.addLocationNode("node7", new Location(0, 3), ImageType.POINT);
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
+        // Junction between two paths - index 1
+        mTestMap.addLocationNode("node1", new Location(0, 1), ImageType.POINT);
+
+        // Path one connection node - index 2
+        mTestMap.addLocationNode("node2", new Location(0, 2), ImageType.POINT);
+
+        // Path two connection nodes - indices 3-5
+        mTestMap.addLocationNode("node4", new Location(1, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
+        mTestMap.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
+
+        // Destination node - index 6
+        mTestMap.addLocationNode("node1", new Location(0, 3), ImageType.POINT);
+
+        // Get the current floor's location, then assign values to test location node variables
+        ArrayList<LocationNode> mNodes = mTestMap.getCurrentFloor().getLocationNodes();
+
+        startNode = mNodes.get(0);
 
         // Junction
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
+        connectionNode1 = mNodes.get(1);
 
         // Path one connection node
-        connectionNode2 = mTestBuilding.getFloors().get(0).getLocationNodes().get(2);
+        connectionNode2 = mNodes.get(2);
 
         // Path two connection nodes
-        connectionNode3 = mTestBuilding.getFloors().get(0).getLocationNodes().get(3);
-        connectionNode4 = mTestBuilding.getFloors().get(0).getLocationNodes().get(4);
-        connectionNode5 = mTestBuilding.getFloors().get(0).getLocationNodes().get(5);
+        connectionNode3 = mNodes.get(3);
+        connectionNode4 = mNodes.get(4);
+        connectionNode5 = mNodes.get(5);
 
-        destinationNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(6);
+        destinationNode = mNodes.get(6);
 
         // Edges
         startNode.addEdge(connectionNode1);
@@ -206,7 +279,7 @@ public class AStarTest {
         // Path one edge to destination
         connectionNode2.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path (path 1) from start to destination
 
@@ -224,59 +297,65 @@ public class AStarTest {
     @Test
     public void testThreePaths() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
+
+        // Add location nodes to current floor
         // Start node - index 0
-        mFloor.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
 
         // Junction between all paths - index 1
-        mFloor.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
 
         // First junction between path two and three - index 2
-        mFloor.addLocationNode("node3", new Location(1, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node3", new Location(1, 1), ImageType.POINT);
 
         // Path one connection node - index 3
-        mFloor.addLocationNode("node4", new Location(0, 2), ImageType.POINT);
+        mTestMap.addLocationNode("node4", new Location(0, 2), ImageType.POINT);
 
         // Path two connection node - index 4
-        mFloor.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
+        mTestMap.addLocationNode("node5", new Location(1, 2), ImageType.POINT);
 
         // Second junction between path two and three - index 5
-        mFloor.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
+        mTestMap.addLocationNode("node6", new Location(1, 3), ImageType.POINT);
 
         // Path three connection nodes - indices 6-8
-        mFloor.addLocationNode("node7", new Location(2, 1), ImageType.POINT);
-        mFloor.addLocationNode("node8", new Location(2, 2), ImageType.POINT);
-        mFloor.addLocationNode("node9", new Location(2, 3), ImageType.POINT);
+        mTestMap.addLocationNode("node6", new Location(2, 1), ImageType.POINT);
+        mTestMap.addLocationNode("node7", new Location(2, 2), ImageType.POINT);
+        mTestMap.addLocationNode("node8", new Location(2, 3), ImageType.POINT);
 
         // Destination node - index 9
-        mFloor.addLocationNode("node10", new Location(0, 3), ImageType.POINT);
+        mTestMap.addLocationNode("node10", new Location(0, 3), ImageType.POINT);
 
+        // Get the current floor's location, then assign values to test location node variables
+        ArrayList<LocationNode> mNodes = mTestMap.getCurrentFloor().getLocationNodes();
 
-
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
+        startNode = mNodes.get(0);
 
         // Junction between all paths
-        junctionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
+        junctionNode1 = mNodes.get(1);
 
         // Junction between path two and three (first junction)
-        junctionNode2 = mTestBuilding.getFloors().get(0).getLocationNodes().get(2);
+        junctionNode2 = mNodes.get(2);
 
         // Path one connection node
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(3);
+        connectionNode1 = mNodes.get(3);
 
         // Path two connection node
-        connectionNode2 = mTestBuilding.getFloors().get(0).getLocationNodes().get(4);
+        connectionNode2 = mNodes.get(4);
 
         // Junction between path two and three (second junction)
-        junctionNode3 = mTestBuilding.getFloors().get(0).getLocationNodes().get(5);
+        junctionNode3 = mNodes.get(5);
 
         // Path three connection nodes
-        connectionNode3 =  mTestBuilding.getFloors().get(0).getLocationNodes().get(6);
-        connectionNode4 =  mTestBuilding.getFloors().get(0).getLocationNodes().get(7);
-        connectionNode5 =  mTestBuilding.getFloors().get(0).getLocationNodes().get(8);
+        connectionNode3 =  mNodes.get(6);
+        connectionNode4 =  mNodes.get(7);
+        connectionNode5 =  mNodes.get(8);
 
-        destinationNode =  mTestBuilding.getFloors().get(0).getLocationNodes().get(9);
+        destinationNode =  mNodes.get(9);
 
         // Start to first junction
         startNode.addEdge(junctionNode1);
@@ -301,7 +380,7 @@ public class AStarTest {
         // Path two and three junction to destination
         junctionNode3.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path (path 1) from start to destination
         expectedPath.add(startNode);
@@ -318,22 +397,32 @@ public class AStarTest {
     @Test
     public void testSinglePathTwoFloors() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor1 = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
-        Floor mFloor2 = mTestBuilding.addFloor("floor2", ImageType.FLOOR);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
-        mFloor1.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
-        mFloor1.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
-        mFloor2.addLocationNode("node3", new Location(0, 1), ImageType.POINT);
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
-        destinationNode =  mTestBuilding.getFloors().get(1).getLocationNodes().get(0);
+        // Add location nodes to current floor (floor 1)
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+        mTestMap.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
+
+        startNode = mTestMap.getCurrentFloor().getFloorNodes().get(0);
+        connectionNode1 =  mTestMap.getCurrentFloor().getFloorNodes().get(1);
+
+        // Set current floor to floor 2
+        mTestMap.setCurrentFloor(mFloor2);
+
+        // Add location nodes to current floor (floor 2)
+        mTestMap.addLocationNode("node3", new Location(0, 1), ImageType.POINT);
+
+        destinationNode =  mTestMap.getCurrentFloor().getLocationNodes().get(0);
 
         // Edges
         startNode.addEdge(connectionNode1);
         connectionNode1.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path from start to destination
         expectedPath.add(startNode);
@@ -350,24 +439,35 @@ public class AStarTest {
     @Test
     public void testSinglePathTwoBuildings() throws FloorDoesNotExistException, NoPathException, NodeDoesNotExistException {
 
-        Floor mFloor1 = mTestBuilding.addFloor("floor1", ImageType.FLOOR);
-        Floor mFloor2 = mTestSecondBuilding.addFloor("floor2", ImageType.FLOOR);
+        // Set first test building as current building
+        mTestMap.setCurrentBuilding(mTestBuilding);
 
-        mFloor1.addLocationNode("building1 node1", new Location(0, 0), ImageType.POINT);
-        mFloor1.addLocationNode("building1 node2", new Location(0, 1), ImageType.POINT);
-        mFloor2.addLocationNode("building2 node1", new Location(10, 10), ImageType.POINT);
+        // Set current floor to floor 1
+        mTestMap.setCurrentFloor(mFloor1);
 
+        // Add location nodes to current floor (floor 1)
+        mTestMap.addLocationNode("node1", new Location(0, 0), ImageType.POINT);
+        mTestMap.addLocationNode("node2", new Location(0, 1), ImageType.POINT);
 
+        startNode = mTestMap.getCurrentFloor().getFloorNodes().get(0);
+        connectionNode1 =  mTestMap.getCurrentFloor().getFloorNodes().get(1);
 
-        startNode = mTestBuilding.getFloors().get(0).getLocationNodes().get(0);
-        connectionNode1 = mTestBuilding.getFloors().get(0).getLocationNodes().get(1);
-        destinationNode =  mTestSecondBuilding.getFloors().get(0).getLocationNodes().get(0);
+        // Set second test building as current building
+        mTestMap.setCurrentBuilding(mTestSecondBuilding);
+
+        // Set current floor of second building to floor A
+        mTestMap.setCurrentFloor(mFloorA);
+
+        // Add location node to current floor (floor A) of second building
+        mTestMap.addLocationNode("building2 node1", new Location(10, 10), ImageType.POINT);
+
+        destinationNode =  mTestMap.getCurrentFloor().getLocationNodes().get(0);
 
         // Edges
         startNode.addEdge(connectionNode1);
         connectionNode1.addEdge(destinationNode);
 
-        actualPath = aStar(startNode, destinationNode);
+        actualPath = mAstar.getPath(startNode, destinationNode);
 
         // Expect path from start to destination
         expectedPath.add(startNode);
