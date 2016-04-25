@@ -94,7 +94,7 @@ public class Floor extends Observable implements Observer {
      * @param location
      * @param imageType
      */
-    public void addLocationNode(String name, Location location, ImageType imageType) {
+    public LocationNode addLocationNode(String name, Location location, ImageType imageType) {
 
         // Create a new LocationNode
         LocationNode newLocationNode = new LocationNode(name, location, this, imageType);
@@ -105,24 +105,6 @@ public class Floor extends Observable implements Observer {
         setChanged();
         notifyObservers(UpdateType.LOCATIONNODEADDED);
 
-    }
-
-
-    public LocationNode addNode(String nodeName, Location nodeLocation, ImageType nodeImageType) {
-
-        // Create a new node
-        LocationNode newLocationNode = new LocationNode (nodeName, nodeLocation, this, nodeImageType);
-
-        // Add the node to the list of locationNodes on the current floor
-        this.locationNodes.add(newLocationNode);
-
-        // mark the floor as changed
-        setChanged();
-
-        // trigger notification
-        notifyObservers(UpdateType.LOCATIONNODEADDED);
-
-        // Return the new LocationNode
         return newLocationNode;
     }
 

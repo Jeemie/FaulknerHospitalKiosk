@@ -228,7 +228,12 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentFloor.addLocationNode(name, location, imageType);
+        setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
+
+        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+        this.currentFloorLocationNodes.add(this.currentLocationNode);
 
     }
 
@@ -358,26 +363,26 @@ public class Map implements Observer {
 
         });
 
-        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                if (currentMapState == MapState.ADDNODE) {
-
-                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
-
-
-                    Location newLocation = new Location(event.getX(), event.getY());
-
-//                    addLocationNode();
-
-                }
-
-
-            }
-
-        });
+//        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                if (currentMapState == MapState.ADDNODE) {
+//
+//                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
+//
+//
+//                    Location newLocation = new Location(event.getX(), event.getY());
+//
+////                    addLocationNode();
+//
+//                }
+//
+//
+//            }
+//
+//        });
 
     }
 
@@ -504,8 +509,12 @@ public class Map implements Observer {
 
             case LOCATIONNODEADDED:
 
-//                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-//                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+                if (this.currentLocationNode != null) {
+
+                    this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                    this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                }
 
                 // TODO decide whether or not we are going to redraw the entire floor
                 break;

@@ -1,20 +1,27 @@
 package Kiosk.Controllers;
 
 //import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
+import Kiosk.Controllers.EventHandlers.AddTabEventHandler;
 import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
+import Map.Enums.ImageType;
 import Map.Enums.MapState;
 import Map.Map;
 import Map.Floor;
 import Map.Destination;
 import Map.LocationNode;
+import Map.Location;
 import Map.LocationNodeEdge;
 import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
@@ -34,6 +41,12 @@ public class AdminDashboardController {
     private Map faulknerHospitalMap;
 
     private KioskApp kioskApp;
+
+    private ObservableList icons = FXCollections.observableArrayList();
+
+    private boolean lockTabPane;
+
+    private Location clickedLocation;
 
 
     // TODO possibly rethink
@@ -209,8 +222,27 @@ public class AdminDashboardController {
     @FXML
     private Tab addFloorTab;
 
+
+
+
+
+
     @FXML
     private Tab addLocationTab;
+
+    @FXML
+    private ListView addLocationIconsListView;
+
+    @FXML
+    private TextField addLocationNameTextField;
+
+    @FXML
+    private Button addLocationAddButton;
+
+    @FXML
+    private Button addLocationDiscardButton;
+
+
 
 
     @FXML
@@ -228,11 +260,18 @@ public class AdminDashboardController {
 
     public void setListeners() {
 
+        this.icons.setAll(ImageType.values());
+        this.lockTabPane = false;
+        this.clickedLocation = new Location(0, 0);
+
+
         // Setup Listeners
         setCoreFunctionalityListeners();
         setBuildingTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
+        setAddFloorTabListeners();
+        setAddLocationTabListeners();
 
     }
 
@@ -384,7 +423,35 @@ public class AdminDashboardController {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
+
+                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab))) {
+
+                    mapTabPane.getSelectionModel().select(oldValue);
+
+                    return;
+                }
+
+                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab)) {
+
+                    lockTabPane = true;
+
+                    return;
+                }
+
                 LOGGER.info("The selected tab is currently " + newValue.getText());
+
+            }
+
+        });
+
+        this.mapStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                clickedLocation = new Location(event.getX(), event.getY());
+
+                LOGGER.info("The current clicked location is " + clickedLocation.getX() + ", " + clickedLocation.getY());
 
             }
 
@@ -622,9 +689,9 @@ public class AdminDashboardController {
         });
 
 
-        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.ADDNODE, "Add Button",
-                        this.selectedButtonLabel));
+        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDNODE,
+                this.faulknerHospitalMap, "Add Location", this.selectedButtonLabel, this.mapTabPane,
+                this.addLocationTab));
 
 
         this.floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -759,10 +826,112 @@ public class AdminDashboardController {
             }
 
         });
+
     }
 
+    private void setAddFloorTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addFloorTab);
 
 
+
+
+    }
+
+    private void setAddLocationTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addLocationTab);
+
+        this.addLocationIconsListView.setCellFactory(listView -> new ListCell<ImageType>() {
+
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(80);
+                imageView.setFitWidth(160);
+                imageView.setPreserveRatio(true);
+            }
+
+            @Override
+            public void updateItem(ImageType imageType, boolean empty) {
+                super.updateItem(imageType, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(imageType.toString());
+
+                    try {
+
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                                imageType.getResourceFileName()).toString(), true);
+
+                        imageView.setImage(icon);
+
+                    } catch (MalformedURLException e) {
+
+                        LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
+
+                    }
+
+                    setGraphic(imageView);
+                }
+            }
+        });
+
+        this.addLocationIconsListView.setItems(this.icons);
+
+
+        this.addLocationNameTextField.getText();
+
+        this.addLocationAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (addLocationNameTextField.getText().length() < 1) {
+
+                    return;
+                }
+
+                if (addLocationIconsListView.getSelectionModel().getSelectedItem() == null) {
+
+                    return;
+                }
+
+                ImageType selectedImageType = (ImageType) addLocationIconsListView.getSelectionModel().getSelectedItem();
+
+                faulknerHospitalMap.addLocationNode(addLocationNameTextField.getText(), clickedLocation, selectedImageType);
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addLocationTab);
+
+                mapTabPane.getSelectionModel().select(floorTab);
+
+                addLocationNameTextField.setText("");
+
+            }
+
+        });
+
+        this.addLocationDiscardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addLocationTab);
+
+                mapTabPane.getSelectionModel().select(floorTab);
+
+                addLocationNameTextField.setText("");
+
+            }
+
+        });
+
+    }
 
 
 
