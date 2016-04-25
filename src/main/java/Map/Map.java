@@ -7,6 +7,7 @@ import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
+import Map.Memento.MapMemento;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.BreadthFirstSearch;
 import Map.SearchAlgorithms.Dijkstras;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
+
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Map.class)
 public class Map implements Observer {
@@ -870,5 +872,18 @@ public class Map implements Observer {
 
         return directoryList;
     }
+
+    public MapMemento saveStateToMomento() {
+
+        return new MapMemento(name, uniqueID, startLocationNode, mapBuildings, searchAlgorithm, currentMapState, directoryList, currentPath, currentDestination, currentLocationNode, currentAdjacentLocationNodes, currentLocationNodeDestinations, currentFloor, currentFloorLocationNodes, currentFloorDestinations, currentFloorLocationNodePane, currentFloorEdgePane, currentFloorImage, currentBuilding, currentBuildingFloors, currentBuildingDestinations);
+
+    }
+
+    public void loadFromMomento() {
+        //TODO change the momento
+//        return mMomento.getMomento();
+        return;
+    }
+
 
 }
