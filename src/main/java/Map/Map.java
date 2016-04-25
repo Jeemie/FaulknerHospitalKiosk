@@ -142,6 +142,7 @@ public class Map implements Observer {
 
     }
 
+
     /*
     TODO create exception to throw when adding something to the map when something of the sametype already has that name
     */
@@ -562,7 +563,13 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, this);
+
+        MapMemento mapMemento = saveStateToMomento();
+
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
+
+        System.out.println(objectMapper.writeValueAsString(mapMemento));
+
         LOGGER.info("Saving the map to the file: " + file.toString());
 
     }
@@ -572,6 +579,9 @@ public class Map implements Observer {
      * @param specifiedFilePath The JSON file you want to load from
      */
     public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
+//        MapMemento mapMemento = null;//TODO Load using gson
+//        Map map = loadFromMemento(mapMemento);
+//        return map;
 
         Map mMap = new Map();
         URL defaultFilePath = null;
@@ -630,6 +640,19 @@ public class Map implements Observer {
         }
 
         return mMap;
+    }
+
+    public MapMemento saveStateToMomento() {
+
+        return new MapMemento(this.name, this.uniqueID, this.startLocationNode, this.mapBuildings);
+
+    }
+
+    public Map loadFromMemento(MapMemento mapMemento) {
+        //TODO change the memento
+//        return mMemento.getMomento();
+        Map map = new Map(null);
+        return map;
     }
 
 
@@ -871,18 +894,6 @@ public class Map implements Observer {
     public ObservableList<Destination> getDirectoryList() {
 
         return directoryList;
-    }
-
-    public MapMemento saveStateToMomento() {
-
-        return new MapMemento(name, uniqueID, startLocationNode, mapBuildings, searchAlgorithm, currentMapState, directoryList, currentPath, currentDestination, currentLocationNode, currentAdjacentLocationNodes, currentLocationNodeDestinations, currentFloor, currentFloorLocationNodes, currentFloorDestinations, currentFloorLocationNodePane, currentFloorEdgePane, currentFloorImage, currentBuilding, currentBuildingFloors, currentBuildingDestinations);
-
-    }
-
-    public void loadFromMomento() {
-        //TODO change the momento
-//        return mMomento.getMomento();
-        return;
     }
 
 

@@ -24,13 +24,10 @@ public class MapMemento {
     //  circular dependency issue (Building would hold a Mapz)
     ArrayList <BuildingMemento> buildingMementos;
 
-    // TODO do we need this?
-    //ISearchAlgorithm searchAlgorithm;
-
     MapState currentMapState;
 
 
-    public MapMemento(String name, UUID uniqueID, LocationNode startLocationNode, ArrayList < Building > mapBuildings, ISearchAlgorithm searchAlgorithm) {
+    public MapMemento(String name, UUID uniqueID, LocationNode startLocationNode, ArrayList < Building > mapBuildings) {
 
         this.name = name;
 
