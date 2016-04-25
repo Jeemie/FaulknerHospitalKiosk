@@ -22,10 +22,9 @@ public class LocationNodeEdgeMemento {
     // Other node to connect with
     private UUID locationNode2ID;
 
-    public LocationNodeEdgeMemento (UUID uniqueID, double weight, LocationNode locationNode1, LocationNode locationNode2) {
+    public LocationNodeEdgeMemento (UUID uniqueID, LocationNode locationNode1, LocationNode locationNode2) {
 
         this.uniqueID = uniqueID;
-        this.weight = weight;
         this.locationNode1ID = locationNode1.getUniqueID();
         this.locationNode2ID = locationNode2.getUniqueID();
 

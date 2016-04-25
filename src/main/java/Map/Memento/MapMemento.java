@@ -30,10 +30,9 @@ public class MapMemento {
     public MapMemento(String name, UUID uniqueID, LocationNode startLocationNode, ArrayList < Building > mapBuildings) {
 
         this.name = name;
-
         this.uniqueID = uniqueID;
-
         this.startLocationNodeID = startLocationNode.getUniqueID();
+        this.buildingMementos = new ArrayList<BuildingMemento>();
 
 
         for(Building building : mapBuildings) {

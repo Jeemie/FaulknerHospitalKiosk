@@ -28,8 +28,8 @@ public class BuildingMemento {
     public BuildingMemento(String name, UUID uniqueID, ArrayList<Floor> floors, Map currentMap) {
 
         this.name = name;
-
         this.uniqueID = uniqueID;
+        this.floorMomentos = new ArrayList<FloorMemento>();
 
         for (Floor floor : floors) {
 

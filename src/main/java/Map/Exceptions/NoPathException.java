@@ -9,12 +9,22 @@ import Map.LocationNode;
 public class NoPathException extends Exception {
 
     private final LocationNode startLocationNode;
-    private final LocationNode destinatonLocationNode;
+    private final LocationNode destinationLocationNode;
 
-    public NoPathException(LocationNode startLocationNode, LocationNode destinatonLocationNode) {
+    public NoPathException(LocationNode startLocationNode, LocationNode destinationLocationNode) {
 
         this.startLocationNode = startLocationNode;
-        this.destinatonLocationNode = destinatonLocationNode;
+        this.destinationLocationNode = destinationLocationNode;
+
+        if (startLocationNode == null) {
+
+            System.err.println("startLocationNode is null.");
+        }
+
+        if (destinationLocationNode == null) {
+
+            System.err.println("destinationLocationNode is null.");
+        }
 
     }
 

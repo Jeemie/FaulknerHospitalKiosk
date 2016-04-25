@@ -9,7 +9,6 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
 import Map.Memento.MapMemento;
 import Map.SearchAlgorithms.AStar;
-import Map.SearchAlgorithms.BreadthFirstSearch;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.annotation.*;
@@ -26,8 +25,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -49,6 +50,9 @@ public class Map implements Observer {
     private LocationNode startLocationNode;
 
     private ArrayList<Building> mapBuildings;
+
+    // Building UUIDs for serialization
+    private ArrayList<UUID> buildingIdList;
 
     private ISearchAlgorithm searchAlgorithm;
 
@@ -153,7 +157,8 @@ public class Map implements Observer {
         this.uniqueID = UUID.randomUUID();
         this.startLocationNode = null;
         this.mapBuildings = new ArrayList<>();
-        this.searchAlgorithm = new BreadthFirstSearch();
+        this.buildingIdList = new ArrayList<>();
+        this.searchAlgorithm = new AStar();
         this.currentMapState = MapState.NORMAL;
         this.directoryList = FXCollections.observableArrayList();
         this.currentLocationNode = null;
@@ -201,6 +206,7 @@ public class Map implements Observer {
 
         this.currentBuilding = newBuilding;
         this.mapBuildings.add(newBuilding);
+        this.buildingIdList.add(newBuilding.getUniqueID());
 
     }
 
@@ -227,7 +233,12 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentFloor.addLocationNode(name, location, imageType);
+        setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
+
+        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+        this.currentFloorLocationNodes.add(this.currentLocationNode);
 
     }
 
@@ -357,26 +368,26 @@ public class Map implements Observer {
 
         });
 
-        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                if (currentMapState == MapState.ADDNODE) {
-
-                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
-
-
-                    Location newLocation = new Location(event.getX(), event.getY());
-
-//                    addLocationNode();
-
-                }
-
-
-            }
-
-        });
+//        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                if (currentMapState == MapState.ADDNODE) {
+//
+//                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
+//
+//
+//                    Location newLocation = new Location(event.getX(), event.getY());
+//
+////                    addLocationNode();
+//
+//                }
+//
+//
+//            }
+//
+//        });
 
     }
 
@@ -387,8 +398,8 @@ public class Map implements Observer {
         try {
 
             //path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+            path = (new AStar()).getPath(this.startLocationNode, this.currentLocationNode);
 
-            path = AStar.getPath(this.startLocationNode, this.currentLocationNode);
 
         } catch (NoPathException e) {
 
@@ -423,14 +434,14 @@ public class Map implements Observer {
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
     }
 
-   /*
+
     public void useAStar() {
 
 
         this.searchAlgorithm = new AStar();
 
     }
-    */
+
 
     public void useDijkstras() {
 
@@ -503,8 +514,12 @@ public class Map implements Observer {
 
             case LOCATIONNODEADDED:
 
-//                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-//                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+                if (this.currentLocationNode != null) {
+
+                    this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                    this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                }
 
                 // TODO decide whether or not we are going to redraw the entire floor
                 break;
@@ -563,12 +578,27 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
+//        Gson gson = new Gson();
+
 
         MapMemento mapMemento = saveStateToMomento();
 
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
 
+//        try {
+//
+//            String json = gson.toJson(mapMemento);
+//            FileWriter fileWriter = new FileWriter(file.toString());
+//            fileWriter.write(json);
+//
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//
+//        }
+
         System.out.println(objectMapper.writeValueAsString(mapMemento));
+//        System.out.println(json);
 
         LOGGER.info("Saving the map to the file: " + file.toString());
 
@@ -603,12 +633,14 @@ public class Map implements Observer {
 
         try {
 
+
             File specifiedFile = new File(specifiedFilePath.toURI());
 
             File defaultFile = new File(defaultFilePath.toURI());
 
-            if (specifiedFile.exists() && specifiedFile.length() > 0) {
-
+            //TODO uncomment after deserializer is complete - load from starter map for now
+            //if (specifiedFile.exists() && specifiedFile.length() > 0) {
+            if(false) {
                 // Load specified file
 
                 mMap = objectMapper.readValue(specifiedFile, Map.class);
@@ -617,14 +649,15 @@ public class Map implements Observer {
             } else if (defaultFile.exists()) {
 
                 // Load default file
-                mMap = objectMapper.readValue(defaultFile, Map.class);
-                LOGGER.info("Loaded map from file " + defaultFile.toString());
+                //TODO uncomment after deserializer is complete - load from starter map for now
+                //mMap = objectMapper.readValue(defaultFile, Map.class);
+                //LOGGER.info("Loaded map from file " + defaultFile.toString());
 
                 if (defaultFile.length() <= 2) {
 
                     LOGGER.warn("Loaded file is empty.");
-                    // TODO uncomment after startMap is refactored
-                    // mMap = FaulknerHospitalData.starterMap();
+
+                     mMap = FaulknerHospitalData.starterMap();
                 }
             } else {
 
@@ -896,5 +929,8 @@ public class Map implements Observer {
         return directoryList;
     }
 
+    public ArrayList<UUID> getBuildingIdList() {
+        return buildingIdList;
+    }
 
 }

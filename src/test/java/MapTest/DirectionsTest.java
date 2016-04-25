@@ -1,7 +1,6 @@
 package MapTest;
 
 import Map.*;
-import Map.Enums.String;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class DirectionsTest {
     private Floor mFloor3;
     List<LocationNode> mpath, mpath2, mpath3;
 
-    @Before
+/*    @Before
    public void setup() {
         mTestBuilding = new Building();
 
@@ -48,7 +47,7 @@ public class DirectionsTest {
         mpath3.add(new LocationNode("node15", new Location(0, 50), mFloor3, ImageType.POINT)); //Should just be Straight
         mpath3.add(new LocationNode("node16", new Location(0, 40), mFloor3, ImageType.POINT));
 
-    }
+    }*/
 /*
     @Test
     public void testGetRelativeDirections() {

@@ -11,10 +11,14 @@ import static java.util.Collections.reverse;
 /**
  * TODO
  */
-//public class AStar implements ISearchAlgorithm {
-public class AStar {
+public class AStar implements ISearchAlgorithm {
+//public class AStar {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
+
+    public AStar() {
+
+    }
 
     /**
      * Determines the shortest path between a start node and destination node.
@@ -24,8 +28,14 @@ public class AStar {
      * @param startNode Start destination in path
      * @param destinationNode End destination in path
      */
-    public static ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
+    public ArrayList<LocationNode> getPath(LocationNode startNode, LocationNode destinationNode) throws
             NoPathException {
+
+        if (startNode == null || destinationNode == null) {
+
+            throw new NoPathException(startNode, destinationNode);
+
+        }
 
         LocationNode currentNode;
         Double tentative_gScore;

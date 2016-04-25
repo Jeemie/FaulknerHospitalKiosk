@@ -109,7 +109,9 @@ public class MapViewController{
                         Platform.runLater(resetKiosk);
                         break;
                     }
+
                     Thread.sleep(1000);
+
                 } catch (InterruptedException exception) {
                     atimer.cancel();
                     timer.cancel();
@@ -129,8 +131,11 @@ public class MapViewController{
 
         @Override
         public void run() {
+
             handleBack();
+
         }
+
     };
 
 

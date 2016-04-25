@@ -32,6 +32,7 @@ public class FloorMemento {
         this.uniqueID = uniqueID;
         this.resourceFileName = resourceFileName;
         this.currentBuildingID = currentBuilding.getUniqueID();
+        this.locationNodeMomentos = new ArrayList<LocationNodeMemento>();
 
         for (LocationNode locationNode : locationNodes) {
 

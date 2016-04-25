@@ -1,10 +1,7 @@
 package Map.Memento;
 
-import Map.Destination;
+import Map.*;
 import Map.Enums.ImageType;
-import Map.Floor;
-import Map.Location;
-import Map.LocationNodeEdge;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -42,10 +39,12 @@ public class LocationNodeMemento {
         this.location = location;
         this.currentFloorID = currentFloor.getUniqueID();
         this.associatedImage = associatedImage;
+        this.edgeMomentos = new ArrayList<LocationNodeEdgeMemento>();
+        this.destinationMementos = new ArrayList<DestinationMemento>();
 
         for (LocationNodeEdge locationNodeEdge : edges) {
 
-            edgeMomentos.add(new LocationNodeEdgeMemento(locationNodeEdge.getUniqueID(), locationNodeEdge.computeWeight(), locationNodeEdge.getLocationNode1(), locationNodeEdge.getLocationNode2()));
+            edgeMomentos.add(new LocationNodeEdgeMemento(locationNodeEdge.getUniqueID(), locationNodeEdge.getLocationNode1(), locationNodeEdge.getLocationNode2()));
 
         }
 
