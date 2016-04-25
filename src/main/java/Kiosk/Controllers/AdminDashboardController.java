@@ -202,6 +202,17 @@ public class AdminDashboardController {
 
 
 
+
+
+
+
+    @FXML
+    private Tab addFloorTab;
+
+    @FXML
+    private Tab addLocationTab;
+
+
     @FXML
     private Button discardChangesButton;
 
@@ -210,8 +221,6 @@ public class AdminDashboardController {
 
     @FXML
     private Button logoutButton;
-
-
 
 
 
