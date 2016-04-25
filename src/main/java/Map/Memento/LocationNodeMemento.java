@@ -2,6 +2,7 @@ package Map.Memento;
 
 import Map.*;
 import Map.Enums.ImageType;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -9,6 +10,8 @@ import java.util.UUID;
 /**
  * Created by binam on 4/24/16.
  */
+
+@JsonSerialize
 public class LocationNodeMemento {
 
     // Name of this node
@@ -57,5 +60,38 @@ public class LocationNodeMemento {
 
     }
 
+    public String getName() {
 
+        return name;
+    }
+
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    public Location getLocation() {
+
+        return location;
+    }
+
+    public UUID getCurrentFloorID() {
+
+        return currentFloorID;
+    }
+
+    public ImageType getAssociatedImage() {
+
+        return associatedImage;
+    }
+
+    public ArrayList<LocationNodeEdgeMemento> getEdgeMomentos() {
+
+        return edgeMomentos;
+    }
+
+    public ArrayList<DestinationMemento> getDestinationMementos() {
+
+        return destinationMementos;
+    }
 }

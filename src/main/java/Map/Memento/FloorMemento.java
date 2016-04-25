@@ -2,6 +2,7 @@ package Map.Memento;
 
 import Map.Building;
 import Map.LocationNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 /**
  * Created by binam on 4/24/16.
  */
+@JsonSerialize
 public class FloorMemento {
 
     // The name of the floor
@@ -42,6 +44,28 @@ public class FloorMemento {
 
     }
 
+    public String getFloorName() {
 
+        return floorName;
+    }
 
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    public String getResourceFileName() {
+
+        return resourceFileName;
+    }
+
+    public UUID getCurrentBuildingID() {
+
+        return currentBuildingID;
+    }
+
+    public ArrayList<LocationNodeMemento> getLocationNodeMomentos() {
+
+        return locationNodeMomentos;
+    }
 }

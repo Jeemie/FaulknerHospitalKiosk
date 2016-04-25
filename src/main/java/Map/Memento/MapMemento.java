@@ -3,6 +3,7 @@ package Map.Memento;
 import Map.*;
 import Map.Enums.MapState;
 import Map.SearchAlgorithms.ISearchAlgorithm;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import java.util.UUID;
 /**
  * Created by binam on 4/24/16.
  */
+@JsonSerialize
 public class MapMemento {
 
 //    HashMap<UUID, Object> UUIDtoObject; //Maybe use for quick loading
@@ -47,4 +49,28 @@ public class MapMemento {
 //        this.directoryList = directoryList;
     }
 
+    public String getName() {
+
+        return name;
+    }
+
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    public MapState getCurrentMapState() {
+
+        return currentMapState;
+    }
+
+    public UUID getStartLocationNodeID() {
+
+        return startLocationNodeID;
+    }
+
+    public ArrayList<BuildingMemento> getBuildingMementos() {
+
+        return buildingMementos;
+    }
 }

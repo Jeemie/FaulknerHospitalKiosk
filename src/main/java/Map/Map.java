@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 //import com.google.gson.Gson;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -578,6 +579,7 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
+        //ObjectMapper
 //        Gson gson = new Gson();
 
 
@@ -597,7 +599,7 @@ public class Map implements Observer {
 //
 //        }
 
-        System.out.println(objectMapper.writeValueAsString(mapMemento));
+        //System.out.println(objectMapper.writeValueAsString(mapMemento));
 //        System.out.println(json);
 
         LOGGER.info("Saving the map to the file: " + file.toString());
