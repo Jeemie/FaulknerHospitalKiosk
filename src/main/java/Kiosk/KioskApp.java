@@ -63,18 +63,18 @@ public class KioskApp extends Application {
 
                 exception.printStackTrace();
 
-            } catch (FloorDoesNotExistException exception) {
-
-                exception.printStackTrace();
-
             } catch (IOException exception) {
 
                 exception.printStackTrace();
             }
+
         }
 
-
+        this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
         this.faulknerHospitalMap.initMapComponents();
+
+
+        this.faulknerHospitalMap = FaulknerHospitalData.starterMap();
 
 
         this.primaryStage.setTitle("Pathfinding Application");
