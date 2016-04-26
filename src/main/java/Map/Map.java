@@ -17,19 +17,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import com.google.gson.Gson;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -40,7 +36,6 @@ import java.util.Observer;
 import java.util.UUID;
 
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Map.class)
 public class Map implements Observer {
 
     private String name;
@@ -59,8 +54,9 @@ public class Map implements Observer {
 
     private MapState currentMapState;
 
-    // TODO DELETE EVENTUALLY
-    @JsonIgnore
+    // TODO DELETE EVENTUALLY:
+    // I'm not sure who wrote this, why are we deleting it?  - Binam
+    // To do was added on commit f32ef4d, "Merged with little success"
     private ObservableList<Destination> directoryList;
 
     private Path currentPath;
@@ -78,12 +74,10 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentLocationNodeDestinations;
 
 
@@ -94,27 +88,22 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<LocationNode> currentFloorLocationNodes;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentFloorDestinations;
 
 
     //
-    @JsonIgnore
     private Pane currentFloorLocationNodePane;
 
 
     //
-    @JsonIgnore
     private Pane currentFloorEdgePane;
 
 
     //
-    @JsonIgnore
     private ImageView currentFloorImage;
 
 
@@ -125,27 +114,16 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<Floor> currentBuildingFloors;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentBuildingDestinations;
 
 
     // Logger for this class
-    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
-    /**
-     * Jackson Constructor
-     */
-    public Map() {
-
-        super();
-
-    }
 
 
     /*
@@ -689,38 +667,31 @@ public class Map implements Observer {
         return this;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
 
         return uniqueID;
     }
 
-    @JsonGetter
     public String getName() {
 
         return name;
     }
-
-    @JsonGetter
 
     public ArrayList<Building> getMapBuildings() {
 
         return mapBuildings;
     }
 
-    @JsonGetter
     public LocationNode getCurrentLocationNode() {
 
         return currentLocationNode;
     }
 
-    @JsonGetter
     public Floor getCurrentFloor() {
 
         return currentFloor;
     }
 
-    @JsonGetter
     public Building getCurrentBuilding() {
 
         return currentBuilding;

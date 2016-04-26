@@ -1,10 +1,5 @@
 package Map;
 
-import Map.Enums.UpdateType;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import org.slf4j.Logger;
@@ -17,7 +12,6 @@ import java.util.UUID;
 /**
  * Created by matt on 4/18/16.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=LocationNodeEdge.class)
 public class LocationNodeEdge extends Observable {
 
     // Unique ID for this edge
@@ -32,21 +26,10 @@ public class LocationNodeEdge extends Observable {
     // Other node to connect with
     private LocationNode locationNode2;
 
-    @JsonIgnore
     private Line edgeLine;
 
-    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeEdge.class);
-
-
-    /**
-     * Jackson Constructor
-     */
-    public LocationNodeEdge() {
-
-        super();
-    }
 
     /**
      * Constructor to create edge and associated line between two nodes
@@ -198,7 +181,6 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-    @JsonGetter
     public double getWeight() {
 
         return weight;
@@ -226,19 +208,16 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-    @JsonGetter
     public LocationNode getLocationNode1() {
 
         return locationNode1;
     }
 
-    @JsonGetter
     public LocationNode getLocationNode2() {
 
         return locationNode2;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
 
         return uniqueID;

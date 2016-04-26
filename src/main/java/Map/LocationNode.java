@@ -8,11 +8,6 @@ import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Map.Exceptions.NodeDoesNotExistException;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,7 +22,6 @@ import java.util.*;
 
 import static Map.Enums.CardinalDirection.*;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=LocationNode.class)
 public class LocationNode extends Observable implements Observer, Comparable<LocationNode> {
 
     // Name of this node
@@ -39,7 +33,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Location of this node
     private Location location;
 
-    @JsonIgnore
     // Floor this node is located on
     private Floor currentFloor;
 
@@ -54,37 +47,21 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     // Variables for Dijkstra's and A* search:
 
-    @JsonIgnore
     // the cost of getting from the start node to this node - changes during shortest path search
     private double gScore;
 
-    @JsonIgnore
     // the total cost of getting from the start node to the goal - changes during shortest path search
     private double fScore;
 
-    @JsonIgnore
     // the node this node came from - changes during shortest path search
     private LocationNode cameFrom;
 
-    @JsonIgnore
     private ImageView iconImageView;
 
-    @JsonIgnore
     private Label iconLabel;
 
-    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
-
-
-    /**
-     * Jackson Constructor
-     */
-    public LocationNode() {
-
-        super();
-
-    }
 
     public LocationNode(String name, Location location, Floor currentFloor, ImageType associatedImage) {
 
@@ -540,7 +517,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         return location;
     }
 
-    @JsonGetter
     public ArrayList<LocationNodeEdge> getEdges() {
 
         return edges;
@@ -568,25 +544,21 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         notifyObservers(arg);
     }
 
-    @JsonGetter
     public String getName() {
 
         return name;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
 
         return uniqueID;
     }
 
-    @JsonGetter
     public Floor getCurrentFloor() {
 
         return currentFloor;
     }
 
-    @JsonGetter
     public ImageType getAssociatedImage() {
 
         return associatedImage;
