@@ -30,6 +30,7 @@ public class BuildingMemento {
         this.name = name;
         this.uniqueID = uniqueID;
         this.floorMomentos = new ArrayList<FloorMemento>();
+        this.currentMapID = currentMap.getUniqueID();
 
         for (Floor floor : floors) {
 

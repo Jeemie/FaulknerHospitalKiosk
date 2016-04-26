@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -581,13 +581,12 @@ public class Map implements Observer {
 //        Gson gson = new Gson();
 
 
-        MapMemento mapMemento = saveStateToMomento();
+        MapMemento mapMemento = saveStateToMemento();
 
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
 
 //        try {
 //
-//            String json = gson.toJson(mapMemento);
 //            FileWriter fileWriter = new FileWriter(file.toString());
 //            fileWriter.write(json);
 //
@@ -598,7 +597,6 @@ public class Map implements Observer {
 //        }
 
         System.out.println(objectMapper.writeValueAsString(mapMemento));
-//        System.out.println(json);
 
         LOGGER.info("Saving the map to the file: " + file.toString());
 
@@ -675,7 +673,7 @@ public class Map implements Observer {
         return mMap;
     }
 
-    public MapMemento saveStateToMomento() {
+    public MapMemento saveStateToMemento() {
 
         return new MapMemento(this.name, this.uniqueID, this.startLocationNode, this.mapBuildings);
 
