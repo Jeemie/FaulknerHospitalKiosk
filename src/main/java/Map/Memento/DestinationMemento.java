@@ -2,12 +2,14 @@ package Map.Memento;
 
 import Map.Enums.DestinationType;
 import Map.LocationNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.UUID;
 
 /**
  * Created by binam on 4/24/16.
  */
+@JsonSerialize
 public class DestinationMemento {
 
     // Unique ID for this edge
@@ -29,5 +31,23 @@ public class DestinationMemento {
 
     }
 
+    public UUID getUniqueID() {
 
+        return uniqueID;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public DestinationType getDestinationType() {
+
+        return destinationType;
+    }
+
+    public UUID getCurrentLocationNodeID() {
+
+        return currentLocationNodeID;
+    }
 }

@@ -47,4 +47,23 @@ public class MapMemento {
 //        this.directoryList = directoryList;
     }
 
+    public String getName() {
+
+        return name;
+    }
+
+    public UUID getUniqueID() {
+
+        return uniqueID;
+    }
+
+    public UUID getStartLocationNodeID() {
+
+        return startLocationNodeID;
+    }
+
+    public ArrayList<BuildingMemento> getBuildingMementos() {
+
+        return buildingMementos;
+    }
 }

@@ -25,7 +25,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.FileWriter;
