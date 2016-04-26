@@ -28,6 +28,12 @@ public class BuildingMemento {
     // Map this building belongs to
     private UUID currentMapID;
 
+    public BuildingMemento() {
+
+        super();
+
+    }
+
     public BuildingMemento(String name, UUID uniqueID, ArrayList<Floor> floors, Map currentMap) {
 
         this.name = name;

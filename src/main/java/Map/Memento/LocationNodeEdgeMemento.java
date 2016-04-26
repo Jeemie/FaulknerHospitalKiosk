@@ -2,6 +2,7 @@ package Map.Memento;
 
 import Map.Location;
 import Map.LocationNode;
+import Map.LocationNodeEdge;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.UUID;
@@ -24,6 +25,11 @@ public class LocationNodeEdgeMemento {
     // Other node to connect with
     private UUID locationNode2ID;
 
+    public LocationNodeEdgeMemento () {
+
+        super();
+
+    }
     public LocationNodeEdgeMemento (UUID uniqueID, LocationNode locationNode1, LocationNode locationNode2) {
 
         this.uniqueID = uniqueID;

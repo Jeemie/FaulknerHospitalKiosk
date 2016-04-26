@@ -27,7 +27,7 @@ public class LocationNodeMemento {
     private UUID currentFloorID;
 
     // Type of image icon to display with this (Enum)
-    private ImageType associatedImage;
+    private String associatedImageString;
 
     // Edges from this node to adjacent nodes
     private ArrayList<LocationNodeEdgeMemento> edgeMomentos;
@@ -35,13 +35,19 @@ public class LocationNodeMemento {
     // Destinations at this node
     private ArrayList<DestinationMemento> destinationMementos;
 
+    public LocationNodeMemento () {
+
+        super();
+
+    }
+
     public LocationNodeMemento(String name, UUID uniqueID, Location location, Floor currentFloor, ImageType associatedImage, ArrayList<LocationNodeEdge> edges, ArrayList<Destination> destinations) {
 
         this.name = name;
         this.uniqueID = uniqueID;
         this.location = location;
         this.currentFloorID = currentFloor.getUniqueID();
-        this.associatedImage = associatedImage;
+        this.associatedImageString = associatedImage.getResourceFileName();
         this.edgeMomentos = new ArrayList<LocationNodeEdgeMemento>();
         this.destinationMementos = new ArrayList<DestinationMemento>();
 
@@ -80,9 +86,9 @@ public class LocationNodeMemento {
         return currentFloorID;
     }
 
-    public ImageType getAssociatedImage() {
+    public String getAssociatedImageString() {
 
-        return associatedImage;
+        return associatedImageString;
     }
 
     public ArrayList<LocationNodeEdgeMemento> getEdgeMomentos() {

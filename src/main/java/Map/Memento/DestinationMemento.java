@@ -17,16 +17,22 @@ public class DestinationMemento {
 
     private String name;
 
-    private DestinationType destinationType;
+    private String destinationTypeString;
 
     // LocationNode where this destination is located
     private UUID currentLocationNodeID;
+
+    public DestinationMemento() {
+
+        super();
+
+    }
 
     public DestinationMemento(UUID uniqueID, String name, DestinationType destinationType, LocationNode currentLocationNode) {
 
         this.uniqueID = uniqueID;
         this.name = name;
-        this.destinationType = destinationType;
+        this.destinationTypeString = destinationType.toString();
         this.currentLocationNodeID = currentLocationNode.getUniqueID();
 
     }
@@ -41,9 +47,9 @@ public class DestinationMemento {
         return name;
     }
 
-    public DestinationType getDestinationType() {
+    public String getDestinationTypeString() {
 
-        return destinationType;
+        return destinationTypeString;
     }
 
     public UUID getCurrentLocationNodeID() {

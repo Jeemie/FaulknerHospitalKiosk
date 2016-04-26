@@ -28,6 +28,13 @@ public class FloorMemento {
     // A list of location nodes which exists on teh floor
     private ArrayList<LocationNodeMemento> locationNodeMomentos;
 
+    public FloorMemento() {
+
+        super();
+
+    }
+
+
     public FloorMemento(String floorName, UUID uniqueID, String resourceFileName, Building currentBuilding, ArrayList<LocationNode> locationNodes) {
 
         this.floorName = floorName;

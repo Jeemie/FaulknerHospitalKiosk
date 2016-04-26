@@ -603,16 +603,15 @@ public class Map implements Observer {
 
     }
 
+
     /**
      * Load a map from a JSON file
      * @param specifiedFilePath The JSON file you want to load from
      */
     public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
-//        MapMemento mapMemento = null;//TODO Load using gson
-//        Map map = loadFromMemento(mapMemento);
-//        return map;
 
-        Map mMap = new Map();
+        MapMemento mapMemento = null; //TODO watch out for null pointer exception
+
         URL defaultFilePath = null;
 
         // Set up an ObjectMapper for deserialization
@@ -622,7 +621,7 @@ public class Map implements Observer {
         try {
 
             defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
-            //specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
         } catch (MalformedURLException e) {
 
@@ -638,29 +637,18 @@ public class Map implements Observer {
             File defaultFile = new File(defaultFilePath.toURI());
 
             //TODO uncomment after deserializer is complete - load from starter map for now
-            //if (specifiedFile.exists() && specifiedFile.length() > 0) {
-            if(false) {
+            if (specifiedFile.exists() && specifiedFile.length() > 0) {
+//            if(false) {
                 // Load specified file
 
-                mMap = objectMapper.readValue(specifiedFile, Map.class);
+                mapMemento = objectMapper.readValue(specifiedFile, MapMemento.class);
                 LOGGER.info("Loaded map from file " + specifiedFile.toString());
 
-            } else if (defaultFile.exists()) {
-
-                // Load default file
-                //TODO uncomment after deserializer is complete - load from starter map for now
-                //mMap = objectMapper.readValue(defaultFile, Map.class);
-                //LOGGER.info("Loaded map from file " + defaultFile.toString());
-
-                if (defaultFile.length() <= 2) {
-
-                    LOGGER.warn("Loaded file is empty.");
-
-                     mMap = FaulknerHospitalData.starterMap();
-                }
             } else {
 
+                //This will be caught by starterMap and will cause the map to be loaded with hardcoded code
                 throw new DefaultFileDoesNotExistException();
+
             }
         } catch (IOException e) {
 
@@ -671,7 +659,7 @@ public class Map implements Observer {
             e.printStackTrace();
         }
 
-        return mMap;
+        return loadStateFromMemento(mapMemento);
     }
 
     public MapMemento saveStateToMemento() {
@@ -680,11 +668,10 @@ public class Map implements Observer {
 
     }
 
-    public Map loadFromMemento(MapMemento mapMemento) {
-        //TODO change the memento
-//        return mMemento.getMomento();
-        Map map = new Map(null);
-        return map;
+    public static Map loadStateFromMemento(MapMemento mapMemento) {
+        //TODO working on
+        return null;
+
     }
 
 

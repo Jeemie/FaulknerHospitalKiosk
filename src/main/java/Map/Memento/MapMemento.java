@@ -26,6 +26,11 @@ public class MapMemento {
     //  circular dependency issue (Building would hold a Mapz)
     ArrayList <BuildingMemento> buildingMementos;
 
+    public MapMemento() {
+
+        super();
+
+    }
 
     public MapMemento(String name, UUID uniqueID, LocationNode startLocationNode, ArrayList < Building > mapBuildings) {
 
