@@ -51,6 +51,31 @@ public class Building extends Observable implements Observer {
     }
 
     /**
+     * Constructor used only for loading purposes.
+     *   Note that the arraylist of floors must be
+     *   added on afterwards, as it has not been loaded yet.
+     * @param name
+     * @param uniqueID
+     * @param currentMap
+     */
+    public Building(String name, UUID uniqueID, Map currentMap) {
+
+        this.name = name;
+        this.uniqueID = uniqueID;
+        this.floors = new ArrayList<Floor>();
+        this.currentMap = currentMap;
+
+        this.addObserver(this.currentMap);
+
+
+        LOGGER.info("A new Building was created");
+
+//        setChanged();
+//        notifyObservers(UpdateType.BUILDINGADDED);
+
+    }
+
+    /**
      * Add a new floor to this building
      * Note : this method assumes each floor in a building has a unique name
      * @param floorName Name for new floor

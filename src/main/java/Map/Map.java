@@ -125,11 +125,9 @@ public class Map implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
 
-
     /*
     TODO create exception to throw when adding something to the map when something of the sametype already has that name
     */
-
     public Map(String name) {
 
         this.name = name;
@@ -155,6 +153,37 @@ public class Map implements Observer {
 
     }
 
+    /**
+     * Constructor used only for loading the MapMemento object to the Map object
+     *   Note that the startLocationNode and the arraylist of mapBuildings must be
+     *   added on afterwards, as they have not been loaded yet.
+     * @param name
+     * @param uniqueID
+     */
+    public Map(String name, UUID uniqueID) {
+
+        this.name = name;
+        this.uniqueID = uniqueID;
+        this.startLocationNode = null;
+        this.mapBuildings = new ArrayList<>();
+        this.buildingIdList = new ArrayList<>();
+        this.searchAlgorithm = new AStar();
+        this.currentMapState = MapState.NORMAL;
+        this.directoryList = FXCollections.observableArrayList();
+        this.currentLocationNode = null;
+        this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
+        this.currentLocationNodeDestinations = FXCollections.observableArrayList();
+        this.currentFloor = null;
+        this.currentFloorLocationNodes = FXCollections.observableArrayList();
+        this.currentFloorDestinations = FXCollections.observableArrayList();
+        this.currentFloorLocationNodePane = new Pane();
+        this.currentFloorEdgePane = new Pane();
+        this.currentFloorImage = new ImageView();
+        this.currentBuilding = null;
+        this.currentBuildingFloors = FXCollections.observableArrayList();
+        this.currentBuildingDestinations = FXCollections.observableArrayList();
+
+    }
 
 
 //    private void setCurrentChangeListeners() {

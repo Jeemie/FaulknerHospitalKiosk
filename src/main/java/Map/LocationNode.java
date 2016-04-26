@@ -82,6 +82,36 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         notifyObservers(UpdateType.LOCATIONNODEADDED);
     }
 
+
+    /**
+     *
+     * Constructor used only for loading purposes.
+     *   Note that the arraylists of locationNodeEdges and destinations must be
+     *   added on afterwards, as they have not been loaded yet.
+     * @param name
+     * @param location
+     * @param currentFloor
+     * @param associatedImage
+     */
+    public LocationNode(String name, UUID uniqueID, Location location, Floor currentFloor, ImageType associatedImage) {
+
+        this.name = name;
+        this.uniqueID = uniqueID;
+        this.location = location;
+        this.location.addObserver(this);
+        this.currentFloor = currentFloor;
+        this.associatedImage = associatedImage;
+        this.edges = new ArrayList<>();
+        this.destinations = new ArrayList<>();
+        this.fScore = Double.POSITIVE_INFINITY;
+        this.gScore = Double.POSITIVE_INFINITY;
+
+        this.addObserver(this.currentFloor);
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEADDED);
+    }
+
     /**
      * TODO
      *
