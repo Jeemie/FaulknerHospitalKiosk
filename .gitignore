@@ -164,3 +164,4 @@ build/
 .gradle/
 .idea/
 gradle/
+resources/default.json
