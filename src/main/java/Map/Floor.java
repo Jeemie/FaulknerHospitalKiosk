@@ -114,6 +114,29 @@ public class Floor extends Observable implements Observer {
         return floorDestinations;
     }
 
+    //
+    //
+
+    //
+    //
+    public ArrayList<Destination> getAllFloorDestinations() {
+
+        ArrayList<Destination> floorDestinations = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+
+
+            floorDestinations.addAll(locationNode.getAllDestinations(DestinationType.BATHROOM));
+
+        }
+
+
+        return floorDestinations;
+    }
+    //
+    //
+    //
+    //
     /**
      * Get's all the floor destinations
      * @param destinationType

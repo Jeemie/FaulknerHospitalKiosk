@@ -246,6 +246,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
 //            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 

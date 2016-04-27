@@ -29,10 +29,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.UUID;
+import java.util.*;
 
 
 public class Map implements Observer {
@@ -155,15 +152,12 @@ public class Map implements Observer {
     }
 
 
-
 //    private void setCurrentChangeListeners() {
 //
 //        this.currentBuilding.
 //
 //
 //    }
-
-
 
 
     public void addBuilding(String name) {
@@ -273,10 +267,35 @@ public class Map implements Observer {
 
         for (Building building : this.mapBuildings) {
 
-            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
+            this.directoryList.setAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
 
         }
 
+    }
+
+    public List<Destination> getPhysicianDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.setAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
+
+        }
+        return directoryList;
+    }
+
+    public List<Destination> allDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.setAll(building.getAllBuildingDestinations(DestinationType.BATHROOM));
+
+        }
+
+        return this.directoryList;
     }
 
     public void departmentDirectory() {
@@ -291,6 +310,17 @@ public class Map implements Observer {
 
     }
 
+    public List<Destination> getDepartmentDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.setAll(building.getBuildingDestinations(DestinationType.DEPARTMENT));
+
+        }
+        return directoryList;
+    }
     public void serviceDirectory() {
 
         this.directoryList.clear();
@@ -303,6 +333,17 @@ public class Map implements Observer {
 
     }
 
+    public List<Destination> getServiceDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.setAll(building.getBuildingDestinations(DestinationType.SERVICE));
+
+        }
+        return directoryList;
+    }
 
     /**
      * TODO
@@ -382,11 +423,7 @@ public class Map implements Observer {
     public void setupNormalStackPane(StackPane stackPane) {
 
 
-
-
     }
-
-
 
 
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
@@ -420,10 +457,6 @@ public class Map implements Observer {
         this.currentPath.drawPreviousFloor();
 
     }
-
-
-
-
 
 
     @Override
@@ -519,8 +552,6 @@ public class Map implements Observer {
                 break;
 
 
-
-
         }
 
     }
@@ -533,6 +564,7 @@ public class Map implements Observer {
 
     /**
      * Save this map to a JSON file
+     *
      * @param file The JSON file you want to save to
      */
     public void saveToFile(File file) throws IOException, URISyntaxException {
@@ -565,6 +597,7 @@ public class Map implements Observer {
 
     /**
      * Load a map from a JSON file
+     *
      * @param specifiedFilePath The JSON file you want to load from
      */
     public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
@@ -634,12 +667,11 @@ public class Map implements Observer {
     }
 
 
-
     //||\\ Getters And Setters //||\\
 
 
-
     //TODO
+
     /**
      * Reinitialize null fields in Map object and subclass objects after loading from file
      */

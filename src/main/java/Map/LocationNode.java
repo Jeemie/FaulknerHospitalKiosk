@@ -134,6 +134,26 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         return nodeDestinations;
     }
 
+    //
+    //
+    //
+    //
+    public ArrayList<Destination> getAllDestinations(DestinationType destinationType) {
+
+        ArrayList<Destination> nodeDestinations = new ArrayList<>();
+
+        for (Destination d : this.destinations) {
+
+                nodeDestinations.add(d);
+
+        }
+
+        return nodeDestinations;
+    }
+    //
+    //
+    //
+    //
     /**
      * Get all destinations at the node
      *
@@ -141,7 +161,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      */
     public ArrayList<Destination> getDestinations() {
 
+
         return this.destinations;
+
     }
 
     /**
