@@ -329,6 +329,30 @@ public class KioskApp extends Application {
     }
 
     /**
+     * Shows the about page.
+     */
+    public void showAboutPage() {
+        try {
+            // Load About Page.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AboutPage.fxml"));
+            AnchorPane page = loader.load();
+
+            // Set kiosk overview into the center of root layout.
+            primaryStage.setTitle("About the Developers");
+            primaryStage.getScene().setRoot(page);
+
+            // Give the controller access to the main app.
+            AboutPageController controller = loader.getController();
+            controller.setKioskApp(this);
+//            controller.setListeners();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Resets the screen to the KioskOverview
      *
      */
