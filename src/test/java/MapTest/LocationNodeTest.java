@@ -25,18 +25,18 @@ public class LocationNodeTest {
      */
     private LocationNode mNode3A, mNode3B, mNode3C, mNode3D;
 
-    @Before
-    public void setUp() throws Exception {
-
-        Building mMainHospital = new Building();
-        Floor mFloor3 = new Floor("Floor 3", "Floor1_Final.png", mMainHospital);
-        Location mLocation3B = new Location(10, 10);
-
-        mNode3A = new LocationNode("3A", mLocation3B, mFloor3, ImageType.POINT);
-        mNode3B = new LocationNode("3B", new Location (10, 15), mFloor3, ImageType.POINT);
-        mNode3C = new LocationNode("3C", new Location(10, 30), mFloor3, ImageType.POINT);
-        mNode3D = new LocationNode("3D", new Location(10, 40), mFloor3, ImageType.POINT);
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//
+//        Building mMainHospital = new Building();
+//        Floor mFloor3 = new Floor("Floor 3", "Floor1_Final.png", mMainHospital);
+//        Location mLocation3B = new Location(10, 10);
+//
+//        mNode3A = new LocationNode("3A", mLocation3B, mFloor3, ImageType.POINT);
+//        mNode3B = new LocationNode("3B", new Location (10, 15), mFloor3, ImageType.POINT);
+//        mNode3C = new LocationNode("3C", new Location(10, 30), mFloor3, ImageType.POINT);
+//        mNode3D = new LocationNode("3D", new Location(10, 40), mFloor3, ImageType.POINT);
+//    }
 
     /**
      * Add new department destination to specified location
