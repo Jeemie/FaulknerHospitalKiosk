@@ -67,7 +67,7 @@ public class Building extends Observable implements Observer {
                 LOGGER.info("A floor with the name " + floorName + " already exists in this building.");
 
                 // Return the existing floor
-                return null;
+                return floor;
             }
 
         }
@@ -77,6 +77,7 @@ public class Building extends Observable implements Observer {
         floors.add(newFloor);
 
         setChanged();
+        //TODO the following line results in NullPointerException
         notifyObservers(UpdateType.FLOORADDED);
 
         return newFloor;
