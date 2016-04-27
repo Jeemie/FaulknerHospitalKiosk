@@ -20,14 +20,8 @@ public class SerializersTest {
     public static void main (String[] args) {
 
         Map mMap = new Map("Faulkner Hospital Map");
-        try {
+        mMap = FaulknerHospitalData.starterMap();
 
-            mMap = FaulknerHospitalData.starterMap();
-
-        } catch (FloorDoesNotExistException e) {
-
-            e.printStackTrace();
-        }
 
         ObjectMapper mapper = new ObjectMapper();
 

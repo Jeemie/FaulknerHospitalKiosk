@@ -13,10 +13,10 @@ public class FloorDoesNotExistExceptionTest {
 
     private Building mTestBuilding;
 
-    @Before
-    public void setUp() {
-        mTestBuilding = new Building();
-    }
+//    @Before
+//    public void setUp() {
+//        mTestBuilding = new Building();
+//    }
 
     /**
      * Floor one not added to mTestBuilding (Building is empty)

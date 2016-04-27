@@ -36,7 +36,7 @@ public class Path {
 
     public Path(ImageView imageView, Pane nodePane, Pane edgePane, ArrayList<LocationNode> locationNodes) {
 
-        this.currentIndex = 0;
+        this.currentIndex = -1;
         this.originalPath = locationNodes;
         this.imageView = imageView;
         this.nodePane = nodePane;
@@ -51,12 +51,6 @@ public class Path {
 
         ArrayList<LocationNode> tempPath = new ArrayList<>();
 
-        for (LocationNode l : this.originalPath) {
-
-            LOGGER.info(l.toString());
-
-        }
-
         for (int i = 0; i < this.originalPath.size() - 1; i++) {
 
             LOGGER.info("i: " + i + " size: " + this.originalPath.size());
@@ -67,9 +61,10 @@ public class Path {
 
             } else {
 
+                tempPath.add(this.originalPath.get(i));
+
                 this.splitPath.add(tempPath);
                 tempPath = new ArrayList<>();
-                tempPath.add(this.originalPath.get(i));
 
             }
 
@@ -88,20 +83,36 @@ public class Path {
 
     public void drawNextFloor() {
 
-        LOGGER.info("Drawing floor " + this.currentIndex);
-
         if (!(this.currentIndex == (this.splitPath.size() - 1))) {
 
             this.currentIndex++;
 
         }
 
+        drawFloorPath();
+
+    }
+
+    public void drawPreviousFloor() {
+
+        if (!(this.currentIndex == 0)) {
+
+            this.currentIndex--;
+
+        }
+
+        drawFloorPath();
+
+    }
+
+
+    private void drawFloorPath() {
+
+        LOGGER.info(this.splitPath.toString());
         LOGGER.info("Drawing floor " + this.currentIndex);
 
         ArrayList<LocationNode> temp = this.splitPath.get(this.currentIndex);
         Floor tempFloor = temp.get(0).getCurrentFloor();
-
-        LOGGER.info(temp.toString());
 
         tempFloor.drawFloor(this.imageView);
 
@@ -114,7 +125,7 @@ public class Path {
 
         } else {
 
-            temp.get(0).drawNormal(this.nodePane, temp.get(0).getAssociatedImage(), -10, 0);
+            temp.get(0).drawNormal(this.nodePane, -10, 0);
 
         }
 
@@ -125,7 +136,7 @@ public class Path {
 
         } else {
 
-            temp.get(temp.size() - 1).drawNormal(this.nodePane, temp.get(temp.size() - 1).getAssociatedImage(), -10, 0);
+            temp.get(temp.size() - 1).drawNormal(this.nodePane, -10, 10);
 
         }
 

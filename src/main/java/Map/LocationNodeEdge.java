@@ -167,7 +167,8 @@ public class LocationNodeEdge extends Observable {
      */
     public boolean isEdgeBetweenNodes(LocationNode currentNode, LocationNode adjacentNode) {
 
-        return this.locationNode1.equals(currentNode) && this.locationNode2.equals(adjacentNode);
+        return (this.locationNode1.equals(currentNode) && this.locationNode2.equals(adjacentNode)) ||
+                (this.locationNode1.equals(adjacentNode) && this.locationNode2.equals(currentNode));
     }
 
 
