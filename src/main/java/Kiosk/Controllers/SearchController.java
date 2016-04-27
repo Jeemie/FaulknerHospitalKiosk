@@ -3,6 +3,7 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.Building;
 import Map.Destination;
+import Map.Enums.DestinationType;
 import Map.Floor;
 import Map.LocationNode;
 import javafx.application.Platform;
@@ -127,19 +128,20 @@ public class SearchController {
 
                         for (LocationNode n : nodes) {
 
-                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                                timer.cancel();
-                                running = false;
-                                timerThread.interrupt();
-                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
-
-                            }
+//                            if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                                timer.cancel();
+//                                running = false;
+//                                timerThread.interrupt();
+//                                kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
+//
+//                            }
 
                         }
 
                     }
                 }
+
             }
 
         });
@@ -252,15 +254,15 @@ public class SearchController {
 
             for (LocationNode n : nodes) {
 
-                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                    timer.cancel();
-                    atimer.cancel();
-                    running = false;
-                    timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
-
-                }
+//                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
+//
+//                    timer.cancel();
+//                    atimer.cancel();
+//                    running = false;
+//                    timerThread.interrupt();
+//                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
+//
+//                }
 
             }
 
@@ -271,7 +273,7 @@ public class SearchController {
     @FXML
     public void displayResult(String value) {
 
-        destinations.setAll(building.getDestinations());
+//        destinations.setAll(building.getDestinations());
 
         searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
 
@@ -285,33 +287,33 @@ public class SearchController {
     }
 
     @FXML
-    public void sortResult(Destination destinationType) {
+    public void sortResult(DestinationType destinationType) {
 
 
-        if (destinationType == Destination.PHYSICIAN) {
+        if (destinationType == DestinationType.PHYSICIAN) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(Destination.PHYSICIAN));
+//            destinations.setAll(building.getDestinations(DestinationType.PHYSICIAN));
             searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
         }
 
-        if (destinationType == Destination.DEPARTMENT) {
+        if (destinationType == DestinationType.DEPARTMENT) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(Destination.DEPARTMENT));
+//            DestinationType.DEPARTMENT));
             searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
 
         }
 
-        if (destinationType == Destination.SERVICE) {
+        if (destinationType == DestinationType.SERVICE) {
 
             counter = 0;
-            destinations.setAll(building.getDestinations(Destination.SERVICE));
+//            destinations.setAll(building.getDestinations(DestinationType.SERVICE));
             searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
             searchResults.setAll(searchResult);
             listDirectory.setItems(searchResults);
@@ -323,21 +325,21 @@ public class SearchController {
     @FXML
     private void sortPhysicians() {
 
-        sortResult(Destination.PHYSICIAN);
+        sortResult(DestinationType.PHYSICIAN);
 
     }
 
     @FXML
     private void sortDepartments() {
 
-        sortResult(Destination.DEPARTMENT);
+        sortResult(DestinationType.DEPARTMENT);
 
     }
 
     @FXML
     private void sortServices() {
 
-        sortResult(Destination.SERVICE);
+        sortResult(DestinationType.SERVICE);
 
     }
 }

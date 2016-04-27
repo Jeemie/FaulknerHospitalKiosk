@@ -2,13 +2,20 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Destination;
+import Map.Enums.DestinationType;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 
 public class KioskOverviewController {
@@ -26,11 +33,17 @@ public class KioskOverviewController {
 
     @FXML
     private Label dontTouchMe;
+
+
+     @FXML
+     private AnchorPane textFieldAncho;
+    
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
     public KioskOverviewController() {
+        //textFieldAncho.getStylesheets().add(this.getClass().getResource("textfield.css").toExternalForm());
     }
 
     /**
@@ -39,6 +52,7 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
+
 
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -108,7 +122,7 @@ public class KioskOverviewController {
 
 
 
-        kioskApp.showDirectory(Destination.PHYSICIAN);
+        kioskApp.showDirectory(DestinationType.PHYSICIAN);
     }
 
 
@@ -118,7 +132,8 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleDepartments() {
-        kioskApp.showDirectory(Destination.DEPARTMENT);
+
+        kioskApp.showDirectory(DestinationType.DEPARTMENT);
     }
 
     /**
@@ -127,7 +142,8 @@ public class KioskOverviewController {
      */
     @FXML
     private void handleServices() {
-        kioskApp.showDirectory(Destination.SERVICE);
+
+        kioskApp.showDirectory(DestinationType.SERVICE);
     }
 
 

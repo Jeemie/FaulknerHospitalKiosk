@@ -1,11 +1,11 @@
 package Kiosk;
 
 import Kiosk.Controllers.*;
-import Map.Building;
-import Map.Destination;
+import Map.Enums.DestinationType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
-import Map.LocationNode;
+import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
+import Map.FaulknerHospitalData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,9 +25,7 @@ public class KioskApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    protected Map faulknerMap;
-    private Building hospitalBuilding;
-    private LocationNode startNode;
+    protected Map faulknerHospitalMap;
     private URL filePath;
 
 
@@ -41,7 +39,15 @@ public class KioskApp extends Application {
         this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
         try {
 
-            this.hospitalBuilding = Map.storeMapData(this.filePath); //TODO Change to map by iteration 3
+            this.faulknerHospitalMap = Map.loadFromFile(this.filePath);
+
+        }  catch (FloorDoesNotExistException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
 
         } catch (DefaultFileDoesNotExistException e) {
             // Create new default file
@@ -50,27 +56,33 @@ public class KioskApp extends Application {
                 File newFile = new File(this.filePath.toURI());
                 newFile.createNewFile();
 
+                this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
+                this.faulknerHospitalMap = FaulknerHospitalData.starterMap();
+
             } catch (URISyntaxException exception) {
+
+                exception.printStackTrace();
+
+            } catch (FloorDoesNotExistException exception) {
 
                 exception.printStackTrace();
 
             } catch (IOException exception) {
 
                 exception.printStackTrace();
-
             }
-
         }
 
 
-        this.hospitalBuilding = Map.initMapComponents(this.hospitalBuilding);
+        this.faulknerHospitalMap.initMapComponents();
 
 
         this.primaryStage.setTitle("Pathfinding Application");
 
         initRootLayout();
-        
+
         showKioskOverview();
+//        showAdminControls();
     }
 
     /**
@@ -87,8 +99,12 @@ public class KioskApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-//            System.out.println(getClass().getResource("stylesheet.css"));
+
+            // Debugger works better when full screen is off
+            primaryStage.setFullScreen(false);
+            //primaryStage.setFullScreen(true);
+//
+//          System.out.println(getClass().getResource("stylesheet.css"));
 //            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
@@ -104,12 +120,12 @@ public class KioskApp extends Application {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane kioskOverview = (AnchorPane) loader.load();
+            AnchorPane kioskOverview = loader.load();
 
             // Set kiosk overview into the center of root layout.
             rootLayout.setCenter(kioskOverview);
-            
-         // Give the controller access to the main app.
+
+            // Give the controller access to the main app.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
 //            controller.setListeners();
@@ -117,7 +133,7 @@ public class KioskApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }   
+    }
 
     /**
      * Returns the main stage.
@@ -130,42 +146,46 @@ public class KioskApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     /**
      * Changes scene to allow admins to log in
-     * 
+     *
      */
     public boolean showAdminLogin() {
-        try {
-            // Load AdminLogin
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+        showAdminControls();
 
-            // Replace KioskOverview with AdminLogin
-            primaryStage.setTitle("Admin Login");
-            primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
+//        try {
+//            // Load AdminLogin
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
+//            AnchorPane page = loader.load();
+//
+//            // Replace KioskOverview with AdminLogin
+//            primaryStage.setTitle("Admin Login");
+//            primaryStage.getScene().setRoot(page);
+///*            Scene scene = new Scene(page);
+//            primaryStage.setScene(scene);
+//            primaryStage.setFullScreen(true);
+//            primaryStage.show();*/
+//
+//            // Give controller access to Main App
+//            AdminLoginController controller = loader.getController();
+//            controller.setKioskApp(this);
+//            controller.setListeners();
+//
+//            return controller.isOkClicked();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
-            // Give controller access to Main App
-            AdminLoginController controller = loader.getController();
-            controller.setKioskApp(this);
-            controller.setListeners();
-
-            return controller.isOkClicked();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return true;
     }
-    
+
     /**
      * Changes screen to allow admins to edit the map
-     * 
+     *
      */
     public boolean showAdminControls() {
 
@@ -173,7 +193,7 @@ public class KioskApp extends Application {
             // Load AdminDashboard
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AdminDashboard.fxml"));
-            SplitPane page = (SplitPane) loader.load();
+            SplitPane page = loader.load();
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Administrator Dashboard");
@@ -186,7 +206,8 @@ public class KioskApp extends Application {
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+//            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
 //            return controller.isOkClicked();
@@ -199,18 +220,18 @@ public class KioskApp extends Application {
         }
 
     }
-    
+
     /**
      * Changes screen to allow users to see results of search
-     * 
+     *
      */
- // TODO: showSearch should have parameter for input
+    // TODO: showSearch should have parameter for input
     public boolean showSearch(String searchText) {
         try {
             // Load SearchScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = loader.load();
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
@@ -225,53 +246,42 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
+//            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
             return controller.isOkClicked();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     /**
      * Changes screen to allow users to select by directory
-     * 
+     *
      */
-    public boolean showDirectory(Destination destinationType) {
+    public boolean showDirectory(DestinationType destinationType) {
 
         try {
-            // Load DirectoryScreen
 
+            // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = loader.load();
 
-            //Replace KioskOverview with userUI3.
-            primaryStage.setTitle("Directories");
+            primaryStage.setTitle("Directory");
             primaryStage.getScene().setRoot(page);
-//            Scene scene = new Scene(page, width, height);
-//            primaryStage.setScene(scene);
-//            primaryStage.setFullScreen(false);
-//            primaryStage.setFullScreen(true);
-            //primaryStage.show();
-
-
-
 
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
             controller.setKioskApp(this);
-            controller.setBuilding(hospitalBuilding);
-            controller.setStartNode(startNode);
-
-            //set the selected directory view to appear
-            controller.setList(destinationType);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+            controller.setupListeners();
+            controller.setStartSelection(destinationType);
 
             return controller.isOkClicked();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -279,19 +289,19 @@ public class KioskApp extends Application {
 
     }
 
-    
+
     /**
      * Changes screen to allow users to view the map
-     * 
+     *
      */
     // TODO: showMap should have parameter for chosen destination from previous screen
-    public boolean showMap(LocationNode startNode, LocationNode destinationNode) {
+    public boolean showMap() {
 
         try {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = loader.load();
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
@@ -303,32 +313,33 @@ public class KioskApp extends Application {
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
-
             controller.setKioskApp(this);
-            controller.setBuilding(this.hospitalBuilding);
-            controller.setDestinationNode(destinationNode);
-            controller.setStartNode(startNode);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+            controller.setListeners();
+//            controller.setBuilding(this.hospitalBuilding);
+//            controller.setStartNode(startNode);
+//            controller.setDestinationNode(destinationNode);
 
 
 
             return controller.isOkClicked();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     /**
      * Resets the screen to the KioskOverview
-     * 
+     *
      */
     public void reset() {
         try {
             // Load KioskOverview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = loader.load();
 
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
@@ -341,16 +352,10 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
 
     }
 

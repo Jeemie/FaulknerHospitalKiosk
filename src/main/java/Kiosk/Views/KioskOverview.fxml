@@ -5,56 +5,47 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
    <children>
-      <Label fx:id="dontTouchMe" alignment="CENTER" layoutX="93.0" layoutY="238.0" minWidth="1094.0" prefHeight="107.0" prefWidth="1094.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="238.0">
+      <Label fx:id="dontTouchMe" alignment="CENTER" layoutY="140.0" minWidth="1094.0" prefHeight="107.0" prefWidth="1094.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
          <font>
-            <Font size="60.0" />
+            <Font name="Apple Braille" size="60.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="201.0" layoutY="387.0" minWidth="878.0" prefHeight="70.0" prefWidth="878.0" text="Select a directory below" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="387.0">
+      <Label alignment="CENTER" layoutX="201.0" layoutY="296.0" minWidth="878.0" prefHeight="70.0" prefWidth="878.0" text="Select a directory below" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="296.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="searchTextBox" layoutX="57.0" layoutY="105.0" prefHeight="70.0" prefWidth="1130.0" promptText="Search..." AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="105.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </TextField>
-      <GridPane layoutX="101.0" layoutY="648.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="648.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <AnchorPane fx:id="textFieldAncho" layoutX="75.0" layoutY="678.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="678.0">
          <children>
-            <ButtonBar buttonMinWidth="333.0" maxHeight="107.0" maxWidth="1038.0" prefHeight="107.0" prefWidth="1038.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-              <buttons>
-                <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="70.0" prefWidth="370.0" text="Care Provider" translateX="-20.0">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="70.0" text="Departments" translateX="-10.0">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleServices" prefHeight="70.0" text="Services">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-              </buttons>
-            </ButtonBar>
+            <TextField fx:id="searchTextBox" prefHeight="70.0" prefWidth="1159.0" promptText="Search...">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
          </children>
-      </GridPane>
+      </AnchorPane>
+      <ButtonBar layoutX="24.0" layoutY="411.0">
+         <buttons>
+            <Button mnemonicParsing="false" onAction="#handleServices" prefHeight="232.0" prefWidth="757.0" text="Services">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="232.0" prefWidth="244.0" text="Departments" translateX="-10.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+          <Button minWidth="244.0" mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="232.0" prefWidth="244.0" text="Care Providers" translateX="-20.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+         </buttons>
+      </ButtonBar>
    </children>
 </AnchorPane>

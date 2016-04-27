@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -17,207 +16,182 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane fx:id="aSplitPane" dividerPositions="0.769170579029734" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDashboardController">
-   <items>
-      <ScrollPane fx:id="mapScrollPane" prefHeight="798.0" prefWidth="1000.0">
-         <content>
-            <StackPane fx:id="mapStackPane" />
-         </content>
-      </ScrollPane>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <AnchorPane prefHeight="86.0" prefWidth="291.0">
-               <children>
-                  <AnchorPane opacity="0.0">
-                     <children>
-                        <Label text="Control Panel" textAlignment="CENTER" />
-                        <Label layoutY="17.0" text="Zoom" />
-                        <Button fx:id="zoomOutButton" layoutX="36.0" layoutY="12.0" mnemonicParsing="false" text="-" />
-                        <Button fx:id="zoomInButton" layoutX="250.0" layoutY="12.0" mnemonicParsing="false" text="+" />
-                        <Slider fx:id="zoomSlider" layoutX="76.0" layoutY="18.0" />
-                     </children>
-                  </AnchorPane>
-                  <Label layoutX="3.0" layoutY="58.0" text="Current Button : " />
-                  <Label fx:id="alabel" layoutX="113.0" layoutY="58.0" text="None Selected" />
-               </children>
-            </AnchorPane>
-            <TabPane fx:id="mapTabPane" prefHeight="603.0" prefWidth="291.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                  <Tab fx:id="buildingTab" text="Building">
-                     <content>
-                        <Accordion fx:id="buildingAccordion">
-                          <panes>
-                            <TitledPane fx:id="buildingFloorsTitledPane" animated="false" text="Floors">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="buildingFloorsListView" layoutX="21.4" layoutY="20.4" prefHeight="402.0" prefWidth="268.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <ButtonBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
-                                             <buttons>
-                                                <Button fx:id="buildingFloorsAddButton" mnemonicParsing="false" text="Add" />
-                                                <Button fx:id="buildingFloorsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                <Button fx:id="buildingFloorsDeleteButton" mnemonicParsing="false" text="Delete" />
-                                             </buttons>
-                                          </ButtonBar>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                            </TitledPane>
-                            <TitledPane fx:id="buildingDestinationsTitledPane" animated="false" text="Destinations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="buildingDestinationsListView" layoutX="45.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="buildingMiscTitledPane" animated="false" text="Misc">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Button fx:id="setStartNode" layoutX="106.0" layoutY="86.0" mnemonicParsing="false" text="Start Location" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </content>
+<SplitPane dividerPositions="0.769170579029734" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDashboardController">
+    <items>
+        <ScrollPane fx:id="mapScrollPane" prefHeight="798.0" prefWidth="1000.0">
+            <content>
+                <StackPane fx:id="mapStackPane" />
+            </content>
+        </ScrollPane>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <children>
+                <AnchorPane prefHeight="86.0" prefWidth="291.0">
+                    <children>
+                        <AnchorPane opacity="0.0">
+                            <children>
+                                <Label text="Control Panel" textAlignment="CENTER" />
+                                <Label layoutY="17.0" text="Zoom" />
+                                <Button fx:id="zoomOutButton" layoutX="36.0" layoutY="12.0" mnemonicParsing="false" text="-" />
+                                <Button fx:id="zoomInButton" layoutX="250.0" layoutY="12.0" mnemonicParsing="false" text="+" />
+                                <Slider fx:id="zoomSlider" layoutX="76.0" layoutY="18.0" />
+                            </children>
+                        </AnchorPane>
+                        <Label layoutX="3.0" layoutY="58.0" text="Current Button : " />
+                        <Label fx:id="selectedButtonLabel" layoutX="113.0" layoutY="58.0" text="None Selected" />
+                    </children>
+                </AnchorPane>
+                <TabPane fx:id="mapTabPane" prefHeight="603.0" prefWidth="291.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab fx:id="buildingTab" text="Building">
+                            <content>
+                                <Accordion fx:id="buildingAccordion">
+                                    <panes>
+                                        <TitledPane fx:id="buildingFloorsTitledPane" animated="false" text="Floors">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="buildingFloorsListView" layoutX="21.4" layoutY="20.4" prefHeight="402.0" prefWidth="268.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <ButtonBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
+                                                            <buttons>
+                                                                <Button fx:id="buildingFloorsAddButton" mnemonicParsing="false" text="Add" />
+                                                                <Button fx:id="buildingFloorsModifyButton" mnemonicParsing="false" text="Modify" />
+                                                                <Button fx:id="buildingFloorsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                            </buttons>
+                                                        </ButtonBar>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="buildingDestinationsTitledPane" animated="false" text="Destinations">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="buildingDestinationsListView" layoutX="45.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="buildingMiscTitledPane" animated="false" text="Misc">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <Button fx:id="setStartNode" layoutX="106.0" layoutY="86.0" mnemonicParsing="false" text="Set Start Location" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                                          <Button fx:id="dijkstrasButton" layoutX="119.0" layoutY="455.0" mnemonicParsing="false" text="Use Dijkstras" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                                          <Button fx:id="astarButton" layoutX="119.0" layoutY="390.0" mnemonicParsing="false" text="Use AStar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                    </panes>
+                                </Accordion>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="floorTab" text="Floor">
+                            <content>
+                                <Accordion fx:id="floorAccordion">
+                                    <panes>
+                                        <TitledPane fx:id="floorLocationsTitledPane" animated="false" text="Locations">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="floorLocationsListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
+                                                            <buttons>
+                                                                <Button fx:id="floorLocationsAddButton" mnemonicParsing="false" text="Add" />
+                                                                <Button fx:id="floorLocationsModifyButton" mnemonicParsing="false" text="Modify" />
+                                                                <Button fx:id="floorLocationsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                            </buttons>
+                                                        </ButtonBar>
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="floorDestinationsTitledPane" animated="false" text="Destinations">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="floorDestinationsListView" layoutX="35.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="floorInformationTitledPane" animated="false" text="Misc">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            </content>
+                                        </TitledPane>
+                                    </panes>
+                                </Accordion>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="LocationTab" text="Location">
+                            <content>
+                                <Accordion fx:id="locationAccordion">
+                                    <panes>
+                                        <TitledPane fx:id="locationConnectedLocationsTitledPane" animated="false" text="Connected Locations">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="locationConnectedLocationListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
+                                                            <buttons>
+                                                                <Button fx:id="locationConnectedLocationsAddButton" mnemonicParsing="false" text="Add" ButtonBar.buttonData="LEFT" />
+                                                                <Button fx:id="locationConnectedLocationsDeleteButton" mnemonicParsing="false" text="Delete" ButtonBar.buttonData="RIGHT" />
+                                                            </buttons>
+                                                        </ButtonBar>
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="locationDestinationsTitledPane" animated="false" text="Destinations">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <ListView fx:id="locationDestinationsListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
+                                                            <buttons>
+                                                                <Button fx:id="locationDestinationsAddButton" mnemonicParsing="false" text="Add" />
+                                                                <Button fx:id="locationDestinationsModifyButton" mnemonicParsing="false" text="Modify" />
+                                                                <Button fx:id="locationDestinationsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                            </buttons>
+                                                        </ButtonBar>
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane fx:id="locationInformationTitledPane" animated="false" text="Misc">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            </content>
+                                        </TitledPane>
+                                    </panes>
+                                </Accordion>
+                            </content>
+                        </Tab>
+                  <Tab fx:id="addFloorTab" text="Add Floor">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
                   </Tab>
-                <Tab fx:id="floorTab" text="Floor">
-                     <content>
-                        <Accordion fx:id="floorAccordion">
-                          <panes>
-                            <TitledPane fx:id="floorLocationsTitledPane" animated="false" text="Locations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="floorLocationsListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
-                                             <buttons>
-                                                <Button fx:id="floorLocationsAddButton" mnemonicParsing="false" text="Add" />
-                                                <Button fx:id="floorLocationsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                <Button fx:id="floorLocationsDeleteButton" mnemonicParsing="false" text="Delete" />
-                                             </buttons>
-                                          </ButtonBar>
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="floorDestinationsTitledPane" animated="false" text="Destinations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="floorDestinationsListView" layoutX="35.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="floorInformationTitledPane" animated="false" text="Misc">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </content>
-                </Tab>
-                <Tab fx:id="LocationTab" text="Location">
-                     <content>
-                        <Accordion fx:id="locationAccordion">
-                          <panes>
-                            <TitledPane fx:id="locationConnectedLocationsTitledPane" animated="false" text="Connected Locations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                           <ListView fx:id="locationConnectedLocationListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
-                                             <buttons>
-                                                <Button fx:id="locationConnectedLocationsAddButton" mnemonicParsing="false" text="Add" ButtonBar.buttonData="LEFT" />
-                                                <Button fx:id="locationConnectedLocationsDeleteButton" mnemonicParsing="false" text="Delete" ButtonBar.buttonData="RIGHT" />
-                                             </buttons>
-                                          </ButtonBar>
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="locationDestinationsTitledPane" animated="false" text="Destinations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="locationDestinationsListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="430.0">
-                                             <buttons>
-                                                <Button fx:id="locationDestinationsAddButton" mnemonicParsing="false" text="Add" />
-                                                <Button fx:id="locationDestinationsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                <Button fx:id="locationDestinationsDeleteButton" mnemonicParsing="false" text="Delete" />
-                                             </buttons>
-                                          </ButtonBar>
-                                       </children></AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="locationInformationTitledPane" animated="false" text="Misc">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </content>
-                </Tab>
-                  <Tab fx:id="actionTab" text="Action">
-                     <content>
-                        <Accordion fx:id="actionAccordion">
-                          <panes>
-                            <TitledPane fx:id="actionAddLocationIconsTitlePane" animated="false" text="Add Location Icons">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ChoiceBox fx:id="locationIconBox" layoutX="56.0" layoutY="136.0" prefHeight="27.0" prefWidth="178.0" />
-                                          <Button fx:id="locationIconConfirmButton" layoutX="56.0" layoutY="242.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="62.0" text="OK" />
-                                          <Button fx:id="locationIconCancelButton" layoutX="173.0" layoutY="242.0" mnemonicParsing="false" text="Cancel" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="actionAddDestinationsTitlePane" animated="false" text="Add Destinations">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <TextField fx:id="departmentField" layoutX="108.0" layoutY="86.0" promptText="Enter Department Name" />
-                                          <ChoiceBox fx:id="departmentBox" layoutX="109.0" layoutY="155.0" prefHeight="27.0" prefWidth="165.0" />
-                                          <Label layoutX="32.0" layoutY="80.0" prefHeight="39.0" prefWidth="48.0" text="Name" />
-                                          <Label layoutX="32.0" layoutY="149.0" prefHeight="39.0" prefWidth="48.0" text="Type" />
-                                          <Button fx:id="departmentOkButton" layoutX="51.0" layoutY="242.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="OK" />
-                                          <Button fx:id="departmentCancelButton" layoutX="192.0" layoutY="242.0" mnemonicParsing="false" text="Cancel" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane fx:id="actionAddFloorsTitlePane" animated="false" text="Add Floors">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <TextField fx:id="floorNumberField" layoutX="108.0" layoutY="63.0" prefHeight="0.0" prefWidth="167.0" promptText="Enter Floor Numbers..." />
-                                          <TextField fx:id="floorNumberPath" layoutX="40.0" layoutY="134.0" prefHeight="27.0" prefWidth="207.0" promptText="Enter Floor Path" />
-                                          <Button fx:id="floorOpenFile" layoutX="107.0" layoutY="185.0" mnemonicParsing="false" text="Open File" />
-                                          <Label layoutX="14.0" layoutY="63.0" prefHeight="27.0" prefWidth="84.0" text="Floor Number" />
-                                          <Label layoutX="38.0" layoutY="190.0" prefHeight="17.0" prefWidth="36.0" text="OR" />
-                                          <Button fx:id="addFloorOKButton" layoutX="38.0" layoutY="261.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="OK" />
-                                          <Button fx:id="addFloorCancelButton" layoutX="192.0" layoutY="261.0" mnemonicParsing="false" text="Cancel" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </content>
+                  <Tab fx:id="addLocationTab" text="Add Location">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView fx:id="addLocationIconsListView" layoutX="46.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                              <TextField fx:id="addLocationNameTextField" layoutX="56.0" layoutY="229.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="10.0" />
+                              <ButtonBar layoutX="46.0" layoutY="512.0" prefHeight="40.0" prefWidth="200.0">
+                                <buttons>
+                                  <Button fx:id="addLocationAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="addLocationDiscardButton" mnemonicParsing="false" text="Discard" />
+                                </buttons>
+                              </ButtonBar>
+                           </children>
+                      </AnchorPane>
+                    </content>
                   </Tab>
-              </tabs>
-            </TabPane>
-            <AnchorPane prefHeight="122.0" prefWidth="291.0">
-               <children>
-                  <Button fx:id="saveChangesButton" mnemonicParsing="false" text="Save Changes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button fx:id="discardChangesButton" mnemonicParsing="false" text="Discard Changes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                  <Button fx:id="logoutButton" layoutX="116.0" layoutY="46.0" mnemonicParsing="false" text="Logout" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </children></VBox>
-   </items>
+                    </tabs>
+                </TabPane>
+                <AnchorPane prefHeight="122.0" prefWidth="291.0">
+                    <children>
+                        <Button fx:id="saveChangesButton" mnemonicParsing="false" text="Save Changes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="discardChangesButton" mnemonicParsing="false" text="Discard Changes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Button fx:id="logoutButton" layoutX="116.0" layoutY="46.0" mnemonicParsing="false" text="Logout" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </children></VBox>
+    </items>
 </SplitPane>

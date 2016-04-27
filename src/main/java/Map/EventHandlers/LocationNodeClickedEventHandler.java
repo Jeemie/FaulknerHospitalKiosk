@@ -1,29 +1,29 @@
 package Map.EventHandlers;
 
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
-import Map.BuildingState;
+import Map.Enums.MapState;
+import Map.Exceptions.NodeDoesNotExistException;
 import Map.LocationNode;
+import Map.Map;
 import Utils.FixedSizedStack;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.AbstractMap;
-import java.util.EmptyStackException;
-import java.util.Map;
 
 /**
- * An event handler for the Location Node when it has been clicked in the Admin Panel.
+ * Created by Matt on 4/18/2016.
  */
 public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent> {
+
 
     // Location Node associated with the circle event handler
     private final LocationNode locationNode;
 
     // Stack of the past 10 node click actions
-    private static FixedSizedStack<Map.Entry<LocationNode, BuildingState>> previousActions = new FixedSizedStack<>(10);
+    private static FixedSizedStack<java.util.Map.Entry<LocationNode, MapState>> previousActions = new
+            FixedSizedStack<>(10);
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNodeClickedEventHandler.class);
@@ -42,103 +42,71 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
     }
 
-    /**
-     * Handler for when the node's circle is clicked.
-     *
-     * @param event Event that describes the scenario in which the circle was clicked.
-     */
     @Override
     public void handle(MouseEvent event) {
 
-        Map.Entry<LocationNode, BuildingState> lastAction = null;
+
+        Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
+
+
+        java.util.Map.Entry<LocationNode, MapState> lastAction = null;
 
         if (previousActions.size() > 0 ) {
 
             lastAction = previousActions.peek();
-            lastAction.getKey().getNodeCircle().setFill(Color.BLACK);
 
         }
 
 
-        locationNode.getNodeCircle().setFill(Color.CRIMSON);
-
-        LOGGER.info("Node " + this.locationNode.toString() + " was clicked with the state " +
-                this.locationNode.getState().toString());
+        LOGGER.info("Location Node: " + this.locationNode.toString() + "was clicked with the state: " +
+                currentMap.getCurrentMapState().toString());
 
 
-        locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
 
-        // Switch statement that is dependant of the state of the node
-        switch(locationNode.getState()) {
+        switch (currentMap.getCurrentMapState()) {
 
-            case NORMAL:
-                this.locationNode.getAdjacentLocationNodes();
-                this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
-                System.out.println(this.locationNode.getAdjacentLocationNodes());
-                System.out.println(this.locationNode.getDestinations());
+            case ADMIN:
 
-                break;
-
-
-            case ADDNODE:
-
-                break;
-
-
-            case REMOVENODE:
-
-                LOGGER.info("Deleting Node: " + toString());
-
-                this.locationNode.deleteNode();
-
-                break;
-
-
-            case ADDADJACENTNODE:
-
-                if (previousActions.isEmpty()) {
-
-                    break;
-
-                }
-
-                if (lastAction != null && lastAction.getValue() == BuildingState.ADDADJACENTNODE) {
-
-                    LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
-                            lastAction.getKey().toString());
-
-                    this.locationNode.addAdjacentNode(lastAction.getKey());
-
-                    //this.locationNode.setState(BuildingState.NORMAL);
-
-                }
-
-                break;
-
-
-            case MODIFYDESTINATIONS:
-
-                this.modifyNodeView();
-
-                break;
-
-
-            case SETFLOORSTARTNODE:
-
-                this.locationNode.setAsFloorStartNode();
-
-                break;
-
-
-            case MOVENODE:
+                currentMap.setCurrentLocationNode(this.locationNode);
 
                 break;
 
             case SETSTARTNODE:
 
-                LOGGER.info("Setting the new start node to ");
+                currentMap.setStartLocationNode(this.locationNode);
 
-                this.locationNode.getCurrentFloor().getCurrentBuilding().setCurrentNodes(this.locationNode);
+                break;
+
+            case ADDADJACENTNODE:
+
+                currentMap.setCurrentLocationNode(this.locationNode);
+
+                if (previousActions.isEmpty()) {
+
+                    break;
+                }
+
+                LOGGER.info(previousActions.toString());
+
+                if (lastAction != null && lastAction.getValue() == MapState.ADDADJACENTNODE) {
+
+                    LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
+                            lastAction.getKey().toString());
+
+                    try {
+
+                        this.locationNode.addEdge(lastAction.getKey());
+
+                    } catch (NodeDoesNotExistException e) {
+
+                        LOGGER.error("Unable to create an edge ", e);
+
+                    }
+
+                }
+
+                break;
+
 
 
 
@@ -148,48 +116,12 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         }
 
-        // Add current action
-        Map.Entry<LocationNode, BuildingState> entry =
-                new AbstractMap.SimpleEntry<LocationNode, BuildingState>(this.locationNode, this.locationNode.getState());
+        java.util.Map.Entry<LocationNode, MapState> entry =
+                new AbstractMap.SimpleEntry<LocationNode, MapState>(this.locationNode, currentMap.getCurrentMapState());
+
         previousActions.push(entry);
 
-    }
-
-    /**
-     * Creates a new window where the the Admin can modify the current node.
-     */
-    private void modifyNodeView() {
-
-        LOGGER.info("Opening Admin department Editor");
-
-        // TODO change the AdminDepartmentPanel to an inline editor in the admin panel (Left listview spot)
-
-//        try {
-//
-//            Stage stage;
-//            stage = new Stage();
-//
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Kiosk/Views/AdminDepartmentPanel.fxml"));
-//            Parent root = loader.loadAddDestination();
-//            AdminDepartmentPanelController controller = loader.getController();
-//            controller.setNode(this.locationNode);
-//
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.show();
-//
-//        } catch (IOException e) {
-//
-//            LOGGER.info("Unable to open the modify node view ", e);
-//
-//        }
-        AdminSubControllerLoader loader = new AdminSubControllerLoader();
-
-        loader.setStackPane(this.locationNode.getCurrentFloor().getStackPane());
-        loader.setCurrentLocationNode(this.locationNode);
-        loader.loadAddDestination();
+        currentMap.setCurrentMapState(MapState.ADMIN);
 
     }
 

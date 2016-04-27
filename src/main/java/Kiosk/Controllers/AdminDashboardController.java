@@ -1,25 +1,33 @@
 package Kiosk.Controllers;
 
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController;
-import Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader;
-import Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader;
-import Kiosk.Controllers.EventHandlers.ChangeBuildingStateEventHandler;
+//import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
+import Kiosk.Controllers.EventHandlers.AddTabEventHandler;
+import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
-import Map.*;
-import Map.Exceptions.FloorDoesNotExistException;
+import Map.Enums.ImageType;
+import Map.Enums.MapState;
+import Map.Map;
+import Map.Floor;
+import Map.Destination;
+import Map.LocationNode;
+import Map.Location;
+import Map.LocationNodeEdge;
+import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -30,8 +38,25 @@ import java.net.URL;
  */
 public class AdminDashboardController {
 
-    private Building building;
+    private Map faulknerHospitalMap;
+
     private KioskApp kioskApp;
+
+    private ObservableList icons = FXCollections.observableArrayList();
+
+    private boolean lockTabPane;
+
+    private Location clickedLocation;
+
+
+    // TODO possibly rethink
+    private FixedSizedStack<Destination> previouslyClickedDestinations = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<LocationNodeEdge> previouslyClickedEdges = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<LocationNode> previouslyClickedLocationNodes = new FixedSizedStack<>(10);
+
+    private FixedSizedStack<Destination> previouslyClickedFloors = new FixedSizedStack<>(10);
 
 
     // Logger for this class
@@ -40,14 +65,9 @@ public class AdminDashboardController {
     @FXML
     private ScrollPane mapScrollPane;
 
+    // TODO find out use and rename
     @FXML
-    private SplitPane aSplitPane;
-
-
-    @FXML
-    private Label alabel;
-    @FXML
-    private Button setStartNode;
+    private Label selectedButtonLabel;
 
     @FXML
     private StackPane mapStackPane;
@@ -103,6 +123,15 @@ public class AdminDashboardController {
     @FXML
     private TitledPane buildingMiscTitledPane;
 
+    @FXML
+    private Button setStartNode;
+
+    @FXML
+    private Button astarButton;
+
+    @FXML
+    private Button dijkstrasButton;
+
 
 
     //\\ Floor Tab //\\
@@ -151,9 +180,6 @@ public class AdminDashboardController {
     @FXML
     private Accordion locationAccordion;
 
-    @FXML
-    private  Accordion actionAccordion;
-
 
     // Connected Locations Titled Pane //
     @FXML
@@ -187,53 +213,36 @@ public class AdminDashboardController {
     @FXML
     private TitledPane locationInformationTitledPane;
 
-    /****************************Start Action Define *************************************/
-    /*Define Tab*/
-    @FXML
-    private Tab actionTab;
 
-    /*Define TitlePane*/
-    @FXML
-    private TitledPane actionAddLocationIconsTitlePane;
-    @FXML
-    private  TitledPane actionAddDestinationsTitlePane;
-    @FXML
-    private TitledPane actionAddFloorsTitlePane;
 
-    /*Define Button*/
-    @FXML
-    private Button locationIconConfirmButton;
-    @FXML
-    private Button locationIconCancelButton;
-    @FXML
-    private Button departmentOkButton;
-    @FXML
-    private Button departmentCancelButton ;
-    @FXML
-    private Button addFloorOKButton;
-    @FXML
-    private Button addFloorCancelButton;
-    @FXML
-    private Button floorOpenFile;
 
-    /*Define Choicebox*/
-    @FXML
-    private ChoiceBox departmentBox ;
+
+
 
     @FXML
-    private  ChoiceBox locationIconBox;
+    private Tab addFloorTab;
 
-    /*Define TextField*/
-    @FXML
-    private TextField departmentField;
 
-    @FXML
-    private TextField floorNumberField;
+
+
+
 
     @FXML
-    private  TextField floorNumberPath;
+    private Tab addLocationTab;
 
-/****************************End Action Define *************************************/
+    @FXML
+    private ListView addLocationIconsListView;
+
+    @FXML
+    private TextField addLocationNameTextField;
+
+    @FXML
+    private Button addLocationAddButton;
+
+    @FXML
+    private Button addLocationDiscardButton;
+
+
 
 
     @FXML
@@ -249,62 +258,37 @@ public class AdminDashboardController {
 
 
 
-
-
     public void setListeners() {
 
-        // Setup Listeners
+        this.icons.setAll(ImageType.values());
+        this.lockTabPane = false;
+        this.clickedLocation = new Location(0, 0);
 
+
+        // Setup Listeners
         setCoreFunctionalityListeners();
         setBuildingTabListeners();
-        setActionTabListeners();
         setFloorTabListeners();
         setLocationTabListeners();
-        deleteThis();
-
-
-
-    }
-
-    private void deleteThis() {
-
-
-        //this.building.addFloor(2, "Floor4_Draft.png").addNode(new Location(500.0,500.0)).addDestination(Destination.BATHROOM,"triet");
-
-        try {
-            LocationNode node3A = new LocationNode(0, new Location(100, 100), this.building.getFloor(3));
-            node3A.addDestination(Destination.KIOSK, "Kiosk3");
-        } catch (FloorDoesNotExistException e) {
-            e.printStackTrace();
-        }
-
-
-        for (Floor floor: this.building.getFloors()) {
-            floor.setFloorImage(getClass().getResource(String.valueOf(floor.getImagePath())));
-            if(floor.getFloorNodes().size() > 0) { // Check if the floor contains nodes
-                for (LocationNode node : floor.getFloorNodes()) {
-                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
-                    node.initObserver();
-                    node.initAdjacentLines();
-                }
-            }
-            floor.drawFloorAdmin(this.mapStackPane);
-        }
-
+        setAddFloorTabListeners();
+        setAddLocationTabListeners();
 
     }
-
 
 
 
 
     private void setCoreFunctionalityListeners() {
 
+        this.faulknerHospitalMap.setupAdminStackPane(this.mapStackPane);
+
         // Setup Logout Button
         this.logoutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.setCurrentMapState(MapState.NORMAL);
 
                 // TODO Add saving prompt if changes have been made
 
@@ -338,27 +322,23 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                // TODO Fix saving so that is saves to a different location
-
                 LOGGER.info("Attempting to save changes to the map");
 
 
                 try {
-                    /**
-                     *
-                     *This is for OSx use this while testing.
-                     *
-                     *this.savefilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
-                     */
+
                     this.saveFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
                 } catch (MalformedURLException e) {
+
                     e.printStackTrace();
                 }
 
-
                 try {
 
-                    building.saveToFile(saveFilePath);
+                    File saveFile = new File(saveFilePath.toURI());
+
+                    faulknerHospitalMap.saveToFile(saveFile);
 
                     LOGGER.info("Changes were saved");
 
@@ -376,47 +356,32 @@ public class AdminDashboardController {
 
         });
 
-        this.aSplitPane.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        // Setup Zoom Slider
+        this.zoomSlider.setMax(1.5);
+        this.zoomSlider.setMin(0.5);
+        this.zoomSlider.setValue(1.0);
+        this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
             @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.F1)) {
-                    LOGGER.info("Attempting to back to NORMAL");
-                    building.setState(BuildingState.NORMAL);
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
+                LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
 
+                // TODO fix zooming
 
-                }
+//                double scrollH = mapScrollPane.getHvalue();
+//                double scrollV = mapScrollPane.getVvalue();
+//
+//                LOGGER.info("" + scrollH);
+//                LOGGER.info("" + scrollV);
+//                zoomSlider.setScaleX(newValue.doubleValue());
+//                zoomSlider.setScaleY(newValue.doubleValue());
+//                mapScrollPane.setHvalue(scrollH);
+//                mapScrollPane.setVvalue(scrollV);
+
             }
+
         });
-
-
-
-//        // Setup Zoom Slider
-//        this.zoomSlider.setMax(1.5);
-//        this.zoomSlider.setMin(0.5);
-//        this.zoomSlider.setValue(1.0);
-//        this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//
-//                LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
-//
-//                // TODO fix zooming
-//
-////                double scrollH = mapScrollPane.getHvalue();
-////                double scrollV = mapScrollPane.getVvalue();
-////
-////                LOGGER.info("" + scrollH);
-////                LOGGER.info("" + scrollV);
-////                zoomSlider.setScaleX(newValue.doubleValue());
-////                zoomSlider.setScaleY(newValue.doubleValue());
-////                mapScrollPane.setHvalue(scrollH);
-////                mapScrollPane.setVvalue(scrollV);
-//
-//            }
-//
-//        });
 
 
 
@@ -458,7 +423,35 @@ public class AdminDashboardController {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
+
+                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab))) {
+
+                    mapTabPane.getSelectionModel().select(oldValue);
+
+                    return;
+                }
+
+                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab)) {
+
+                    lockTabPane = true;
+
+                    return;
+                }
+
                 LOGGER.info("The selected tab is currently " + newValue.getText());
+
+            }
+
+        });
+
+        this.mapStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                clickedLocation = new Location(event.getX(), event.getY());
+
+                LOGGER.info("The current clicked location is " + clickedLocation.getX() + ", " + clickedLocation.getY());
 
             }
 
@@ -491,19 +484,6 @@ public class AdminDashboardController {
 
         });
 
-        aSplitPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                building.addFloorsToListView(buildingFloorsListView);
-                building.getCurrentFloor().addLocationToListView(floorLocationsListView);
-                building.addBuildingDestinationsToListView(buildingDestinationsListView);
-                building.getCurrentFloor().addDestinationsToListView(floorDestinationsListView);
-                building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
-                building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
-            }
-        });
-
-
         this.buildingFloorsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -513,42 +493,21 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    building.addFloorsToListView(buildingFloorsListView);
-
-
-
                 }
 
             }
 
         });
 
-
-            this.buildingFloorsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        this.buildingFloorsListView.setItems(this.faulknerHospitalMap.getCurrentBuildingFloors());
+        this.buildingFloorsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
-                ((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()).drawFloorAdmin(mapStackPane);
-                building.setCurrentFloor(((Floor)buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                //building.setCurrentDestination(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-                //building.setCurrentNodes(((LocationNode) buildingFloorsListView.getSelectionModel().getSelectedItem()));
-            }
+                Floor currentFloor = ((Floor) buildingFloorsListView.getSelectionModel().getSelectedItem());
 
-        });
-
-        this.buildingDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
-                if (newValue) {
-
-                    LOGGER.info("Building Destinations Titled Pane Opened");
-
-                    building.addBuildingDestinationsToListView(buildingDestinationsListView);
-
-                }
+                faulknerHospitalMap.setCurrentFloor(currentFloor);
 
             }
 
@@ -559,33 +518,94 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                AdminSubControllerLoader loader = new AdminSubControllerLoader();
-
-                loader.setStackPane(mapStackPane);
-                loader.setCurrentBuilding(building);
-                loader.loadAddFloor();
-
-
-                SubViewLoader<AdminDashboardAddFloorController> subViewLoader =
-                        new SubViewLoader<>("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml", mapStackPane);
-
-                AdminDashboardAddFloorController adminDashboardAddFloorController = subViewLoader.loadView();
-
-
-                adminDashboardAddFloorController.setCurrentBuilding(building);
-                adminDashboardAddFloorController.setSubViewLoader(subViewLoader);
-                adminDashboardAddFloorController.setListeners();
+//                AdminSubControllerLoader loader = new AdminSubControllerLoader();
+//
+//                loader.setStackPane(mapStackPane);
+//                loader.setCurrentBuilding(building);
+//                loader.loadAddFloor();
+//
+//
+//                SubViewLoader<AdminDashboardAddFloorController> subViewLoader =
+//                        new SubViewLoader<>("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml", mapStackPane);
+//
+//                AdminDashboardAddFloorController adminDashboardAddFloorController = subViewLoader.loadView();
+//
+//
+//                adminDashboardAddFloorController.setCurrentBuilding(building);
+//                adminDashboardAddFloorController.setSubViewLoader(subViewLoader);
+//                adminDashboardAddFloorController.setListeners();
 
             }
 
         });
 
 
-//        this.buildingDestinationsListView
+        this.buildingDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+
+                    LOGGER.info("Building Destinations Titled Pane Opened");
+
+//                    building.addBuildingDestinationsToListView(buildingDestinationsListView);
+
+                }
+
+            }
+
+        });
+
+
+        this.buildingDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentBuildingDestinations());
+        this.buildingDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                Destination currentDestination = ((Destination) buildingDestinationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
+
+        });
+
+        this.astarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Switching to AStart Algorithm");
+
+                faulknerHospitalMap.useAStar();
+
+            }
+
+        });
+
+        this.dijkstrasButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Switching to Diskstra's Algorithm");
+
+                faulknerHospitalMap.useDijkstras();
+
+            }
+
+        });
+
 
     }
 
+
+
+
     private void setFloorTabListeners() {
+
         // Setup Building Accordion
         this.floorAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
 
@@ -615,15 +635,29 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    if (building.getCurrentFloor() != null) {
-
-                        building.getCurrentFloor().addLocationToListView(floorLocationsListView);
-
-                    }
+//                    if (building.getCurrentFloor() != null) {
+//
+//                        building.getCurrentFloor().addLocationToListView(floorLocationsListView);
+//
+//                    }
 
 
 
                 }
+
+            }
+
+        });
+
+        this.floorLocationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorLocationNodes());
+        this.floorLocationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LocationNode currentLocationNode = ((LocationNode) floorLocationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentLocationNode(currentLocationNode);
 
             }
 
@@ -634,50 +668,40 @@ public class AdminDashboardController {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
-                if (newValue) {
+                LOGGER.info("Building Floors Titled Pane Opened");
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
-
-                    if (building.getCurrentFloor() != null) {
-
-                        building.getCurrentFloor().addDestinationsToListView(floorDestinationsListView);
-
-
-                    }
-                }
             }
-        });
-
-        floorLocationsAddButton.setOnAction(event ->{
-
-            alabel.setText("Add Button");
-
-            floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(building, BuildingState.ADDNODE));
 
         });
 
+        this.floorDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentFloorDestinations());
+        this.floorDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-        floorLocationsDeleteButton.setOnAction(event ->{
+            @Override
+            public void handle(MouseEvent event) {
 
-            alabel.setText("Delete Button");
+                Destination currentDestination = ((Destination) floorDestinationsListView.getSelectionModel().getSelectedItem());
 
-            floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
 
         });
 
 
-        floorLocationsModifyButton.setOnAction(event ->{
-
-            alabel.setText("Modify Button");
-
-            floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    new ChangeBuildingStateEventHandler(building, BuildingState.MOVENODE));
+        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDNODE,
+                this.faulknerHospitalMap, "Add Location", this.selectedButtonLabel, this.mapTabPane,
+                this.addLocationTab));
 
 
-        });
+        this.floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVENODE, "Delete Button",
+                        this.selectedButtonLabel));
 
+
+        this.floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.MOVENODE, "Modify Button",
+                        this.selectedButtonLabel));
 
 
     }
@@ -714,13 +738,26 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
+//                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
 
                 }
 
             }
 
+
+        });
+
+
+        this.locationConnectedLocationListView.setItems(this.faulknerHospitalMap.getCurrentAdjacentLocationNodes());
+        this.locationConnectedLocationListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                // TODO
+
+            }
 
         });
 
@@ -733,11 +770,11 @@ public class AdminDashboardController {
 
                     LOGGER.info("Building Floors Titled Pane Opened");
 
-                    if (building.getCurrentNodes() != null) {
-
-                        building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
-
-                    }
+//                    if (building.getCurrentNodes() != null) {
+//
+//                        building.getCurrentNodes().addDestinationsToListView(locationDestinationsListView);
+//
+//                    }
 
 
                 }
@@ -747,28 +784,35 @@ public class AdminDashboardController {
 
         });
 
+        this.locationDestinationsListView.setItems(this.faulknerHospitalMap.getCurrentLocationNodeDestinations());
+        this.locationDestinationsListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-        locationConnectedLocationsAddButton.setOnAction(event -> {
+            @Override
+            public void handle(MouseEvent event) {
 
-            alabel.setText("Add Connected Button");
-            this.locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.ADDADJACENTNODE));
+                Destination currentDestination = ((Destination) locationDestinationsListView.getSelectionModel().getSelectedItem());
+
+                faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
 
         });
 
+
+        locationConnectedLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.ADDADJACENTNODE, "Add Connected " +
+                        "Button", this.selectedButtonLabel));
+
         locationDestinationsAddButton.setOnAction(event -> {
-            alabel.setText("Add Destination Button");
-            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            this.
-                        }
-                    }
+            selectedButtonLabel.setText("Add Destination Button");
+//            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
+        });
 
-                    locationConnectedLocationsDeleteButton.setOnAction(event -> {
+        locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
-                        alabel.setText("Delete Destination Button");
-                        this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeBuildingStateEventHandler(building, BuildingState.REMOVENODE));
-                    });
+            selectedButtonLabel.setText("Delete Destination Button");
+//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
+        });
 
 
 
@@ -777,103 +821,123 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                LOGGER.info("Setting start node to: " + building.getCurrentNodes());
-
-                building.setStartNode(building.getCurrentNodes());
+                faulknerHospitalMap.setStartLocationNode(faulknerHospitalMap.getCurrentLocationNode());
 
             }
 
         });
+
     }
 
-    private void setActionTabListeners() {
+    private void setAddFloorTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addFloorTab);
 
 
-        // Setup Action Accordion
-        this.actionAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
+
+
+    }
+
+    private void setAddLocationTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addLocationTab);
+
+        this.addLocationIconsListView.setCellFactory(listView -> new ListCell<ImageType>() {
+
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(80);
+                imageView.setFitWidth(160);
+                imageView.setPreserveRatio(true);
+            }
 
             @Override
-            public void changed(ObservableValue<? extends TitledPane> observable, TitledPane oldValue, TitledPane newValue) {
-
-                if (newValue != null) {
-
-                    LOGGER.info("In the Action tab the " + newValue.getText() + " Titled Pane has been expanded");
-
+            public void updateItem(ImageType imageType, boolean empty) {
+                super.updateItem(imageType, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
                 } else {
+                    setText(imageType.toString());
 
-                    LOGGER.info("In the Action tab the " + oldValue.getText() + " Titled Pane has been closed");
+                    try {
 
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                                imageType.getResourceFileName()).toString(), true);
+
+                        imageView.setImage(icon);
+
+                    } catch (MalformedURLException e) {
+
+                        LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
+
+                    }
+
+                    setGraphic(imageView);
                 }
-
             }
-
         });
 
-        this.actionAddDestinationsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+        this.addLocationIconsListView.setItems(this.icons);
+
+
+        this.addLocationNameTextField.getText();
+
+        this.addLocationAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            public void handle(MouseEvent event) {
 
-                if (newValue) {
+                if (addLocationNameTextField.getText().length() < 1) {
 
-                    LOGGER.info("Action Add  Destionation Titled Pane Opened");
-
-                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
-
-
+                    return;
                 }
+
+                if (addLocationIconsListView.getSelectionModel().getSelectedItem() == null) {
+
+                    return;
+                }
+
+                ImageType selectedImageType = (ImageType) addLocationIconsListView.getSelectionModel().getSelectedItem();
+
+                faulknerHospitalMap.addLocationNode(addLocationNameTextField.getText(), clickedLocation, selectedImageType);
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addLocationTab);
+
+                mapTabPane.getSelectionModel().select(floorTab);
+
+                addLocationNameTextField.setText("");
 
             }
 
-
         });
 
-        this.actionAddFloorsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
+        this.addLocationDiscardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            public void handle(MouseEvent event) {
 
-                if (newValue) {
+                lockTabPane = false;
 
-                    LOGGER.info("Action Add Floor Titled Pane Opened");
+                mapTabPane.getTabs().remove(addLocationTab);
 
+                mapTabPane.getSelectionModel().select(floorTab);
 
-
-
-                }
-
-            }
-
-
-        });
-        this.actionAddLocationIconsTitlePane.expandedProperty().addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
-                if (newValue) {
-
-                    LOGGER.info("Action Add Icon Titled Pane Opened");
-
-
-
-                }
+                addLocationNameTextField.setText("");
 
             }
 
-
         });
+
     }
 
 
 
+    public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
 
-
-
-
-    public void setBuilding(Building building) {
-
-        this.building = building;
+        this.faulknerHospitalMap = faulknerHospitalMap;
 
     }
 

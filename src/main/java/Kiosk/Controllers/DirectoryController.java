@@ -2,11 +2,11 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.*;
+import Map.Enums.DestinationType;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -25,22 +25,36 @@ public class DirectoryController {
 
     private boolean okClicked = false;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryController.class);
+    private Map faulknerHospitalMap;
+
+    private Destination currentDestination;
+
     // Reference to the main application.
     private KioskApp kioskApp;
 
-    @FXML
-    private TextField searchTextBox;
-    /**
-     * Initialize the ListView and the list that fills it
-     */
-    @FXML
-    private ListView<String> listDirectory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryController.class);
 
-    private ObservableList<String> currentNames = FXCollections.observableArrayList();
+    @FXML
+    private TextField searchTextField;
 
-    private Building building;
-    private LocationNode startNode;
+    @FXML
+    private Button okButton;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button physiciansButton;
+
+    @FXML
+    private Button departmentsButton;
+
+    @FXML
+    private Button servicesButton;
+
+    @FXML
+    private ListView directoryListView;
+
 
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
@@ -58,30 +72,43 @@ public class DirectoryController {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+
             while (running) {
+
                 try {
+
                     if (counter == 60) {
-                        System.out.println("Timed Out.");
+
+                        LOGGER.info("Timed Out");
+
                         running = false;
                         timer.cancel();
                         atimer.cancel();
                         timerTask.cancel();
                         Platform.runLater(resetKiosk);
                         break;
+
                     }
+
                     Thread.sleep(1000);
+
                 } catch (InterruptedException exception) {
-                    System.out.println("I'm outta here");
+
+                    LOGGER.info("Switching Views");
+
                     atimer.cancel();
                     timer.cancel();
                     timerTask.cancel();
                     running = false;
                     //exception.printStackTrace();
                     break;
+
                 }
 
             }
+
         }
+
     };
 
     Thread timerThread = new Thread(runnable);
@@ -90,57 +117,26 @@ public class DirectoryController {
 
         @Override
         public void run() {
-            handleBack();
+
+            atimer.cancel();
+            atimer.purge();
+            timer.cancel();
+            timer.purge();
+            running = false;
+            timerThread.interrupt();
+            kioskApp.reset();
+
         }
+
     };
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
-    @FXML
-    private void initialize() {
 
+    public void setupListeners() {
 
-        listDirectory.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.searchTextField.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(MouseEvent event) {
-
-                // Double Clicking!
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
-                    if (event.getClickCount() == 2) {
-
-                        // Array of all the floors so we can check each floor for the directory selection.
-                        ArrayList<Floor> floors = building.getFloors();
-
-                        // These for loops will index through all available floor  and all availible LocationNodes
-                        // to see which floor the selection is stored
-                        for (Floor f : floors) {
-                            ArrayList<LocationNode> nodes = f.getFloorNodes();
-                            for (LocationNode n : nodes) {
-
-                                // This statement is called when we find the node which corresponds to the selection
-                                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                                    timer.cancel();
-                                    running = false;
-                                    timerThread.interrupt();
-                                    kioskApp.showMap(n.getCurrentFloor().getCurrentBuilding().getStartNode(), n);
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-        });
-
-        searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
@@ -148,25 +144,117 @@ public class DirectoryController {
                     running = false;
                     timerThread.interrupt();
 
-                    kioskApp.showSearch(searchTextBox.getText());
+                    kioskApp.showSearch(searchTextField.getText());
 
                 } else {
 
                     counter = 0;
 
                 }
+
             }
+
         });
 
 
-        listDirectory.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        this.okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentDestination != null) {
+
+                    LOGGER.info("Switching to the Map View");
+
+                    timer.cancel();
+                    running = false;
+                    timerThread.interrupt();
+
+                    faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+                    kioskApp.showMap();
+
+                }
+
+            }
+
+        });
+
+        this.cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                atimer.cancel();
+                atimer.purge();
+                timer.cancel();
+                timer.purge();
+                running = false;
+                timerThread.interrupt();
+                kioskApp.reset();
+
+            }
+
+        });
+
+        this.physiciansButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
             @Override
             public void handle(MouseEvent event) {
 
                 counter = 0;
+
+                LOGGER.info("Showing the Physician Directory");
+
+                faulknerHospitalMap.physicianDirectory();
+
             }
+
         });
 
+        this.departmentsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                counter = 0;
+
+                LOGGER.info("Showing the Department Directory");
+
+                faulknerHospitalMap.departmentDirectory();
+
+            }
+
+        });
+
+        this.servicesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                counter = 0;
+
+                LOGGER.info("Showing the Services Directory");
+
+                faulknerHospitalMap.serviceDirectory();
+
+            }
+
+        });
+
+        this.directoryListView.setItems(this.faulknerHospitalMap.getDirectoryList());
+        this.directoryListView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                counter = 0;
+
+                currentDestination = ((Destination) directoryListView.getSelectionModel().getSelectedItem());
+
+            }
+
+        });
 
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
@@ -180,7 +268,9 @@ public class DirectoryController {
      * @param kioskApp
      */
     public void setKioskApp(KioskApp kioskApp) {
+
         this.kioskApp = kioskApp;
+
     }
 
     /**
@@ -189,163 +279,34 @@ public class DirectoryController {
      * @return
      */
     public boolean isOkClicked() {
+
         return okClicked;
     }
 
 
-    /**
-     * Called when the user clicks the Physicians button.
-     * Displays the Staff Directory
-     */
-    @FXML
-    private void handlePhysicians() {
+    public void setFaulknerHospitalMap(Map map) {
 
-        counter = 0;
-
-        //Removes previous listings and sorts the list of Care Providers.
-        currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
-        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-        listDirectory.setItems(currentNames);
+        this.faulknerHospitalMap = map;
 
     }
 
-    /**
-     * Called when the user clicks the Departments button.
-     * Displays the Departments
-     */
-    @FXML
-    private void handleDepartments() {
-        counter = 0;
-
-        //Removes previous listings and sorts the list of Care Providers.
-        currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
-        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-        listDirectory.setItems(currentNames);
-
-    }
-
-    /**
-     * Called when the user clicks the Services button.
-     * Displays the Services
-     */
-    @FXML
-    private void handleServices() {
-        counter = 0;
-
-        //Removes previous listings and sorts the list of Departments.
-        currentNames.setAll(building.getDestinations(Destination.SERVICE));
-        currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-        listDirectory.setItems(currentNames);
-    }
-
-    /**
-     * Called when the user clicks back.
-     */
-    @FXML
-    private void handleBack() {
-        atimer.cancel();
-        atimer.purge();
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
-        kioskApp.reset();
-    }
-
-    /**
-     * Called when the user clicks cancel.
-     */
-    @FXML
-    private void handleCancel() {
-        this.handleBack();
-    }
-
-    /**
-     * Called when the user clicks Forward.
-     */
-    @FXML
-    private void handleForward() {
-
-        ArrayList<Floor> floors = building.getFloors();
-
-        // These for loops will index through all available floor to see which floor the double clicked
-        // selection is stored
-        for (Floor f : floors) {
-
-            ArrayList<LocationNode> nodes = f.getFloorNodes();
-
-            for (LocationNode n : nodes) {
-
-                // This statement is called when we find the node which corresponds to the selection
-                if (n.getBuildingDestinations().contains(listDirectory.getSelectionModel().getSelectedItem())) {
-
-                    timer.cancel();
-                    running = false;
-                    timerThread.interrupt();
-                    kioskApp.showMap(n.getCurrentFloor().getStartNode(), n);
-
-                }
-
-            }
-
-        }
-    }
-
-    public void setList(Destination destinationType) {
+    public void setStartSelection(DestinationType destinationType) {
 
         switch (destinationType) {
 
             case PHYSICIAN:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Care Providers.
-                currentNames.setAll(building.getDestinations(Destination.PHYSICIAN));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
+                this.faulknerHospitalMap.physicianDirectory();
                 break;
 
             case DEPARTMENT:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Departments
-                currentNames.setAll(building.getDestinations(Destination.DEPARTMENT));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
-                break;
-
-            case SERVICE:
-
-                counter = 0;
-
-                //Removes previous listings and sorts the list of Services
-                currentNames.setAll(building.getDestinations(Destination.SERVICE));
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
+                this.faulknerHospitalMap.departmentDirectory();
                 break;
 
             default:
+                this.faulknerHospitalMap.serviceDirectory();
+                break;
 
-                counter = 0;
-
-                //Removes previous listings and sorts the list all destinations
-                currentNames.setAll(building.getDestinations());
-                currentNames.sort(String.CASE_INSENSITIVE_ORDER);
-                listDirectory.setItems(currentNames);
         }
-
-    }
-
-    public void setBuilding(Building building) {
-
-        this.building = building;
-
-    }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
 
     }
 
