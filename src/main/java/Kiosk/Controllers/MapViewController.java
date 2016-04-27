@@ -1,8 +1,13 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
+import Map.Enums.DestinationType;
 import Map.Map;
+import Map.Destination;
 import Map.Exceptions.FloorDoesNotExistException;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,9 +18,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,6 +37,12 @@ public class MapViewController{
     private Map faulknerHospitalMap;
 
     private KioskApp kioskApp;
+
+    @FXML
+    private  Label clock ;
+
+
+    private final DateFormat date = DateFormat.getInstance();
 
 
 
@@ -75,6 +90,20 @@ public class MapViewController{
     @FXML
     private Button cancelButton;
 
+    @FXML
+    private ListView mapViewsListView;
+
+    @FXML
+    private Button physiciansButton;
+
+    @FXML
+    private  Button departmentsButton;
+
+    @FXML
+    private Button servicesButton;
+
+    private Destination currentDestination;
+
     private Group zoomGroup;
 
 
@@ -92,6 +121,8 @@ public class MapViewController{
             counter++;
         }
     };
+
+
 
     Runnable runnable = new Runnable() {
         @Override
@@ -149,6 +180,21 @@ public class MapViewController{
     @FXML
     private void initialize() {
 
+
+
+
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                clock.setText("Current Time: "+ sdf.format(cal.getTime()));
+            }
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
 //        setListeners();
 
         zoomScrollPane.setHvalue(0.5);
@@ -178,32 +224,31 @@ public class MapViewController{
 //
 //        System.out.println(destinationNode.getLocation().getY());
 
-        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                counter = 0;
-
-//                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-//                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
-//                //mMainHost.drawShortestPath(startNode, destinationNode);
-//                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-
-//                mMainHost.drawShortestPath(startNode, destinationNode);
-//                imageStackPane.setMaxHeight(mMainHost.getyMax());
-//                imageStackPane.setMinHeight(mMainHost.getyMin());
-//                imageStackPane.setMaxWidth(mMainHost.getxMax());
-//                imageStackPane.setMinWidth(mMainHost.getyMin());
-                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-
-            }
-
-        });
-
+//        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                counter = 0;
+//
+////                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+////                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+////                //mMainHost.drawShortestPath(startNode, destinationNode);
+////                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//
+////                mMainHost.drawShortestPath(startNode, destinationNode);
+////                imageStackPane.setMaxHeight(mMainHost.getyMax());
+////                imageStackPane.setMinHeight(mMainHost.getyMin());
+////                imageStackPane.setMaxWidth(mMainHost.getxMax());
+////                imageStackPane.setMinWidth(mMainHost.getyMin());
+//                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//
+//            }
+//
+//        });
 
 
 
@@ -241,6 +286,8 @@ public class MapViewController{
 
 
 
+
+
         zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -266,23 +313,12 @@ public class MapViewController{
 
         //timerThread.start();
 
-        this.changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathNextFloor();
-
-            }
-
-        });
-
-        this.changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                faulknerHospitalMap.pathPreviousFloor();
 
             }
 
@@ -298,13 +334,13 @@ public class MapViewController{
 
     }
 
-//    @FXML
+    //    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal += 0.1);
     }
 
-//    @FXML
+    //    @FXML
     void zoomOut(ActionEvent event) {
 
         double sliderVal = slider.getValue();
@@ -375,4 +411,25 @@ public class MapViewController{
         this.faulknerHospitalMap = faulknerHospitalMap;
 
     }
+
+
+//    public void setStartSelection(DestinationType destinationType) {
+//
+//        switch (destinationType) {
+//
+//            case PHYSICIAN:
+//                this.faulknerHospitalMap.physicianDirectory();
+//                break;
+//
+//            case DEPARTMENT:
+//                this.faulknerHospitalMap.departmentDirectory();
+//                break;
+//
+//            default:
+//                this.faulknerHospitalMap.serviceDirectory();
+//                break;
+//
+//        }
+
+
 }
