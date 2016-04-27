@@ -3,15 +3,11 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.Destination;
 import Map.Enums.DestinationType;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,17 +29,11 @@ public class KioskOverviewController {
 
     @FXML
     private Label dontTouchMe;
-
-
-     @FXML
-     private AnchorPane textFieldAncho;
-    
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
      */
     public KioskOverviewController() {
-        //textFieldAncho.getStylesheets().add(this.getClass().getResource("textfield.css").toExternalForm());
     }
 
     /**
@@ -52,7 +42,6 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
-
 
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

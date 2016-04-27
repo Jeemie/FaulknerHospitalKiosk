@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="2638.7101415964585" y="0.0">Map.ObjectToJsonToJava</node>
+    <node x="2040.2101415964585" y="230.5">Map.SearchAlgorithms.AStar</node>
+    <node x="1094.3019763544685" y="2416.0">Map.LocationNodeEdge</node>
+    <node x="1213.1022223418" y="3279.0">Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardDestinationAddController</node>
+    <node x="481.0750484287563" y="120.0">Map.Destination</node>
+    <node x="306.32504842875653" y="621.0">Map.Map</node>
+    <node x="1896.973602484472" y="3059.0">Map.LocationNode</node>
+    <node x="185.5" y="3199.0">Kiosk.Controllers.MapViewController</node>
+    <node x="2872.7101415964585" y="0.0">Map.Enums.RelativeDirection</node>
+    <node x="1046.6964285714287" y="3199.0">Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader</node>
+    <node x="2315.858695652174" y="0.0">Map.Exceptions.NoPathException</node>
+    <node x="2097.3351415964585" y="2647.5">Map.EventHandlers.LocationNodeDraggedEventHandler</node>
+    <node x="2947.7101415964585" y="0.0">Map.Enums.CardinalDirection</node>
+    <node x="115.5" y="3059.0">Kiosk.KioskApp</node>
+    <node x="430.0750484287563" y="285.5">Map.Exceptions.DefaultFileDoesNotExistException</node>
+    <node x="85.5" y="3199.0">Kiosk.Controllers.KioskOverviewController</node>
+    <node x="1659.3019763544685" y="2647.5">Map.Floor</node>
+    <node x="3022.7101415964585" y="0.0">Map.Enums.UpdateType</node>
+    <node x="2398.7101415964585" y="2647.5">Map.Exceptions.NodeDoesNotExistException</node>
+    <node x="2289.2101415964585" y="285.5">Map.SearchAlgorithms.Dijkstras</node>
+    <node x="1072.3250484287564" y="2306.0">Map.Building</node>
+    <node x="2339.2101415964585" y="285.5">Map.SearchAlgorithms.BreadthFirstSearch</node>
+    <node x="1874.3250484287564" y="2647.5">Map.EventHandlers.LocationNodeClickedEventHandler</node>
+    <node x="84.5" y="2306.0">Map.Exceptions.FloorDoesNotExistException</node>
+    <node x="135.5" y="3199.0">Kiosk.Controllers.AdminLoginController</node>
+    <node x="986.5714285714286" y="3199.0">Kiosk.Controllers.AdminDashboardController</node>
+    <node x="623.5519763544684" y="3199.0">Kiosk.Controllers.SearchController</node>
+    <node x="9.0" y="3199.0">Kiosk.Controllers.DirectoryController</node>
+    <node x="1990.2101415964585" y="285.5">Map.Location</node>
+    <node x="926.0750484287563" y="285.5">Map.Enums.MapState</node>
+    <node x="1971.4873155095017" y="2647.5">Map.Enums.ImageType</node>
+    <node x="34.5" y="2306.0">Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader</node>
+    <node x="1856.7295938134187" y="285.5">Map.Path</node>
+    <node x="2161.2543962548434" y="0.0">Map.SearchAlgorithms.ISearchAlgorithm</node>
+    <node x="1917.223602484472" y="3199.0">Map.Directions</node>
+    <node x="678.5750484287563" y="0.0">Map.Enums.DestinationType</node>
+    <node x="84.5" y="2647.5">Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController</node>
+    <node x="288.32504842875653" y="2306.0">Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Map.LocationNode" target="Map.Exceptions.NodeDoesNotExistException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.Location">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Path" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Floor" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.Floor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Location">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController" target="Kiosk.Controllers.AdminDashboardSubControllers.SubViewLoader">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.Dijkstras" target="Map.SearchAlgorithms.ISearchAlgorithm">
+      <point x="-7.5" y="-15.0" />
+      <point x="2296.7101415964585" y="80.0" />
+      <point x="2180.0043962548434" y="80.0" />
+      <point x="3.75" y="15.0" />
+    </edge>
+    <edge source="Map.Directions" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.EventHandlers.LocationNodeClickedEventHandler" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Building" target="Map.Floor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.KioskOverviewController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.MapViewController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Floor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader" target="Map.Building">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler" target="Map.Enums.MapState">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.KioskApp" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Building">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.Dijkstras" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.EventHandlers.LocationNodeDraggedEventHandler">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.SearchController" target="Map.Building">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardDestinationAddController" target="Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.Destination">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminSubControllerLoader" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.MapViewController" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.EventHandlers.LocationNodeClickedEventHandler" target="Map.Enums.MapState">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.SearchAlgorithms.ISearchAlgorithm">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.SearchAlgorithms.AStar">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.SearchController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Map.Destination">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController" target="Map.Exceptions.FloorDoesNotExistException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Map.LocationNodeEdge">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.Enums.ImageType">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Destination">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Enums.MapState">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.Dijkstras" target="Map.Exceptions.NoPathException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.EventHandlers.LocationNodeClickedEventHandler">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.BreadthFirstSearch" target="Map.Exceptions.NoPathException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Floor" target="Map.Building">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.DirectoryController" target="Map.Destination">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.SearchAlgorithms.Dijkstras">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Destination" target="Map.Enums.DestinationType">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Exceptions.NoPathException" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNodeEdge" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Exceptions.DefaultFileDoesNotExistException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.DirectoryController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.AStar" target="Map.SearchAlgorithms.ISearchAlgorithm">
+      <point x="-57.25" y="-70.0" />
+      <point x="2097.4601415964585" y="100.0" />
+      <point x="2172.5043962548434" y="100.0" />
+      <point x="-3.75" y="15.0" />
+    </edge>
+    <edge source="Map.Destination" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.BreadthFirstSearch" target="Map.SearchAlgorithms.ISearchAlgorithm">
+      <point x="-7.5" y="-15.0" />
+      <point x="2346.7101415964585" y="70.0" />
+      <point x="2187.5043962548434" y="70.0" />
+      <point x="11.25" y="15.0" />
+    </edge>
+    <edge source="Map.Map" target="Map.Path">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminLoginController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.LocationNode" target="Map.LocationNodeEdge">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardDestinationAddController" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardAddFloorController" target="Map.Building">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.AStar" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.DirectoryController" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Kiosk.Controllers.AdminDashboardController" target="Kiosk.KioskApp">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.Building" target="Map.Map">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.EventHandlers.LocationNodeDraggedEventHandler" target="Map.LocationNode">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Map.SearchAlgorithms.AStar" target="Map.Exceptions.NoPathException">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.30290222597914906" x="1074.2088372093026" y="1764.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -2,10 +2,6 @@ package Map;
 
 import Map.Enums.DestinationType;
 import Map.Enums.UpdateType;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +11,6 @@ import java.util.UUID;
 /**
  * Created by matt on 4/19/16.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Destination.class)
-
 public class Destination extends Observable {
 
     // Unique ID for this edge
@@ -29,19 +23,8 @@ public class Destination extends Observable {
     // LocationNode where this destination is located
     private LocationNode currentLocationNode;
 
-    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Destination.class);
-
-
-    /**
-     * Constructor for Jackson
-     */
-    public Destination() {
-
-        super();
-
-    }
 
     /**
      * TODO
@@ -93,25 +76,21 @@ public class Destination extends Observable {
     }
 
 
-    @JsonGetter
     public String getName() {
 
         return name;
     }
 
-    @JsonGetter
     public DestinationType getDestinationType() {
 
         return destinationType;
     }
 
-    @JsonGetter
     public LocationNode getCurrentLocationNode() {
 
         return currentLocationNode;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
         
         return uniqueID;

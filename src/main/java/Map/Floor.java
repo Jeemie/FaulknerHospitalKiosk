@@ -25,7 +25,6 @@ import java.util.UUID;
  * A class that represents a floor in a building
  */
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
 public class Floor extends Observable implements Observer {
 
     // The name of the floor
@@ -37,31 +36,17 @@ public class Floor extends Observable implements Observer {
     //
     private String resourceFileName;
 
-    @JsonIgnore
     // The building that the floor is associated with
     private Building currentBuilding;
 
-    @JsonIgnore
     // The image of the floor
     private Image floorImage;
 
-    @JsonIgnore
     // A list of location nodes which exists on teh floor
     private ArrayList<LocationNode> locationNodes;
 
-    @JsonIgnore
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class);
-
-
-    /**
-     * Constructor for Jackson
-     */
-    public Floor() {
-
-        super();
-
-    }
 
     /**
      * TODO
@@ -324,34 +309,28 @@ public class Floor extends Observable implements Observer {
      *
      * @return A list of all of the locationNodes on the current floor.
      */
-    @JsonIgnore
     public ArrayList<LocationNode> getFloorNodes() {
 
         return this.locationNodes;
     }
 
 
-    @JsonGetter
     public String getFloorName() {
         return floorName;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
         return uniqueID;
     }
 
-    @JsonGetter
     public String getResourceFileName() {
         return resourceFileName;
     }
 
-    @JsonGetter
     public Building getCurrentBuilding() {
         return currentBuilding;
     }
 
-    @JsonGetter
     public ArrayList<LocationNode> getLocationNodes() {
         return locationNodes;
     }

@@ -2,10 +2,6 @@ package Map;
 
 import Map.Enums.DestinationType;
 import Map.Enums.UpdateType;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +13,6 @@ import java.util.UUID;
 /**
  * A class that represents a building.
  */
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Building.class)
 public class Building extends Observable implements Observer {
 
     // Building name
@@ -26,25 +21,13 @@ public class Building extends Observable implements Observer {
     // A randomly generated UUID associated with the current building
     private UUID uniqueID;
 
-    // TODO Change
-    @JsonIgnore
     // A list of all of the floors in the building
     private ArrayList<Floor> floors;
 
-    @JsonIgnore
     // Map this building belongs to
     private Map currentMap;
 
-    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Building.class); // Logger for this class
-
-    /**
-     * Jackson Constructor
-     */
-    public Building() {
-
-        super();
-    }
 
     /**
      * Building Constructor
@@ -74,7 +57,7 @@ public class Building extends Observable implements Observer {
      * @param resourceFileName Image you want to associate with the floor.
      * @return New floor added to this building
      */
-    public void addFloor(String floorName, String resourceFileName) {
+    public Floor addFloor(String floorName, String resourceFileName) {
 
         for (Floor floor : floors) {
 
@@ -84,7 +67,7 @@ public class Building extends Observable implements Observer {
                 LOGGER.info("A floor with the name " + floorName + " already exists in this building.");
 
                 // Return the existing floor
-                return;
+                return null;
             }
 
         }
@@ -96,7 +79,7 @@ public class Building extends Observable implements Observer {
         setChanged();
         notifyObservers(UpdateType.FLOORADDED);
 
-
+        return newFloor;
     }
 
     public ArrayList<Destination> getBuildingDestinations() {
@@ -151,25 +134,21 @@ public class Building extends Observable implements Observer {
         return this.name;
     }
 
-    @JsonGetter
     public String getName() {
 
         return name;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
 
         return uniqueID;
     }
 
-    @JsonIgnore
     public ArrayList<Floor> getFloors() {
 
         return floors;
     }
 
-    @JsonIgnore
     public Map getCurrentMap() {
 
         return currentMap;

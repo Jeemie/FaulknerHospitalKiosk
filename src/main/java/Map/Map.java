@@ -7,23 +7,22 @@ import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
+import Map.Memento.MapMemento;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
-import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Map.class)
+
 public class Map implements Observer {
 
     private String name;
@@ -54,8 +53,9 @@ public class Map implements Observer {
 
     private MapState currentMapState;
 
-    // TODO DELETE EVENTUALLY
-    @JsonIgnore
+    // TODO DELETE EVENTUALLY:
+    // I'm not sure who wrote this, why are we deleting it?  - Binam
+    // To do was added on commit f32ef4d, "Merged with little success"
     private ObservableList<Destination> directoryList;
 
     private Path currentPath;
@@ -73,12 +73,10 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentLocationNodeDestinations;
 
 
@@ -89,27 +87,22 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<LocationNode> currentFloorLocationNodes;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentFloorDestinations;
 
 
     //
-    @JsonIgnore
     private Pane currentFloorLocationNodePane;
 
 
     //
-    @JsonIgnore
     private Pane currentFloorEdgePane;
 
 
     //
-    @JsonIgnore
     private ImageView currentFloorImage;
 
 
@@ -120,27 +113,17 @@ public class Map implements Observer {
 
 
     //
-    @JsonIgnore
     private ObservableList<Floor> currentBuildingFloors;
 
 
     //
-    @JsonIgnore
     private ObservableList<Destination> currentBuildingDestinations;
 
 
     // Logger for this class
-    @JsonIgnore
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
-    /**
-     * Jackson Constructor
-     */
-    public Map() {
 
-        super();
-
-    }
 
     /*
     TODO create exception to throw when adding something to the map when something of the sametype already has that name
@@ -215,7 +198,7 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentBuilding.addFloor(name, resourceFileName);
+        this.setCurrentFloor(this.currentBuilding.addFloor(name, resourceFileName));
 
     }
 
@@ -228,7 +211,7 @@ public class Map implements Observer {
             return;
         }
 
-        setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
+        this.setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
 
         this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
         this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
@@ -363,26 +346,8 @@ public class Map implements Observer {
 
         });
 
-//        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-//
-//            @Override
-//            public void handle(MouseEvent event) {
-//
-//                if (currentMapState == MapState.ADDNODE) {
-//
-//                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
-//
-//
-//                    Location newLocation = new Location(event.getX(), event.getY());
-//
-////                    addLocationNode();
-//
-//                }
-//
-//
-//            }
-//
-//        });
+        this.currentFloorLocationNodePane.getChildren().clear();
+        this.currentFloorEdgePane.getChildren().clear();
 
     }
 
@@ -452,7 +417,7 @@ public class Map implements Observer {
 
     public void pathPreviousFloor() {
 
-
+        this.currentPath.drawPreviousFloor();
 
     }
 
@@ -573,10 +538,30 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, this);
+//        Gson gson = new Gson();
+
+
+        MapMemento mapMemento = saveStateToMemento();
+
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
+
+//        try {
+//
+//            FileWriter fileWriter = new FileWriter(file.toString());
+//            fileWriter.write(json);
+//
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//
+//        }
+
+        System.out.println(objectMapper.writeValueAsString(mapMemento));
+
         LOGGER.info("Saving the map to the file: " + file.toString());
 
     }
+
 
     /**
      * Load a map from a JSON file
@@ -584,7 +569,8 @@ public class Map implements Observer {
      */
     public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
 
-        Map mMap = new Map();
+        MapMemento mapMemento = null; //TODO watch out for null pointer exception
+
         URL defaultFilePath = null;
 
         // Set up an ObjectMapper for deserialization
@@ -594,7 +580,7 @@ public class Map implements Observer {
         try {
 
             defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
-            //specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
         } catch (MalformedURLException e) {
 
@@ -610,29 +596,18 @@ public class Map implements Observer {
             File defaultFile = new File(defaultFilePath.toURI());
 
             //TODO uncomment after deserializer is complete - load from starter map for now
-            //if (specifiedFile.exists() && specifiedFile.length() > 0) {
-            if(false) {
+            if (specifiedFile.exists() && specifiedFile.length() > 0) {
+//            if(false) {
                 // Load specified file
 
-                mMap = objectMapper.readValue(specifiedFile, Map.class);
+                mapMemento = objectMapper.readValue(specifiedFile, MapMemento.class);
                 LOGGER.info("Loaded map from file " + specifiedFile.toString());
 
-            } else if (defaultFile.exists()) {
-
-                // Load default file
-                //TODO uncomment after deserializer is complete - load from starter map for now
-                //mMap = objectMapper.readValue(defaultFile, Map.class);
-                //LOGGER.info("Loaded map from file " + defaultFile.toString());
-
-                if (defaultFile.length() <= 2) {
-
-                    LOGGER.warn("Loaded file is empty.");
-
-                     mMap = FaulknerHospitalData.starterMap();
-                }
             } else {
 
+                //This will be caught by starterMap and will cause the map to be loaded with hardcoded code
                 throw new DefaultFileDoesNotExistException();
+
             }
         } catch (IOException e) {
 
@@ -643,7 +618,19 @@ public class Map implements Observer {
             e.printStackTrace();
         }
 
-        return mMap;
+        return loadStateFromMemento(mapMemento);
+    }
+
+    public MapMemento saveStateToMemento() {
+
+        return new MapMemento(this.name, this.uniqueID, this.startLocationNode, this.mapBuildings);
+
+    }
+
+    public static Map loadStateFromMemento(MapMemento mapMemento) {
+        //TODO working on
+        return null;
+
     }
 
 
@@ -661,38 +648,31 @@ public class Map implements Observer {
         return this;
     }
 
-    @JsonGetter
     public UUID getUniqueID() {
 
         return uniqueID;
     }
 
-    @JsonGetter
     public String getName() {
 
         return name;
     }
-
-    @JsonGetter
 
     public ArrayList<Building> getMapBuildings() {
 
         return mapBuildings;
     }
 
-    @JsonGetter
     public LocationNode getCurrentLocationNode() {
 
         return currentLocationNode;
     }
 
-    @JsonGetter
     public Floor getCurrentFloor() {
 
         return currentFloor;
     }
 
-    @JsonGetter
     public Building getCurrentBuilding() {
 
         return currentBuilding;
@@ -890,4 +870,5 @@ public class Map implements Observer {
     public ArrayList<UUID> getBuildingIdList() {
         return buildingIdList;
     }
+
 }

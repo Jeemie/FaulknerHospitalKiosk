@@ -224,31 +224,31 @@ public class MapViewController{
 //
 //        System.out.println(destinationNode.getLocation().getY());
 
-        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                counter = 0;
-
-//                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-//                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
-//                //mMainHost.drawShortestPath(startNode, destinationNode);
-//                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-
-//                mMainHost.drawShortestPath(startNode, destinationNode);
-//                imageStackPane.setMaxHeight(mMainHost.getyMax());
-//                imageStackPane.setMinHeight(mMainHost.getyMin());
-//                imageStackPane.setMaxWidth(mMainHost.getxMax());
-//                imageStackPane.setMinWidth(mMainHost.getyMin());
-                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-
-            }
-
-        });
+//        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                counter = 0;
+//
+////                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+////                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+////                //mMainHost.drawShortestPath(startNode, destinationNode);
+////                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//
+////                mMainHost.drawShortestPath(startNode, destinationNode);
+////                imageStackPane.setMaxHeight(mMainHost.getyMax());
+////                imageStackPane.setMinHeight(mMainHost.getyMin());
+////                imageStackPane.setMaxWidth(mMainHost.getxMax());
+////                imageStackPane.setMinWidth(mMainHost.getyMin());
+//                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//
+//            }
+//
+//        });
 
 
 
@@ -334,13 +334,13 @@ public class MapViewController{
 
     }
 
-//    @FXML
+    //    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal += 0.1);
     }
 
-//    @FXML
+    //    @FXML
     void zoomOut(ActionEvent event) {
 
         double sliderVal = slider.getValue();
