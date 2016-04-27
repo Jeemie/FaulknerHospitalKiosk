@@ -798,6 +798,9 @@ public class Map implements Observer {
             this.currentAdjacentLocationNodes.clear();
             this.currentAdjacentLocationNodes.addAll(newLocationNode.getAdjacentLocationNodes());
 
+            newLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+            newLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
         }
 
     }
