@@ -15,10 +15,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +89,6 @@ public class AdminDashboardController {
     private TabPane mapTabPane;
 
 
-
     //\\ Building Tab //\\
     @FXML
     private Tab buildingTab;
@@ -140,7 +143,6 @@ public class AdminDashboardController {
     private Button dijkstrasButton;
 
 
-
     //\\ Floor Tab //\\
     @FXML
     private Tab floorTab;
@@ -177,7 +179,6 @@ public class AdminDashboardController {
     // Floor Information Titled Pane //
     @FXML
     private TitledPane floorInformationTitledPane;
-
 
 
     //\\ Location Tab //\\
@@ -221,17 +222,8 @@ public class AdminDashboardController {
     private TitledPane locationInformationTitledPane;
 
 
-
-
-
-
-
     @FXML
     private Tab addFloorTab;
-
-
-
-
 
 
     @FXML
@@ -250,8 +242,6 @@ public class AdminDashboardController {
     private Button addLocationDiscardButton;
 
 
-
-
     @FXML
     private Button discardChangesButton;
 
@@ -262,7 +252,9 @@ public class AdminDashboardController {
     private Button logoutButton;
 
 
+    private int counter = 0;
 
+    final double SCALE_DELTA = 1.1;
 
 
     public void setListeners() {
@@ -280,14 +272,17 @@ public class AdminDashboardController {
         setAddFloorTabListeners();
         setAddLocationTabListeners();
 
+
     }
-
-
 
 
     private void setCoreFunctionalityListeners() {
 
+
         this.faulknerHospitalMap.setupAdminStackPane(this.mapStackPane);
+
+        final Group scrollContent = new Group(mapStackPane);
+        mapScrollPane.setContent(scrollContent);
 
         // Setup Logout Button
         this.logoutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -366,7 +361,7 @@ public class AdminDashboardController {
         // Setup Zoom Slider
         this.zoomSlider.setMax(1.5);
         this.zoomSlider.setMin(0.5);
-        this.zoomSlider.setValue(1.0);
+        this.zoomSlider.setValue(0.5);
         this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -391,9 +386,6 @@ public class AdminDashboardController {
         });
 
 
-
-
-
         // Setup Zoom In Button
         this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -404,6 +396,25 @@ public class AdminDashboardController {
 
                 zoomSlider.setValue(zoomSlider.getValue() + 0.1);
 
+                double scaleFactor = 1.1;
+
+                scaleFactor = SCALE_DELTA;
+                if (counter < 10) {
+                    counter += 1;
+                }
+
+                if (counter > 0 && counter < 10) {
+                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
+
+                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
+                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
+
+                    // move viewport so that old center remains in the center after the
+                    // scaling
+                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
+                } else {
+                    return;
+                }
             }
 
         });
@@ -417,6 +428,26 @@ public class AdminDashboardController {
                 LOGGER.info("Zooming out");
 
                 zoomSlider.setValue(zoomSlider.getValue() - 0.1);
+
+                double scaleFactor = 1.1;
+
+                scaleFactor = 1 / SCALE_DELTA;
+                if (counter > 0) {
+                    counter -= 1;
+                }
+
+                if (counter > 0 && counter < 10) {
+                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
+
+                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
+                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
+
+                    // move viewport so that old center remains in the center after the
+                    // scaling
+                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
+                } else {
+                    return;
+                }
 
             }
 
@@ -463,7 +494,86 @@ public class AdminDashboardController {
 
         });
 
+
+        this.mapStackPane.setOnScroll(new EventHandler<ScrollEvent>() {
+
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = 1.1;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+                    if (counter < 10) {
+                        zoomSlider.setValue(zoomSlider.getValue() + 0.1);
+                        counter += 1;
+                    }
+                } else {
+                    scaleFactor = 1 / SCALE_DELTA;
+                    if (counter > 0) {
+                        zoomSlider.setValue(zoomSlider.getValue() - 0.1);
+                        counter -= 1;
+                    }
+                }
+
+
+                // amount of scrolling in each direction in scrollContent coordinate
+                // units
+
+                if (counter > 0 && counter < 10) {
+                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
+
+                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
+                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
+
+                    // move viewport so that old center remains in the center after the
+                    // scaling
+                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
+                } else {
+                    return;
+                }
+            }
+
+        });
     }
+
+
+    private Point2D figureScrollOffset(Node scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+
+    private void repositionScroller(Node scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2;
+            double newScrollXOffset = (scaleFactor - 1) * halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+    }
+
 
     private void setBuildingTabListeners() {
 
@@ -642,8 +752,6 @@ public class AdminDashboardController {
     }
 
 
-
-
     private void setFloorTabListeners() {
 
         // Setup Building Accordion
@@ -680,7 +788,6 @@ public class AdminDashboardController {
 //                        building.getCurrentFloor().addLocationToListView(floorLocationsListView);
 //
 //                    }
-
 
 
                 }
@@ -870,13 +977,22 @@ public class AdminDashboardController {
         });
 
 
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.setStartLocationNode(faulknerHospitalMap.getCurrentLocationNode());
+
+            }
+
+        });
+
     }
 
     private void setAddFloorTabListeners() {
 
         this.mapTabPane.getTabs().remove(this.addFloorTab);
-
-
 
 
     }
@@ -888,6 +1004,7 @@ public class AdminDashboardController {
         this.addLocationIconsListView.setCellFactory(listView -> new ListCell<ImageType>() {
 
             private final ImageView imageView = new ImageView();
+
             {
                 imageView.setFitHeight(80);
                 imageView.setFitWidth(160);
@@ -975,7 +1092,6 @@ public class AdminDashboardController {
         });
 
     }
-
 
 
     public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
