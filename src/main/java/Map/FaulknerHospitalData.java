@@ -4,8 +4,6 @@ package Map;
 
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
-import Map.Exceptions.FloorDoesNotExistException;
-import Map.Exceptions.NodeDoesNotExistException;
 
 /**
  * Created by maryannoconnell on 4/21/16.
@@ -38,7 +36,7 @@ public class FaulknerHospitalData {
         Floor f1 = map.getCurrentBuilding().getFloors().get(0);
 
         // FLOOR 1
-
+/*
         map.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
         map.addDestination("Audiology Destination", DestinationType.DEPARTMENT);
         map.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
@@ -57,15 +55,21 @@ public class FaulknerHospitalData {
         map.addDestination("Radiology", DestinationType.DEPARTMENT);
         map.addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
         map.addDestination("Special Testing", DestinationType.DEPARTMENT);
-        map.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
+        */
+        map.addLocationNode("Family", new Location(1308, 945), ImageType.KIOSK);
         map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
+        addDestinationOld(DestinationType.KIOSK, "Kiosk");
+
+        map.addLocationNode("Family2", new Location(1308, 945), ImageType.KIOSK);
+        map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
+        addDestinationOld(DestinationType.KIOSK, "Kiosk");
 
 
 
         // TODO change to Kiosk - starting at a waiting room currently
         map.setStartLocationNode(f1.getLocationNodes().get(0));
 
-
+/*
 
         map.addFloor("Floor 2", "floor2.png"); // Index 1
         Floor f2 = map.getCurrentBuilding().getFloors().get(1);
@@ -92,8 +96,8 @@ public class FaulknerHospitalData {
         map.addDestination("Special Testing", DestinationType.DEPARTMENT);
         map.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
         map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
-
-
+*/
+/*
         //TODO replace with actual values
         // Random edges for testing:
         try {
@@ -107,7 +111,7 @@ public class FaulknerHospitalData {
             System.err.println("Couldn't draw path from Audiology to Cardiac Rehabilatation\n");
             e.printStackTrace();
 
-        }
+        }*/
 /*
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
 
@@ -119,7 +123,7 @@ public class FaulknerHospitalData {
         mMainHospital.getFloor(1).addNode(new Location(1054, 1000)); //get(17) A Elevatoe
 */
 
-
+/*
         addDestinationOld(DestinationType.SERVICE, "Information");
         addDestinationOld(DestinationType.SERVICE, "Admitting/Registration");
         addDestinationOld(DestinationType.SERVICE, "Atrium Cafe");
@@ -426,10 +430,11 @@ public class FaulknerHospitalData {
 
         addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
         addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
-
+*/
 
          return map;
     }
+
 
 
     private static void addDestinationOld(DestinationType destinationType, String name) {

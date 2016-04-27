@@ -1,10 +1,8 @@
 package Map;
 
 import Map.Enums.DestinationType;
-
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
-import com.fasterxml.jackson.annotation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -131,6 +129,26 @@ public class Floor extends Observable implements Observer {
 
 
         return floorDestinations;
+    }
+
+    /**
+     * Get's all the floor LocationNodes
+     * @param associatedImage
+    * @return an ArrayList of LocationNode objects
+    */
+    public ArrayList<LocationNode> getFloorLocationNodes(ImageType associatedImage) {
+
+        ArrayList<LocationNode> floorLocationNodes = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+            if(locationNode.getAssociatedImage() == ImageType.KIOSK){
+                    floorLocationNodes.add(locationNode);
+            }
+
+        }
+
+
+        return floorLocationNodes;
     }
 
     public void removeLocationNode(LocationNode locationNode) {

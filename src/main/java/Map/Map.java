@@ -120,6 +120,10 @@ public class Map implements Observer {
     private ObservableList<Destination> currentBuildingDestinations;
 
 
+    //
+    private ObservableList<LocationNode> currentKioskLocationNodes;
+
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
@@ -151,6 +155,7 @@ public class Map implements Observer {
         this.currentBuilding = null;
         this.currentBuildingFloors = FXCollections.observableArrayList();
         this.currentBuildingDestinations = FXCollections.observableArrayList();
+        this.currentKioskLocationNodes = FXCollections.observableArrayList();
 
     }
 
@@ -449,6 +454,9 @@ public class Map implements Observer {
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+
 //
 //                // remove current location node destinations from current floor destinations and building destinations
 //                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
@@ -503,6 +511,9 @@ public class Map implements Observer {
 
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
 
                 break;
 
@@ -722,6 +733,12 @@ public class Map implements Observer {
 
         return currentBuildingDestinations;
     }
+
+    public ObservableList<LocationNode> getCurrentKioskLocationNodes() {
+
+        return currentKioskLocationNodes;
+    }
+
 
     public void setStartLocationNode(LocationNode locationNode) {
 
