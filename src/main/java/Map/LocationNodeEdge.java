@@ -208,6 +208,13 @@ public class LocationNodeEdge extends Observable {
 
     }
 
+    public void removeLocationNodes() {
+
+        this.locationNode2 = null;
+        this.locationNode1 = null;
+
+    }
+
     public LocationNode getLocationNode1() {
 
         return locationNode1;
@@ -226,8 +233,9 @@ public class LocationNodeEdge extends Observable {
     @Override
     protected void finalize() throws Throwable {
 
-        LOGGER.debug("Deleting Edge: " + this.toString());
+        System.out.println("Deleting Edge: " + this.toString());
 
         super.finalize();
+
     }
 }

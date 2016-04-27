@@ -564,6 +564,7 @@ public class Map implements Observer {
             case LOCATIONNODEREMOVED:
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+                this.currentLocationNode.getEdges().clear();
                 this.setCurrentLocationNode(null);
 
                 break;
@@ -779,7 +780,6 @@ public class Map implements Observer {
 
                     }
 
-
 //                    locationNodeMemento.getAssociatedLocationNode().addEdge();
 
                 }
@@ -839,8 +839,7 @@ public class Map implements Observer {
 //
 //            }
 
-
-
+        locationNodeHashMap.clear();
 
 
         return map;
@@ -1000,6 +999,11 @@ public class Map implements Observer {
     }
 
     private void locationNodeUpdater(LocationNode newLocationNode) {
+
+        if (newLocationNode == null) {
+
+            return;
+        }
 
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
 

@@ -371,7 +371,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         }
 
-
+        this.iconLabel = null;
         this.iconImageView = null;
 
     }
@@ -385,6 +385,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             edge.getOtherNode(this).removeEdgeConnection(edge);
 
+            edge.removeLocationNodes();
+
         }
 
     }
@@ -397,6 +399,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public void removeEdgeConnection(LocationNodeEdge edge) {
 
         this.edges.remove(edge);
+
     }
 
     /**
@@ -626,7 +629,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     @Override
     protected void finalize() throws Throwable {
 
-        LOGGER.debug("Deleting Location Node: " + this.toString());
+        System.out.println("Deleting Location Node: " + this.toString());
 
         super.finalize();
     }
