@@ -2,6 +2,7 @@ package Map.Memento;
 
 import Map.*;
 import Map.Enums.ImageType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
@@ -34,6 +35,9 @@ public class LocationNodeMemento {
 
     // Destinations at this node
     private ArrayList<DestinationMemento> destinationMementos;
+
+    @JsonIgnore
+    public LocationNode associatedLocationNode;
 
     public LocationNodeMemento () {
 
@@ -99,5 +103,18 @@ public class LocationNodeMemento {
     public ArrayList<DestinationMemento> getDestinationMementos() {
 
         return destinationMementos;
+    }
+
+
+    public LocationNode getAssociatedLocationNode() {
+
+        return associatedLocationNode;
+
+    }
+
+    public void setAssociatedLocationNode(LocationNode associatedLocationNode) {
+
+        this.associatedLocationNode = associatedLocationNode;
+
     }
 }

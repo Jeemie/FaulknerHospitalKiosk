@@ -698,7 +698,7 @@ public class Map implements Observer {
     public static Map loadStateFromMemento(MapMemento mapMemento) {
         //TODO working on
 
-        HashMap<UUID, LocationNodeMemento> locationNodeMementoHashMap = new HashMap<UUID, LocationNodeMemento>();
+        HashMap<UUID, LocationNode> locationNodeHashMap= new HashMap<UUID, LocationNode>();
 
         //TODO to map, add startLocatio object and the mapBuilding arraylist
         Map map = new Map(mapMemento.getName(), mapMemento.getUniqueID());
@@ -723,22 +723,23 @@ public class Map implements Observer {
                 for (LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
 
 
-                   ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
+                    ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
 
-                   LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(), locationNodeMemento.getLocation(), map.getCurrentFloor(), imageType);
+                    LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(), locationNodeMemento.getLocation(), map.getCurrentFloor(), imageType);
 
-                   for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
+                    for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
 
-                       DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
+                        DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
 
-                       locationNode.addDestination(destinationMemento.getName(), destinationType);
+                        locationNode.addDestination(destinationMemento.getName(), destinationType);
 
-                   }
+                    }
 
 
-                   locationNodeMementoHashMap.put(locationNodeMemento.getUniqueID(), locationNodeMemento);
+                    locationNodeHashMap.put(locationNode.getUniqueID(), locationNode);
+                    locationNodeMemento.setAssociatedLocationNode(locationNode);
 
-                   map.getCurrentFloor().addLocationNode(locationNode);
+                    map.getCurrentFloor().addLocationNode(locationNode);
 
                 }
 
@@ -752,6 +753,53 @@ public class Map implements Observer {
 
         //Loop through the existing Building, floor, then locationNodes
         //For each floor,
+
+        for(BuildingMemento buildingMemento : mapMemento.getBuildingMementos()) {
+
+            map.currentBuilding = map.getMapBuildings().get(map.getMapBuildings().size() - 1);
+
+            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+
+                map.currentFloor = map.currentBuilding.getFloors().get(map.currentBuilding.getFloors().size() - 1);
+
+                for(LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+
+                    LocationNode associatedLocationNode = locationNodeMemento.getAssociatedLocationNode();
+
+                    for(LocationNodeEdgeMemento locationNodeEdgeMemento : locationNodeMemento.getEdgeMomentos()) {
+
+                        LocationNode locationNode1 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode1ID());
+                        LocationNode locationNode2 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode2ID());
+
+
+                        try{
+
+                            if(!associatedLocationNode.equals(locationNode1)) {
+
+                                associatedLocationNode.addEdge(locationNode1);
+
+                            } else if (!associatedLocationNode.equals(locationNode2)) {
+
+                                associatedLocationNode.addEdge(locationNode2);
+
+                            }
+
+                        } catch (NodeDoesNotExistException e) {
+                                e.printStackTrace();
+                        }
+
+
+
+                    }
+
+
+//                    locationNodeMemento.getAssociatedLocationNode().addEdge();
+
+                }
+            }
+
+        }
+
 //        for (LocationNode locationNode : map.getCurrentFloorLocationNodes()) {
 //
 //            // Get the memento version of this locationNode
