@@ -397,7 +397,10 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             edge.getOtherNode(this).removeEdgeConnection(edge);
 
+           // this.removeEdgeConnection(edge);
+
         }
+
 
     }
 

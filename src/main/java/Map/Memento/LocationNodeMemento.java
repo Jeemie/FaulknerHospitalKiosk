@@ -47,7 +47,7 @@ public class LocationNodeMemento {
         this.uniqueID = uniqueID;
         this.location = location;
         this.currentFloorID = currentFloor.getUniqueID();
-        this.associatedImageString = associatedImage.getResourceFileName();
+        this.associatedImageString = associatedImage.toString();
         this.edgeMomentos = new ArrayList<LocationNodeEdgeMemento>();
         this.destinationMementos = new ArrayList<DestinationMemento>();
 
@@ -59,7 +59,7 @@ public class LocationNodeMemento {
 
         for (Destination destination: destinations) {
 
-            destinationMementos.add(new DestinationMemento(destination.getUniqueID(), destination.getName(), destination.getDestinationType(), destination.getCurrentLocationNode()));
+            destinationMementos.add(new DestinationMemento(destination.getName(), destination.getUniqueID(), destination.getDestinationType(), destination.getCurrentLocationNode()));
 
         }
 

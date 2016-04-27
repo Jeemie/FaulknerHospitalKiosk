@@ -12,10 +12,11 @@ import java.util.UUID;
 @JsonSerialize
 public class DestinationMemento {
 
-    // Unique ID for this edge
-    private UUID uniqueID;
 
     private String name;
+
+    // Unique ID for this edge
+    private UUID uniqueID;
 
     private String destinationTypeString;
 
@@ -28,10 +29,10 @@ public class DestinationMemento {
 
     }
 
-    public DestinationMemento(UUID uniqueID, String name, DestinationType destinationType, LocationNode currentLocationNode) {
+    public DestinationMemento(String name, UUID uniqueID, DestinationType destinationType, LocationNode currentLocationNode) {
 
-        this.uniqueID = uniqueID;
         this.name = name;
+        this.uniqueID = uniqueID;
         this.destinationTypeString = destinationType.toString();
         this.currentLocationNodeID = currentLocationNode.getUniqueID();
 

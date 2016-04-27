@@ -7,7 +7,8 @@ import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
-import Map.Memento.MapMemento;
+import Map.Exceptions.NodeDoesNotExistException;
+import Map.Memento.*;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
@@ -30,10 +31,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.UUID;
+import java.util.*;
 
 
 public class Map implements Observer {
@@ -250,6 +248,19 @@ public class Map implements Observer {
 
     }
 
+    public void addLocationNodeEdge(LocationNode locationNode) throws NodeDoesNotExistException {
+
+        if(this.currentLocationNode == null) {
+
+            LOGGER.debug("Edge could not be added because the currentLocationNdoe was null");
+
+        }
+
+        this.currentLocationNode.addEdge(locationNode);
+
+    }
+
+
     public void addDestination(String name, DestinationType destinationType) {
 
         if (this.currentLocationNode == null) {
@@ -269,6 +280,28 @@ public class Map implements Observer {
         // TODO create debug message
 
     }
+
+
+    //No currentLocationNodeEdge
+//    public void removeLocationNodeEdge() {
+//        //TODO create debug message
+//
+//        if (this.currentFloor == null) {
+//
+//            // TODO create debug message
+//
+//            return;
+//        }
+//
+//        if (this.currentLocationNodeEdge == null) {
+//
+//            // TODO create debug message
+//
+//            return;
+//        }
+//
+//        return;
+//    }
 
     public void removeLocationNode() {
 
@@ -586,23 +619,11 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-//        Gson gson = new Gson();
 
 
         MapMemento mapMemento = saveStateToMemento();
 
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
-
-//        try {
-//
-//            FileWriter fileWriter = new FileWriter(file.toString());
-//            fileWriter.write(json);
-//
-//        } catch (IOException e) {
-//
-//            e.printStackTrace();
-//
-//        }
 
         System.out.println(objectMapper.writeValueAsString(mapMemento));
 
@@ -645,7 +666,6 @@ public class Map implements Observer {
 
             //TODO uncomment after deserializer is complete - load from starter map for now
             if (specifiedFile.exists() && specifiedFile.length() > 0) {
-//            if(false) {
                 // Load specified file
 
                 mapMemento = objectMapper.readValue(specifiedFile, MapMemento.class);
@@ -677,7 +697,118 @@ public class Map implements Observer {
 
     public static Map loadStateFromMemento(MapMemento mapMemento) {
         //TODO working on
-        return null;
+
+        HashMap<UUID, LocationNodeMemento> locationNodeMementoHashMap = new HashMap<UUID, LocationNodeMemento>();
+
+        //TODO to map, add startLocatio object and the mapBuilding arraylist
+        Map map = new Map(mapMemento.getName(), mapMemento.getUniqueID());
+
+        // Loop through the building memento arraylist in the mapMemento
+        for(BuildingMemento buildingMemento : mapMemento.getBuildingMementos()) {
+
+            // Add a building to the map
+            map.addBuilding(buildingMemento.getName());
+
+            // Get the last element in the array (which will be the element just added)
+            // Set the added Building as the current building
+            map.currentBuilding = map.getMapBuildings().get(map.getMapBuildings().size() - 1);
+
+            // Loop through the floorMementos
+            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+
+                map.addFloor(floorMemento.getFloorName(), floorMemento.getResourceFileName());
+
+                map.currentFloor = map.currentBuilding.getFloors().get(map.currentBuilding.getFloors().size() - 1);
+
+                for (LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+
+
+                   ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
+
+                   LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(), locationNodeMemento.getLocation(), map.getCurrentFloor(), imageType);
+
+                   for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
+
+                       DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
+
+                       locationNode.addDestination(destinationMemento.getName(), destinationType);
+
+                   }
+
+
+                   locationNodeMementoHashMap.put(locationNodeMemento.getUniqueID(), locationNodeMemento);
+
+                   map.getCurrentFloor().addLocationNode(locationNode);
+
+                }
+
+            }
+
+        }
+
+
+        // TODO, load edges
+        // At this point all the location nodes have been added, so we can start adding the edges
+
+        //Loop through the existing Building, floor, then locationNodes
+        //For each floor,
+//        for (LocationNode locationNode : map.getCurrentFloorLocationNodes()) {
+//
+//            // Get the memento version of this locationNode
+//            LocationNodeMemento locationNodeMemento = locationNodeMementoHashMap.get(locationNode.getUniqueID());
+//
+//            for (LocationNodeEdgeMemento locationNodeEdgeMemento : locationNodeMemento.getEdgeMomentos()) {
+//
+//                if(locationNodeEdgeMemento.getLocationNode1ID() == locationNode.getUniqueID()) {
+////                    locationNode.addEdge() //Get the location from hashmap,
+//                }
+////                locationNode.addEdge();
+//
+//            }
+//        }
+
+
+
+            //TODO set the floors arraylist
+//            Building building = new Building(buildingMemento.getName(), buildingMemento.getUniqueID(), map);
+
+//            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+//
+//                //TODO set the locationNodes arraylist
+//                Floor floor = new Floor(floorMemento.getFloorName(), floorMemento.getUniqueID(), floorMemento.getResourceFileName(), building);
+//
+//                for(LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+//
+//                    //Gets the imageType enum from the string form the locationNodeMomento
+//                    ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
+//
+//                    //TODO set the edges
+//                    LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(),locationNodeMemento.getLocation(), floor, imageType);
+//
+//                    ArrayList<Destination> destinations = new ArrayList<Destination>();
+//
+//                    for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
+//
+//                        //Gets the destinationType enum from the string from the destinationMemento
+//                        DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
+//
+//                        Destination destination = new Destination( destinationMemento.getName(), destinationMemento.getUniqueID(), destinationType, locationNode);
+//
+//                        locationNode.addDestination(destination.getName(), destinationType);
+//
+//                    }
+//
+//                    floor.addLocationNode(locationNode.getName(), locationNode.getLocation(), locationNode.getAssociatedImage());
+//
+//                }
+//
+//            }
+
+
+
+
+
+        return map;
 
     }
 
