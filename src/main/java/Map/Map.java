@@ -284,6 +284,15 @@ public class Map implements Observer {
             return;
         }
 
+        LOGGER.info("Removing Location Node: " + this.currentLocationNode.toString());
+
+        this.currentLocationNodeDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentAdjacentLocationNodes.removeAll(this.currentLocationNode.getAdjacentLocationNodes());
+        this.currentFloorLocationNodes.remove(this.currentLocationNode);
+        this.currentFloorDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentDestination = null;
+
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
     }
@@ -554,7 +563,8 @@ public class Map implements Observer {
             case LOCATIONNODEREMOVED:
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
-                this.currentLocationNode = null;
+                this.currentLocationNode.getEdges().clear();
+                this.setCurrentLocationNode(null);
 
                 break;
 
@@ -815,8 +825,7 @@ public class Map implements Observer {
         }
 
 
-
-
+        locationNodeHashMap.clear();
 
 
         return map;
@@ -959,6 +968,12 @@ public class Map implements Observer {
 
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
+        if (locationNode == null) {
+
+            this.currentLocationNode = null;
+
+            return;
+        }
 
         this.currentDestination = null;
         locationNodeUpdater(locationNode);
@@ -971,7 +986,7 @@ public class Map implements Observer {
 
     private void locationNodeUpdater(LocationNode newLocationNode) {
 
-        if (currentMapState.equals(MapState.NORMAL)) {
+        if (newLocationNode == null) {
 
             return;
         }

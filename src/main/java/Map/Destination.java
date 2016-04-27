@@ -122,4 +122,11 @@ public class Destination extends Observable {
         return this.name;
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+
+        LOGGER.debug("Deleting Destination: " + this.toString());
+
+        super.finalize();
+    }
 }

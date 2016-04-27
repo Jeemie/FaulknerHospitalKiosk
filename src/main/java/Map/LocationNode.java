@@ -363,7 +363,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 
@@ -371,7 +371,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         }
 
-
+        this.iconLabel = null;
         this.iconImageView = null;
 
     }
@@ -385,10 +385,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             edge.getOtherNode(this).removeEdgeConnection(edge);
 
-           // this.removeEdgeConnection(edge);
+            edge.removeLocationNodes();
 
         }
-
 
     }
 
@@ -400,6 +399,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public void removeEdgeConnection(LocationNodeEdge edge) {
 
         this.edges.remove(edge);
+
     }
 
     /**
@@ -624,5 +624,13 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public boolean isSameFloor(LocationNode locationNode) {
 
         return this.currentFloor.equals(locationNode.getCurrentFloor());
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+
+        System.out.println("Deleting Location Node: " + this.toString());
+
+        super.finalize();
     }
 }

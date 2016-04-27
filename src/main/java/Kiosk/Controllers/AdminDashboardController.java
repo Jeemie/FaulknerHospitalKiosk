@@ -659,9 +659,40 @@ public class AdminDashboardController {
 
                 faulknerHospitalMap.setCurrentLocationNode(currentLocationNode);
 
+                switch (faulknerHospitalMap.getCurrentMapState()) {
+
+                    case REMOVENODE:
+
+                        faulknerHospitalMap.removeLocationNode();
+
+                        break;
+
+                    case MOVENODE:
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
             }
 
         });
+
+        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDNODE,
+                this.faulknerHospitalMap, "Add Location", this.selectedButtonLabel, this.mapTabPane,
+                this.addLocationTab));
+
+        this.floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.MOVENODE, "Modify Button",
+                        this.selectedButtonLabel));
+
+        this.floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVENODE, "Delete Button",
+                        this.selectedButtonLabel));
+
 
         this.floorDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -687,22 +718,6 @@ public class AdminDashboardController {
             }
 
         });
-
-
-        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDNODE,
-                this.faulknerHospitalMap, "Add Location", this.selectedButtonLabel, this.mapTabPane,
-                this.addLocationTab));
-
-
-        this.floorLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVENODE, "Delete Button",
-                        this.selectedButtonLabel));
-
-
-        this.floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.MOVENODE, "Modify Button",
-                        this.selectedButtonLabel));
-
 
     }
 
