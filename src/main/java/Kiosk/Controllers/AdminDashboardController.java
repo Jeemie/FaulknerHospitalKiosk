@@ -1,17 +1,13 @@
 package Kiosk.Controllers;
 
 //import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
+
 import Kiosk.Controllers.EventHandlers.AddTabEventHandler;
 import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
+import Map.*;
 import Map.Enums.ImageType;
 import Map.Enums.MapState;
-import Map.Map;
-import Map.Floor;
-import Map.Destination;
-import Map.LocationNode;
-import Map.Location;
-import Map.LocationNodeEdge;
 import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,9 +36,13 @@ public class AdminDashboardController {
 
     private Map faulknerHospitalMap;
 
+    private Building hospitalBuilding;
+
     private KioskApp kioskApp;
 
     private ObservableList icons = FXCollections.observableArrayList();
+
+    private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
 
     private boolean lockTabPane;
 
@@ -94,7 +94,7 @@ public class AdminDashboardController {
     private Accordion buildingAccordion;
 
 
-    // Floors Titled Pane //
+    // Floors Titled Pane // in Building tab
     @FXML
     private TitledPane buildingFloorsTitledPane;
 
@@ -111,7 +111,7 @@ public class AdminDashboardController {
     private Button buildingFloorsDeleteButton;
 
 
-    // Destinations Titled Pane //
+    // Destinations Titled Pane // in Building tab
     @FXML
     private TitledPane buildingDestinationsTitledPane;
 
@@ -119,12 +119,16 @@ public class AdminDashboardController {
     private ListView buildingDestinationsListView;
 
 
-    // Destinations Titled Pane //
+    // Misc Titled Pane // in Building tab
+
     @FXML
     private TitledPane buildingMiscTitledPane;
 
     @FXML
     private Button setStartNode;
+
+    @FXML
+    private ComboBox selectStartKioskComboBox;
 
     @FXML
     private Button astarButton;
@@ -387,7 +391,6 @@ public class AdminDashboardController {
 
 
 
-
         // Setup Zoom In Button
         this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -473,6 +476,7 @@ public class AdminDashboardController {
                 if (newValue != null) {
 
                     LOGGER.info("In the building tab the " + newValue.getText() + " Titled Pane has been expanded");
+
 
                 } else {
 
@@ -567,6 +571,20 @@ public class AdminDashboardController {
                 Destination currentDestination = ((Destination) buildingDestinationsListView.getSelectionModel().getSelectedItem());
 
                 faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
+
+        });
+
+
+        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentBuildingKiosks());
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+
 
             }
 
