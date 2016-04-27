@@ -409,16 +409,6 @@ public class Map implements Observer {
     }
 
 
-    public void setupNormalStackPane(StackPane stackPane) {
-
-
-
-
-    }
-
-
-
-
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
@@ -538,7 +528,6 @@ public class Map implements Observer {
 
             case LOCATIONNODEEDGE:
 
-                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
                 this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
@@ -901,9 +890,8 @@ public class Map implements Observer {
 
     public void setStartLocationNode(LocationNode locationNode) {
 
-        LOGGER.info(locationNode.toString());
-
         this.startLocationNode = locationNode;
+
     }
 
     public void setCurrentDestination(Destination destination) {
