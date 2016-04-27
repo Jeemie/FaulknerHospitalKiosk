@@ -36,7 +36,11 @@ public class MapMemento {
 
         this.name = name;
         this.uniqueID = uniqueID;
-        this.startLocationNodeID = startLocationNode.getUniqueID();
+        if(startLocationNode == null) {
+            this.startLocationNodeID = null;
+        } else {
+            this.startLocationNodeID = startLocationNode.getUniqueID();
+        }
         this.buildingMementos = new ArrayList< BuildingMemento >();
 
 
