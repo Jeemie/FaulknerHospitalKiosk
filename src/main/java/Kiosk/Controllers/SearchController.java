@@ -1,11 +1,9 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Building;
-import Map.Destination;
+import Map.*;
 import Map.Enums.DestinationType;
-import Map.Floor;
-import Map.LocationNode;
+import Map.Map;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SearchController {
@@ -32,15 +27,14 @@ public class SearchController {
     private boolean okClicked = false;
     private KioskApp kioskApp;
     private Building building;
+    private Map faulknerHospitalMap;
     private String inValue;
-    List<String> searchResult;
-
+    List searchResult;
 
 
     ToggleButton departments;
     ToggleButton physicians;
     ToggleButton services;
-
 
 
     Timer timer = new Timer("A Timer");
@@ -52,7 +46,7 @@ public class SearchController {
 
         @Override
         public void run() {
-                counter++;
+            counter++;
         }
     };
 
@@ -77,7 +71,7 @@ public class SearchController {
                     timer.cancel();
                     timerTask.cancel();
                     running = false;
-                   // exception.printStackTrace();
+                    // exception.printStackTrace();
                     break;
                 }
 
@@ -95,15 +89,16 @@ public class SearchController {
         }
     };
 
+    List<Destination> allDestinations = new ArrayList<Destination>();
+    List<Destination> filteredDestinations = new ArrayList<Destination>();
     ObservableList<String> destinations = FXCollections.observableArrayList();
-    ObservableList<String> searchResults = FXCollections.observableArrayList();
+    ObservableList<Destination> searchResults = FXCollections.observableArrayList();
 
     @FXML
-    private ListView<String> listDirectory;
+    private ListView listDirectory;
 
     @FXML
     private TextField searchTextBox;
-
 
 
     /**
@@ -119,7 +114,7 @@ public class SearchController {
             @Override
             public void handle(MouseEvent event) {
 
-                if(event.getClickCount() == 2) {
+                if (event.getClickCount() == 2) {
                     ArrayList<Floor> floors = building.getFloors();
 
                     for (Floor f : floors) {
@@ -159,12 +154,21 @@ public class SearchController {
 
                     kioskApp.showSearch(searchTextBox.getText());
 
-                }
-                else {
+                } else if (event.getCode().equals(KeyCode.BACK_SPACE)) {
 
+                    String backSpaced = searchTextBox.getText();
+
+                    backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
+
+                    displayResult(backSpaced);
+                    counter = 0;
+
+                } else {
+                    displayResult(searchTextBox.getText() + event.getText());
                     counter = 0;
 
                 }
+
             }
         });
 
@@ -176,7 +180,6 @@ public class SearchController {
                 counter = 0;
             }
         });
-
 
 
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -273,16 +276,22 @@ public class SearchController {
     @FXML
     public void displayResult(String value) {
 
-//        destinations.setAll(building.getDestinations());
+        allDestinations = this.faulknerHospitalMap.allDirectory();
 
-        searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
-
+        for (Destination d : allDestinations) {
+            filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
         inValue = value;
 
-        searchResults.setAll(searchResult);
+        Collections.sort(filteredDestinations, new Comparator<Destination>() {
+            public int compare(Destination o1, Destination o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        searchResults.setAll(filteredDestinations);
+
 
         listDirectory.setItems(searchResults);
-
 
     }
 
@@ -293,9 +302,21 @@ public class SearchController {
         if (destinationType == DestinationType.PHYSICIAN) {
 
             counter = 0;
-//            destinations.setAll(building.getDestinations(DestinationType.PHYSICIAN));
-            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
+
+            allDestinations = this.faulknerHospitalMap.getPhysicianDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
+            searchResults.sorted();
             listDirectory.setItems(searchResults);
 
         }
@@ -303,19 +324,42 @@ public class SearchController {
         if (destinationType == DestinationType.DEPARTMENT) {
 
             counter = 0;
-//            DestinationType.DEPARTMENT));
-            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
+
+            allDestinations = this.faulknerHospitalMap.getDepartmentDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
             listDirectory.setItems(searchResults);
+
 
         }
 
         if (destinationType == DestinationType.SERVICE) {
 
             counter = 0;
-//            destinations.setAll(building.getDestinations(DestinationType.SERVICE));
-            searchResult = destinations.stream().filter(a -> a.toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
-            searchResults.setAll(searchResult);
+
+            allDestinations = this.faulknerHospitalMap.getServiceDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
             listDirectory.setItems(searchResults);
 
         }
@@ -340,6 +384,12 @@ public class SearchController {
     private void sortServices() {
 
         sortResult(DestinationType.SERVICE);
+
+    }
+
+    public void setFaulknerHospitalMap(Map map) {
+
+        this.faulknerHospitalMap = map;
 
     }
 }
