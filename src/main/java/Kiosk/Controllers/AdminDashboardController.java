@@ -1,17 +1,13 @@
 package Kiosk.Controllers;
 
 //import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
+
 import Kiosk.Controllers.EventHandlers.AddTabEventHandler;
 import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
+import Map.*;
 import Map.Enums.ImageType;
 import Map.Enums.MapState;
-import Map.Map;
-import Map.Floor;
-import Map.Destination;
-import Map.LocationNode;
-import Map.Location;
-import Map.LocationNodeEdge;
 import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,9 +36,13 @@ public class AdminDashboardController {
 
     private Map faulknerHospitalMap;
 
+    private Building hospitalBuilding;
+
     private KioskApp kioskApp;
 
     private ObservableList icons = FXCollections.observableArrayList();
+
+ //   private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
 
     private boolean lockTabPane;
 
@@ -94,7 +94,7 @@ public class AdminDashboardController {
     private Accordion buildingAccordion;
 
 
-    // Floors Titled Pane //
+    // Floors Titled Pane // in Building tab
     @FXML
     private TitledPane buildingFloorsTitledPane;
 
@@ -111,7 +111,7 @@ public class AdminDashboardController {
     private Button buildingFloorsDeleteButton;
 
 
-    // Destinations Titled Pane //
+    // Destinations Titled Pane // in Building tab
     @FXML
     private TitledPane buildingDestinationsTitledPane;
 
@@ -119,12 +119,19 @@ public class AdminDashboardController {
     private ListView buildingDestinationsListView;
 
 
-    // Destinations Titled Pane //
+    // Misc Titled Pane // in Building tab
+
     @FXML
     private TitledPane buildingMiscTitledPane;
 
     @FXML
+    private Label startNodeLabel;
+
+    @FXML
     private Button setStartNode;
+
+    @FXML
+    private ComboBox selectStartKioskComboBox;
 
     @FXML
     private Button astarButton;
@@ -387,7 +394,6 @@ public class AdminDashboardController {
 
 
 
-
         // Setup Zoom In Button
         this.zoomInButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -473,6 +479,7 @@ public class AdminDashboardController {
                 if (newValue != null) {
 
                     LOGGER.info("In the building tab the " + newValue.getText() + " Titled Pane has been expanded");
+
 
                 } else {
 
@@ -567,6 +574,39 @@ public class AdminDashboardController {
                 Destination currentDestination = ((Destination) buildingDestinationsListView.getSelectionModel().getSelectedItem());
 
                 faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+            }
+
+        });
+
+
+        startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
+        selectStartKioskComboBox.setPromptText("Select Kiosk");
+        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+
+                    LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+                    faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                    startNodeLabel.setText("Current Kiosk: " +faulknerHospitalMap.getStartLocationNode().toString());
+                }
+
+            }
+
+        });
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
 
             }
 
@@ -724,7 +764,7 @@ public class AdminDashboardController {
     private void setLocationTabListeners() {
 
 
-        // Setup Building Accordion
+        // Setup Location Accordion
         this.locationAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
 
             @Override
@@ -751,7 +791,7 @@ public class AdminDashboardController {
 
                 if (newValue) {
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
+                    LOGGER.info("Location ConnectedLocations Titled Pane Opened");
 
 //                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
@@ -783,7 +823,7 @@ public class AdminDashboardController {
 
                 if (newValue) {
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
+                    LOGGER.info("Location Destinations Titled Pane Opened");
 
 //                    if (building.getCurrentNodes() != null) {
 //
@@ -829,18 +869,6 @@ public class AdminDashboardController {
 //            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
         });
 
-
-
-        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                faulknerHospitalMap.setStartLocationNode(faulknerHospitalMap.getCurrentLocationNode());
-
-            }
-
-        });
 
     }
 

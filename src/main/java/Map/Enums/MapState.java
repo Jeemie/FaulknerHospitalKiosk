@@ -1,7 +1,5 @@
 package Map.Enums;
 
-import Map.Map;
-
 /**
  * Represents how you can modify the current building.
  */
@@ -12,7 +10,6 @@ public enum MapState {
     REMOVENODE,
     ADDADJACENTNODE,
     MODIFYDESTINATIONS,
-    MOVENODE,
-    SETSTARTNODE;
+    MOVENODE;
 
 }
