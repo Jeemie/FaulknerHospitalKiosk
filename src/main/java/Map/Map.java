@@ -412,12 +412,18 @@ public class Map implements Observer {
 
     public void setupDirections(ListView textualDirections) {
 
-        //TODO help
-        ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
-        textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
-
-        LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
-        textualDirections.setItems(textualDirectionStrings);
+        try {
+            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
+            if(this.currentPath  == null) {
+                LOGGER.debug("No path");
+            } else {
+                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
+                textualDirections.setItems(textualDirectionStrings);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
