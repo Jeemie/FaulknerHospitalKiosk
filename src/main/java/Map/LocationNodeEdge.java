@@ -49,26 +49,6 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-    /**
-     * Constructor used only for loading purposes.
-     * @param uniqueID
-     * @param locationNode1
-     * @param locationNode2
-     */
-    public LocationNodeEdge(UUID uniqueID, LocationNode locationNode1, LocationNode locationNode2) {
-
-        this.uniqueID = uniqueID;
-        this.locationNode1 = locationNode1;
-        this.locationNode2 = locationNode2;
-        this.weight = computeWeight();
-
-
-        this.addObserver(this.locationNode1);
-        this.addObserver(this.locationNode2);
-
-    }
-
-
     public void drawEdgeAdmin(Pane locationNodeEdgePane) {
 
         // TODO setup edge clicking

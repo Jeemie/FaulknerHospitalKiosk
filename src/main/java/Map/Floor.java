@@ -73,32 +73,6 @@ public class Floor extends Observable implements Observer {
     }
 
     /**
-     * Constructor used only for loading purposes.
-     *   Note that the arraylist of locationNodes must be
-     *   added on afterwards, as it has not been loaded yet.
-     * @param floorName
-     * @param uniqueID
-     * @param resourceFileName
-     * @param currentBuilding
-     */
-    public Floor(String floorName, UUID uniqueID, String resourceFileName, Building currentBuilding) {
-
-        this.floorName = floorName;
-        this.uniqueID = uniqueID;
-        this.resourceFileName = resourceFileName;
-        this.currentBuilding = currentBuilding;
-        //TODO correct image loading
-        //this.floorImage = new Image(this.getClass().getResource(resourceFileName.getResourceFileName()).toString());
-
-        // TODO delete - Temp fix for testing:
-        this.floorImage = null;
-        this.locationNodes = new ArrayList<>();
-
-        this.addObserver(this.currentBuilding);
-
-    }
-
-    /**
      * Add a new node to the current floor. By default, heruistic cost is set to 0
      *
      * @param name
