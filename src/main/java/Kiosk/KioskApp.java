@@ -102,8 +102,8 @@ public class KioskApp extends Application {
             primaryStage.setFullScreen(false);
             //primaryStage.setFullScreen(true);
 //
-//          System.out.println(getClass().getResource("stylesheet.css"));
-//            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
+//          System.out.println(getClass().getResource("Styles.css"));
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,6 +165,7 @@ public class KioskApp extends Application {
 //            primaryStage.setScene(scene);
 //            primaryStage.setFullScreen(true);
 //            primaryStage.show();*/
+//            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 //
 //            // Give controller access to Main App
 //            AdminLoginController controller = loader.getController();
@@ -200,16 +201,11 @@ public class KioskApp extends Application {
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Administrator Dashboard");
             primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
 
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
             controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
-//            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
 
@@ -281,10 +277,11 @@ public class KioskApp extends Application {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane scene = loader.load();
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             primaryStage.setTitle("Directory");
-            primaryStage.getScene().setRoot(page);
+            primaryStage.getScene().setRoot(scene);
 
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
@@ -318,15 +315,13 @@ public class KioskApp extends Application {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane scene = loader.load();
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
-            primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
+            primaryStage.getScene().setRoot(scene);
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
@@ -389,10 +384,6 @@ public class KioskApp extends Application {
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
             primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
 
             // Give controller access to Main App.
             KioskOverviewController controller = loader.getController();
