@@ -199,7 +199,7 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentBuilding.addFloor(name, resourceFileName);
+        this.setCurrentFloor(this.currentBuilding.addFloor(name, resourceFileName));
 
     }
 
@@ -212,7 +212,7 @@ public class Map implements Observer {
             return;
         }
 
-        setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
+        this.setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
 
         this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
         this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
@@ -436,7 +436,7 @@ public class Map implements Observer {
 
     public void pathPreviousFloor() {
 
-
+        this.currentPath.drawPreviousFloor();
 
     }
 

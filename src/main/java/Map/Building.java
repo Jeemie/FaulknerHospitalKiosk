@@ -57,7 +57,7 @@ public class Building extends Observable implements Observer {
      * @param resourceFileName Image you want to associate with the floor.
      * @return New floor added to this building
      */
-    public void addFloor(String floorName, String resourceFileName) {
+    public Floor addFloor(String floorName, String resourceFileName) {
 
         for (Floor floor : floors) {
 
@@ -67,7 +67,7 @@ public class Building extends Observable implements Observer {
                 LOGGER.info("A floor with the name " + floorName + " already exists in this building.");
 
                 // Return the existing floor
-                return;
+                return null;
             }
 
         }
@@ -79,7 +79,7 @@ public class Building extends Observable implements Observer {
         setChanged();
         notifyObservers(UpdateType.FLOORADDED);
 
-
+        return newFloor;
     }
 
     public ArrayList<Destination> getBuildingDestinations() {

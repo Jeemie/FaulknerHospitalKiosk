@@ -266,12 +266,23 @@ public class MapViewController{
 
         //timerThread.start();
 
-        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        this.changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathNextFloor();
+
+            }
+
+        });
+
+        this.changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.pathPreviousFloor();
 
             }
 

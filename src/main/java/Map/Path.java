@@ -88,20 +88,35 @@ public class Path {
 
     public void drawNextFloor() {
 
-        LOGGER.info("Drawing floor " + this.currentIndex);
-
         if (!(this.currentIndex == (this.splitPath.size() - 1))) {
 
             this.currentIndex++;
 
         }
 
+        drawFloorPath();
+
+    }
+
+    public void drawPreviousFloor() {
+
+        if (!(this.currentIndex == 0)) {
+
+            this.currentIndex--;
+
+        }
+
+        drawFloorPath();
+
+    }
+
+
+    private void drawFloorPath() {
+
         LOGGER.info("Drawing floor " + this.currentIndex);
 
         ArrayList<LocationNode> temp = this.splitPath.get(this.currentIndex);
         Floor tempFloor = temp.get(0).getCurrentFloor();
-
-        LOGGER.info(temp.toString());
 
         tempFloor.drawFloor(this.imageView);
 

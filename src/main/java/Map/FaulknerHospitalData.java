@@ -39,9 +39,6 @@ public class FaulknerHospitalData {
 
         // FLOOR 1
 
-        // Set current floor, then set start node
-        map.setCurrentFloor(f1);
-
         map.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
         map.addDestination("Audiology Destination", DestinationType.DEPARTMENT);
         map.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
@@ -66,20 +63,8 @@ public class FaulknerHospitalData {
 
 
         // TODO change to Kiosk - starting at a waiting room currently
-        map.setStartLocationNode(f1.getLocationNodes().get(0));
+        map.setStartLocationNode(f1.getLocationNodes().get(1));
 
-        //TODO replace with actual values
-        // Random edges for testing:
-        try {
-            // Add edge from Audiology to Cardiac Rehabilitation
-            f1.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(1));
-
-        } catch (NodeDoesNotExistException e) {
-
-            System.err.println("Couldn't draw path from Audiology to Cardiac Rehabilatation\n");
-            e.printStackTrace();
-
-        }
 
 
         map.addFloor("Floor 2", "floor2.png"); // Index 1
@@ -108,6 +93,21 @@ public class FaulknerHospitalData {
         map.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
         map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
+
+        //TODO replace with actual values
+        // Random edges for testing:
+        try {
+            // Add edge from Audiology to Cardiac Rehabilitation
+            f1.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(1));
+            f2.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(0));
+            f2.getLocationNodes().get(1).addEdge(f2.getLocationNodes().get(0));
+
+        } catch (NodeDoesNotExistException e) {
+
+            System.err.println("Couldn't draw path from Audiology to Cardiac Rehabilatation\n");
+            e.printStackTrace();
+
+        }
 /*
         mMainHospital.getFloor(1).addNode(new Location(1090, 1100)); //get(10) Info
 
