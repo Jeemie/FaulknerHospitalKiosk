@@ -158,8 +158,9 @@ public class SearchController {
 
                     String backSpaced = searchTextBox.getText();
 
-                    backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
-
+                    if(backSpaced.length() != 0) {
+                        backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
+                    }
                     displayResult(backSpaced);
                     counter = 0;
 

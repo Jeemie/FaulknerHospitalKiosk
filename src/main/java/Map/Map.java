@@ -325,7 +325,7 @@ public class Map implements Observer {
 
         for (Building building : this.mapBuildings) {
 
-            this.directoryList.setAll(building.getAllBuildingDestinations(DestinationType.BATHROOM));
+            this.directoryList.setAll(building.getAllBuildingDestinations());
 
         }
 

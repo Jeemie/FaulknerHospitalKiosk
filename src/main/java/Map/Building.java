@@ -112,7 +112,7 @@ public class Building extends Observable implements Observer {
     //
     //
     //
-    public ArrayList<Destination> getAllBuildingDestinations(DestinationType destinationType) {
+    public ArrayList<Destination> getAllBuildingDestinations() {
 
         ArrayList<Destination> buildingDestinations = new ArrayList<>();
 
