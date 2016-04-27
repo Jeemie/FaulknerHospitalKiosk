@@ -11,7 +11,6 @@ import Map.Memento.MapMemento;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
-import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -347,26 +346,8 @@ public class Map implements Observer {
 
         });
 
-//        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-//
-//            @Override
-//            public void handle(MouseEvent event) {
-//
-//                if (currentMapState == MapState.ADDNODE) {
-//
-//                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
-//
-//
-//                    Location newLocation = new Location(event.getX(), event.getY());
-//
-////                    addLocationNode();
-//
-//                }
-//
-//
-//            }
-//
-//        });
+        this.currentFloorLocationNodePane.getChildren().clear();
+        this.currentFloorEdgePane.getChildren().clear();
 
     }
 
@@ -816,6 +797,9 @@ public class Map implements Observer {
 
             this.currentAdjacentLocationNodes.clear();
             this.currentAdjacentLocationNodes.addAll(newLocationNode.getAdjacentLocationNodes());
+
+            newLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+            newLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
 
         }
 

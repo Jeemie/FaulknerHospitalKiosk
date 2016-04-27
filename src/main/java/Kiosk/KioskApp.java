@@ -328,6 +328,7 @@ public class KioskApp extends Application {
             e.printStackTrace();
             return false;
         }
+
     }
 
     /**
