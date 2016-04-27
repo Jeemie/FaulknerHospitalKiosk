@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="73.0" layoutY="50.0" prefHeight="51.0" prefWidth="1134.0" promptText="Search..." AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="50.0">
+        <TextField fx:id="searchTextBox" layoutX="73.0" layoutY="50.0" prefHeight="51.0" prefWidth="1134.0" promptText="Search..." styleClass="text-field" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="50.0">
          <font>
             <Font size="24.0" />
          </font></TextField>
@@ -26,7 +26,7 @@
                 <TableColumn prefWidth="453.0" text="Search Results" />
             </columns>
         </TableView>
-        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="371.0" prefHeight="340.0" prefWidth="1134.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="300.0" />
+        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="371.0" prefHeight="340.0" prefWidth="1134.0" styleClass="list-cell" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="300.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="226.0" prefHeight="51.0" prefWidth="1134.0" text="Search Results" textAlignment="CENTER" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="226.0">
          <font>
             <Font size="24.0" />
@@ -65,7 +65,7 @@
          <children>
             <ButtonBar buttonMinWidth="231.0" maxWidth="733.0" prefHeight="51.0" prefWidth="733.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
               <buttons>
-                  <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="40.0" text="Care Provider" translateX="-10.0">
+                  <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="40.0" styleClass="button" text="Care Provider" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -73,12 +73,12 @@
                         <ToggleGroup fx:id="Sorting" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" prefHeight="40.0" text="Departments" toggleGroup="$Sorting" translateX="-10.0">
+                  <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" prefHeight="40.0" styleClass="button" text="Departments" toggleGroup="$Sorting" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" prefHeight="40.0" prefWidth="273.0" text="Services" toggleGroup="$Sorting" translateX="-10.0">
+                  <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" prefHeight="40.0" prefWidth="273.0" styleClass="button" text="Services" toggleGroup="$Sorting" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
