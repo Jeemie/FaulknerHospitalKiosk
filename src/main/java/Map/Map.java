@@ -934,6 +934,11 @@ public class Map implements Observer {
         this.startLocationNode = locationNode;
 
     }
+    public LocationNode getStartLocationNode() {
+
+        return this.startLocationNode;
+
+    }
 
     public void setCurrentDestination(Destination destination) {
 

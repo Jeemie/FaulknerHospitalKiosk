@@ -42,7 +42,7 @@ public class AdminDashboardController {
 
     private ObservableList icons = FXCollections.observableArrayList();
 
-    private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
+ //   private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
 
     private boolean lockTabPane;
 
@@ -123,6 +123,9 @@ public class AdminDashboardController {
 
     @FXML
     private TitledPane buildingMiscTitledPane;
+
+    @FXML
+    private Label startNodeLabel;
 
     @FXML
     private Button setStartNode;
@@ -579,7 +582,8 @@ public class AdminDashboardController {
 
 
         this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
-        selectStartKioskComboBox.setPromptText("Select Current Kiosk");
+        startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
+        selectStartKioskComboBox.setPromptText("Select Kiosk");
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -590,6 +594,7 @@ public class AdminDashboardController {
 
                     LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
                     faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                    startNodeLabel.setText("Current Kiosk: " +faulknerHospitalMap.getStartLocationNode().toString());
                 }
 
             }
