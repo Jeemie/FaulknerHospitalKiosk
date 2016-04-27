@@ -2,6 +2,7 @@ package Map.Memento;
 
 import Map.*;
 import Map.Enums.ImageType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class LocationNodeMemento {
     // Destinations at this node
     private ArrayList<DestinationMemento> destinationMementos;
 
+    @JsonIgnore
+    public LocationNode associatedLocationNode;
+
     public LocationNodeMemento () {
 
         super();
@@ -47,7 +51,7 @@ public class LocationNodeMemento {
         this.uniqueID = uniqueID;
         this.location = location;
         this.currentFloorID = currentFloor.getUniqueID();
-        this.associatedImageString = associatedImage.getResourceFileName();
+        this.associatedImageString = associatedImage.toString();
         this.edgeMomentos = new ArrayList<LocationNodeEdgeMemento>();
         this.destinationMementos = new ArrayList<DestinationMemento>();
 
@@ -59,7 +63,7 @@ public class LocationNodeMemento {
 
         for (Destination destination: destinations) {
 
-            destinationMementos.add(new DestinationMemento(destination.getUniqueID(), destination.getName(), destination.getDestinationType(), destination.getCurrentLocationNode()));
+            destinationMementos.add(new DestinationMemento(destination.getName(), destination.getUniqueID(), destination.getDestinationType(), destination.getCurrentLocationNode()));
 
         }
 
@@ -99,5 +103,18 @@ public class LocationNodeMemento {
     public ArrayList<DestinationMemento> getDestinationMementos() {
 
         return destinationMementos;
+    }
+
+
+    public LocationNode getAssociatedLocationNode() {
+
+        return associatedLocationNode;
+
+    }
+
+    public void setAssociatedLocationNode(LocationNode associatedLocationNode) {
+
+        this.associatedLocationNode = associatedLocationNode;
+
     }
 }

@@ -45,6 +45,24 @@ public class Destination extends Observable {
     }
 
     /**
+     * Constructor used only for loading purposes.
+     * @param name
+     * @param uniqueID
+     * @param destinationType
+     * @param currentLocationNode
+     */
+    public Destination(String name, UUID uniqueID, DestinationType destinationType, LocationNode currentLocationNode) {
+
+        this.uniqueID = uniqueID;
+        this.name = name;
+        this.destinationType = destinationType;
+        this.currentLocationNode = currentLocationNode;
+
+        this.addObserver(this.currentLocationNode);
+
+    }
+
+    /**
      * TODO
      *
      * @param destinationType
@@ -104,4 +122,11 @@ public class Destination extends Observable {
         return this.name;
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+
+        LOGGER.debug("Deleting Destination: " + this.toString());
+
+        super.finalize();
+    }
 }

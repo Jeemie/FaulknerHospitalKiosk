@@ -7,7 +7,8 @@ import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
-import Map.Memento.MapMemento;
+import Map.Exceptions.NodeDoesNotExistException;
+import Map.Memento.*;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
@@ -121,11 +122,9 @@ public class Map implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
 
-
     /*
     TODO create exception to throw when adding something to the map when something of the sametype already has that name
     */
-
     public Map(String name) {
 
         this.name = name;
@@ -214,6 +213,19 @@ public class Map implements Observer {
 
     }
 
+    public void addLocationNodeEdge(LocationNode locationNode) throws NodeDoesNotExistException {
+
+        if(this.currentLocationNode == null) {
+
+            LOGGER.debug("Edge could not be added because the currentLocationNdoe was null");
+
+        }
+
+        this.currentLocationNode.addEdge(locationNode);
+
+    }
+
+
     public void addDestination(String name, DestinationType destinationType) {
 
         if (this.currentLocationNode == null) {
@@ -234,6 +246,28 @@ public class Map implements Observer {
 
     }
 
+
+    //No currentLocationNodeEdge
+//    public void removeLocationNodeEdge() {
+//        //TODO create debug message
+//
+//        if (this.currentFloor == null) {
+//
+//            // TODO create debug message
+//
+//            return;
+//        }
+//
+//        if (this.currentLocationNodeEdge == null) {
+//
+//            // TODO create debug message
+//
+//            return;
+//        }
+//
+//        return;
+//    }
+
     public void removeLocationNode() {
 
         if (this.currentFloor == null) {
@@ -249,6 +283,15 @@ public class Map implements Observer {
 
             return;
         }
+
+        LOGGER.info("Removing Location Node: " + this.currentLocationNode.toString());
+
+        this.currentLocationNodeDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentAdjacentLocationNodes.removeAll(this.currentLocationNode.getAdjacentLocationNodes());
+        this.currentFloorLocationNodes.remove(this.currentLocationNode);
+        this.currentFloorDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentDestination = null;
 
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
@@ -419,13 +462,6 @@ public class Map implements Observer {
 
     }
 
-
-    public void setupNormalStackPane(StackPane stackPane) {
-
-
-    }
-
-
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
@@ -528,7 +564,8 @@ public class Map implements Observer {
             case LOCATIONNODEREMOVED:
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
-                this.currentLocationNode = null;
+                this.currentLocationNode.getEdges().clear();
+                this.setCurrentLocationNode(null);
 
                 break;
 
@@ -541,7 +578,6 @@ public class Map implements Observer {
 
             case LOCATIONNODEEDGE:
 
-                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
                 this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
@@ -570,23 +606,11 @@ public class Map implements Observer {
     public void saveToFile(File file) throws IOException, URISyntaxException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-//        Gson gson = new Gson();
 
 
         MapMemento mapMemento = saveStateToMemento();
 
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
-
-//        try {
-//
-//            FileWriter fileWriter = new FileWriter(file.toString());
-//            fileWriter.write(json);
-//
-//        } catch (IOException e) {
-//
-//            e.printStackTrace();
-//
-//        }
 
         System.out.println(objectMapper.writeValueAsString(mapMemento));
 
@@ -630,7 +654,6 @@ public class Map implements Observer {
 
             //TODO uncomment after deserializer is complete - load from starter map for now
             if (specifiedFile.exists() && specifiedFile.length() > 0) {
-//            if(false) {
                 // Load specified file
 
                 mapMemento = objectMapper.readValue(specifiedFile, MapMemento.class);
@@ -662,7 +685,164 @@ public class Map implements Observer {
 
     public static Map loadStateFromMemento(MapMemento mapMemento) {
         //TODO working on
-        return null;
+
+        HashMap<UUID, LocationNode> locationNodeHashMap= new HashMap<UUID, LocationNode>();
+
+        //TODO to map, add startLocatio object and the mapBuilding arraylist
+        Map map = new Map(mapMemento.getName());
+
+        // Loop through the building memento arraylist in the mapMemento
+        for(BuildingMemento buildingMemento : mapMemento.getBuildingMementos()) {
+
+            // Add a building to the map
+            map.addBuilding(buildingMemento.getName());
+
+            // Get the last element in the array (which will be the element just added)
+            // Set the added Building as the current building
+            map.currentBuilding = map.getMapBuildings().get(map.getMapBuildings().size() - 1);
+
+            // Loop through the floorMementos
+            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+
+                map.addFloor(floorMemento.getFloorName(), floorMemento.getResourceFileName());
+
+                map.currentFloor = map.currentBuilding.getFloors().get(map.currentBuilding.getFloors().size() - 1);
+
+                for (LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+
+
+                    ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
+
+                    LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(), locationNodeMemento.getLocation(), map.getCurrentFloor(), imageType);
+
+                    for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
+
+                        DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
+
+                        locationNode.addDestination(destinationMemento.getName(), destinationType);
+
+                    }
+
+
+                    locationNodeHashMap.put(locationNode.getUniqueID(), locationNode);
+                    locationNodeMemento.setAssociatedLocationNode(locationNode);
+
+                    map.getCurrentFloor().addLocationNode(locationNode);
+
+                }
+
+            }
+
+        }
+
+        map.setStartLocationNode(locationNodeHashMap.get(mapMemento.getStartLocationNodeID()));
+
+        // At this point all the location nodes have been added, so we can start adding the edges
+
+        //Loop through the existing Building, floor, then locationNodes
+        //For each floor,
+
+        for(BuildingMemento buildingMemento : mapMemento.getBuildingMementos()) {
+
+            map.currentBuilding = map.getMapBuildings().get(map.getMapBuildings().size() - 1);
+
+            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+
+                map.currentFloor = map.currentBuilding.getFloors().get(map.currentBuilding.getFloors().size() - 1);
+
+                for(LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+
+                    LocationNode associatedLocationNode = locationNodeMemento.getAssociatedLocationNode();
+
+                    for(LocationNodeEdgeMemento locationNodeEdgeMemento : locationNodeMemento.getEdgeMomentos()) {
+
+                        LocationNode locationNode1 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode1ID());
+                        LocationNode locationNode2 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode2ID());
+
+
+                        try{
+
+                            if(!associatedLocationNode.equals(locationNode1)) {
+
+                                associatedLocationNode.addEdge(locationNode1);
+
+                            } else if (!associatedLocationNode.equals(locationNode2)) {
+
+                                associatedLocationNode.addEdge(locationNode2);
+
+                            }
+
+                        } catch (NodeDoesNotExistException e) {
+                                e.printStackTrace();
+                        }
+
+
+
+                    }
+
+//                    locationNodeMemento.getAssociatedLocationNode().addEdge();
+
+                }
+            }
+
+        }
+
+//        for (LocationNode locationNode : map.getCurrentFloorLocationNodes()) {
+//
+//            // Get the memento version of this locationNode
+//            LocationNodeMemento locationNodeMemento = locationNodeMementoHashMap.get(locationNode.getUniqueID());
+//
+//            for (LocationNodeEdgeMemento locationNodeEdgeMemento : locationNodeMemento.getEdgeMomentos()) {
+//
+//                if(locationNodeEdgeMemento.getLocationNode1ID() == locationNode.getUniqueID()) {
+////                    locationNode.addEdge() //Get the location from hashmap,
+//                }
+////                locationNode.addEdge();
+//
+//            }
+//        }
+
+
+
+            //TODO set the floors arraylist
+//            Building building = new Building(buildingMemento.getName(), buildingMemento.getUniqueID(), map);
+
+//            for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
+//
+//                //TODO set the locationNodes arraylist
+//                Floor floor = new Floor(floorMemento.getFloorName(), floorMemento.getUniqueID(), floorMemento.getResourceFileName(), building);
+//
+//                for(LocationNodeMemento locationNodeMemento : floorMemento.getLocationNodeMomentos()) {
+//
+//                    //Gets the imageType enum from the string form the locationNodeMomento
+//                    ImageType imageType = ImageType.valueOf(locationNodeMemento.getAssociatedImageString());
+//
+//                    //TODO set the edges
+//                    LocationNode locationNode = new LocationNode(locationNodeMemento.getName(), locationNodeMemento.getUniqueID(),locationNodeMemento.getLocation(), floor, imageType);
+//
+//                    ArrayList<Destination> destinations = new ArrayList<Destination>();
+//
+//                    for(DestinationMemento destinationMemento : locationNodeMemento.getDestinationMementos()) {
+//
+//                        //Gets the destinationType enum from the string from the destinationMemento
+//                        DestinationType destinationType = DestinationType.valueOf(destinationMemento.getDestinationTypeString());
+//
+//                        Destination destination = new Destination( destinationMemento.getName(), destinationMemento.getUniqueID(), destinationType, locationNode);
+//
+//                        locationNode.addDestination(destination.getName(), destinationType);
+//
+//                    }
+//
+//                    floor.addLocationNode(locationNode.getName(), locationNode.getLocation(), locationNode.getAssociatedImage());
+//
+//                }
+//
+//            }
+
+        locationNodeHashMap.clear();
+
+
+        return map;
 
     }
 
@@ -757,9 +937,8 @@ public class Map implements Observer {
 
     public void setStartLocationNode(LocationNode locationNode) {
 
-        LOGGER.info(locationNode.toString());
-
         this.startLocationNode = locationNode;
+
     }
 
     public void setCurrentDestination(Destination destination) {
@@ -803,6 +982,12 @@ public class Map implements Observer {
 
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
+        if (locationNode == null) {
+
+            this.currentLocationNode = null;
+
+            return;
+        }
 
         this.currentDestination = null;
         locationNodeUpdater(locationNode);
@@ -815,7 +1000,7 @@ public class Map implements Observer {
 
     private void locationNodeUpdater(LocationNode newLocationNode) {
 
-        if (currentMapState.equals(MapState.NORMAL)) {
+        if (newLocationNode == null) {
 
             return;
         }

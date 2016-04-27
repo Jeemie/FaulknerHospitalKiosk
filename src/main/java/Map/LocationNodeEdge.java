@@ -49,7 +49,6 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-
     public void drawEdgeAdmin(Pane locationNodeEdgePane) {
 
         // TODO setup edge clicking
@@ -209,6 +208,13 @@ public class LocationNodeEdge extends Observable {
 
     }
 
+    public void removeLocationNodes() {
+
+        this.locationNode2 = null;
+        this.locationNode1 = null;
+
+    }
+
     public LocationNode getLocationNode1() {
 
         return locationNode1;
@@ -222,5 +228,14 @@ public class LocationNodeEdge extends Observable {
     public UUID getUniqueID() {
 
         return uniqueID;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+
+        System.out.println("Deleting Edge: " + this.toString());
+
+        super.finalize();
+
     }
 }

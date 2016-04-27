@@ -70,11 +70,7 @@ public class KioskApp extends Application {
 
         }
 
-        this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
         this.faulknerHospitalMap.initMapComponents();
-
-
-        this.faulknerHospitalMap = FaulknerHospitalData.starterMap();
 
 
         this.primaryStage.setTitle("Pathfinding Application");
