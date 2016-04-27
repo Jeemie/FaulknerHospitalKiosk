@@ -393,4 +393,14 @@ public class SearchController {
         this.faulknerHospitalMap = map;
 
     }
+
+    public void shutOff(){
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
+    }
 }

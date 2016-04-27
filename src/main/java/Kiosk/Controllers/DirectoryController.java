@@ -16,6 +16,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,9 @@ public class DirectoryController {
 
     @FXML
     private TextField searchTextField;
+
+    @FXML
+    private AnchorPane stage;
 
     @FXML
     private Button okButton;
@@ -278,7 +283,9 @@ public class DirectoryController {
         timerThread.start();
 
 
+
     }
+
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -439,4 +446,13 @@ public class DirectoryController {
 
     }
 
+    public void shutOff(){
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
+    }
 }

@@ -27,7 +27,7 @@
             <children>
                 <AnchorPane prefHeight="86.0" prefWidth="291.0">
                     <children>
-                        <AnchorPane opacity="0.0">
+                        <AnchorPane opacity="0.74">
                             <children>
                                 <Label text="Control Panel" textAlignment="CENTER" />
                                 <Label layoutY="17.0" text="Zoom" />

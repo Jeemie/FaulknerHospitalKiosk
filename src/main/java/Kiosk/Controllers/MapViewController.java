@@ -412,7 +412,15 @@ public class MapViewController{
 
     }
 
-
+    public void shutOff(){
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
+    }
 //    public void setStartSelection(DestinationType destinationType) {
 //
 //        switch (destinationType) {
