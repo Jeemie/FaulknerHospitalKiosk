@@ -41,26 +41,26 @@ public class FaulknerHospitalData {
         // Set current floor, then set start node
         map.setCurrentFloor(f1);
 
-        f1.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
-        f1.getLocationNodes().get(0).addDestination("Audiology Destination", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
-        f1.getLocationNodes().get(1).addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(2).addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
-        f1.addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(3).addDestination("Emergency Room", DestinationType.DEPARTMENT);
-        f1.addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(4).addDestination("GI Endoscopy", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(5).addDestination("Laboratory", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
-        f1.getLocationNodes().get(6).addDestination("Patient Financial Services", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(7).addDestination("Radiology", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(8).addDestination("Special Testing", DestinationType.DEPARTMENT);
-        f1.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
-        f1.getLocationNodes().get(9).addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
+        map.addLocationNode("Audiology", new Location(1000, 500), ImageType.WAITINGROOM); //TODO fix location
+        map.addDestination("Audiology Destination", DestinationType.DEPARTMENT);
+        map.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM); // TODO fix location
+        map.addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
+        map.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
+        map.addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
+        map.addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
+        map.addDestination("Emergency Room", DestinationType.DEPARTMENT);
+        map.addLocationNode("GI", new Location(1249, 640), ImageType.WAITINGROOM);
+        map.addDestination("GI Endoscopy", DestinationType.DEPARTMENT);
+        map.addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
+        map.addDestination("Laboratory", DestinationType.DEPARTMENT);
+        map.addLocationNode("Finance", new Location(1230, 934), ImageType.SERVICE);
+        map.addDestination("Patient Financial Services", DestinationType.DEPARTMENT);
+        map.addLocationNode("Radiology", new Location(900, 900), ImageType.WAITINGROOM);
+        map.addDestination("Radiology", DestinationType.DEPARTMENT);
+        map.addLocationNode("Test", new Location(1150, 906), ImageType.WAITINGROOM);
+        map.addDestination("Special Testing", DestinationType.DEPARTMENT);
+        map.addLocationNode("Family", new Location(1308, 945), ImageType.WAITINGROOM);
+        map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
         // TODO change to Kiosk - starting at a waiting room currently
         map.setStartLocationNode(f1.getLocationNodes().get(0));
@@ -69,12 +69,13 @@ public class FaulknerHospitalData {
         // Random edges for testing:
         try {
             // Add edge from Audiology to Cardiac Rehabilitation
-            (f1.getLocationNodes().get(0)).addEdge(f1.getLocationNodes().get(1));
+            f1.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(1));
 
         } catch (NodeDoesNotExistException e) {
 
             System.err.println("Couldn't draw path from Audiology to Cardiac Rehabilatation\n");
             e.printStackTrace();
+
         }
 
         // FLOOR 2
