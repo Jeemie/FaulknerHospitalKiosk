@@ -1,165 +1,96 @@
 package Map;
 
+import Map.Enums.DestinationType;
+
+import Map.Enums.ImageType;
+import Map.Enums.UpdateType;
 import com.fasterxml.jackson.annotation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
 
 /**
  * A class that represents a floor in a building
  */
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="uniqueID", scope=Floor.class)
-public class Floor extends Observable{
+public class Floor extends Observable implements Observer {
 
-    private int floor; // The level number associated with the floor
-    private UUID uniqueID; // A randomly generated UUID associated with the current floor
+    // The name of the floor
+    private String floorName;
+
+    // The uniqueID identifing the floor
+    private UUID uniqueID;
+
+    //
+    private String resourceFileName;
+
+    // The building that the floor is associated with
     private Building currentBuilding;
+
+    // The image of the floor
+    private Image floorImage;
+
+    // A list of location nodes which exists on teh floor
     private ArrayList<LocationNode> locationNodes;
-    private String relativePath;
-    @JsonIgnore
-    private URL imagePath;
-    @JsonIgnore
-    private ImageView floorImage;
-    @JsonIgnore
-    private Pane nodePane;
-    @JsonIgnore
-    private static FloorObserver observer = new FloorObserver(); // the FloorObserver observing all Floor objects
-    @JsonIgnore
-    private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class); // Logger for this class
-    private LocationNode startNode;
-    @JsonIgnore
-    private StackPane stackPane;
 
+    // Logger for this class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Floor.class);
 
     /**
-     *  Default constructor for a new floor
-     *  Required by ObjectToJsonToJava.loadFromFile()
-     */
-    public Floor() {
-        super();
-    }
-
-    /**
-     * Constructor for a new floor with a new randomly generated UUID and an empty list of locationNodes on the current floor.
+     * TODO
      *
-     * @param floor           The number that is associated with the current floor.
-     * @param currentBuilding The building that the floor is located in.
-     * @param relativePath       The relative path of the floor image
+     * @param floorName
+     * @param resourceFileName
+     * @param currentBuilding
      */
-    public Floor(int floor, Building currentBuilding, String relativePath) {
+    public Floor(String floorName, String resourceFileName, Building currentBuilding) {
 
-        this.floor = floor;
+        this.floorName = floorName;
         this.uniqueID = UUID.randomUUID();
-        this.locationNodes = new ArrayList<>();
+        this.resourceFileName = resourceFileName;
         this.currentBuilding = currentBuilding;
-        this.relativePath = relativePath;
-        this.floorImage = new ImageView();
-        this.nodePane = new Pane();
+        //TODO correct image loading
+        //this.floorImage = new Image(this.getClass().getResource(resourceFileName.getResourceFileName()).toString());
 
-        setImagePath(this.relativePath);
-
-
-        LOGGER.info("Created new Floor: " + this.toString());
-
-        // adds an observer to this floor and add the floor to list of observed floors in the Observer object
-        observer.observeFloor(this);
-
-    }
-
-    /**
-     * Constructor for a new floor that has been created previously. By default the floor is created without any Nodes.
-     *
-     * @param floor The number that is associated with the current floor.
-     * @param uniqueID An UUID that is associated with the floor.
-     * @param currentBuilding The building that the floor is located in.
-     */
-    public Floor(int floor, UUID uniqueID, Building currentBuilding) {
-
-        this.floor = floor;
-        this.uniqueID = uniqueID;
+        // TODO delete - Temp fix for testing:
+        this.floorImage = null;
         this.locationNodes = new ArrayList<>();
-        this.currentBuilding = currentBuilding;
 
-        LOGGER.info("Created new Floor: " + this.toString());
-
-        //adds an observer to this floor and add the floor to list of observed floors in the Observer object
-        observer.observeFloor(this);
+        this.addObserver(this.currentBuilding);
 
     }
 
     /**
-     * Getter for the floor number.
+     * Add a new node to the current floor. By default, heruistic cost is set to 0
      *
-     * @return The current floor's number
+     * @param name
+     * @param location
+     * @param imageType
      */
-    @JsonGetter
-    public int getFloor(){
-        return this.floor;
-    }
+    public LocationNode addLocationNode(String name, Location location, ImageType imageType) {
 
-    /**
-     * Add a new node to the current floor. By default the heuristic cost is set to 0.
-     *
-     * @param location The x and y coordinate in which the node was placed on the current floor.
-     * @return The newly created node
-     */
-    public LocationNode addNode(Location location) {
-
-        // Create a new node
-        LocationNode newLocationNode = new LocationNode(0, location, this);
+        // Create a new LocationNode
+        LocationNode newLocationNode = new LocationNode(name, location, this, imageType);
 
         // Add the node to the list of locationNodes on the current floor
         this.locationNodes.add(newLocationNode);
 
-        // mark the floor as changed
         setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEADDED);
 
-        // trigger notification
-        notifyObservers();
-
-        // Return the new LocationNode
         return newLocationNode;
-    }
-
-    /**
-     * Gets a list of all of the destinations of the given type located on this floor.
-     *
-     * @param destinationType Type of destination that you want to get.
-     * @return A list of all of the destinations of the given type on the current floor.
-     */
-    public ArrayList<String> getFloorDestinations(Destination destinationType) {
-
-        // List of destinations of the given type on the current floor
-        ArrayList<String> floorDestinations = new ArrayList<>();
-
-        // Go through all of the locationNodes on the current floor and add destinations of the given type to the list
-        for (LocationNode n : locationNodes) {
-
-            // add all of the destinations of the given type at the current node to the list
-            floorDestinations.addAll(n.getDestinations(destinationType));
-
-        }
-
-        // Return all of the destinations of the given type on the current floor
-        return floorDestinations;
     }
 
 
@@ -168,41 +99,138 @@ public class Floor extends Observable{
      *
      * @return A List of all the destinations on the current floor.
      */
-    @JsonIgnore
-    public ArrayList<String> getFloorDestinations() {
+    public ArrayList<Destination> getFloorDestinations() {
 
-        // List of all the destinations on the current floor
-        ArrayList<String> floorDestinations = new ArrayList<>();
+        ArrayList<Destination> floorDestinations = new ArrayList<>();
 
-        for (LocationNode n : locationNodes) {
+        for (LocationNode locationNode : this.locationNodes) {
 
-            // add all of the destinations at the current node to the list
-            floorDestinations.addAll(n.getBuildingDestinations());
+
+            floorDestinations.addAll(locationNode.getDestinations());
 
         }
 
-        // Return all of the destinations on the current floor
+
         return floorDestinations;
     }
 
+    /**
+     * Get's all the floor destinations
+     * @param destinationType
+     * @return an arraylist of Destination objects
+     */
+    public ArrayList<Destination> getFloorDestinations(DestinationType destinationType) {
+
+        ArrayList<Destination> floorDestinations = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+
+            floorDestinations.addAll(locationNode.getDestinations(destinationType));
+
+        }
 
 
-    public void drawFloorAdmin(StackPane stackPane) {
+        return floorDestinations;
+    }
 
-        // clear the stackpane
-        stackPane.getChildren().clear();
+    public void removeLocationNode(LocationNode locationNode) {
 
-        this.nodePane.getChildren().clear();
-        this.nodePane = new Pane();
-        this.nodePane.setPrefHeight(floorImage.getX());
-        this.nodePane.setPrefWidth(floorImage.getY());
+        this.locationNodes.remove(locationNode);
+        locationNode.deleteLocationNodeEdgeConnections();
 
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEREMOVED);
+    }
+
+    /* STUFF I ADDED PLZ REVIEW */
+    /**
+     * Draws the floor on the admin screen by
+     * @param imageView
+     * @param LocationNodePane
+     * @param EdgePane
+     */
+    public void drawFloorAdmin(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
+
+        try {
+
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
+                    this.resourceFileName).toString());
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
+
+        }
+
+        imageView.setImage(this.floorImage);
+
+        // Reset LocationNodePane and EdgePane
+        LocationNodePane.getChildren().clear();
+
+        EdgePane.getChildren().clear();
+
+        // Loop through the location nodes, and then draw the locations and the edges
+        //   in their respective panes
+        for (LocationNode locationNode : locationNodes) {
+
+            locationNode.drawAdmin(LocationNodePane);
+            locationNode.drawEdgesAdmin(EdgePane);
+
+        }
+
+    }
+
+    public void drawFloorNormal(ImageView imageView, Pane LocationNodePane, Pane EdgePane) {
+
+        try {
+
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
+                    this.resourceFileName).toString());
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
+
+        }
+
+        imageView.setImage(this.floorImage);
+
+        LocationNodePane.getChildren().clear();
+        EdgePane.getChildren().clear();
+
+    }
+
+    public void drawFloor(ImageView imageView) {
+
+        try {
+
+            this.floorImage = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/floors/" +
+                    this.resourceFileName).toString());
+
+        } catch (MalformedURLException e) {
+
+            LOGGER.error("Unable to load the image file for the current floor: ", e);
+
+        }
+
+        imageView.setImage(this.floorImage);
+
+    }
+
+        // marked the Floor as changed
+//        setChanged();
+
+        // trigger notification
+//        notifyObservers(UpdateType.FLOORADDED); //TODO is this update correct?
+
+        //There was also an event handler which handled a mouse click event:
+        /*
         this.nodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
-                if (currentBuilding.getState() == BuildingState.ADDNODE) {
+                if (currentBuilding.getState() == MapState.ADDNODE) {
 
                     LOGGER.info("APPLESAUCE1");
 
@@ -218,56 +246,32 @@ public class Floor extends Observable{
 
         });
 
-        // add the current floor's canvas and imageview to the stackpane
-        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
-
-        this.stackPane = stackPane;
-
-        updateFloorAdmin();
-
-    }
-
-    public void updateFloorAdmin() {
-
-        for (LocationNode locationNode : this.locationNodes) {
-
-            locationNode.drawAdminNode(this.nodePane);
-            locationNode.drawAdjacentNodes(this.nodePane);
-            locationNode.setAssociatedPane(this.nodePane);
-
-        }
-
-    }
+         */
+//    }
 
 
-    public void drawFloorNormal(StackPane stackPane) {
+    /**
+     * TODO
+     *
+     * @param o
+     * @param arg
+     */
+    @Override
+    public void update(Observable o, Object arg) {
 
-        // clear the stackpane
-        stackPane.getChildren().clear();
-        this.nodePane.getChildren().clear();
-        this.nodePane = new Pane();
-        this.nodePane.setPrefHeight(floorImage.getX());
-        this.nodePane.setPrefWidth(floorImage.getY());
-        stackPane.getChildren().addAll(this.floorImage, this.nodePane);
+        LOGGER.info("Updating LocationNode: " + o.toString());
+
+
+        setChanged();
+        notifyObservers(arg);
 
     }
 
-    public void setFloorImage(URL imagePath) {
+    @Override
+    public String toString() {
 
-        if(this.floorImage == null) {
-            this.floorImage = new ImageView();
-        }
-        if(this.nodePane == null) {
-            this.nodePane = new Pane();
-        }
-
-        Image image = new Image(String.valueOf(imagePath));
-        this.floorImage.setImage(image);
-        this.nodePane.setPrefHeight(floorImage.getX());
-        this.nodePane.setPrefWidth(floorImage.getY());
-
+        return this.floorName;
     }
-
 
     public void addLocationToListView(ListView listView) {
 
@@ -293,7 +297,9 @@ public class Floor extends Observable{
 
         ObservableList<String> ObservedLocation = FXCollections.observableArrayList();
 
-        ObservedLocation.addAll(this.getFloorDestinations());
+        for (Destination d : this.getFloorDestinations()) {
+            ObservedLocation.add(d.toString());
+        }
 
         listView.setItems(ObservedLocation);
     }
@@ -303,135 +309,48 @@ public class Floor extends Observable{
      *
      * @return A list of all of the locationNodes on the current floor.
      */
-    @JsonIgnore
     public ArrayList<LocationNode> getFloorNodes() {
 
         return this.locationNodes;
     }
 
-    /**
-     * Getter for the building's current state.
-     *
-     * @return The state of the building.
-     */
-    @JsonIgnore
-    public BuildingState getState() {
 
-        return this.currentBuilding.getState();
+    public String getFloorName() {
+        return floorName;
     }
 
-    /**
-     * Sets the state of the building
-     *
-     * @param state The state you want to set the building to
-     */
-    public void setState(BuildingState state) {
-
-        this.currentBuilding.setState(state);
-
-    }
-
-    public void removeLocationNode(LocationNode node) {
-
-        this.locationNodes.remove(node);
-
-    }
-
-    /**
-     * Return a FloorObserver associated with Floor
-     *
-     * @return the FloorObserver called observer
-     */
-    @JsonIgnore
-    public FloorObserver getFloorObserver() {
-
-        return observer;
-    }
-
-    @Override
-    public String toString() {
-
-        return uniqueID.toString();
-    }
-
-    public Pane getNodePane() {
-        return nodePane;
-    }
-
-    @JsonGetter
     public UUID getUniqueID() {
         return uniqueID;
     }
 
-    @JsonGetter
+    public String getResourceFileName() {
+        return resourceFileName;
+    }
+
     public Building getCurrentBuilding() {
         return currentBuilding;
     }
 
-    public ArrayList<LocationNode> getLocationNodes(){
+    public ArrayList<LocationNode> getLocationNodes() {
         return locationNodes;
     }
 
-    public void setStartNode(LocationNode startNode) {
-        this.startNode = startNode;
-    }
+/*
+*
+TODO: Figure out if we ned these
+Methods that I left out from old class
 
-    public LocationNode getStartNode() {
-        return startNode;
-    }
+updateFloorAdmin() //Covered by drawFloorAdmin I believe.
+drawFloorNormal() //draws the floor using stackPane
+setFloorImage() //How to do this without stackPane, not sure where to draw it on
+MapState getState()
+BuildignState setState()   //As I understand it state is not being set using the Building
+get and set startnode functions
+getFloorObserver we don't have observer object.
+getRelativePath()
+setRelativePath
+getImagePath
+setImagePath
 
-    public ImageView getFloorImage() {
-        return floorImage;
-    }
-
-    @JsonGetter
-    public String getRelativePath() {
-        return relativePath;
-    }
-
-    @JsonIgnore
-    public void setRelativePath(URL imagePath) {
-        URI uri = null;
-        try {
-            uri = imagePath.toURI();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        String path = uri.getPath();
-        String idStr = path.substring(path.lastIndexOf('/') + 1);
-        int id = Integer.parseInt(idStr);
-        this.relativePath =  idStr;
-    }
-
-    @JsonIgnore
-    public URL getImagePath() {
-
-        return imagePath;
-    }
-
-    @JsonIgnore
-    public void setImagePath(String relativePath) {
-        try {
-
-            /**
-             *
-             *This is for OSx use this while testing.
-             *
-             *this.imagePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + relativePath);
-             */
-        //Use this for windows
-
-            this.imagePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + relativePath);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public StackPane getStackPane() {
-        return stackPane;
-    }
-
-    public void setStackPane(StackPane stackPane) {
-        this.stackPane = stackPane;
-    }
+ */
 }

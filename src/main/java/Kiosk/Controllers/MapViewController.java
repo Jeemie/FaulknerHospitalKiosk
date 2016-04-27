@@ -1,9 +1,8 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Building;
+import Map.Map;
 import Map.Exceptions.FloorDoesNotExistException;
-import Map.LocationNode;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,21 +24,27 @@ public class MapViewController{
     // Reference to the main application.
 
     private boolean okClicked = false;
+
+    private Map faulknerHospitalMap;
+
     private KioskApp kioskApp;
-    private Building mMainHost;
-    private LocationNode startNode;
-    private LocationNode destinationNode;
+
+
+
     private int numThreads = 0;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
+
     @FXML
     private Label currentFloorLabel;
 
     @FXML
-    private TextField searchTextBox;
+    private TextField searchTextField;
+
     @FXML
     private Button zoomIn;
+
     @FXML
     private Button zoomOut;
 
@@ -53,7 +58,7 @@ public class MapViewController{
     private Button confirmButton;
 
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane zoomScrollPane;
 
     @FXML
     private Button changeFloorButtonUp;
@@ -62,9 +67,15 @@ public class MapViewController{
     private Button changeFloorButtonDown;
 
     @FXML
-
     private ListView Direction;
-    Group zoomGroup;
+
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private Button cancelButton;
+
+    private Group zoomGroup;
 
 
     public Timer timer;
@@ -98,7 +109,9 @@ public class MapViewController{
                         Platform.runLater(resetKiosk);
                         break;
                     }
+
                     Thread.sleep(1000);
+
                 } catch (InterruptedException exception) {
                     atimer.cancel();
                     timer.cancel();
@@ -118,8 +131,11 @@ public class MapViewController{
 
         @Override
         public void run() {
+
             handleBack();
+
         }
+
     };
 
 
@@ -133,21 +149,22 @@ public class MapViewController{
     @FXML
     private void initialize() {
 
+//        setListeners();
 
-        scrollPane.setHvalue(0.5);
-        scrollPane.setVvalue(0.5);
+        zoomScrollPane.setHvalue(0.5);
+        zoomScrollPane.setVvalue(0.5);
 
         slider.setMin(0.5);
         slider.setMax(1.5);
         slider.setValue(1.0);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
-        // Wrap scroll content in a Group so ScrollPane re-computes scroll bars
+        // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
         Group contentGroup = new Group();
         zoomGroup = new Group();
         contentGroup.getChildren().add(zoomGroup);
-        zoomGroup.getChildren().add(scrollPane.getContent());
-        scrollPane.setContent(contentGroup);
+        zoomGroup.getChildren().add(zoomScrollPane.getContent());
+        zoomScrollPane.setContent(contentGroup);
 
 
 
@@ -168,20 +185,20 @@ public class MapViewController{
 
                 counter = 0;
 
-                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-                scrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-//                scrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
+//                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
+//                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
+//                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
 //                //mMainHost.drawShortestPath(startNode, destinationNode);
 //                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
 //                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
-                mMainHost.drawShortestPath(startNode, destinationNode);
-                imageStackPane.setMaxHeight(mMainHost.getyMax());
-                imageStackPane.setMinHeight(mMainHost.getyMin());
-                imageStackPane.setMaxWidth(mMainHost.getxMax());
-                imageStackPane.setMinWidth(mMainHost.getyMin());
+//                mMainHost.drawShortestPath(startNode, destinationNode);
+//                imageStackPane.setMaxHeight(mMainHost.getyMax());
+//                imageStackPane.setMinHeight(mMainHost.getyMin());
+//                imageStackPane.setMaxWidth(mMainHost.getxMax());
+//                imageStackPane.setMinWidth(mMainHost.getyMin());
                 //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
+//                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
 
             }
 
@@ -191,7 +208,7 @@ public class MapViewController{
 
 
 
-        searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
@@ -200,8 +217,8 @@ public class MapViewController{
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    LOGGER.info("Blah " + searchTextBox.getText());
-                    kioskApp.showSearch(searchTextBox.getText());
+                    LOGGER.info("Blah " + searchTextField.getText());
+                    kioskApp.showSearch(searchTextField.getText());
 
                 } else {
 
@@ -210,23 +227,13 @@ public class MapViewController{
                 }
             }
         });
+
+
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                getCounterFloor--;
-                if (getCounterFloor >= 1) {
-                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
-                } else { getCounterFloor = 1;}
-                try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
-                    if(counter<1){
-                        counter =1;
-                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(getCounterFloor);
+                faulknerHospitalMap.pathPreviousFloor();
 
             }
         });
@@ -234,7 +241,7 @@ public class MapViewController{
 
 
 
-        scrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
@@ -259,39 +266,45 @@ public class MapViewController{
 
         //timerThread.start();
 
-        changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        this.changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                getCounterFloor++;
-                if (getCounterFloor <= 7) {
-                    currentFloorLabel.setText(String.valueOf(getCounterFloor));
-                } else {getCounterFloor = 7;}
-                try {
-                    mMainHost.getFloor(getCounterFloor).drawFloorNormal(imageStackPane);
-                    if(counter>4){
-                        counter =4;
-                    }
-                } catch (FloorDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(getCounterFloor);
-               // building.drawShortestPath(startNode, destinationNode);
+
+                faulknerHospitalMap.pathNextFloor();
 
             }
 
         });
 
+        this.changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.pathPreviousFloor();
+
+            }
+
+        });
 
     }
 
-    @FXML
+
+    public void setListeners() {
+
+        this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+
+
+    }
+
+//    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal += 0.1);
     }
 
-    @FXML
+//    @FXML
     void zoomOut(ActionEvent event) {
 
         double sliderVal = slider.getValue();
@@ -300,12 +313,12 @@ public class MapViewController{
 
     private void zoom(double scaleValue) {
 
-        double scrollH = scrollPane.getHvalue();
-        double scrollV = scrollPane.getVvalue();
+        double scrollH = zoomScrollPane.getHvalue();
+        double scrollV = zoomScrollPane.getVvalue();
         zoomGroup.setScaleX(scaleValue);
         zoomGroup.setScaleY(scaleValue);
-        scrollPane.setHvalue(scrollH);
-        scrollPane.setVvalue(scrollV);
+        zoomScrollPane.setHvalue(scrollH);
+        zoomScrollPane.setVvalue(scrollV);
     }
 
 
@@ -357,26 +370,9 @@ public class MapViewController{
         kioskApp.reset();
     }
 
-    public void setBuilding(Building building) {
-        this.mMainHost = building;
-    }
+    public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
 
-    public void setDestinationNode(LocationNode destinationNode){
-
-/*      atimer.cancel();
-        atimer.purge();
-        timer.cancel();
-        timer.purge();*/
-        running = false;
-        //timerThread.interrupt();
-        this.destinationNode = destinationNode;
-        destinationNode.getCurrentFloor().drawFloorAdmin(this.imageStackPane);
+        this.faulknerHospitalMap = faulknerHospitalMap;
 
     }
-
-    public void setStartNode(LocationNode startNode) {
-
-        this.startNode = startNode;
-    }
-
 }

@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.DirectoryController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="52.0" layoutY="14.0" prefHeight="51.0" prefWidth="1160.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+        <TextField fx:id="searchTextField" layoutX="52.0" layoutY="14.0" prefHeight="51.0" prefWidth="1160.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="24.0" />
          </font></TextField>
@@ -28,12 +28,12 @@
          <children>
               <ButtonBar buttonMinWidth="312.0" maxWidth="644.0" prefHeight="74.0" prefWidth="654.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                   <buttons>
-                      <Button mnemonicParsing="false" onAction="#handleForward" text="OK" translateX="-15.0">
+                      <Button fx:id="okButton" mnemonicParsing="false" text="OK" translateX="-15.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                      <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" translateX="-5.0">
+                      <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" translateX="-5.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -52,17 +52,17 @@
          <children>
               <ButtonBar buttonMinWidth="312.0" maxWidth="976.0" prefHeight="58.0" prefWidth="938.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                   <buttons>
-                      <Button mnemonicParsing="false" onAction="#handlePhysicians" text="Care Provider" translateX="-10.0">
+                      <Button fx:id="physiciansButton" mnemonicParsing="false" text="Care Provider" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                      <Button mnemonicParsing="false" onAction="#handleDepartments" text="Departments" translateX="-10.0">
+                      <Button fx:id="departmentsButton" mnemonicParsing="false" text="Departments" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                      <Button mnemonicParsing="false" onAction="#handleServices" text="Services" translateX="-10.0">
+                      <Button fx:id="servicesButton" mnemonicParsing="false" text="Services" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -88,7 +88,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
-                        <ListView fx:id="listDirectory" layoutX="92.0" layoutY="-30.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="directoryListView" layoutX="92.0" layoutY="-30.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </items>

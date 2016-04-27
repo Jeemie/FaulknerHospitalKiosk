@@ -1,16 +1,18 @@
 package Map.EventHandlers;
 
-import Map.BuildingState;
-import Map.Location;
+import Map.Enums.MapState;
+import Map.Map;
 import Map.LocationNode;
+import Map.Location;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An event handler for the Location Node when it has been dragged in the Admin Panel.
+ * Created by Matt on 4/18/2016.
  */
 public class LocationNodeDraggedEventHandler implements EventHandler<MouseEvent> {
 
@@ -35,34 +37,30 @@ public class LocationNodeDraggedEventHandler implements EventHandler<MouseEvent>
     }
 
 
-    /**
-     * Handler for when the node's circle is dragged.
-     *
-     * @param event Event that describes the scenario in which the circle was dragged.
-     */
     @Override
     public void handle(MouseEvent event) {
 
-        LOGGER.info("Node " + this.locationNode.toString() + " was dragged with the state " +
-                this.locationNode.getState().toString());
+        Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
 
-        if (locationNode.getState() == BuildingState.MOVENODE) {
+        currentMap.setCurrentLocationNode(this.locationNode);
 
-            LOGGER.info("Moving Node " + this.locationNode.toString());
+        if (currentMap.getCurrentMapState().equals(MapState.MOVENODE)) {
 
-            Location circleLocation = this.locationNode.getLocation();
+            LOGGER.info("Moving LocationNode " + this.locationNode.toString());
 
-            double offsetX = event.getSceneX() - circleLocation.getX();
-            double offsetY = event.getSceneY() - circleLocation.getY();
-            double newTranslateX = ((Circle)(event.getSource())).getTranslateX() + offsetX;
-            double newTranslateY = ((Circle)(event.getSource())).getTranslateY() + offsetY;
+            Location labelLocation = this.locationNode.getLocation();
 
-            ((Circle)(event.getSource())).setTranslateX(newTranslateX);
-            ((Circle)(event.getSource())).setTranslateY(newTranslateY);
+            double offsetX = event.getSceneX() - labelLocation.getX();
+            double offsetY = event.getSceneY() - labelLocation.getY();
 
+            double newTranslateX = ((Label)(event.getSource())).getTranslateX() + offsetX;
+            double newTranslateY = ((Label)(event.getSource())).getTranslateY() + offsetY;
 
+//            ((Label)(event.getSource())).setTranslateX(newTranslateX);
+//            ((Label)(event.getSource())).setTranslateY(newTranslateY);
 
-            this.locationNode.setLocation(new Location(event.getSceneX(), event.getSceneY()));
+            labelLocation.setX(event.getSceneX());
+            labelLocation.setY(event.getSceneY());
 
         }
 

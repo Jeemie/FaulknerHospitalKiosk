@@ -1,9 +1,13 @@
 package Map;
 
+import Map.Enums.UpdateType;
+
+import java.util.Observable;
+
 /**
  * Class that contains the x and y coordinates of a arbitrary point.
  */
-public class Location {
+public class Location extends Observable {
 
     private double x;
     private double y;
@@ -54,6 +58,9 @@ public class Location {
 
         this.x = x;
 
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEPOSITION);
+
     }
 
     /**
@@ -64,6 +71,9 @@ public class Location {
     public void setY(double y) {
 
         this.y = y;
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEPOSITION);
 
     }
 
@@ -82,6 +92,11 @@ public class Location {
 
         // return the distance between two locations
         return result;
+    }
+
+    public void addNewObserver(LocationNode locationNode) {
+
+        this.addObserver(locationNode);
     }
 
 

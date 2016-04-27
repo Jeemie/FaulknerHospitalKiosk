@@ -44,7 +44,7 @@ public class AdminDashboardDestinationAddController {
     public void setListeners() {
 
         ObservableList<Destination> destinations = FXCollections.observableArrayList();
-        destinations.addAll(Destination.values());
+//        destinations.addAll(Destination.values());
         this.destinationsChoiceBox.setItems(destinations);
 
 
@@ -67,8 +67,8 @@ public class AdminDashboardDestinationAddController {
                 if ((destinationsChoiceBox.getSelectionModel().getSelectedItem() != null) &&
                         (destinationNameTextField.getText().length() > 0)) {
 
-                    currentLocationNode.addDestination(
-                            (Destination)destinationsChoiceBox.getSelectionModel().getSelectedItem(), destinationNameTextField.getText());
+//                    currentLocationNode.addDestination(
+//                            (Destination)destinationsChoiceBox.getSelectionModel().getSelectedItem(), destinationNameTextField.getText());
 
                     loader.removeFromScene();
 

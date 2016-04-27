@@ -1,5 +1,6 @@
 package Map.Exceptions;
 
+
 import Map.LocationNode;
 
 /**
@@ -7,13 +8,23 @@ import Map.LocationNode;
  */
 public class NoPathException extends Exception {
 
-    private final LocationNode starLocationNode;
-    private final LocationNode destinatonLocationNode;
+    private final LocationNode startLocationNode;
+    private final LocationNode destinationLocationNode;
 
-    public NoPathException(LocationNode starLocationNode, LocationNode destinatonLocationNode) {
+    public NoPathException(LocationNode startLocationNode, LocationNode destinationLocationNode) {
 
-        this.starLocationNode = starLocationNode;
-        this.destinatonLocationNode = destinatonLocationNode;
+        this.startLocationNode = startLocationNode;
+        this.destinationLocationNode = destinationLocationNode;
+
+        if (startLocationNode == null) {
+
+            System.err.println("startLocationNode is null.");
+        }
+
+        if (destinationLocationNode == null) {
+
+            System.err.println("destinationLocationNode is null.");
+        }
 
     }
 

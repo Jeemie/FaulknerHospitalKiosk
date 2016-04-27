@@ -1,62 +1,605 @@
 package Map;
 
+import Map.Enums.MapState;
+import Map.Enums.DestinationType;
+import Map.Enums.ImageType;
+import Map.Enums.UpdateType;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
-import javafx.scene.shape.Circle;
+import Map.Exceptions.NoPathException;
+import Map.Memento.MapMemento;
+import Map.SearchAlgorithms.AStar;
+import Map.SearchAlgorithms.Dijkstras;
+import Map.SearchAlgorithms.ISearchAlgorithm;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.UUID;
 
-import static Map.ObjectToJsonToJava.loadFromFile;
+
+public class Map implements Observer {
+
+    private String name;
+
+    // Unique ID for this Map
+    private UUID uniqueID;
+
+    private LocationNode startLocationNode;
+
+    private ArrayList<Building> mapBuildings;
+
+    // Building UUIDs for serialization
+    private ArrayList<UUID> buildingIdList;
+
+    private ISearchAlgorithm searchAlgorithm;
+
+    private MapState currentMapState;
+
+    // TODO DELETE EVENTUALLY:
+    // I'm not sure who wrote this, why are we deleting it?  - Binam
+    // To do was added on commit f32ef4d, "Merged with little success"
+    private ObservableList<Destination> directoryList;
+
+    private Path currentPath;
 
 
-/**
- * Created by maryannoconnell on 4/12/16.
- */
-public class Map {
+    //||\\ Current Destination //||\\
 
-    // Floor of Kiosk
+    private Destination currentDestination;
+
+
+    //||\\ Current LocationNode //||\\
+
+    //
+    private LocationNode currentLocationNode;
+
+
+    //
+    private ObservableList<LocationNode> currentAdjacentLocationNodes;
+
+
+    //
+    private ObservableList<Destination> currentLocationNodeDestinations;
+
+
+    //||\\ Current Floor //||\\
+
+    //
     private Floor currentFloor;
+
+
+    //
+    private ObservableList<LocationNode> currentFloorLocationNodes;
+
+
+    //
+    private ObservableList<Destination> currentFloorDestinations;
+
+
+    //
+    private Pane currentFloorLocationNodePane;
+
+
+    //
+    private Pane currentFloorEdgePane;
+
+
+    //
+    private ImageView currentFloorImage;
+
+
+    //||\\ Current Building //||\\
+
+    //
+    private Building currentBuilding;
+
+
+    //
+    private ObservableList<Floor> currentBuildingFloors;
+
+
+    //
+    private ObservableList<Destination> currentBuildingDestinations;
+
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
 
-    public Map(Floor currentFloor) {
 
-        this.currentFloor = currentFloor;
+    /*
+    TODO create exception to throw when adding something to the map when something of the sametype already has that name
+    */
+
+    public Map(String name) {
+
+        this.name = name;
+        this.uniqueID = UUID.randomUUID();
+        this.startLocationNode = null;
+        this.mapBuildings = new ArrayList<>();
+        this.buildingIdList = new ArrayList<>();
+        this.searchAlgorithm = new AStar();
+        this.currentMapState = MapState.NORMAL;
+        this.directoryList = FXCollections.observableArrayList();
+        this.currentLocationNode = null;
+        this.currentAdjacentLocationNodes = FXCollections.observableArrayList();
+        this.currentLocationNodeDestinations = FXCollections.observableArrayList();
+        this.currentFloor = null;
+        this.currentFloorLocationNodes = FXCollections.observableArrayList();
+        this.currentFloorDestinations = FXCollections.observableArrayList();
+        this.currentFloorLocationNodePane = new Pane();
+        this.currentFloorEdgePane = new Pane();
+        this.currentFloorImage = new ImageView();
+        this.currentBuilding = null;
+        this.currentBuildingFloors = FXCollections.observableArrayList();
+        this.currentBuildingDestinations = FXCollections.observableArrayList();
 
     }
 
-    // TODO @return Map initialized with data from loaded from JSON file
-    // TODO Store data from JSON file in Map object for use during runtime
-    /**
-     * Store data from JSON file in Building object for use during runtime
-     * @return Building initialized with data from loaded from JSON file
-     */
-    public static Building storeMapData(URL specifiedFilePath) throws DefaultFileDoesNotExistException {
 
-        Building mMainHospital = new Building();    // TODO Change mMainBuilding to mMainMap
-        ArrayList<Floor> floors;
-        ArrayList<LocationNode> node;
-        URL defaultFilePath = null;
+
+//    private void setCurrentChangeListeners() {
+//
+//        this.currentBuilding.
+//
+//
+//    }
+
+
+
+
+    public void addBuilding(String name) {
+
+        for (Building building : this.mapBuildings) {
+
+            if (building.getName().equals(name)) {
+
+                LOGGER.debug("There is already a building with the name: ", name);
+
+                return;
+            }
+
+        }
+
+
+        Building newBuilding = new Building(name, this);
+
+        this.currentBuilding = newBuilding;
+        this.mapBuildings.add(newBuilding);
+        this.buildingIdList.add(newBuilding.getUniqueID());
+
+    }
+
+
+    public void addFloor(String name, String resourceFileName) {
+
+        if (this.currentBuilding == null) {
+
+            LOGGER.debug("Floor could not be added because the currentBuilding was null");
+
+            return;
+        }
+
+        this.setCurrentFloor(this.currentBuilding.addFloor(name, resourceFileName));
+
+    }
+
+    public void addLocationNode(String name, Location location, ImageType imageType) {
+
+        if (this.currentFloor == null) {
+
+            LOGGER.debug("LocationNode could not be added because the currentFloor was null");
+
+            return;
+        }
+
+        this.setCurrentLocationNode(this.currentFloor.addLocationNode(name, location, imageType));
+
+        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+        this.currentFloorLocationNodes.add(this.currentLocationNode);
+
+    }
+
+    public void addDestination(String name, DestinationType destinationType) {
+
+        if (this.currentLocationNode == null) {
+
+            LOGGER.debug("Destination could not be added because the currentLocationNode was null");
+
+            return;
+        }
+
+        this.currentLocationNode.addDestination(name, destinationType);
+
+    }
+
+    public void removeDestination() {
+
+        // TODO fill in
+        // TODO create debug message
+
+    }
+
+    public void removeLocationNode() {
+
+        if (this.currentFloor == null) {
+
+            // TODO create debug message
+
+            return;
+        }
+
+        if (this.currentLocationNode == null) {
+
+            // TODO create debug message
+
+            return;
+        }
+
+        this.currentFloor.removeLocationNode(this.currentLocationNode);
+
+    }
+
+    public void removeFloor() {
+
+        // TODO fill in
+        // TODO create debug message
+
+    }
+
+    public void physicianDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
+
+        }
+
+    }
+
+    public void departmentDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.DEPARTMENT));
+
+        }
+
+    }
+
+    public void serviceDirectory() {
+
+        this.directoryList.clear();
+
+        for (Building building : this.mapBuildings) {
+
+            this.directoryList.addAll(building.getBuildingDestinations());
+
+        }
+
+    }
+
+
+    /**
+     * TODO
+     *
+     * @param stackPane
+     */
+    public void setupAdminStackPane(StackPane stackPane) {
+
+
+        this.currentMapState = MapState.ADMIN;
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
+
+
+        this.currentFloorImage.setPreserveRatio(true);
+        this.currentFloorImage.setSmooth(true);
+        this.currentFloorImage.setCache(true);
+        this.currentFloorImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+
+                LOGGER.info("Image Bounds changed, updating pane bounds");
+                LOGGER.info("Old Image Bounds: " + newValue.toString());
+                LOGGER.info("New Image Bounds: " + newValue.toString());
+
+                currentFloorLocationNodePane.setPrefWidth(newValue.getWidth());
+                currentFloorLocationNodePane.setPrefHeight(newValue.getHeight());
+
+
+                LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
+
+                currentFloorEdgePane.setPrefWidth(newValue.getWidth());
+                currentFloorEdgePane.setPrefHeight(newValue.getHeight());
+
+                LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
+
+
+            }
+
+        });
+
+//        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                if (currentMapState == MapState.ADDNODE) {
+//
+//                    LOGGER.info("Adding a node at x: " + event.getX() + " and y: " + event.getY());
+//
+//
+//                    Location newLocation = new Location(event.getX(), event.getY());
+//
+////                    addLocationNode();
+//
+//                }
+//
+//
+//            }
+//
+//        });
+
+    }
+
+    public void setupPathStackPane(StackPane stackPane) {
+
+        ArrayList<LocationNode> path;
 
         try {
-            /**
-             *
-             *This is for OSx use this while testing.
-             *
-             *defaultFilePath = new URL("file://" + System.getProperty("user.dir") + "/resources/" + "default.json");
-             */
-            //This is for Windows. Use this while testing.
+
+            //path = this.searchAlgorithm.getPath(this.startLocationNode, this.currentLocationNode);
+            path = (new AStar()).getPath(this.startLocationNode, this.currentLocationNode);
+
+
+        } catch (NoPathException e) {
+
+            LOGGER.error("Unable to get a path", e);
+
+            return;
+        }
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().addAll(this.currentFloorImage, this.currentFloorEdgePane, this.currentFloorLocationNodePane);
+
+        this.currentPath = new Path(this.currentFloorImage, this.currentFloorLocationNodePane, this.currentFloorEdgePane,
+                path);
+
+        this.currentPath.setup();
+
+    }
+
+
+    public void setupNormalStackPane(StackPane stackPane) {
+
+
+
+
+    }
+
+
+
+
+    public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
+
+        return this.searchAlgorithm.getPath(this.startLocationNode, destination);
+    }
+
+
+    public void useAStar() {
+
+
+        this.searchAlgorithm = new AStar();
+
+    }
+
+
+    public void useDijkstras() {
+
+        this.searchAlgorithm = new Dijkstras();
+
+    }
+
+    public void pathNextFloor() {
+
+        this.currentPath.drawNextFloor();
+
+    }
+
+    public void pathPreviousFloor() {
+
+        this.currentPath.drawPreviousFloor();
+
+    }
+
+
+
+
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        // Check to see if the argument is null
+        if (arg == null) {
+
+            LOGGER.debug("Observer was updated but the argument was null");
+
+            return;
+        }
+
+        LOGGER.info("Updating the Map");
+
+        UpdateType updateType = ((UpdateType) arg);
+
+        switch (updateType) {
+
+            case DESTINATIONCHANGE:
+
+                // TODO cleanup by only modifying one destination
+                this.currentBuildingDestinations.clear();
+                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+
+//
+//                // remove current location node destinations from current floor destinations and building destinations
+//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+//
+//                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
+//                this.currentLocationNodeDestinations.clear();
+//                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+//
+//                // Add current location node destinations from current floor and building destinations
+//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+
+
+                break;
+
+            case LOCATIONNODEPOSITION:
+
+                this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                break;
+
+            case LOCATIONNODEADDED:
+
+                if (this.currentLocationNode != null) {
+
+                    this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                    this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                }
+
+                // TODO decide whether or not we are going to redraw the entire floor
+                break;
+
+            case FLOORADDED:
+
+                this.currentBuildingFloors.clear();
+                this.currentBuildingFloors.addAll(this.currentBuilding.getFloors());
+
+                break;
+
+
+            case LOCATIONNODEREMOVED:
+
+                this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+                this.currentLocationNode = null;
+
+                break;
+
+            case BUILDINGADDED:
+
+                this.currentBuildingDestinations.clear();
+                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+
+                break;
+
+            case LOCATIONNODEEDGE:
+
+                this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+                this.locationNodeUpdater(this.currentLocationNode);
+
+                break;
+
+
+            default:
+
+                break;
+
+
+
+
+        }
+
+    }
+
+    @Override
+    public String toString() {
+
+        return this.name;
+    }
+
+    /**
+     * Save this map to a JSON file
+     * @param file The JSON file you want to save to
+     */
+    public void saveToFile(File file) throws IOException, URISyntaxException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+//        Gson gson = new Gson();
+
+
+        MapMemento mapMemento = saveStateToMemento();
+
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, mapMemento);
+
+//        try {
+//
+//            FileWriter fileWriter = new FileWriter(file.toString());
+//            fileWriter.write(json);
+//
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//
+//        }
+
+        System.out.println(objectMapper.writeValueAsString(mapMemento));
+
+        LOGGER.info("Saving the map to the file: " + file.toString());
+
+    }
+
+
+    /**
+     * Load a map from a JSON file
+     * @param specifiedFilePath The JSON file you want to load from
+     */
+    public static Map loadFromFile(URL specifiedFilePath) throws IOException, FloorDoesNotExistException, DefaultFileDoesNotExistException {
+
+        MapMemento mapMemento = null; //TODO watch out for null pointer exception
+
+        URL defaultFilePath = null;
+
+        // Set up an ObjectMapper for deserialization
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        try {
 
             defaultFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
-            //specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+            specifiedFilePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
 
         } catch (MalformedURLException e) {
 
@@ -66,613 +609,285 @@ public class Map {
 
         try {
 
+
             File specifiedFile = new File(specifiedFilePath.toURI());
 
             File defaultFile = new File(defaultFilePath.toURI());
 
-            /* if (specifiedFile.exists() && specifiedFile.length() > 0) {
-
+            //TODO uncomment after deserializer is complete - load from starter map for now
+            if (specifiedFile.exists() && specifiedFile.length() > 0) {
+//            if(false) {
                 // Load specified file
-                mMainHospital = loadFromFile(specifiedFile);
+
+                mapMemento = objectMapper.readValue(specifiedFile, MapMemento.class);
                 LOGGER.info("Loaded map from file " + specifiedFile.toString());
-
-            } else
-             */
-            if (defaultFile.exists()) {
-
-                mMainHospital = loadFromFile(defaultFile);
-                LOGGER.info("Loaded map from file " + defaultFile.toString());
-
-                if (defaultFile.length() <= 2) {
-                    LOGGER.warn("Loaded file is empty");
-                    mMainHospital = starterMap();
-
-                }
 
             } else {
 
+                //This will be caught by starterMap and will cause the map to be loaded with hardcoded code
                 throw new DefaultFileDoesNotExistException();
 
             }
-
-        } catch (FloorDoesNotExistException e) {
-
-            e.printStackTrace();
-
         } catch (IOException e) {
 
             e.printStackTrace();
 
         } catch (URISyntaxException e) {
+
             e.printStackTrace();
         }
 
-        return mMainHospital;
+        return loadStateFromMemento(mapMemento);
     }
 
-    /*
-     * TODO @param mMainMap Map object with fields requiring initialization
-     * TODO @return Map object you want to initialize
-     */
+    public MapMemento saveStateToMemento() {
+
+        return new MapMemento(this.name, this.uniqueID, this.startLocationNode, this.mapBuildings);
+
+    }
+
+    public static Map loadStateFromMemento(MapMemento mapMemento) {
+        //TODO working on
+        return null;
+
+    }
 
 
+
+    //||\\ Getters And Setters //||\\
+
+
+
+    //TODO
     /**
-     *
-     * @param mMainHospital Building object you want to initialize
-     * @return Building Building with all required fields initialized
-     *
+     * Reinitialize null fields in Map object and subclass objects after loading from file
      */
-    public static Building initMapComponents(Building mMainHospital) {
+    public Map initMapComponents() {
 
-        for (Floor floor: mMainHospital.getFloors()) {
-
-            //Initialize view-associated fields for each building floor
-            //String filePath = System.getProperty("user.dir") + "/resources/" + floor.getImagePath();
-            floor.setImagePath(floor.getRelativePath());
-            floor.setFloorImage(floor.getImagePath());
-
-            // Check if the floor contains nodes
-            if (floor.getFloorNodes().size() > 0) {
-
-                for (LocationNode node : floor.getFloorNodes()) {
-                    node.setNodeCircle(new Circle(node.getLocation().getX(), node.getLocation().getY(), 5.0));
-                    node.initObserver();
-                    node.initAdjacentLines();
-                }
-
-            }
-
-        }
-
-        return mMainHospital;
-    }
-    /**
-     * Data for starter map
-     * @return
-     */
-    public static Building starterMap() throws FloorDoesNotExistException {
-        Building mMainHospital = new Building();
-
-        mMainHospital = new Building();
-
-        // Floors
-        mMainHospital.addFloor(1, "floor1.png");
-        mMainHospital.addFloor(2, "floor2.png");
-        mMainHospital.addFloor(3, "floor3.png");
-        mMainHospital.addFloor(4, "floor4.png");
-        mMainHospital.addFloor(5, "floor5.png");
-        mMainHospital.addFloor(6, "floor6.png");
-        mMainHospital.addFloor(7, "floor7.png");
-
-
-/*
-
-        //FLOOR 1
-        mMainHospital.getFloor(1).addNode(new Location(20, 10));        //get(0) Audiology
-        mMainHospital.getFloor(1).addNode(new Location(20, 20));        //get(1) Cardiac
-        mMainHospital.getFloor(1).addNode(new Location(1501, 497));     //get(2) Preop
-        mMainHospital.getFloor(1).addNode(new Location(1042, 471));     //get(3) ER
-        mMainHospital.getFloor(1).addNode(new Location(1203, 832));     //get(4) GI
-        mMainHospital.getFloor(1).addNode(new Location(1274, 435));     //get(5) Finance
-        mMainHospital.getFloor(1).addNode(new Location(1699.0, 482.0)); //get(6) Radiology
-        mMainHospital.getFloor(1).addNode(new Location(1258, 471));     //get(7) Test
-        mMainHospital.getFloor(1).addNode(new Location(1124, 420));     //get(8) Family
-        mMainHospital.getFloor(1).addNode(new Location(20, 120));       //get(9) Admit
-        mMainHospital.getFloor(1).addNode(new Location(1298, 130));     //get(10) Cafe
-        mMainHospital.getFloor(1).addNode(new Location(20, 140));       //get(11) Valet
-        mMainHospital.getFloor(1).addNode(new Location(1437, 233.0));   //get(12) kiosk
-        mMainHospital.getFloor(1).addNode(new Location(1381, 420));     //get(13) Bathroom
-        mMainHospital.getFloor(1).addNode(new Location(1413, 1195));    //get(14) H Elevatoe
-        mMainHospital.getFloor(1).addNode(new Location(1454, 339));     //get(15) A Elevatoe
-        mMainHospital.getFloor(1).addNode(new Location(1464, 1100));    //get(16) Hillside Stairs
-        mMainHospital.getFloor(1).addNode(new Location(1527, 343));     //get(17) Atrium Stairs
-
-        mMainHospital.getFloor(1).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Audiology");
-        mMainHospital.getFloor(1).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Cardiac Rehabilitation");
-        mMainHospital.getFloor(1).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Center for Preoperative Evaluation");
-        mMainHospital.getFloor(1).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Emergency Room");
-        mMainHospital.getFloor(1).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "GI Endoscopy");
-        mMainHospital.getFloor(1).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Patient Financial Services");
-        mMainHospital.getFloor(1).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Radiology");
-        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Special Testing");
-        mMainHospital.getFloor(1).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT, "Laboratory");
-        mMainHospital.getFloor(1).getLocationNodes().get(8).addDestination(Destination.DEPARTMENT, "Taiclet Family Center");
-
-
-        mMainHospital.getFloor(1).getLocationNodes().get(9).addDestination(Destination.SERVICE, "Admitting/Registration");
-        mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Atrium Cafe");
-        mMainHospital.getFloor(1).getLocationNodes().get(10).addDestination(Destination.SERVICE, "Starbucks");
-        mMainHospital.getFloor(1).getLocationNodes().get(11).addDestination(Destination.SERVICE, "Valet Parking");
-
-        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.KIOSK, " Floor 1Kiosk");
-        mMainHospital.getFloor(1).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Information");
-        (mMainHospital.getFloor(1)).setStartNode(mMainHospital.getFloor(1).getLocationNodes().get(12));
-
-        mMainHospital.getFloor(1).getLocationNodes().get(13).addDestination(Destination.BATHROOM, "Floor 1 Bathroom");
-
-        mMainHospital.getFloor(1).getLocationNodes().get(14).addDestination(Destination.ELEVATOR, "Hillside Elevator");
-        mMainHospital.getFloor(1).getLocationNodes().get(15).addDestination(Destination.ELEVATOR, "Atrium Elevator");
-
-         mMainHospital.getFloor(1).getLocationNodes().get(16).addDestination(Destination.STAIR, "Hillside Stairs");
-         mMainHospital.getFloor(1).getLocationNodes().get(17).addDestination(Destination.STAIR, "Atrium Stairs");
-*/
-        /*
-        //FLOOR 2
-        mMainHospital.getFloor(2).addNode(new Location(1371, 81.0));        //get(0) 2A
-        mMainHospital.getFloor(2).addNode(new Location(1617, 81.0));        //get(1) 2B
-        mMainHospital.getFloor(2).addNode(new Location(1724, 557.0));        //get(2) Physical Therapy
-        mMainHospital.getFloor(2).addNode(new Location(1414, 1242.0));        //get(3) Psychiatry
-        mMainHospital.getFloor(2).addNode(new Location(20, 50));        //get(4) Addiction recovery
-        mMainHospital.getFloor(2).addNode(new Location(20, 60));        //get(5) rehab
-        mMainHospital.getFloor(2).addNode(new Location(1614, 171.0));        //get(6) bathroom
-        mMainHospital.getFloor(2).addNode(new Location(1400, 1142));    //get(7) H Elevatoe
-        mMainHospital.getFloor(2).addNode(new Location(1445, 223));      //get(8) A Elevatoe
-        mMainHospital.getFloor(2).addNode(new Location(1430, 1051));    //get(9) Hillside Stairs
-        mMainHospital.getFloor(2).addNode(new Location(1525, 233));     //get(10) Atrium Stairs
-
-        mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Otolarngology");
-        mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Corrales, Carleton Eduardo, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Prince, Anthony, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Roditi, Rachel, MD");
-
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Plastic Surgery");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Carty, Matthew, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Caterson, Stephanie, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Chun, Yoon Sun, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Hajj, Micheline, RN");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Halvorson, Eric, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Hergrueter, Charles, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Ingram, Abbie, PA-C");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Lafleur, Emily, PA-C");
-        mMainHospital.getFloor(2).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Lahair, Tracy, PA-C");
-
-        mMainHospital.getFloor(2).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Physical Therapy");
-        mMainHospital.getFloor(2).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Psychology");
-        mMainHospital.getFloor(2).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "Addiction Recovery Program");
-        mMainHospital.getFloor(2).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Rehabilitation Services");
-
-        mMainHospital.getFloor(2).getLocationNodes().get(6).addDestination(Destination.BATHROOM, "Floor 2 Bathroom ");
-
-        mMainHospital.getFloor(2).getLocationNodes().get(7).addDestination(Destination.ELEVATOR, "Hillside Elevator");
-        mMainHospital.getFloor(2).getLocationNodes().get(8).addDestination(Destination.ELEVATOR, "Atrium Elevator");
-        mMainHospital.getFloor(2).getLocationNodes().get(9).addDestination(Destination.STAIR, "Hillside Stairs");
-        mMainHospital.getFloor(2).getLocationNodes().get(10).addDestination(Destination.STAIR, "Atrium Stairs");
-*/
-
-        /* Unknown Locction
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Berman, Dan, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Cotter, Lindsay, LCSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Doherty, Meghan, LCSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Donnelly, Kevin, PhD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Dowd, Erin, LCSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Ecker, Vivian, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Fromson, John, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN,"Haimovici, Florina, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Howard, Neal Anthony, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Humbert, Timberly, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Keller, Beth, RN, PsyD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Lai, Leonard, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Leone, Amanda, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Mariano, Timothy, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Matwin, Sonia, PhD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Perry, David, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Rodriguez, Claudia, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Samadi, Farrah, NP");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Schoenfeld, Paul, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Stevens, Erin, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Stewart, Carl, MEd, LADC I");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Trumble, Julia, LICSW");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Yudkoff, Benjamin, MD");
-        mMainHospital.getFloor(2).getLocationNodes().get().addDestination(Destination.PHYSICIAN, "Issa, Mohammed, MD"); */
-
-        //FLOOR 3
-        mMainHospital.getFloor(3).addNode(new Location(1402, 202));     //get(0) 3A
-        mMainHospital.getFloor(3).addNode(new Location(1534, 202));     //get(1) 3B
-        mMainHospital.getFloor(3).addNode(new Location(1594, 229));     //get(2) 3C
-        mMainHospital.getFloor(3).addNode(new Location(10, 40));        //get(3) ATM
-        mMainHospital.getFloor(3).addNode(new Location(1347, 700));     //get(4) Auditorium
-        mMainHospital.getFloor(3).addNode(new Location(1492, 637));     //get(5) Cafeteria
-        mMainHospital.getFloor(3).addNode(new Location(1333, 1380));    //get(6) Chapel
-        mMainHospital.getFloor(3).addNode(new Location(1449, 940));     //get(7) Gift Shop
-        mMainHospital.getFloor(3).addNode(new Location(10, 90));//get(8) Patient Relations
-        mMainHospital.getFloor(3).addNode(new Location(1601, 1380));    //get(9) Volunteer Services
-        mMainHospital.getFloor(3).addNode(new Location(1469, 1359));    //get(10) Kiosk
-        mMainHospital.getFloor(3).addNode(new Location(1445, 240));     //get(11) Bathrooms near atrium left
-        mMainHospital.getFloor(3).addNode(new Location(1490, 240));     //get(12) Bathrooms near atrium right
-        mMainHospital.getFloor(3).addNode(new Location(1295, 606));       //get(13) Bathrooms near kiosk
-        mMainHospital.getFloor(3).addNode(new Location(1391, 1276));       //get(14) Bathrooms near auditorium
-        mMainHospital.getFloor(3).addNode(new Location(1406, 1191));    //get(15) H Elevatoe
-        mMainHospital.getFloor(3).addNode(new Location(1435, 349));     //get(16) A Elevatoe
-        mMainHospital.getFloor(3).addNode(new Location(1464, 1100));    //get(17) Hillside Stairs
-        mMainHospital.getFloor(3).addNode(new Location(1541, 1190));     //get(18) Atrium Stairs
-
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Roslindale Pediatric Associates");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Byrne, Jennifer, RN, CPNP");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Grossi, Lisa, RN, MS, CPNP");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Keller, Elisabeth, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Malone, Linda, DNP, RN, CPNP");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Morrison, Beverly, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "O'Connor, Elizabeth, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Saluti, Andrew, DO");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Scheff, David, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Stacks, Robert, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Tunick, Mitchell, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Viola, Julianne, MD");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Eye Care Specialists");
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Suburban Eye Specialists");
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Dann, Harriet, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Frangieh, George, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Micley, Bruce, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Patten, James, MD");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Obstetrics and Gynecology Associates");
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Greenberg, James Adam, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Miner, Julie, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Nadarajah, Sarah, WHNP");
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Schueler, Leila, MD");
-        mMainHospital.getFloor(3).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Smith, Shannon, MD");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(3).addDestination(Destination.SERVICE, "ATM");
-        mMainHospital.getFloor(3).getLocationNodes().get(4).addDestination(Destination.SERVICE, "Huvos Auditorium");
-        mMainHospital.getFloor(3).getLocationNodes().get(5).addDestination(Destination.SERVICE, "Cafeteria");
-        mMainHospital.getFloor(3).getLocationNodes().get(6).addDestination(Destination.SERVICE, "Chapel");
-        mMainHospital.getFloor(3).getLocationNodes().get(7).addDestination(Destination.SERVICE, "Gift Shop");
-        mMainHospital.getFloor(3).getLocationNodes().get(8).addDestination(Destination.SERVICE, "Patient Relations");
-        mMainHospital.getFloor(3).getLocationNodes().get(9).addDestination(Destination.SERVICE, "Volunteer Services");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(10).addDestination(Destination.KIOSK, "Kiosk");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(11).addDestination(Destination.BATHROOM, "Floor 3 Atrium Left Bathroom");
-        mMainHospital.getFloor(3).getLocationNodes().get(12).addDestination(Destination.BATHROOM, "Floor 3 Atrium RightBathroom");
-        mMainHospital.getFloor(3).getLocationNodes().get(13).addDestination(Destination.BATHROOM, "Floor 3 Auditorium Bathroom");
-        mMainHospital.getFloor(3).getLocationNodes().get(14).addDestination(Destination.BATHROOM, "Floor 3 Hillside Bathroom");
-
-        mMainHospital.getFloor(3).getLocationNodes().get(15).addDestination(Destination.ELEVATOR, " Hillside Elevator");
-        mMainHospital.getFloor(3).getLocationNodes().get(16).addDestination(Destination.ELEVATOR, "Atrium Elevatoe");
-        mMainHospital.getFloor(3).getLocationNodes().get(17).addDestination(Destination.STAIR, "Hillside Stairs");
-        mMainHospital.getFloor(3).getLocationNodes().get(18).addDestination(Destination.STAIR, "Atrium Stairs");
-
-         /*
-
-        //FLOOR 4
-        mMainHospital.getFloor(4).addNode(new Location(40, 10));//get(0) 4A
-        mMainHospital.getFloor(4).addNode(new Location(40, 20));//get(1) 4B
-        mMainHospital.getFloor(4).addNode(new Location(40, 30));//get(2) 4C
-        mMainHospital.getFloor(4).addNode(new Location(40, 40));//get(3) 4D
-        mMainHospital.getFloor(4).addNode(new Location(40, 50));//get(4) 4F
-        mMainHospital.getFloor(4).addNode(new Location(40, 60));//get(5) 4G
-        mMainHospital.getFloor(4).addNode(new Location(40, 70));//get(6) 4H
-        mMainHospital.getFloor(4).addNode(new Location(40, 80));//get(7) 4I
-        mMainHospital.getFloor(4).addNode(new Location(40, 90));//get(8) 4J
-        mMainHospital.getFloor(4).addNode(new Location(40, 100));//get(9) 4N
-        mMainHospital.getFloor(4).addNode(new Location(40, 110));//get(10) 4S
-        mMainHospital.getFloor(4).addNode(new Location(40, 120));//get(11) Doherty Conference Room
-        mMainHospital.getFloor(4).addNode(new Location(40, 130));//get(12) Interpreter Services
-        mMainHospital.getFloor(4).addNode(new Location(40, 140));//get(13) Mary Ann Tynan Conference Rooms
-        mMainHospital.getFloor(4).addNode(new Location(40, 150));//get(14) Medical Library
-        mMainHospital.getFloor(4).addNode(new Location(40, 160));//get(15) Medical Records
-        mMainHospital.getFloor(4).addNode(new Location(40, 170));//get(16) Sadowsky Conference Room
-        mMainHospital.getFloor(4).addNode(new Location(40, 180));//get(17) Saslow Conference Room
-        mMainHospital.getFloor(4).addNode(new Location(40, 190));//get(18) Social Work
-        mMainHospital.getFloor(4).addNode(new Location(40, 200));//get(19) Floor 4 Bathroom
-        mMainHospital.getFloor(4).addNode(new Location(40, 210));//get(20) Hillside Elevator
-        mMainHospital.getFloor(4).addNode(new Location(40, 220));//get(21) Atrium Elevator
-
-
-
-        //Floor 4
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Brigham and Women's Primary Physicians");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Caplan, Laura, PA-C");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Cohen, Natalie, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Copello, Maria, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Healy, Barbara, RN");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Lauretti, Linda, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "McCord, Laura, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Nuspl, Kristen, PA-C");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Oliver, Lynn, RN");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Walsh Samp, Kathy, LICSW");
-        mMainHospital.getFloor(4).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Welker, Roy, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "Gastroenterology Associates");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Conant, Alene, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Drewniak, Stephen, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Homenko, Daria, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Lo, Amy, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Matloff, Daniel, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Mutinga, Muthoka, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Preneta, Ewa, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(1).addDestination(Destination.PHYSICIAN, "Smith, Benjamin, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Neurology/Sleep Division");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Sleep Disorders Service");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Horowitz, Sandra, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Mullally, William, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Novak, Peter, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Pavlova, Milena, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Pilgrim, David, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Vardeh, Daniel, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Weisholtz, Daniel, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Whitman, Gregory, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Arthritis Center");
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Rheumatology Center");
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Hoover, Paul, MD, PhD");
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Pariser, Kenneth, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Todd, Derrick, MD, PhD");
-        mMainHospital.getFloor(4).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Wei, Kevin, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "Infectious Diseases ");
-        mMainHospital.getFloor(4).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN, "Clark, Roger, DO");
-        mMainHospital.getFloor(4).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN, "Cohen, Jeffrey, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN, "McGowan, Katherine, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Allergy");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Cardiology");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Endocrinology");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Gastroenterology");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Geriatrics/Senior Health");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Hematology");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Medical Specialties");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Pulmonary");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Renal");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Sleep Medicine");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Ash, Samuel, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Bachman, William, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Batool-Anwar, Salma, MD, MPH");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Bonaca, Marc, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Budhiraja, Rohit, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Cardet, Juan Carlos, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Cardin, Kristin, NP");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Chan, Walter, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Connell, Nathan, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "D'Ambrosio, Carolyn, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Dave, Jatin, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Epstein, Lawrence, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Fanta, Christopher, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Halperin, Florencia, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Hentschel, Dirk, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Hsu, Joyce, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Lilly, Leonard Stuart, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Parnes, Aric, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Quan, Stuart F., MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Ramirez, Alberto, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Romano, Keith, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Ruff, Christian, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Saldana, Fidencio, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Schissel, Scott, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Shah, Amil, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Sheth, Samira, NP");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Smith, Colleen, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Stephens, Kelly, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Sweeney, Michael, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Tucker, J. Kevin, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Voiculescu, Adina, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Wellman, David, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "White, David, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Wickner, Paige, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Angell, Trevor, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Brigham and Women's Primary Physicians");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Headache Center");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "John R. Graham Headache Center");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.DEPARTMENT, "Neurology");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Bernstein, Carolyn, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Burch, Rebecca, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Cochrane, Thomas, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Friedman, Pamela, PsyD, ABPP");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Loder, Elizabeth, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Mathew, Paul, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN, "Rizzoli, Paul, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN, "Cua, Christopher, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN, "Lahive, Karen, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN, "Tarpy, Robert, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(8).addDestination(Destination.DEPARTMENT, "Mohs and Dermatologic Surgery");
-        mMainHospital.getFloor(4).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN, "Tarpy, Robert, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.DEPARTMENT, "Men's Health Center");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Ruiz, Emily, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Schmults, Chrysalyne, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Chang, Steven, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Kathrins, Martin, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Malone, Michael, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "McDonald, Michael, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "O'Leary, Michael, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Steele, Graeme, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(10).addDestination(Destination.DEPARTMENT, "Brigham and Women's Primary Physicians");
-        mMainHospital.getFloor(4).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN, "Goldman, Jill, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN, "Lilienfeld, Armin, MD");
-        mMainHospital.getFloor(4).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN, "Owens, Lisa Michelle, MD");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(11).addDestination(Destination.SERVICE, "Doherty Conference Room");
-        mMainHospital.getFloor(4).getLocationNodes().get(12).addDestination(Destination.SERVICE, "Interpreter Services");
-        mMainHospital.getFloor(4).getLocationNodes().get(13).addDestination(Destination.SERVICE, "Mary Ann Tynan Conference Rooms");
-        mMainHospital.getFloor(4).getLocationNodes().get(14).addDestination(Destination.SERVICE, "Medical Library");
-        mMainHospital.getFloor(4).getLocationNodes().get(15).addDestination(Destination.SERVICE, "Medical Records");
-        mMainHospital.getFloor(4).getLocationNodes().get(16).addDestination(Destination.SERVICE, "Sadowsky Conference Room");
-        mMainHospital.getFloor(4).getLocationNodes().get(17).addDestination(Destination.SERVICE, "Saslow Conference Room");
-        mMainHospital.getFloor(4).getLocationNodes().get(18).addDestination(Destination.SERVICE, "Social Work");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(19).addDestination(Destination.BATHROOM, "Floor 4 Bathroom");
-
-        mMainHospital.getFloor(4).getLocationNodes().get(20).addDestination(Destination.ELEVATOR, "Hillside Elevator");
-        mMainHospital.getFloor(4).getLocationNodes().get(21).addDestination(Destination.ELEVATOR, "Atrium Elevator");
-*/
-/*/
-        //FLOOR 5
-        mMainHospital.getFloor(5).addNode(new Location(40, 10));//get(0) 5South
-        mMainHospital.getFloor(5).addNode(new Location(40, 20));//get(1) 5North
-        mMainHospital.getFloor(5).addNode(new Location(40, 30));//get(2) 5A
-        mMainHospital.getFloor(5).addNode(new Location(40, 40));//get(3) 5B
-        mMainHospital.getFloor(5).addNode(new Location(40, 50));//get(4) 5C
-        mMainHospital.getFloor(5).addNode(new Location(40, 60));//get(5) 5D
-        mMainHospital.getFloor(5).addNode(new Location(40, 70));//get(6) 5F
-        mMainHospital.getFloor(5).addNode(new Location(40, 80));//get(7) 5G
-        mMainHospital.getFloor(5).addNode(new Location(40, 90));//get(8) 5H
-        mMainHospital.getFloor(5).addNode(new Location(40, 100));//get(9) 5I
-        mMainHospital.getFloor(5).addNode(new Location(40, 110));//get(10) 5J
-        mMainHospital.getFloor(5).addNode(new Location(40, 120));//get(11) 5M
-
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Foot and Ankle Center");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Hand and Upper Extremity Service Neurosurgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Orthopedics Center");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.DEPARTMENT, "Spine Center");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Alqueza, Arnold, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Altschul, Nomee, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Bhattacharyya, Shamik, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Blazar, Phil, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Bluman, Eric, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Bono, Christopher, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Brick, Gregory, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Carleen, Mary Anne, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Chiodo, Christopher, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Cosgrove, Garth Rees, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Dawson, Courtney, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Drew, Michael, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Dyer, George, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Earp, Brandon, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Ermann, Joerg, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Fitz, Wolfgang, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Groff, Michael, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN, "Harris, Mitchel, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Hartigan, Joseph, DPM");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Higgins, Laurence, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Issa, Mohammed, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Lu, Yi, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Matzkin, Elizabeth, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Pingeton, Mallory, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Schoenfeld, Andrew, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Smith, Jeremy, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Taylor, Cristin, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Tenforde, Adam, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Vigneau, Shari, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Whitlock, Kaitlyn, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Zampini, Jay, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Issa, Mohammed, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Isaac, Zacharia, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Nelson, Ehren, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(0).addDestination(Destination.PHYSICIAN,"Yong, Jason, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT, "ICU");
-        mMainHospital.getFloor(5).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT,"Inpatient Hemodialysis");
-        mMainHospital.getFloor(5).getLocationNodes().get(1).addDestination(Destination.DEPARTMENT,"Outpatient Infusion Center");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(2).addDestination(Destination.DEPARTMENT, "Nutrition Clinic");
-        mMainHospital.getFloor(5).getLocationNodes().get(2).addDestination(Destination.PHYSICIAN, "Oliveira, Nancy, MS, RDN, LDN");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.DEPARTMENT, "Boston ENT Associates");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Groden, Joseph, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Innis, William, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN, "Kessler, Joshua, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN,"Mason, William, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN,"Paperno, Halie, Au.D, CCC-A");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN,"Samara, Mariah, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(3).addDestination(Destination.PHYSICIAN,"Stone, Rebecca, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.DEPARTMENT, "Orthopaedics Associates");
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN,"Barr, Joseph Jr., MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN,"Butler, Matthew, DPM");
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN,"Kornack, Fulton, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN,"Savage, Robert, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(4).addDestination(Destination.PHYSICIAN,"Webber, Anthony, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Center for Metabolic Health and Bariatric Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Colorectal Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "General Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Nutrition - Weight Loss Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Psychology - Weight Loss Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Surgical Specialties");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.DEPARTMENT, "Vascular Surgery");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Andromalos, Laura, RD, LDN ");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Ariagno, Meghan, RD, LDN");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN, "Belkin, Michael, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Davidson, Paul, PhD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Hartman, Katy, MS, RD, LDN ");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Irani, Jennifer, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Isom, Kellene, MS, RN, LDN");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Kenney, Pardon, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Kleifield, Allison, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Matthews, Robert, PA-C");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Melnitchouk, Neyla, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Nehs, Matthew, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Rangel, Erika, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Reil, Erin, RD, LDN");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Robinson, Malcolm, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Sheu, Eric, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Shoji, Brent, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Spector, David, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Tavakkoli, Ali, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(5).addDestination(Destination.PHYSICIAN,"Vernon, Ashley, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN,"Warth, James, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(6).addDestination(Destination.PHYSICIAN,"Warth, Maria, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(7).addDestination(Destination.DEPARTMENT,"Brigham Dermatology Associates");
-        mMainHospital.getFloor(5).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN,"Balash, Eva, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN,"Divito, Sherrie, MD, PhD");
-        mMainHospital.getFloor(5).getLocationNodes().get(7).addDestination(Destination.PHYSICIAN,"Frangos, Jason, MD");
-
-
-        mMainHospital.getFloor(5).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN, "Family Care Associates");
-        mMainHospital.getFloor(5).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN,"Monaghan, Colleen, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN,"O'Hare, Kitty, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN,"Sharma, Niraj, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(8).addDestination(Destination.PHYSICIAN,"Joyce, Eileen, LICSW");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Bana, Dhirendra, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Cahan, David, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(9).addDestination(Destination.PHYSICIAN, "Gopal, Malavalli, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.DEPARTMENT, "Brigham and Women's Primary Physicians\n");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Berman, Stephanie, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Healey, Michael, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Laskowski, Karl, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Litwak, Katy, LICSW");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Miatto, Orietta, MD");
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.PHYSICIAN,"Wagle, Neil, MD");
-
-        mMainHospital.getFloor(5).getLocationNodes().get(10).addDestination(Destination.DEPARTMENT, "Sleep Testing Center");
-
-
-
-*/
-        return mMainHospital;
+        return this;
     }
 
+    public UUID getUniqueID() {
 
+        return uniqueID;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public ArrayList<Building> getMapBuildings() {
+
+        return mapBuildings;
+    }
+
+    public LocationNode getCurrentLocationNode() {
+
+        return currentLocationNode;
+    }
 
     public Floor getCurrentFloor() {
 
         return currentFloor;
     }
-    public void setCurrentFloor(Floor currentFloor) {
 
-        this.currentFloor = currentFloor;
+    public Building getCurrentBuilding() {
+
+        return currentBuilding;
+    }
+
+    public ObservableList<LocationNode> getCurrentAdjacentLocationNodes() {
+
+        return currentAdjacentLocationNodes;
+    }
+
+    public ObservableList<Destination> getCurrentLocationNodeDestinations() {
+
+        return currentLocationNodeDestinations;
+    }
+
+    public ObservableList<LocationNode> getCurrentFloorLocationNodes() {
+
+        return currentFloorLocationNodes;
+    }
+
+    public ObservableList<Destination> getCurrentFloorDestinations() {
+
+        return currentFloorDestinations;
+    }
+
+    public Pane getCurrentFloorLocationNodePane() {
+
+        return currentFloorLocationNodePane;
+    }
+
+    public Pane getCurrentFloorEdgePane() {
+
+        return currentFloorEdgePane;
+    }
+
+    public ImageView getCurrentFloorImage() {
+
+        return currentFloorImage;
+    }
+
+    public ObservableList<Floor> getCurrentBuildingFloors() {
+
+        return currentBuildingFloors;
+    }
+
+    public ObservableList<Destination> getCurrentBuildingDestinations() {
+
+        return currentBuildingDestinations;
+    }
+
+    public void setStartLocationNode(LocationNode locationNode) {
+
+        LOGGER.info(locationNode.toString());
+
+        this.startLocationNode = locationNode;
+    }
+
+    public void setCurrentDestination(Destination destination) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        LOGGER.info("set current destination:" + destination.toString());
+
+        this.currentDestination = destination;
+
+        this.locationNodeUpdater(currentDestination.getCurrentLocationNode());
+        this.currentLocationNode = currentDestination.getCurrentLocationNode();
+
+        this.floorChangeUpdater(currentLocationNode.getCurrentFloor());
+        this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.currentBuilding = currentFloor.getCurrentBuilding();
 
     }
+
+//    private void destinationChangeUpdater(Destination newDestination) {
+//
+//        if ((this.currentDestination == null) || (!this.currentDestination.equals(newDestination))) {
+//
+//            this.currentFloorDestinations.clear();
+//            this.currentFloorDestinations.addAll(newDestination.getFloorDestinations());
+//
+//            LOGGER.info("Updating current floor destinations: " + currentFloorDestinations.size());
+//
+//            this.currentFloorLocationNodes.clear();
+//            this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
+//
+//
+//            LOGGER.info("Updating current floor location nodes: " +  currentFloorLocationNodes.size());
+//
+//        }
+//
+//    }
+
+    public void setCurrentLocationNode(LocationNode locationNode) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = null;
+        locationNodeUpdater(locationNode);
+        this.currentLocationNode = locationNode;
+        floorChangeUpdater(currentLocationNode.getCurrentFloor());
+        this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    private void locationNodeUpdater(LocationNode newLocationNode) {
+
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
+
+        if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
+
+            LOGGER.info("Rebuilding current location node destinations and connected location nodes");
+
+            this.currentLocationNodeDestinations.clear();
+            this.currentLocationNodeDestinations.addAll(newLocationNode.getDestinations());
+
+            this.currentAdjacentLocationNodes.clear();
+            this.currentAdjacentLocationNodes.addAll(newLocationNode.getAdjacentLocationNodes());
+
+        }
+
+    }
+
+    public void setCurrentFloor(Floor floor) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.floorChangeUpdater(floor);
+
+        this.currentDestination = null;
+        this.currentLocationNode = null;
+        this.currentFloor = floor;
+        this.currentBuilding = currentFloor.getCurrentBuilding();
+
+    }
+
+    private void floorChangeUpdater(Floor newFloor) {
+
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
+
+        if ((this.currentFloor == null) || (!this.currentFloor.equals(newFloor))) {
+
+            LOGGER.info("Rebuilding current floor destinations and location nodes");
+
+            this.currentFloorDestinations.clear();
+            this.currentFloorDestinations.addAll(newFloor.getFloorDestinations());
+
+            this.currentFloorLocationNodes.clear();
+            this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
+
+            newFloor.drawFloorAdmin(this.currentFloorImage, this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+
+        }
+
+    }
+
+    public void setCurrentBuilding(Building building) {
+
+        // TODO possibly refresh the observable lists
+        // TODO possible highlight the current LocationNode
+
+        this.currentDestination = null;
+        this.currentLocationNode = null;
+        this.currentFloor = null;
+        this.currentBuilding = building;
+
+    }
+
+    public void setCurrentMapState(MapState currentMapState) {
+
+        this.currentMapState = currentMapState;
+
+    }
+
+    public MapState getCurrentMapState() {
+
+        return currentMapState;
+    }
+
+    public ObservableList<Destination> getDirectoryList() {
+
+        return directoryList;
+    }
+
+    public ArrayList<UUID> getBuildingIdList() {
+        return buildingIdList;
+    }
+
 }
-
-

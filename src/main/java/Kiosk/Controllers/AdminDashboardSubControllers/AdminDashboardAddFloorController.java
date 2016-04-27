@@ -1,6 +1,7 @@
 package Kiosk.Controllers.AdminDashboardSubControllers;
 
 import Map.Building;
+import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Floor;
 import javafx.event.EventHandler;
@@ -94,7 +95,8 @@ public class AdminDashboardAddFloorController {
 
                 try {
 
-                    currentBuilding.getFloor(floorNum);
+                    throw new FloorDoesNotExistException(1);
+//                    currentBuilding.getFloor(floorNum);
 
                 } catch (FloorDoesNotExistException e) {
 
@@ -134,8 +136,8 @@ public class AdminDashboardAddFloorController {
 
                     }
 
-                    Floor newFloor = currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
-                    newFloor.drawFloorAdmin(subViewLoader.getMapStackPane());
+//                    Floor newFloor = currentBuilding.addFloor(floorNum, "Floor" + floorNum + ".png");
+//                    newFloor.drawFloorAdmin(subViewLoader.getMapStackPane());
 
 
 
