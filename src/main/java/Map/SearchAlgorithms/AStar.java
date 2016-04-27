@@ -12,7 +12,6 @@ import static java.util.Collections.reverse;
  * TODO
  */
 public class AStar implements ISearchAlgorithm {
-//public class AStar {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AStar.class); // Logger for this class
 
