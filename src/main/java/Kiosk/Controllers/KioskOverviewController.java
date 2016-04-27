@@ -135,5 +135,8 @@ public class KioskOverviewController {
         kioskApp.showDirectory(DestinationType.SERVICE);
     }
 
-
+    @FXML
+    private void handleAbout() {
+        kioskApp.showAboutPage();
+    }
 }
