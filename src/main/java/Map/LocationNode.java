@@ -302,6 +302,12 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+    public void drawNormal(Pane pane, int x, int y) {
+
+        this.drawNormal(pane, this.associatedImage, x, y);
+        
+    }
+
     public void drawNormal(Pane pane, ImageType imageType, int x, int y) {
 
         if (pane.getChildren().contains(this.iconLabel)) {

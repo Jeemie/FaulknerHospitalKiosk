@@ -63,7 +63,7 @@ public class FaulknerHospitalData {
 
 
         // TODO change to Kiosk - starting at a waiting room currently
-        map.setStartLocationNode(f1.getLocationNodes().get(1));
+        map.setStartLocationNode(f1.getLocationNodes().get(0));
 
 
 
@@ -74,8 +74,8 @@ public class FaulknerHospitalData {
 
         map.addLocationNode("Bathroom", new Location(10, 10), ImageType.WAITINGROOM);
         map.addDestination("Audiology", DestinationType.DEPARTMENT);
-        map.addLocationNode("Cardiac", new Location(20, 20), ImageType.WAITINGROOM);
-        map.addDestination("Cardiac Rehabilitation", DestinationType.DEPARTMENT);
+        map.addLocationNode("Cardiac", new Location(200, 200), ImageType.WAITINGROOM);
+        map.addDestination("Destination", DestinationType.DEPARTMENT);
         map.addLocationNode("Preop", new Location(1036, 885), ImageType.WAITINGROOM);
         map.addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
         map.addLocationNode("ER", new Location(1380, 906), ImageType.WAITINGROOM);
@@ -99,7 +99,7 @@ public class FaulknerHospitalData {
         try {
             // Add edge from Audiology to Cardiac Rehabilitation
             f1.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(1));
-            f2.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(0));
+            f2.getLocationNodes().get(0).addEdge(f1.getLocationNodes().get(1));
             f2.getLocationNodes().get(1).addEdge(f2.getLocationNodes().get(0));
 
         } catch (NodeDoesNotExistException e) {
