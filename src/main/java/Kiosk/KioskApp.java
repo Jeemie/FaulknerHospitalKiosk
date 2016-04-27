@@ -7,6 +7,7 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.FaulknerHospitalData;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -14,6 +15,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class KioskApp extends Application {
 
             this.faulknerHospitalMap = Map.loadFromFile(this.filePath);
 
-        }  catch (FloorDoesNotExistException e) {
+        } catch (FloorDoesNotExistException e) {
 
             e.printStackTrace();
 
@@ -133,6 +135,7 @@ public class KioskApp extends Application {
 
     /**
      * Returns the main stage.
+     *
      * @return
      */
     public Stage getPrimaryStage() {
@@ -145,7 +148,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes scene to allow admins to log in
-     *
      */
     public boolean showAdminLogin() {
         showAdminControls();
@@ -169,6 +171,11 @@ public class KioskApp extends Application {
 //            controller.setKioskApp(this);
 //            controller.setListeners();
 //
+        //      primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        //          public void handle(WindowEvent we) {
+//                controller.shutOff();
+        //           }
+        //       });
 //            return controller.isOkClicked();
 //
 //        } catch (IOException e) {
@@ -181,7 +188,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow admins to edit the map
-     *
      */
     public boolean showAdminControls() {
 
@@ -206,6 +212,12 @@ public class KioskApp extends Application {
 //            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
+
+/*            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });*/
 //            return controller.isOkClicked();
             return false;
 
@@ -219,7 +231,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to see results of search
-     *
      */
     // TODO: showSearch should have parameter for input
     public boolean showSearch(String searchText) {
@@ -246,6 +257,12 @@ public class KioskApp extends Application {
 //            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
+
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -256,7 +273,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to select by directory
-     *
      */
     public boolean showDirectory(DestinationType destinationType) {
 
@@ -277,6 +293,11 @@ public class KioskApp extends Application {
             controller.setupListeners();
             controller.setStartSelection(destinationType);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -289,7 +310,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to view the map
-     *
      */
     // TODO: showMap should have parameter for chosen destination from previous screen
     public boolean showMap() {
@@ -317,7 +337,11 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 //            controller.setDestinationNode(destinationNode);
 
-
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
 
             return controller.isOkClicked();
 
@@ -354,7 +378,6 @@ public class KioskApp extends Application {
 
     /**
      * Resets the screen to the KioskOverview
-     *
      */
     public void reset() {
         try {

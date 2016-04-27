@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.DirectoryController">
+<AnchorPane fx:id="stage" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.DirectoryController">
     <children>
         <TextField fx:id="searchTextField" layoutX="52.0" layoutY="14.0" prefHeight="51.0" prefWidth="1160.0" promptText="Search..." AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
          <font>
