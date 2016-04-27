@@ -62,57 +62,57 @@ public class FaulknerHospitalData {
                 map.addLocationNode("Lab", new Location(30, 30), ImageType.WAITINGROOM);
                 map.addDestination("Laboratory", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Center for Preoperative Evaluation",new Location(1501, 497), ImageType.WAITINGROOM);     //get(2) Center for Preoperative Evaluation
+                map.addLocationNode("Center for Preoperative Evaluation",new Location(20, 40), ImageType.WAITINGROOM);     //get(2) Center for Preoperative Evaluation
                 map.addDestination("Center for Preoperative Evaluation", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Emergency Department",new Location(1042, 471), ImageType.WAITINGROOM);     //get(3) Emergency Department
+                map.addLocationNode("Emergency Department",new Location(20, 50), ImageType.WAITINGROOM);     //get(3) Emergency Department
                 map.addDestination("Emergency Department", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("GI Endoscopy",new Location(1203, 832), ImageType.WAITINGROOM);     //get(4) GI Endoscopy
+                map.addLocationNode("GI Endoscopy",new Location(20, 60), ImageType.WAITINGROOM);     //get(4) GI Endoscopy
                 map.addDestination("GI Endoscopy", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Admitting",new Location(1274, 435), ImageType.SERVICE);     //get(5) Finance
+                map.addLocationNode("Admitting",new Location(20, 70), ImageType.SERVICE);     //get(5) Finance
                 map.addDestination("Admitting", DestinationType.SERVICE);
                 map.addDestination("Financial Counseling", DestinationType.SERVICE);
                 map.addDestination("Patient Financial Services", DestinationType.SERVICE);
                 map.addDestination("Patient Registration", DestinationType.SERVICE);
 
-                map.addLocationNode("Radiology",new Location(1699, 482), ImageType.WAITINGROOM); //get(6) Radiology
+                map.addLocationNode("Radiology",new Location(20, 80), ImageType.WAITINGROOM); //get(6) Radiology
                 map.addDestination("Radiology", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Testing",new Location(1258, 471), ImageType.WAITINGROOM);     //get(7) Test
+                map.addLocationNode("Testing",new Location(20, 90), ImageType.WAITINGROOM);     //get(7) Test
                 map.addDestination("Special Testing", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Family Center",new Location(1124, 420), ImageType.SERVICE);     //get(8) Family
+                map.addLocationNode("Family Center",new Location(20, 100), ImageType.SERVICE);     //get(8) Family
                 map.addDestination("Taiclet Family Center", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Admitting",new Location(20, 120), ImageType.SERVICE);       //get(9) Admit
+                map.addLocationNode("Admitting",new Location(20, 110), ImageType.SERVICE);       //get(9) Admit
                 addDestinationOld(DestinationType.SERVICE, "Admitting/Registration");
 
-                map.addLocationNode("Cafe",new Location(1298, 130), ImageType.SERVICE);     //get(10) Cafe
+                map.addLocationNode("Cafe",new Location(20, 120), ImageType.SERVICE);     //get(10) Cafe
                 addDestinationOld(DestinationType.SERVICE, "Atrium Cafe");
                 addDestinationOld(DestinationType.SERVICE, "Starbucks");
 
-                map.addLocationNode("Valet Parking",new Location(20, 140), ImageType.SERVICE);       //get(11) Valet
+                map.addLocationNode("Valet Parking",new Location(20, 130), ImageType.SERVICE);       //get(11) Valet
                 addDestinationOld(DestinationType.SERVICE, "Valet Parking");
 
-                map.addLocationNode("Floor 1 Kiosk",new Location(1437, 233), ImageType.KIOSK);   //get(12) Floor 1 Kiosk
+                map.addLocationNode("Floor 1 Kiosk",new Location(20, 140), ImageType.KIOSK);   //get(12) Floor 1 Kiosk
                 addDestinationOld(DestinationType.SERVICE, "Information");
                 addDestinationOld(DestinationType.KIOSK, "Kiosk");
 
-                map.addLocationNode("Floor 1 Bathroom",new Location(1381, 420), ImageType.BATHROOM);     //get(13) Floor 1 Bathroom
+                map.addLocationNode("Floor 1 Bathroom",new Location(20, 150), ImageType.BATHROOM);     //get(13) Floor 1 Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Floor 1 Bathroom");
 
-                map.addLocationNode("Floor 1 Hillside Elevator",new Location(1413, 1195), ImageType.ELEVATOR);    //get(14) Floor 1 Hillside Elevatoe
+                map.addLocationNode("Floor 1 Hillside Elevator",new Location(20, 160), ImageType.ELEVATOR);    //get(14) Floor 1 Hillside Elevatoe
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 1 Atrium Elevator",new Location(1454, 339), ImageType.ELEVATOR);     //get(15) Floor 1 Atrium Elevatoe
+                map.addLocationNode("Floor 1 Atrium Elevator",new Location(20, 170), ImageType.ELEVATOR);     //get(15) Floor 1 Atrium Elevatoe
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 1 Hillside Stairs",new Location(1464, 1100), ImageType.STAIRS);    //get(16) Floor 1 Hillside Stairs
+                map.addLocationNode("Floor 1 Hillside Stairs",new Location(20, 180), ImageType.STAIRS);    //get(16) Floor 1 Hillside Stairs
                 addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
-                map.addLocationNode("Floor 1 Atrium Stairs",new Location(1527, 343), ImageType.STAIRS);     //get(17) Floor 1 Atrium Stairs
+                map.addLocationNode("Floor 1 Atrium Stairs",new Location(20, 190), ImageType.STAIRS);     //get(17) Floor 1 Atrium Stairs
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
                 // TODO change to Kiosk - starting at a waiting room currently
@@ -125,11 +125,11 @@ public class FaulknerHospitalData {
 
 
                // map.addFloor("Floor 2", "floor2.png"); // Index 1
-             //   Floor f2 = map.getCurrentBuilding().getFloors().get(1);
-
-                map.addLocationNode("Addiction Recovery",new Location(20, 50), ImageType.WAITINGROOM);        //get(0) Addiction recovery
+               // Floor f2 = map.getCurrentBuilding().getFloors().get(1);
+/*
+                map.addLocationNode("Addiction Recovery",new Location(20, 10), ImageType.WAITINGROOM);        //get(0) Addiction recovery
                 addDestinationOld(DestinationType.DEPARTMENT, "Addiction Recovery Program");
-                map.addLocationNode("Rehabilitation Services",new Location(20, 60), ImageType.WAITINGROOM);        //get(1) rehab
+                map.addLocationNode("Rehabilitation Services",new Location(20, 20), ImageType.WAITINGROOM);        //get(1) rehab
                 addDestinationOld(DestinationType.DEPARTMENT, "Rehabilitation Services");
                 map.addDestination("Berman, Dan, LICSW", DestinationType.PHYSICIAN);
                 map.addDestination("Cotter, Lindsay, LCSW", DestinationType.PHYSICIAN);
@@ -155,14 +155,14 @@ public class FaulknerHospitalData {
                 map.addDestination("Trumble, Julia, LICSW", DestinationType.PHYSICIAN);
                 map.addDestination("Yudkoff, Benjamin, MD", DestinationType.PHYSICIAN);
                 map.addDestination("Issa, Mohammed, MD", DestinationType.PHYSICIAN);
-
-                map.addLocationNode("2A",new Location(1371, 81), ImageType.WAITINGROOM);        //get(2)
+*/
+                map.addLocationNode("2A",new Location(20, 30), ImageType.WAITINGROOM);        //get(2)
                 addDestinationOld(DestinationType.DEPARTMENT, "Otolarngology");
                 addDestinationOld(DestinationType.PHYSICIAN, "Corrales, Carleton Eduardo, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Prince, Anthony, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Roditi, Rachel, MD");
 
-                map.addLocationNode("2B",new Location(1617, 81), ImageType.WAITINGROOM);        //get(3) 2B
+                map.addLocationNode("2B",new Location(20, 40), ImageType.WAITINGROOM);        //get(3) 2B
                 addDestinationOld(DestinationType.DEPARTMENT, "Plastic Surgery");
                 addDestinationOld(DestinationType.PHYSICIAN, "Carty, Matthew, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Caterson, Stephanie, MD");
@@ -174,25 +174,25 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Lafleur, Emily, PA-C");
                 addDestinationOld(DestinationType.PHYSICIAN, "Lahair, Tracy, PA-C");
 
-                map.addLocationNode("Physical Therapy",new Location(1724, 557), ImageType.WAITINGROOM);        //get(4)
+                map.addLocationNode("Physical Therapy",new Location(20, 50), ImageType.WAITINGROOM);        //get(4)
                 addDestinationOld(DestinationType.DEPARTMENT, "Physical Therapy");
 
-                map.addLocationNode("Outpatient Psychiatry",new Location(1414, 1242), ImageType.WAITINGROOM);        //get(5) Psychiatry
+                map.addLocationNode("Outpatient Psychiatry",new Location(20, 60), ImageType.WAITINGROOM);        //get(5) Psychiatry
                 addDestinationOld(DestinationType.DEPARTMENT, "Outpatient Psychiatry");
 
-                map.addLocationNode("Floor 2 Bathroom",new Location(1614, 171.0), ImageType.BATHROOM);        //get(6) bathroom
+                map.addLocationNode("Floor 2 Bathroom",new Location(20, 70), ImageType.BATHROOM);        //get(6) bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Floor 2 Bathroom");
 
-                map.addLocationNode("Floor 2 Hillside Elevator",new Location(1400, 1142), ImageType.ELEVATOR);    //get(7) Hillside Elevator
+                map.addLocationNode("Floor 2 Hillside Elevator",new Location(20, 80), ImageType.ELEVATOR);    //get(7) Hillside Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 2 Atrium Elevator",new Location(1445, 223), ImageType.ELEVATOR);      //get(8) A Elevator
+                map.addLocationNode("Floor 2 Atrium Elevator",new Location(20, 90), ImageType.ELEVATOR);      //get(8) A Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 2 Hillside Stairs",new Location(1430, 1051), ImageType.STAIRS);    //get(9) Hillside Stairs
+                map.addLocationNode("Floor 2 Hillside Stairs",new Location(20, 100), ImageType.STAIRS);    //get(9) Hillside Stairs
                 addDestinationOld(DestinationType.STAIR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 2 Atrium Stairs",new Location(1525, 233), ImageType.STAIRS);     //get(10) Atrium Stairs
+                map.addLocationNode("Floor 2 Atrium Stairs",new Location(20, 110), ImageType.STAIRS);     //get(10) Atrium Stairs
                 addDestinationOld(DestinationType.STAIR, "Atrium Elevator");
 
 //FLOOR 3
@@ -205,7 +205,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.SERVICE, "ATM");
                 addDestinationOld(DestinationType.SERVICE, "Information");
 */
-                map.addLocationNode("3A",new Location(1402, 202), ImageType.WAITINGROOM);     //get(2) 3A
+                map.addLocationNode("3A",new Location(20, 10), ImageType.WAITINGROOM);     //get(2) 3A
                 addDestinationOld(DestinationType.DEPARTMENT, "Roslindale Pediatric Associates");
                 addDestinationOld(DestinationType.PHYSICIAN, "Byrne, Jennifer, RN, CPNP");
                 addDestinationOld(DestinationType.PHYSICIAN, "Grossi, Lisa, RN, MS, CPNP");
@@ -219,7 +219,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Tunick, Mitchell, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Viola, Julianne, MD");
 
-                map.addLocationNode("3B",new Location(1534, 202), ImageType.WAITINGROOM);     //get(3)
+                map.addLocationNode("3B",new Location(20, 20), ImageType.WAITINGROOM);     //get(3)
                 addDestinationOld(DestinationType.DEPARTMENT, "Eye Care Specialists");
                 addDestinationOld(DestinationType.DEPARTMENT, "Suburban Eye Specialists");
                 addDestinationOld(DestinationType.PHYSICIAN, "Dann, Harriet, MD");
@@ -227,7 +227,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Micley, Bruce, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Patten, James, MD");
 
-                map.addLocationNode("3C",new Location(1594, 229), ImageType.WAITINGROOM);     //get(4)
+                map.addLocationNode("3C",new Location(20, 30), ImageType.WAITINGROOM);     //get(4)
                 addDestinationOld(DestinationType.DEPARTMENT, "Obstetrics and Gynecology Associates");
                 addDestinationOld(DestinationType.PHYSICIAN, "Greenberg, James Adam, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Miner, Julie, MD");
@@ -235,46 +235,46 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Schueler, Leila, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Smith, Shannon, MD");
 
-                map.addLocationNode("Auditorium",new Location(1347, 700), ImageType.SERVICE);     //get(5)
+                map.addLocationNode("Auditorium",new Location(20, 40), ImageType.SERVICE);     //get(5)
                 addDestinationOld(DestinationType.SERVICE, "Huvos Auditorium");
 
-                map.addLocationNode("Cafeteria",new Location(1492, 637), ImageType.SERVICE);     //get(6)
+                map.addLocationNode("Cafeteria",new Location(20, 50), ImageType.SERVICE);     //get(6)
                 addDestinationOld(DestinationType.SERVICE, "Cafeteria");
 
-                map.addLocationNode("Chapel",new Location(1333, 1380), ImageType.SERVICE);    //get(7)
+                map.addLocationNode("Chapel",new Location(20, 60), ImageType.SERVICE);    //get(7)
                 addDestinationOld(DestinationType.SERVICE, "Chapel and Chaplaincy Services");
 
-                map.addLocationNode("Gift Shop",new Location(1449, 940), ImageType.SERVICE);     //get(8)
+                map.addLocationNode("Gift Shop",new Location(20, 70), ImageType.SERVICE);     //get(8)
                 addDestinationOld(DestinationType.SERVICE, "Gift Shop");
 
-                map.addLocationNode("Volunteer Services",new Location(1601, 1380), ImageType.SERVICE);    //get(9)
+                map.addLocationNode("Volunteer Services",new Location(20, 80), ImageType.SERVICE);    //get(9)
                 addDestinationOld(DestinationType.SERVICE, "Volunteer Services");
 
-                map.addLocationNode("Floor 3 Kiosk",new Location(1469, 1359), ImageType.KIOSK);    //get(10)
+                map.addLocationNode("Floor 3 Kiosk",new Location(20, 90), ImageType.KIOSK);    //get(10)
                 addDestinationOld(DestinationType.KIOSK, "Kiosk");
 
-                map.addLocationNode("Floor 3 Atrium North Bathroom",new Location(1445, 240), ImageType.BATHROOM);     //get(11)
-
-
-                map.addLocationNode("Floor 3 Atrium South Bathroom",new Location(1490, 240), ImageType.BATHROOM);     //get(12)
+                map.addLocationNode("Floor 3 Atrium North Bathroom",new Location(20, 100), ImageType.BATHROOM);     //get(11)
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 3 Hillside Bathroom",new Location(1295, 606), ImageType.BATHROOM);       //get(13)
+                map.addLocationNode("Floor 3 Atrium South Bathroom",new Location(20, 110), ImageType.BATHROOM);     //get(12)
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 3 Auditorium Bathroom",new Location(1391, 1276), ImageType.BATHROOM);       //get(14)
+                map.addLocationNode("Floor 3 Hillside Bathroom",new Location(20, 120), ImageType.BATHROOM);       //get(13)
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 3 Hillside Elevator",new Location(1406, 1191), ImageType.ELEVATOR);    //get(15)
+                map.addLocationNode("Floor 3 Auditorium Bathroom",new Location(20, 130), ImageType.BATHROOM);       //get(14)
+                addDestinationOld(DestinationType.BATHROOM, "Bathroom");
+
+                map.addLocationNode("Floor 3 Hillside Elevator",new Location(20, 140), ImageType.ELEVATOR);    //get(15)
                 addDestinationOld(DestinationType.ELEVATOR, " Hillside Elevator");
 
-                map.addLocationNode("Floor 3 Atrium Elevator",new Location(1435, 349), ImageType.ELEVATOR);     //get(16)
+                map.addLocationNode("Floor 3 Atrium Elevator",new Location(20, 150), ImageType.ELEVATOR);     //get(16)
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 3 Hillside Stairs",new Location(1464, 1100), ImageType.STAIRS);    //get(17)
+                map.addLocationNode("Floor 3 Hillside Stairs",new Location(20, 160), ImageType.STAIRS);    //get(17)
                 addDestinationOld(DestinationType.STAIR, " Hillside Stair");
 
-                map.addLocationNode("Floor 3 Atrium Stairs",new Location(1541, 1190), ImageType.STAIRS);     //get(18)
+                map.addLocationNode("Floor 3 Atrium Stairs",new Location(20, 170), ImageType.STAIRS);     //get(18)
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
 
@@ -295,7 +295,7 @@ public class FaulknerHospitalData {
                 map.addLocationNode("Social Work",new Location(40, 190), ImageType.SERVICE);  //get(5) Social Work
                 addDestinationOld(DestinationType.SERVICE, "Social Work");
 */
-                map.addLocationNode("4A",new Location(1339, 217), ImageType.WAITINGROOM);     //get(6) 4A
+                map.addLocationNode("4A",new Location(20, 10), ImageType.WAITINGROOM);     //get(6) 4A
                 addDestinationOld(DestinationType.DEPARTMENT, "Brigham and Women's Primary Physicians");
                 addDestinationOld(DestinationType.PHYSICIAN, "Caplan, Laura, PA-C");
                 addDestinationOld(DestinationType.PHYSICIAN, "Cohen, Natalie, MD");
@@ -308,7 +308,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Walsh Samp, Kathy, LICSW");
                 addDestinationOld(DestinationType.PHYSICIAN, "Welker, Roy, MD");
 
-                map.addLocationNode("4B",new Location(1470, 217), ImageType.WAITINGROOM);     //get(7) 4B
+                map.addLocationNode("4B",new Location(20, 20), ImageType.WAITINGROOM);     //get(7) 4B
                 addDestinationOld(DestinationType.DEPARTMENT, "Gastroenterology Associates");
                 addDestinationOld(DestinationType.PHYSICIAN, "Conant, Alene, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Drewniak, Stephen, MD");
@@ -319,7 +319,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Preneta, Ewa, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Smith, Benjamin, MD");
 
-                map.addLocationNode("4C",new Location(1533, 283), ImageType.WAITINGROOM);     //get(8) 4C
+                map.addLocationNode("4C",new Location(20, 30), ImageType.WAITINGROOM);     //get(8) 4C
                 addDestinationOld(DestinationType.DEPARTMENT, "Neurology/Sleep Division");
                 addDestinationOld(DestinationType.DEPARTMENT, "Sleep Disorders Service");
                 addDestinationOld(DestinationType.PHYSICIAN, "Horowitz, Sandra, MD");
@@ -331,7 +331,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Weisholtz, Daniel, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Whitman, Gregory, MD");
 
-                map.addLocationNode("4D",new Location(1534, 374), ImageType.WAITINGROOM);     //get(9) 4D
+                map.addLocationNode("4D",new Location(20, 40), ImageType.WAITINGROOM);     //get(9) 4D
                 addDestinationOld(DestinationType.DEPARTMENT, "Arthritis Center");
                 addDestinationOld(DestinationType.DEPARTMENT, "Rheumatology Center");
                 addDestinationOld(DestinationType.PHYSICIAN, "Hoover, Paul, MD, PhD");
@@ -339,13 +339,13 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Todd, Derrick, MD, PhD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Wei, Kevin, MD");
 
-                map.addLocationNode("4F",new Location(1417, 50), ImageType.WAITINGROOM);      //get(10) 4F
+                map.addLocationNode("4F",new Location(20, 50), ImageType.WAITINGROOM);      //get(10) 4F
                 addDestinationOld(DestinationType.DEPARTMENT, "Infectious Diseases ");
                 addDestinationOld(DestinationType.PHYSICIAN, "Clark, Roger, DO");
                 addDestinationOld(DestinationType.PHYSICIAN, "Cohen, Jeffrey, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "McGowan, Katherine, MD");
 
-                map.addLocationNode("4G",new Location(1385, 538), ImageType.WAITINGROOM);     //get(11) 4G
+                map.addLocationNode("4G",new Location(20, 60), ImageType.WAITINGROOM);     //get(11) 4G
                 addDestinationOld(DestinationType.DEPARTMENT, "Allergy");
                 addDestinationOld(DestinationType.DEPARTMENT, "Cardiology");
                 addDestinationOld(DestinationType.DEPARTMENT, "Endocrinology");
@@ -392,7 +392,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Wickner, Paige, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Angell, Trevor, MD");
 
-                map.addLocationNode("4H",new Location(1417, 655), ImageType.WAITINGROOM);     //get(12) 4H
+                map.addLocationNode("4H",new Location(20, 70), ImageType.WAITINGROOM);     //get(12) 4H
                 addDestinationOld(DestinationType.DEPARTMENT, "Brigham and Women's Primary Physicians");
                 addDestinationOld(DestinationType.DEPARTMENT, "Headache Center");
                 addDestinationOld(DestinationType.DEPARTMENT, "John R. Graham Headache Center");
@@ -405,16 +405,16 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "Mathew, Paul, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Rizzoli, Paul, MD");
 
-                map.addLocationNode("4I",new Location(1418, 801), ImageType.WAITINGROOM);     //get(13) 4I
+                map.addLocationNode("4I",new Location(20, 80), ImageType.WAITINGROOM);     //get(13) 4I
                 addDestinationOld(DestinationType.PHYSICIAN, "Cua, Christopher, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Lahive, Karen, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Tarpy, Robert, MD");
 
-                map.addLocationNode("4J",new Location(1386, 1000), ImageType.WAITINGROOM);    //get(14) 4J
+                map.addLocationNode("4J",new Location(20, 90), ImageType.WAITINGROOM);    //get(14) 4J
                 addDestinationOld(DestinationType.DEPARTMENT, "Mohs and Dermatologic Surgery");
                 addDestinationOld(DestinationType.PHYSICIAN, "Tarpy, Robert, MD");
 
-                map.addLocationNode("4N",new Location(718, 1256), ImageType.WAITINGROOM);     //get(15) 4N
+                map.addLocationNode("4N",new Location(20, 100), ImageType.WAITINGROOM);     //get(15) 4N
                 addDestinationOld(DestinationType.DEPARTMENT, "Men's Health Center");
                 addDestinationOld(DestinationType.DEPARTMENT, "Ruiz, Emily, MD");
                 addDestinationOld(DestinationType.DEPARTMENT, "Schmults, Chrysalyne, MD");
@@ -425,37 +425,37 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.PHYSICIAN, "O'Leary, Michael, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Steele, Graeme, MD");
 
-                map.addLocationNode("4S",new Location(1732, 1261), ImageType.WAITINGROOM);    //get(16) 4S
+                map.addLocationNode("4S",new Location(20, 110), ImageType.WAITINGROOM);    //get(16) 4S
                 addDestinationOld(DestinationType.DEPARTMENT, "Brigham and Women's Primary Physicians");
                 addDestinationOld(DestinationType.PHYSICIAN, "Goldman, Jill, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Lilienfeld, Armin, MD");
                 addDestinationOld(DestinationType.PHYSICIAN, "Owens, Lisa Michelle, MD");
 
-                map.addLocationNode("Doherty Conference Room",new Location(1263, 1261), ImageType.SERVICE);    //get(17) Doherty Conference Room
+                map.addLocationNode("Doherty Conference Room",new Location(20, 120), ImageType.SERVICE);    //get(17) Doherty Conference Room
                 addDestinationOld(DestinationType.SERVICE, "Doherty Conference Room");
 
-                map.addLocationNode("Mary Ann Tynan Conference Rooms",new Location(618, 1271), ImageType.SERVICE);     //get(18) Mary Ann Tynan Conference Rooms
+                map.addLocationNode("Mary Ann Tynan Conference Rooms",new Location(20, 130), ImageType.SERVICE);     //get(18) Mary Ann Tynan Conference Rooms
                 addDestinationOld(DestinationType.SERVICE, "Mary Ann Tynan Conference Rooms");
 
-                map.addLocationNode("Floor 4 Atrium North Bathroom",new Location(1384, 253), ImageType.BATHROOM);     //get(19) Floor 4 Atrium Left Bathroom
+                map.addLocationNode("Floor 4 Atrium North Bathroom",new Location(20, 140), ImageType.BATHROOM);     //get(19) Floor 4 Atrium Left Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 4 Atrium South Bathroom",new Location(1423, 252), ImageType.BATHROOM);     //get(20) Floor 4 Atrium Right Bathroom
+                map.addLocationNode("Floor 4 Atrium South Bathroom",new Location(20, 150), ImageType.BATHROOM);     //get(20) Floor 4 Atrium Right Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 4 North Bathroom",new Location(1002, 1262), ImageType.BATHROOM);    //get(21) Floor 4 North Bathroom
+                map.addLocationNode("Floor 4 North Bathroom",new Location(20, 160), ImageType.BATHROOM);    //get(21) Floor 4 North Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 4 Hillside Elevator",new Location(1336, 1190), ImageType.ELEVATOR);    //get(22) Hillside Elevator
+                map.addLocationNode("Floor 4 Hillside Elevator",new Location(20, 170), ImageType.ELEVATOR);    //get(22) Hillside Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 4 Atrium Elevator",new Location(1371, 361), ImageType.ELEVATOR);     //get(23) Atrium Elevator
+                map.addLocationNode("Floor 4 Atrium Elevator",new Location(20, 180), ImageType.ELEVATOR);     //get(23) Atrium Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 4 Hillside Stair",new Location(1479, 1188), ImageType.STAIRS);    //get(24) Hillside Stair
+                map.addLocationNode("Floor 4 Hillside Stair",new Location(20, 190), ImageType.STAIRS);    //get(24) Hillside Stair
                 addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
-                map.addLocationNode("Floor 4 Atrium Stair",new Location(1444, 367), ImageType.STAIRS);     //get(25) Atrium Stair
+                map.addLocationNode("Floor 4 Atrium Stair",new Location(20, 200), ImageType.STAIRS);     //get(25) Atrium Stair
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
 
@@ -596,25 +596,25 @@ public class FaulknerHospitalData {
                 map.addLocationNode("5M",new Location(40, 120), ImageType.WAITINGROOM);//get(11) 5M
                 map.addDestination("Sleep Testing Center  ", DestinationType.DEPARTMENT);
 
-                map.addLocationNode("Floor 5 Atrium North Bathroom",new Location(13, 53), ImageType.BATHROOM);     //get(19) Floor 5 Atrium Left Bathroom
+                map.addLocationNode("Floor 5 Atrium North Bathroom",new Location(40, 130), ImageType.BATHROOM);     //get(19) Floor 5 Atrium Left Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 5 Atrium South Bathroom",new Location(14, 25), ImageType.BATHROOM);     //get(20) Floor 5 Atrium Right Bathroom
+                map.addLocationNode("Floor 5 Atrium South Bathroom",new Location(40, 140), ImageType.BATHROOM);     //get(20) Floor 5 Atrium Right Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 5 Hillside Bathroom",new Location(10, 12), ImageType.BATHROOM);    //get(21) Floor 5 North Bathroom
+                map.addLocationNode("Floor 5 Hillside Bathroom",new Location(40, 150), ImageType.BATHROOM);    //get(21) Floor 5 North Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 5 Hillside Elevator",new Location(13, 90), ImageType.ELEVATOR);    //get(22) Hillside Elevator
+                map.addLocationNode("Floor 5 Hillside Elevator",new Location(40, 160), ImageType.ELEVATOR);    //get(22) Hillside Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 5 Atrium Elevator",new Location(13, 36), ImageType.ELEVATOR);     //get(23) Atrium Elevator
+                map.addLocationNode("Floor 5 Atrium Elevator",new Location(40, 170), ImageType.ELEVATOR);     //get(23) Atrium Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 5 Hillside Stair",new Location(14, 11), ImageType.STAIRS);    //get(24) Hillside Stair
+                map.addLocationNode("Floor 5 Hillside Stair",new Location(40, 180), ImageType.STAIRS);    //get(24) Hillside Stair
                 addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
-                map.addLocationNode("Floor 5 Atrium Stair",new Location(14, 37), ImageType.STAIRS);     //get(25) Atrium Stair
+                map.addLocationNode("Floor 5 Atrium Stair",new Location(40, 190), ImageType.STAIRS);     //get(25) Atrium Stair
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
  //FLOOR 6
@@ -628,19 +628,19 @@ public class FaulknerHospitalData {
                 map.addLocationNode("Pariser Conference Room",new Location(40, 30), ImageType.WAITINGROOM);//get(8) Pariser Conference Room
                 map.addDestination("Pariser Conference Room", DestinationType.DEPARTMENT);
 */
-                map.addLocationNode("Floor 6 Hillside Bathroom",new Location(10, 12), ImageType.BATHROOM);    //get(21) Floor 6 North Bathroom
+                map.addLocationNode("Floor 6 Hillside Bathroom",new Location(40, 10), ImageType.BATHROOM);    //get(21) Floor 6 North Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 6 Hillside Elevator",new Location(13, 90), ImageType.ELEVATOR);    //get(22) Hillside Elevator
+                map.addLocationNode("Floor 6 Hillside Elevator",new Location(40, 20), ImageType.ELEVATOR);    //get(22) Hillside Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 6 Atrium Elevator",new Location(13, 36), ImageType.ELEVATOR);     //get(23) Atrium Elevator
+                map.addLocationNode("Floor 6 Atrium Elevator",new Location(40, 30), ImageType.ELEVATOR);     //get(23) Atrium Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
-                map.addLocationNode("Floor 6 Hillside Stair",new Location(14, 11), ImageType.STAIRS);    //get(24) Hillside Stair
+                map.addLocationNode("Floor 6 Hillside Stair",new Location(40, 40), ImageType.STAIRS);    //get(24) Hillside Stair
                 addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
-                map.addLocationNode("Floor 6 Atrium Stair",new Location(14, 37), ImageType.STAIRS);     //get(25) Atrium Stair
+                map.addLocationNode("Floor 6 Atrium Stair",new Location(40, 50), ImageType.STAIRS);     //get(25) Atrium Stair
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
 
@@ -661,42 +661,15 @@ public class FaulknerHospitalData {
                 map.addDestination("Yong, Jason, MD", DestinationType.PHYSICIAN);
 */
 
-                map.addLocationNode("Floor 7 Bathroom",new Location(10, 12), ImageType.BATHROOM);    //get(21) Floor 7 North Bathroom
+                map.addLocationNode("Floor 7 Bathroom",new Location(40, 10), ImageType.BATHROOM);    //get(21) Floor 7 North Bathroom
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
-                map.addLocationNode("Floor 7 Hillside Elevator",new Location(13, 90), ImageType.ELEVATOR);    //get(22) Hillside Elevator
+                map.addLocationNode("Floor 7 Hillside Elevator",new Location(40, 20), ImageType.ELEVATOR);    //get(22) Hillside Elevator
                 addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
-                map.addLocationNode("Floor 7 Hillside Stair",new Location(14, 11), ImageType.STAIRS);    //get(24) Hillside Stair
+                map.addLocationNode("Floor 7 Hillside Stair",new Location(40, 30), ImageType.STAIRS);    //get(24) Hillside Stair
                 addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
-                /*
-        ///Unknown locations
-                addDestinationOld(DestinationType.PHYSICIAN, "Berman, Dan, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Cotter, Lindsay, LCSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Doherty, Meghan, LCSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Donnelly, Kevin, PhD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Dowd, Erin, LCSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Ecker, Vivian, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Fromson, John, MD");
-                addDestinationOld(DestinationType.PHYSICIAN,"Haimovici, Florina, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Howard, Neal Anthony, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Humbert, Timberly, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Keller, Beth, RN, PsyD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Lai, Leonard, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Leone, Amanda, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Mariano, Timothy, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Matwin, Sonia, PhD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Perry, David, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Rodriguez, Claudia, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Samadi, Farrah, NP");
-                addDestinationOld(DestinationType.PHYSICIAN, "Schoenfeld, Paul, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Stevens, Erin, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Stewart, Carl, MEd, LADC I");
-                addDestinationOld(DestinationType.PHYSICIAN, "Trumble, Julia, LICSW");
-                addDestinationOld(DestinationType.PHYSICIAN, "Yudkoff, Benjamin, MD");
-                addDestinationOld(DestinationType.PHYSICIAN, "Issa, Mohammed, MD");
-*/
 /*
                 //TODO replace with actual values
                 // Random edges for testing:
