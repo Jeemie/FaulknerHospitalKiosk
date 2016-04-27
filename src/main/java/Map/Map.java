@@ -118,6 +118,10 @@ public class Map implements Observer {
     private ObservableList<Destination> currentBuildingDestinations;
 
 
+    //
+    private ObservableList<LocationNode> currentKioskLocationNodes;
+
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
@@ -147,6 +151,7 @@ public class Map implements Observer {
         this.currentBuilding = null;
         this.currentBuildingFloors = FXCollections.observableArrayList();
         this.currentBuildingDestinations = FXCollections.observableArrayList();
+        this.currentKioskLocationNodes = FXCollections.observableArrayList();
 
     }
 
@@ -283,6 +288,15 @@ public class Map implements Observer {
 
             return;
         }
+
+        LOGGER.info("Removing Location Node: " + this.currentLocationNode.toString());
+
+        this.currentLocationNodeDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentAdjacentLocationNodes.removeAll(this.currentLocationNode.getAdjacentLocationNodes());
+        this.currentFloorLocationNodes.remove(this.currentLocationNode);
+        this.currentFloorDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentDestination = null;
 
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
@@ -508,6 +522,9 @@ public class Map implements Observer {
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+
 //
 //                // remove current location node destinations from current floor destinations and building destinations
 //                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
@@ -554,7 +571,8 @@ public class Map implements Observer {
             case LOCATIONNODEREMOVED:
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
-                this.currentLocationNode = null;
+                this.currentLocationNode.getEdges().clear();
+                this.setCurrentLocationNode(null);
 
                 break;
 
@@ -562,6 +580,9 @@ public class Map implements Observer {
 
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
 
                 break;
 
@@ -815,8 +836,7 @@ public class Map implements Observer {
         }
 
 
-
-
+        locationNodeHashMap.clear();
 
 
         return map;
@@ -912,9 +932,20 @@ public class Map implements Observer {
         return currentBuildingDestinations;
     }
 
+    public ObservableList<LocationNode> getCurrentKioskLocationNodes() {
+
+        return currentKioskLocationNodes;
+    }
+
+
     public void setStartLocationNode(LocationNode locationNode) {
 
         this.startLocationNode = locationNode;
+
+    }
+    public LocationNode getStartLocationNode() {
+
+        return this.startLocationNode;
 
     }
 
@@ -959,6 +990,12 @@ public class Map implements Observer {
 
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
+        if (locationNode == null) {
+
+            this.currentLocationNode = null;
+
+            return;
+        }
 
         this.currentDestination = null;
         locationNodeUpdater(locationNode);
@@ -971,7 +1008,7 @@ public class Map implements Observer {
 
     private void locationNodeUpdater(LocationNode newLocationNode) {
 
-        if (currentMapState.equals(MapState.NORMAL)) {
+        if (newLocationNode == null) {
 
             return;
         }

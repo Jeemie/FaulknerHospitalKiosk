@@ -116,7 +116,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
                 // TODO change to Kiosk - starting at a waiting room currently
-                map.setStartLocationNode(f1.getLocationNodes().get(1));
+                map.setStartLocationNode(f1.getLocationNodes().get(13));
 
 
 // FLOOR 2

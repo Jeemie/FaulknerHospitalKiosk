@@ -1,6 +1,7 @@
 package Map;
 
 import Map.Enums.DestinationType;
+import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,6 @@ public class Building extends Observable implements Observer {
         floors.add(newFloor);
 
         setChanged();
-        //TODO the following line results in NullPointerException
         notifyObservers(UpdateType.FLOORADDED);
 
         return newFloor;
@@ -107,6 +107,19 @@ public class Building extends Observable implements Observer {
         }
 
         return buildingDestinations;
+    }
+
+    public ArrayList<LocationNode> getBuildingLocationNodes(ImageType associatedImage) {
+
+        ArrayList<LocationNode> buildingLocationNodes = new ArrayList<>();
+
+        for (Floor floor : this.floors) {
+
+            buildingLocationNodes.addAll(floor.getFloorLocationNodes(associatedImage));
+
+        }
+
+        return buildingLocationNodes;
     }
 
     /**

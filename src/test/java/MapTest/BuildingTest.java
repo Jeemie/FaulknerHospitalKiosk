@@ -7,12 +7,15 @@ import org.junit.Test;
 
 public class BuildingTest {
 
-    private Building mTestBuilding;
+
+    private Map mTestMap;
 
     @Before
     public void setUp() {
 
-        mTestBuilding = new Building("test building", new Map("test map"));
+        mTestMap = new Map("test map");
+        mTestMap.addBuilding("test building");
+        
     }
 
     /**
@@ -22,9 +25,9 @@ public class BuildingTest {
     public void testAddFloor() {
 
         String floorName = "Floor 1";
-        mTestBuilding.addFloor(floorName, "floor1.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName, "floor1.png");
 
-        Assert.assertEquals(mTestBuilding.getFloors().get(0).getFloorName(), floorName);
+        Assert.assertEquals(mTestMap.getMapBuildings().get(0).getFloors().get(0).getFloorName(), floorName);
     }
 
     /**
@@ -33,13 +36,13 @@ public class BuildingTest {
     @Test
     public void testAddFloorAlreadyExists() {
 
-        mTestBuilding.addFloor("Floor 1", "floor1.png");
+        mTestMap.getMapBuildings().get(0).addFloor("Floor 1", "floor1.png");
 
         // The existing floor with the same name should be returned
-        Assert.assertEquals(mTestBuilding.addFloor("Floor 1", "floor1.png"), mTestBuilding.getFloors().get(0));
+        Assert.assertEquals(mTestMap.getMapBuildings().get(0).addFloor("Floor 1", "floor1.png"), mTestMap.getMapBuildings().get(0).getFloors().get(0));
 
         // The building should still have only one floor
-        Assert.assertTrue(mTestBuilding.getFloors().size() == 1);
+        Assert.assertTrue(mTestMap.getMapBuildings().get(0).getFloors().size() == 1);
     }
 
 
@@ -53,13 +56,13 @@ public class BuildingTest {
         String floorName2 = "Floor 2";
         String floorName3 = "Floor 3";
 
-        Assert.assertTrue(mTestBuilding.getFloors().size() == 0);
+        Assert.assertTrue(mTestMap.getMapBuildings().get(0).getFloors().size() == 0);
 
-        mTestBuilding.addFloor(floorName1,"floor1.png");
-        mTestBuilding.addFloor(floorName2,"floor2.png");
-        mTestBuilding.addFloor(floorName3,"floor3.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName1,"floor1.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName2,"floor2.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName3,"floor3.png");
 
-        Assert.assertTrue(mTestBuilding.getFloors().size() == 3);
+        Assert.assertTrue(mTestMap.getMapBuildings().get(0).getFloors().size() == 3);
     }
 
     /**
@@ -72,18 +75,18 @@ public class BuildingTest {
         String floorName2 = "Floor 2";
         String floorName3 = "Floor 3";
 
-        mTestBuilding.addFloor(floorName1,"floor1.png");
-        mTestBuilding.addFloor(floorName2,"floor2.png");
-        mTestBuilding.addFloor(floorName3,"floor3.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName1,"floor1.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName2,"floor2.png");
+        mTestMap.getMapBuildings().get(0).addFloor(floorName3,"floor3.png");
 
 
-        Floor oldFloor = mTestBuilding.getFloors().get(0);
+        Floor oldFloor = mTestMap.getMapBuildings().get(0).getFloors().get(0);
 
         // Remove Floor 1
-        mTestBuilding.removeFloor(oldFloor);
+        mTestMap.getMapBuildings().get(0).removeFloor(oldFloor);
 
-        Assert.assertFalse(mTestBuilding.getFloors().contains(oldFloor));
-        Assert.assertTrue(mTestBuilding.getFloors().size() == 2);
+        Assert.assertFalse(mTestMap.getMapBuildings().get(0).getFloors().contains(oldFloor));
+        Assert.assertTrue(mTestMap.getMapBuildings().get(0).getFloors().size() == 2);
     }
 
     /**
