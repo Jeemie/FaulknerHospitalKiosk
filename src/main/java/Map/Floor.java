@@ -184,7 +184,6 @@ public class Floor extends Observable implements Observer {
         notifyObservers(UpdateType.LOCATIONNODEREMOVED);
     }
 
-    /* STUFF I ADDED PLZ REVIEW */
     /**
      * Draws the floor on the admin screen by
      * @param imageView
