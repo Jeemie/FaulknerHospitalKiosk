@@ -47,5 +47,10 @@
             </Button>
          </buttons>
       </ButtonBar>
+      <Button layoutX="1059.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleAbout" text="About the Developers">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

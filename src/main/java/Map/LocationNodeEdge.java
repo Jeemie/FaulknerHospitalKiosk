@@ -49,7 +49,6 @@ public class LocationNodeEdge extends Observable {
 
     }
 
-
     public void drawEdgeAdmin(Pane locationNodeEdgePane) {
 
         // TODO setup edge clicking

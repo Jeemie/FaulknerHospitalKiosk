@@ -91,6 +91,25 @@ public class Floor extends Observable implements Observer {
         return newLocationNode;
     }
 
+    /**
+     * Add a new node to the current floor. A locationNode is passed in for loading purposes
+     *  (UUID must be the same for edges to be recognize corresponding locationNodes)
+     * @param locationNode
+     * @return
+     */
+    public LocationNode addLocationNode(LocationNode locationNode) {
+
+        // Create a new LocationNode
+        LocationNode newLocationNode = locationNode;
+
+        // Add the node to the list of locationNodes on the current floor
+        this.locationNodes.add(newLocationNode);
+
+        setChanged();
+        notifyObservers(UpdateType.LOCATIONNODEADDED);
+
+        return newLocationNode;
+    }
 
     /**
      * Gets a list of all of the destinations on the current floor.
@@ -112,6 +131,29 @@ public class Floor extends Observable implements Observer {
         return floorDestinations;
     }
 
+    //
+    //
+
+    //
+    //
+    public ArrayList<Destination> getAllFloorDestinations() {
+
+        ArrayList<Destination> floorDestinations = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+
+
+            floorDestinations.addAll(locationNode.getAllDestinations(DestinationType.BATHROOM));
+
+        }
+
+
+        return floorDestinations;
+    }
+    //
+    //
+    //
+    //
     /**
      * Get's all the floor destinations
      * @param destinationType

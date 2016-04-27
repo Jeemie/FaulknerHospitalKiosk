@@ -70,11 +70,7 @@ public class KioskApp extends Application {
 
         }
 
-        this.faulknerHospitalMap = new Map("Faulkner Hospital Map");
         this.faulknerHospitalMap.initMapComponents();
-
-
-        this.faulknerHospitalMap = FaulknerHospitalData.starterMap();
 
 
         this.primaryStage.setTitle("Pathfinding Application");
@@ -246,6 +242,7 @@ public class KioskApp extends Application {
             // Give controller access to Main App.
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
+            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
 //            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
@@ -329,6 +326,30 @@ public class KioskApp extends Application {
             return false;
         }
 
+    }
+
+    /**
+     * Shows the about page.
+     */
+    public void showAboutPage() {
+        try {
+            // Load About Page.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AboutPage.fxml"));
+            AnchorPane page = loader.load();
+
+            // Set kiosk overview into the center of root layout.
+            primaryStage.setTitle("About the Developers");
+            primaryStage.getScene().setRoot(page);
+
+            // Give the controller access to the main app.
+            AboutPageController controller = loader.getController();
+            controller.setKioskApp(this);
+//            controller.setListeners();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

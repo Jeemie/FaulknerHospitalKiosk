@@ -68,7 +68,7 @@ public class Building extends Observable implements Observer {
                 LOGGER.info("A floor with the name " + floorName + " already exists in this building.");
 
                 // Return the existing floor
-                return null;
+                return floor;
             }
 
         }
