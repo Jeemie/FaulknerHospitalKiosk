@@ -715,8 +715,8 @@ public class Map implements Observer {
 
         }
 
+        map.setStartLocationNode(locationNodeHashMap.get(mapMemento.getStartLocationNodeID()));
 
-        // TODO, load edges
         // At this point all the location nodes have been added, so we can start adding the edges
 
         //Loop through the existing Building, floor, then locationNodes
