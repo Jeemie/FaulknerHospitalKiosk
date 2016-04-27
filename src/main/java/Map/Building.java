@@ -77,7 +77,6 @@ public class Building extends Observable implements Observer {
         floors.add(newFloor);
 
         setChanged();
-        //TODO the following line results in NullPointerException
         notifyObservers(UpdateType.FLOORADDED);
 
         return newFloor;
