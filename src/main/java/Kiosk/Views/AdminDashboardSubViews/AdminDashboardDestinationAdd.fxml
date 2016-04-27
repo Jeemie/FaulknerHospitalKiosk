@@ -6,15 +6,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardDestinationAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../Style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AdminDashboardSubControllers.AdminDashboardDestinationAddController">
    <children>
-      <ChoiceBox fx:id="destinationsChoiceBox" layoutX="225.0" layoutY="77.0" prefWidth="150.0" />
-      <TextField fx:id="destinationNameTextField" layoutX="217.0" layoutY="173.0" />
+      <ChoiceBox fx:id="destinationsChoiceBox" layoutX="225.0" layoutY="77.0" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="80.0" />
+      <TextField fx:id="destinationNameTextField" layoutX="217.0" layoutY="173.0" promptText="Destination Name" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="175.0" />
       <ButtonBar layoutX="201.0" layoutY="333.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <buttons>
-            <Button fx:id="discardDestinationButton" mnemonicParsing="false" text="Cancel" ButtonBar.buttonData="LEFT"/>
-            <Button fx:id="createDestinationButton" mnemonicParsing="false" text="Add" ButtonBar.buttonData="RIGHT"/>
+            <Button fx:id="discardDestinationButton" mnemonicParsing="false" text="Cancel" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="createDestinationButton" mnemonicParsing="false" text="Add" ButtonBar.buttonData="RIGHT" />
         </buttons>
       </ButtonBar>
    </children>
