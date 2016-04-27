@@ -1,0 +1,1544 @@
+{
+  "name" : "Faulkner Hospital Map",
+  "uniqueID" : "c874737b-b012-4deb-856c-75a7fd4c0575",
+  "startLocationNodeID" : "1926f388-a0ad-42a5-84d3-55aa724d261a",
+  "buildingMementos" : [ {
+    "name" : "Faulkner Hospital",
+    "uniqueID" : "705d134f-8326-4b3a-acc4-90f627de3f20",
+    "floorMomentos" : [ {
+      "floorName" : "Floor 1",
+      "uniqueID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+      "resourceFileName" : "floor1.png",
+      "currentBuildingID" : "705d134f-8326-4b3a-acc4-90f627de3f20",
+      "locationNodeMomentos" : [ {
+        "name" : "Audiology",
+        "uniqueID" : "33d78639-cdb7-4a2e-9422-bf33ce214372",
+        "location" : {
+          "x" : 1141.0,
+          "y" : 356.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "04e5d37b-83d9-441b-bc99-68a57e642ac8",
+          "weight" : 0.0,
+          "locationNode1ID" : "33d78639-cdb7-4a2e-9422-bf33ce214372",
+          "locationNode2ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f"
+        }, {
+          "uniqueID" : "62fc8fef-c314-4cff-8205-9c3296e5f80d",
+          "weight" : 0.0,
+          "locationNode1ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5",
+          "locationNode2ID" : "33d78639-cdb7-4a2e-9422-bf33ce214372"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "beded59c-d086-4edc-9250-4d439253c55f",
+          "name" : "Audiology Destination",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "33d78639-cdb7-4a2e-9422-bf33ce214372"
+        } ]
+      }, {
+        "name" : "Cardiac",
+        "uniqueID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f",
+        "location" : {
+          "x" : 1149.0,
+          "y" : 177.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "04e5d37b-83d9-441b-bc99-68a57e642ac8",
+          "weight" : 0.0,
+          "locationNode1ID" : "33d78639-cdb7-4a2e-9422-bf33ce214372",
+          "locationNode2ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f"
+        }, {
+          "uniqueID" : "e05f72f2-0bc8-477d-8d8d-4c879e4f43b6",
+          "weight" : 0.0,
+          "locationNode1ID" : "53c9372b-39e7-4e74-b88f-17908a521b02",
+          "locationNode2ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f"
+        }, {
+          "uniqueID" : "f014cdaf-2846-47af-836a-32459286a28d",
+          "weight" : 0.0,
+          "locationNode1ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f",
+          "locationNode2ID" : "1926f388-a0ad-42a5-84d3-55aa724d261a"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "ca2dfda6-bd9b-460d-a893-ddf38174dff7",
+          "name" : "Cardiac Rehabilitation",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f"
+        } ]
+      }, {
+        "name" : "Preop",
+        "uniqueID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d",
+        "location" : {
+          "x" : 1036.0,
+          "y" : 885.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "09558cb1-5ad5-4a57-bb22-16a377ffd664",
+          "weight" : 0.0,
+          "locationNode1ID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d",
+          "locationNode2ID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766"
+        }, {
+          "uniqueID" : "ac80b5fe-7c11-49e2-acc2-2a2e7c4b7448",
+          "weight" : 0.0,
+          "locationNode1ID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94",
+          "locationNode2ID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "dd41dfe4-6dc1-4200-80fd-e9e3a431a5b9",
+          "name" : "Center for Preoperative Evaluation",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d"
+        } ]
+      }, {
+        "name" : "ER",
+        "uniqueID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f",
+        "location" : {
+          "x" : 1266.0,
+          "y" : 619.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "9b1b329e-de80-4115-b2c8-64f86a719a0e",
+          "weight" : 0.0,
+          "locationNode1ID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f",
+          "locationNode2ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5"
+        }, {
+          "uniqueID" : "6f3947c3-4452-466c-a1a3-4d549e0e092d",
+          "weight" : 0.0,
+          "locationNode1ID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e",
+          "locationNode2ID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "a348515e-e7ba-467e-83a9-d8d5416349aa",
+          "name" : "Emergency Room",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f"
+        } ]
+      }, {
+        "name" : "GI",
+        "uniqueID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5",
+        "location" : {
+          "x" : 1146.0,
+          "y" : 612.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "62fc8fef-c314-4cff-8205-9c3296e5f80d",
+          "weight" : 0.0,
+          "locationNode1ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5",
+          "locationNode2ID" : "33d78639-cdb7-4a2e-9422-bf33ce214372"
+        }, {
+          "uniqueID" : "30469adf-cf47-4450-8e51-0ae903280f6a",
+          "weight" : 0.0,
+          "locationNode1ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5",
+          "locationNode2ID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766"
+        }, {
+          "uniqueID" : "9b1b329e-de80-4115-b2c8-64f86a719a0e",
+          "weight" : 0.0,
+          "locationNode1ID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f",
+          "locationNode2ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "4814cfc1-a902-4600-a924-e1c8eebd4a4a",
+          "name" : "GI Endoscopy",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5"
+        } ]
+      }, {
+        "name" : "Lab",
+        "uniqueID" : "4ce533a6-1670-4ce0-ac9e-9cea60d25571",
+        "location" : {
+          "x" : 30.0,
+          "y" : 30.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "fd104398-fd20-4144-b100-974de93f7025",
+          "name" : "Laboratory",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "4ce533a6-1670-4ce0-ac9e-9cea60d25571"
+        } ]
+      }, {
+        "name" : "Finance",
+        "uniqueID" : "27fb0166-cc72-484f-b1b9-1011a9804ecd",
+        "location" : {
+          "x" : 1230.0,
+          "y" : 934.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/gift.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "8bccf0ab-c858-43a1-aad1-9a1f57629843",
+          "name" : "Patient Financial Services",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "27fb0166-cc72-484f-b1b9-1011a9804ecd"
+        } ]
+      }, {
+        "name" : "Radiology",
+        "uniqueID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94",
+        "location" : {
+          "x" : 858.0,
+          "y" : 939.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "ac80b5fe-7c11-49e2-acc2-2a2e7c4b7448",
+          "weight" : 0.0,
+          "locationNode1ID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94",
+          "locationNode2ID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d"
+        }, {
+          "uniqueID" : "c77c18d0-8210-4431-ac04-b1bd488dbcd6",
+          "weight" : 0.0,
+          "locationNode1ID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e",
+          "locationNode2ID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "5544299e-9835-4b23-9b1f-62434465a80c",
+          "name" : "Radiology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94"
+        } ]
+      }, {
+        "name" : "Test",
+        "uniqueID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766",
+        "location" : {
+          "x" : 1150.0,
+          "y" : 906.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "30469adf-cf47-4450-8e51-0ae903280f6a",
+          "weight" : 0.0,
+          "locationNode1ID" : "2bf64891-41a3-442c-b9ba-fc5e73cf18e5",
+          "locationNode2ID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766"
+        }, {
+          "uniqueID" : "09558cb1-5ad5-4a57-bb22-16a377ffd664",
+          "weight" : 0.0,
+          "locationNode1ID" : "e82a07cf-620f-47b8-b0bd-27d435684d1d",
+          "locationNode2ID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "98def96e-b737-499f-8994-4f64f41c2dab",
+          "name" : "Special Testing",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "50fab4e9-c191-47e1-a79e-6c1eca69d766"
+        } ]
+      }, {
+        "name" : "Family",
+        "uniqueID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e",
+        "location" : {
+          "x" : 1244.0,
+          "y" : 983.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "6f3947c3-4452-466c-a1a3-4d549e0e092d",
+          "weight" : 0.0,
+          "locationNode1ID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e",
+          "locationNode2ID" : "6a7252c9-e7d4-4da8-94dd-65149ac2d21f"
+        }, {
+          "uniqueID" : "c77c18d0-8210-4431-ac04-b1bd488dbcd6",
+          "weight" : 0.0,
+          "locationNode1ID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e",
+          "locationNode2ID" : "d5fdea3d-9c4a-4ad9-af02-1e247a1edd94"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "260fd2dd-e0ea-44a6-bf35-8d37609f7090",
+          "name" : "Taiclet Family Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ddb37a0a-b7c8-4432-8fa8-7d73f4aa846e"
+        } ]
+      }, {
+        "name" : "KioskFloor3",
+        "uniqueID" : "1926f388-a0ad-42a5-84d3-55aa724d261a",
+        "location" : {
+          "x" : 1222.0,
+          "y" : 165.0
+        },
+        "currentFloorID" : "e0cae752-198c-4c94-8a12-787e6d74cd84",
+        "associatedImageString" : "/icons/kiosk.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "f014cdaf-2846-47af-836a-32459286a28d",
+          "weight" : 0.0,
+          "locationNode1ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f",
+          "locationNode2ID" : "1926f388-a0ad-42a5-84d3-55aa724d261a"
+        } ],
+        "destinationMementos" : [ ]
+      } ]
+    }, {
+      "floorName" : "Floor 2",
+      "uniqueID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+      "resourceFileName" : "floor2.png",
+      "currentBuildingID" : "705d134f-8326-4b3a-acc4-90f627de3f20",
+      "locationNodeMomentos" : [ {
+        "name" : "Bathroom",
+        "uniqueID" : "53c9372b-39e7-4e74-b88f-17908a521b02",
+        "location" : {
+          "x" : 10.0,
+          "y" : 10.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "e05f72f2-0bc8-477d-8d8d-4c879e4f43b6",
+          "weight" : 0.0,
+          "locationNode1ID" : "53c9372b-39e7-4e74-b88f-17908a521b02",
+          "locationNode2ID" : "c3aec17d-bd39-4ece-8913-e5f2cea2752f"
+        }, {
+          "uniqueID" : "700611d7-436d-497b-949a-d65a267e8214",
+          "weight" : 0.0,
+          "locationNode1ID" : "6440028d-0efa-4f21-9121-9be67891da93",
+          "locationNode2ID" : "53c9372b-39e7-4e74-b88f-17908a521b02"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "079f61d2-c15e-40db-9149-872fea7af12d",
+          "name" : "Audiology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "53c9372b-39e7-4e74-b88f-17908a521b02"
+        } ]
+      }, {
+        "name" : "Cardiac",
+        "uniqueID" : "6440028d-0efa-4f21-9121-9be67891da93",
+        "location" : {
+          "x" : 200.0,
+          "y" : 200.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ {
+          "uniqueID" : "700611d7-436d-497b-949a-d65a267e8214",
+          "weight" : 0.0,
+          "locationNode1ID" : "6440028d-0efa-4f21-9121-9be67891da93",
+          "locationNode2ID" : "53c9372b-39e7-4e74-b88f-17908a521b02"
+        } ],
+        "destinationMementos" : [ {
+          "uniqueID" : "13b258df-2e1f-4119-add8-47e95911059a",
+          "name" : "Destination",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "6440028d-0efa-4f21-9121-9be67891da93"
+        } ]
+      }, {
+        "name" : "Preop",
+        "uniqueID" : "804c417b-4b3e-4ae9-b82f-9f3d8840638e",
+        "location" : {
+          "x" : 1036.0,
+          "y" : 885.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "039b0dc2-ccc1-405e-b35b-b156f1175555",
+          "name" : "Center for Preoperative Evaluation",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "804c417b-4b3e-4ae9-b82f-9f3d8840638e"
+        } ]
+      }, {
+        "name" : "ER",
+        "uniqueID" : "25a933a7-9662-4f24-bae7-1d0c1acb7b38",
+        "location" : {
+          "x" : 1380.0,
+          "y" : 906.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "b0f96588-2d28-4494-84d6-4ec8ff7cc90c",
+          "name" : "Emergency Room",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "25a933a7-9662-4f24-bae7-1d0c1acb7b38"
+        } ]
+      }, {
+        "name" : "GI",
+        "uniqueID" : "78bfed59-1d53-40f1-a96a-a059784058a9",
+        "location" : {
+          "x" : 1249.0,
+          "y" : 640.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "40d5e5ae-ae1d-4b23-81e0-d2c5c3c16870",
+          "name" : "GI Endoscopy",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "78bfed59-1d53-40f1-a96a-a059784058a9"
+        } ]
+      }, {
+        "name" : "Lab",
+        "uniqueID" : "2117764a-2f75-4936-8709-960b5cf1fdbc",
+        "location" : {
+          "x" : 30.0,
+          "y" : 30.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "c261ec8c-ed3c-46f5-9017-576435f29776",
+          "name" : "Laboratory",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "2117764a-2f75-4936-8709-960b5cf1fdbc"
+        } ]
+      }, {
+        "name" : "Finance",
+        "uniqueID" : "6dd2a2b0-75f0-47d6-a056-9d03197cef18",
+        "location" : {
+          "x" : 1230.0,
+          "y" : 934.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/gift.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "71f7b398-e421-42e0-8cb6-a428f690a606",
+          "name" : "Patient Financial Services",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "6dd2a2b0-75f0-47d6-a056-9d03197cef18"
+        } ]
+      }, {
+        "name" : "Radiology",
+        "uniqueID" : "401cb5c3-9473-44bf-a516-9574918be29c",
+        "location" : {
+          "x" : 900.0,
+          "y" : 900.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "e2c6498e-343a-4a82-ab9b-dacd3bc72bf3",
+          "name" : "Radiology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "401cb5c3-9473-44bf-a516-9574918be29c"
+        } ]
+      }, {
+        "name" : "Test",
+        "uniqueID" : "ccb30cd0-f171-40fa-b478-cd93ee6c05e1",
+        "location" : {
+          "x" : 1150.0,
+          "y" : 906.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "f6dc71e4-a796-4dfa-a880-272760219083",
+          "name" : "Special Testing",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ccb30cd0-f171-40fa-b478-cd93ee6c05e1"
+        } ]
+      }, {
+        "name" : "Family",
+        "uniqueID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6",
+        "location" : {
+          "x" : 1308.0,
+          "y" : 945.0
+        },
+        "currentFloorID" : "4f89dc35-26f2-47c7-ab51-fb429d3cb529",
+        "associatedImageString" : "/icons/doctor.png",
+        "edgeMomentos" : [ ],
+        "destinationMementos" : [ {
+          "uniqueID" : "8e7506fc-4dd9-452b-9bb2-3c84f042d1f6",
+          "name" : "Taiclet Family Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5a09801d-7903-4492-8a07-66fd4f98edee",
+          "name" : "Information",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ceb6c9fd-071e-4563-81f6-16fb3c3dbc56",
+          "name" : "Admitting/Registration",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7d793388-907f-48a3-b8ec-70cae520aa62",
+          "name" : "Atrium Cafe",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e50bc7b0-5156-421f-80b4-859209535b82",
+          "name" : "Starbucks",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7be22f5c-0b43-4735-bc0e-e2f8a2f1c269",
+          "name" : "Valet Parking",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "276ee77e-fbf2-43f9-987f-25ebdd4c6ff2",
+          "name" : "Kiosk",
+          "destinationTypeString" : "KIOSK",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "10f3f02a-d6b5-4c97-990e-b575474b4e09",
+          "name" : "Floor 1 Bathroom",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "704e9ce9-3dc3-46a2-bce4-84ab88f6dcce",
+          "name" : "Hillside Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "cdbc3347-0bae-446f-9e3e-a8c2bd21fcbe",
+          "name" : "Atrium Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a2b92fdd-49f2-49a0-bc24-3645d5a330b9",
+          "name" : "Otolarngology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d31ab147-9093-422b-97cd-df9136001427",
+          "name" : "Corrales, Carleton Eduardo, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "cc96b9ce-92a7-4ec6-9b05-4de7b421c3b0",
+          "name" : "Prince, Anthony, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3a301c74-a79e-4f79-8964-16f77781e8f3",
+          "name" : "Roditi, Rachel, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "03de2277-a9b7-4397-b2dd-d7b12f52c5c0",
+          "name" : "Plastic Surgery",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "4d451324-2d74-46e4-90ff-06477080c234",
+          "name" : "Carty, Matthew, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "68c0b6c7-5aeb-4d5d-870a-0d6383b8333c",
+          "name" : "Caterson, Stephanie, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "35a367d3-2484-4529-9a2e-d43fa1c780f7",
+          "name" : "Chun, Yoon Sun, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "1c61ace7-8b0b-4630-a3cd-9e184d0f725e",
+          "name" : "Hajj, Micheline, RN",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "69463737-e223-4f6f-bee5-3e4fd9551438",
+          "name" : "Halvorson, Eric, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9b013e55-ee7b-40ec-a8ee-fcece0e9a90a",
+          "name" : "Hergrueter, Charles, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "4e51db04-6fd2-431d-9948-71faab300f52",
+          "name" : "Ingram, Abbie, PA-C",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5f4d8f45-62ea-4f78-b932-beff29c6ebb8",
+          "name" : "Lafleur, Emily, PA-C",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e0be8e92-edd7-41ba-b85a-561f02eabf83",
+          "name" : "Lahair, Tracy, PA-C",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "542f1814-d2d6-47c8-b07e-c37648b5721b",
+          "name" : "Physical Therapy",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fec90083-363f-4553-ba38-395f8a441e01",
+          "name" : "Psychology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b4c998b0-577b-4a99-bdac-7fea76206391",
+          "name" : "Addiction Recovery Program",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "66e7abc1-d09c-4bb4-bf79-cc955a61ce59",
+          "name" : "Rehabilitation Services",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "73acfa8d-1697-49df-a80f-294b2b51b1df",
+          "name" : "Floor 2 Bathroom ",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9a3a10b7-db9d-4a72-b54a-fccf90a0f53c",
+          "name" : "Hillside Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c2b4d4c9-ec67-4bed-87b2-4d9a91ec4df0",
+          "name" : "Atrium Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fb1dd477-3d9e-4063-bff3-1b81c9587074",
+          "name" : "Berman, Dan, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "36e41688-f848-4f4b-8621-999108a7cbf7",
+          "name" : "Cotter, Lindsay, LCSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "70af2e44-b30c-4b55-8974-01406a5b63c2",
+          "name" : "Doherty, Meghan, LCSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "243fecc8-07b3-4836-bff2-2ec4a909eacb",
+          "name" : "Donnelly, Kevin, PhD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9e9f2908-df9c-4633-b7a3-201c7de41e9b",
+          "name" : "Dowd, Erin, LCSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "64fc36ac-e352-4b8a-876b-85c6fab0ca8e",
+          "name" : "Ecker, Vivian, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "35eda2c3-91aa-4990-b310-a109a4ea00e4",
+          "name" : "Fromson, John, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7912a393-b595-48ad-92bb-44643c2f8bbd",
+          "name" : "Haimovici, Florina, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "41310fc1-cced-4b48-8f41-7d58fb0dff5c",
+          "name" : "Howard, Neal Anthony, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "46314d44-0f3d-4716-b925-189ce62ab3f1",
+          "name" : "Humbert, Timberly, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f425ed6a-98f8-4322-8b0e-b6aecc20bfca",
+          "name" : "Keller, Beth, RN, PsyD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6cdb4e7f-784e-4a86-ae48-5b4afe91c636",
+          "name" : "Lai, Leonard, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "24068c12-c544-489b-b0d1-684d99586f76",
+          "name" : "Leone, Amanda, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "64f2af9d-d74c-43c1-8200-489402d1eeb8",
+          "name" : "Mariano, Timothy, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ec8da17e-05f5-4d50-ae60-cac124c2d5d9",
+          "name" : "Matwin, Sonia, PhD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f2dbde5e-3ef6-4524-bed1-0a3e9edafa31",
+          "name" : "Perry, David, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fffe8ea5-ef06-42c6-884c-68743514f3ba",
+          "name" : "Rodriguez, Claudia, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "602a0033-2f44-4e63-b1d7-f8d00c7941e8",
+          "name" : "Samadi, Farrah, NP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6fcf53df-e4b5-4d70-b31d-5febe903b977",
+          "name" : "Schoenfeld, Paul, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "dbfa5bb4-0aec-455c-b6a9-362116953e50",
+          "name" : "Stevens, Erin, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "71089033-c575-4b0d-ae86-14f3adffd67c",
+          "name" : "Stewart, Carl, MEd, LADC I",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "db500ea7-c9ee-4bd6-bd20-fdecf5979618",
+          "name" : "Trumble, Julia, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d4d7c80b-4871-4a38-a290-0913ea8db803",
+          "name" : "Yudkoff, Benjamin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "457edfaa-e6b5-4c8c-91ee-f9ecc1b85e6b",
+          "name" : "Issa, Mohammed, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "01c9f0e9-03da-4199-8f6b-f94f741fc32e",
+          "name" : "Roslindale Pediatric Associates",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b85d4698-a69a-4563-9acd-26581d0cf871",
+          "name" : "Byrne, Jennifer, RN, CPNP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "4b3bfcd0-59b1-4dfb-910b-6637d974ca9c",
+          "name" : "Grossi, Lisa, RN, MS, CPNP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "40e4d8ce-0993-47c3-b547-7337bcab463c",
+          "name" : "Keller, Elisabeth, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "51b1c1ea-014f-429f-897f-73daea431981",
+          "name" : "Malone, Linda, DNP, RN, CPNP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "48bdd094-42ae-47e4-a4c1-329ba04fea51",
+          "name" : "Morrison, Beverly, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "23e764fd-bfcb-470f-831a-4846c51c44f1",
+          "name" : "O'Connor, Elizabeth, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "353f2ce1-51ee-4139-bc44-04676a7be706",
+          "name" : "Saluti, Andrew, DO",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e03a276b-0d57-4253-90f7-6eaf9913f5ab",
+          "name" : "Scheff, David, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "708fc442-6a7e-4662-baf6-313238279613",
+          "name" : "Stacks, Robert, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "77ea4a60-d6fe-4eb8-b2f0-811ea7d3e982",
+          "name" : "Tunick, Mitchell, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3f01c6c9-414a-4c1f-ab4b-535ca73f654d",
+          "name" : "Viola, Julianne, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "0ef2c968-6cf1-423e-9a7c-e22a49b3c5f6",
+          "name" : "Eye Care Specialists",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d1eac38b-9aa6-418e-b97d-d255f3edcc65",
+          "name" : "Suburban Eye Specialists",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "0f12da99-d154-4719-b880-d7d2b65b9ad9",
+          "name" : "Dann, Harriet, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "55504333-c97d-4aee-a960-8fd837323cfd",
+          "name" : "Frangieh, George, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "309d60ac-36ca-40f2-8e23-ab09b8a34d9e",
+          "name" : "Micley, Bruce, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "cdb9ee76-234d-4d9a-9933-50986dc1c39b",
+          "name" : "Patten, James, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d8b60e0e-da41-4125-bad6-19e4ba85d290",
+          "name" : "Obstetrics and Gynecology Associates",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "026d75b4-49e0-4b61-9b43-0a218c7574bf",
+          "name" : "Greenberg, James Adam, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "0db190d0-7db0-4b77-aaab-e607b14b3951",
+          "name" : "Miner, Julie, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "183cb48c-4928-474c-bcd2-fd829d49d2d8",
+          "name" : "Nadarajah, Sarah, WHNP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a6b433ab-cbbf-49b4-aa70-3766f2b742a1",
+          "name" : "Schueler, Leila, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "108b5e1b-7cce-4fa2-a92b-a704661d9774",
+          "name" : "Smith, Shannon, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6b54ad89-16b3-4ffc-b2fc-b8e76639f285",
+          "name" : "ATM",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ea13fd29-3288-4efa-ba33-55d02649836c",
+          "name" : "Huvos Auditorium",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "be7309ab-af84-477d-be3f-afb1415dcee1",
+          "name" : "Cafeteria",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "199e0815-f228-495d-9c73-025d33dce8b0",
+          "name" : "Chapel",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ca3ba892-9251-4246-9f5a-227176994763",
+          "name" : "Gift Shop",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c797af00-de94-4251-82e5-415b27a88ade",
+          "name" : "Patient Relations",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fa6be2dc-fc1f-4998-a0fd-75c5f2790ce4",
+          "name" : "Volunteer Services",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b0d6d4d2-530c-4572-af26-43840c23e589",
+          "name" : "Kiosk",
+          "destinationTypeString" : "KIOSK",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ce1ad219-e28a-43f6-bb1b-3562b58e6597",
+          "name" : "Floor 3 Bathroom",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a36af573-035f-4ec2-a6ee-586f2f13c2f1",
+          "name" : "Floor 3 Bathroom",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "8bb4bd79-a190-4dc0-99b6-2c71e88405aa",
+          "name" : "Floor 3 Bathroom",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3248ffad-000d-4a2f-b1e1-00a941bd23e6",
+          "name" : " Hillside Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7dab35a8-053d-4c40-8b44-b2fa1dff253e",
+          "name" : "Atrium Elevatoe",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "26e65304-14d2-4156-9ffe-440cc2c13d35",
+          "name" : "Brigham and Women's Primary Physicians",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e7cf6ee7-4124-4558-9ac2-fc060d5c30a0",
+          "name" : "Caplan, Laura, PA-C",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "88d57a82-f7fe-4ad8-8dee-e610eb3826bb",
+          "name" : "Cohen, Natalie, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e51e9760-46f1-4b1b-89ae-2a2f07685108",
+          "name" : "Copello, Maria, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2651334f-b28e-45e2-888b-3139b3a67335",
+          "name" : "Healy, Barbara, RN",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f5479841-75ea-486e-85ed-b706b37fdde4",
+          "name" : "Lauretti, Linda, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d45705e1-9f53-4b82-bc3e-7ba4444653f4",
+          "name" : "McCord, Laura, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "25b2bea9-011e-4884-bb1c-a4d79d19e787",
+          "name" : "Nuspl, Kristen, PA-C",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b23c9056-a675-4e12-8c70-ef1fd951b50e",
+          "name" : "Oliver, Lynn, RN",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "65bde86a-636c-493b-81b6-b7bc57b6630f",
+          "name" : "Walsh Samp, Kathy, LICSW",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3531460b-df89-4228-acbe-2f3dcb79a478",
+          "name" : "Welker, Roy, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9d382e0f-e1c7-4708-be54-56017415c74c",
+          "name" : "Gastroenterology Associates",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "8eaab9a0-fa04-4419-be24-0fe401f2651b",
+          "name" : "Conant, Alene, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3b0ee6f8-44f7-474f-815f-bf9b306ebc55",
+          "name" : "Drewniak, Stephen, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b4eb5064-997a-4474-afa6-1f4de89cea3f",
+          "name" : "Homenko, Daria, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2f2ab13b-2a5a-460e-b0fe-4069ea7f01b6",
+          "name" : "Lo, Amy, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9471f4a4-0ddd-4e33-b306-f591716855e5",
+          "name" : "Matloff, Daniel, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c4f28a1f-516a-4d1b-a7fe-071d63a844f2",
+          "name" : "Mutinga, Muthoka, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "98bca978-8320-4973-80d6-d245c73289c2",
+          "name" : "Preneta, Ewa, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ffafc3e9-ca81-49d0-9bb7-a2bb59de2184",
+          "name" : "Smith, Benjamin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "52da699c-c497-421b-973c-0e6451b8b7c5",
+          "name" : "Neurology/Sleep Division",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3ce53769-9bf5-4644-9d54-3e025aa2742d",
+          "name" : "Sleep Disorders Service",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "35fbdaef-0a82-416c-acc1-aec4306b19c7",
+          "name" : "Horowitz, Sandra, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2ec9c3ff-be01-4ce8-9e49-de9fe23fd35c",
+          "name" : "Mullally, William, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "355e9002-245b-4e0c-954d-579c27e4c5d6",
+          "name" : "Novak, Peter, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5c6a0011-3a9c-47b4-a054-9e52cd0696b7",
+          "name" : "Pavlova, Milena, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b13b7ae0-3403-4cee-b0f1-bc349e3d64d3",
+          "name" : "Pilgrim, David, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fa806ea5-7199-4805-938c-134d43c624b1",
+          "name" : "Vardeh, Daniel, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "32148ddd-6a3c-4e18-9578-9c98de0e138d",
+          "name" : "Weisholtz, Daniel, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "42c929bd-4339-4f92-9f54-386905980a4b",
+          "name" : "Whitman, Gregory, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "24c0984a-a324-43f3-855c-4a27a71e2ca5",
+          "name" : "Arthritis Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3f78b92e-1601-48aa-abb6-0cc868e10c1b",
+          "name" : "Rheumatology Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3012fca1-a54a-4bc4-b561-98eae3fd0e9a",
+          "name" : "Hoover, Paul, MD, PhD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "35f4205f-057d-4a4b-8279-9cfa6afeba15",
+          "name" : "Pariser, Kenneth, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f8cdf23e-c4c4-4c1e-a643-6c64f48930e5",
+          "name" : "Todd, Derrick, MD, PhD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "43505f38-5ad6-4de4-9749-20d76e732f10",
+          "name" : "Wei, Kevin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f4a97da3-8d35-4d95-9065-6ad0e07cdeb5",
+          "name" : "Infectious Diseases ",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f0850b58-0f80-47be-9527-a7468fea5676",
+          "name" : "Clark, Roger, DO",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5dc56947-215f-4cba-95f0-81f18f8fd2fb",
+          "name" : "Cohen, Jeffrey, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6b15e632-a682-47d8-8443-52018f811829",
+          "name" : "McGowan, Katherine, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "878af707-b9f2-4dbe-921a-3590b895e6f4",
+          "name" : "Allergy",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "bf4505f1-9c5f-4407-aa30-fddec7afa243",
+          "name" : "Cardiology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b65a9159-5276-47c2-b74e-c2708353273d",
+          "name" : "Endocrinology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b65e0324-545e-42ce-a355-838a42219ed0",
+          "name" : "Gastroenterology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "1827cf84-ae8e-4737-b5c4-a14834666261",
+          "name" : "Geriatrics/Senior Health",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a9ccce3c-f06e-410b-9e25-6e01ecef5203",
+          "name" : "Hematology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "caf28509-f8d7-4d74-b4bd-04b863036155",
+          "name" : "Medical Specialties",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e5d7145f-17f0-452f-af74-955d738c1e3a",
+          "name" : "Pulmonary",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2c9b673d-57b5-4e0c-8a41-c34c2f8bfdf7",
+          "name" : "Renal",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d37e8cd7-6b37-437a-8265-a7cee88e2444",
+          "name" : "Sleep Medicine",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5fb32f4c-b0bc-47a0-bc09-565574c5f7a0",
+          "name" : "Ash, Samuel, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "73c5e769-7947-48d3-b385-b6d1dc1abf5e",
+          "name" : "Bachman, William, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ffd2c9a7-bbda-42ad-a233-195e1f53b451",
+          "name" : "Batool-Anwar, Salma, MD, MPH",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "8ffe2459-b8da-4680-a2d6-eae00d99d4c2",
+          "name" : "Bonaca, Marc, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "26735242-f54e-4fb6-8e53-ebc964c906c4",
+          "name" : "Budhiraja, Rohit, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6552945d-3c5b-444b-8097-340fb9cfa2db",
+          "name" : "Cardet, Juan Carlos, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2b035125-df99-423b-a5d9-c5c72f04a5d8",
+          "name" : "Cardin, Kristin, NP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7d02b2e8-a19a-4f44-9327-48a270e3f64d",
+          "name" : "Chan, Walter, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e9d5def0-5ca9-4353-802f-896a5877eb01",
+          "name" : "Connell, Nathan, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "8008a3e6-d754-4034-87df-ce6db167005d",
+          "name" : "D'Ambrosio, Carolyn, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "1ad20c5a-c165-41b9-8478-8d7fb7982ff4",
+          "name" : "Dave, Jatin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "06233622-60ab-4d70-bbc8-2776ef2728b4",
+          "name" : "Epstein, Lawrence, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5fd38265-6e61-45e4-ba09-91f42984a79c",
+          "name" : "Fanta, Christopher, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6943f13e-76e3-46d3-9900-cc6e53220343",
+          "name" : "Halperin, Florencia, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e474e41f-5be4-4f70-824b-def97ce532ea",
+          "name" : "Hentschel, Dirk, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "3b7581ea-86a7-4b33-a44d-b0b5dbc553ac",
+          "name" : "Hsu, Joyce, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "5fad89ad-96ad-4ab5-a994-24123d185593",
+          "name" : "Lilly, Leonard Stuart, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a28992f7-6144-48d3-9b61-fe95af438a24",
+          "name" : "Parnes, Aric, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ce8bc34c-ac00-4a7c-bde2-3506df8987a5",
+          "name" : "Quan, Stuart F., MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "7c543365-e0d0-42cb-ba0a-f01ff0334606",
+          "name" : "Ramirez, Alberto, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "19b34e15-76e8-4fdd-bd34-9e65c8181046",
+          "name" : "Romano, Keith, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "1fd8c783-c7d5-4a87-9a30-37c0359b2d24",
+          "name" : "Ruff, Christian, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ef46472e-b4d9-475e-9fdc-362741e75b9b",
+          "name" : "Saldana, Fidencio, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f78625b9-472e-46bd-8f3a-affb0b24d93d",
+          "name" : "Schissel, Scott, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ff1ea8d8-bbf6-409f-a5d9-6da18a508b89",
+          "name" : "Shah, Amil, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2a02412a-b62c-483f-9f7b-17a12909bd6a",
+          "name" : "Sheth, Samira, NP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "dce4af53-f706-485d-830e-d49bfcd98c7d",
+          "name" : "Smith, Colleen, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "040fe88f-6d13-4340-b747-eb23d5ad1b83",
+          "name" : "Stephens, Kelly, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "bcc54a7b-6550-4798-9d23-bb98a3a85a5f",
+          "name" : "Sweeney, Michael, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "766b21b1-1af6-4c48-8cc3-e3fdc2d6b1ef",
+          "name" : "Tucker, J. Kevin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "4ae4d0f2-f148-4b39-970b-f5a160b197e5",
+          "name" : "Voiculescu, Adina, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2439505e-9f90-4f44-8f61-77ce2ded38f8",
+          "name" : "Wellman, David, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fbbd7be4-2a69-4c1d-b422-1e3869098e16",
+          "name" : "White, David, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ce030aae-d57d-46b3-aa43-e0439361ee1e",
+          "name" : "Wickner, Paige, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "4010eb58-e62a-4385-9c1e-8312201c3bc4",
+          "name" : "Angell, Trevor, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e28e510b-e720-467e-a7e3-a15e29feb40e",
+          "name" : "Brigham and Women's Primary Physicians",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ecc59d11-3187-45c3-9a6f-8470bb951000",
+          "name" : "Headache Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a03c8e7d-2158-4bc2-b98b-ee99beda1665",
+          "name" : "John R. Graham Headache Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "8b4ce05d-4756-4f89-af9b-37aecf203f49",
+          "name" : "Neurology",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "796c6c78-58a8-41c1-8255-546650610bd6",
+          "name" : "Bernstein, Carolyn, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "01e20489-ba52-4f17-9ec7-70e049ca18f2",
+          "name" : "Burch, Rebecca, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f902bf93-3188-47f3-a5f0-2b973ee26cec",
+          "name" : "Cochrane, Thomas, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "ecad0717-b542-46fb-8ce1-75e9df2e60c6",
+          "name" : "Friedman, Pamela, PsyD, ABPP",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "9c153458-1310-4fae-886a-625b10f76971",
+          "name" : "Loder, Elizabeth, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e9946b45-daa0-40f0-a017-2acb93982df2",
+          "name" : "Mathew, Paul, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d737d37d-4394-45a0-ab53-8b3e4fb75105",
+          "name" : "Rizzoli, Paul, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "f0ea8314-3fe9-4ded-b177-997b9a28201d",
+          "name" : "Cua, Christopher, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2fb43caa-eeef-43d5-aff2-c0e24d8baf96",
+          "name" : "Lahive, Karen, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "88f55847-291a-46dd-b16c-346e0d5b290f",
+          "name" : "Tarpy, Robert, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "87398366-0d06-453e-b68e-8cb86531e4f3",
+          "name" : "Mohs and Dermatologic Surgery",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "745cdee6-7071-4d9f-94df-62774f3e72b3",
+          "name" : "Tarpy, Robert, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "898f377b-9db5-41a0-814b-08d794c7092c",
+          "name" : "Men's Health Center",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "27e8f9e1-cae8-471b-bf08-66987e305b56",
+          "name" : "Ruiz, Emily, MD",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "2f5dcb26-3572-4748-a1cd-b0ebdc55b7c0",
+          "name" : "Schmults, Chrysalyne, MD",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6ffdf333-aa82-4954-b4e8-bcac47f1405f",
+          "name" : "Chang, Steven, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c4919660-22d3-4a68-bb72-c185e88d185d",
+          "name" : "Kathrins, Martin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c027acc3-ce47-429b-84e3-50f87f1e4738",
+          "name" : "Malone, Michael, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d296e45d-8ac9-4003-a710-11446e2610fc",
+          "name" : "McDonald, Michael, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "85820f09-991c-444d-9572-e84027d535be",
+          "name" : "O'Leary, Michael, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "b6f5ed13-34e4-441e-a929-d2e8fe1b400d",
+          "name" : "Steele, Graeme, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "bf13fe1e-cb97-4bd0-9db0-9d46dfaa4f75",
+          "name" : "Brigham and Women's Primary Physicians",
+          "destinationTypeString" : "DEPARTMENT",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "073dbaba-29ba-4c29-b018-b16f0aa6f1f1",
+          "name" : "Goldman, Jill, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "34828928-55dc-4e87-9946-5a420353ad1e",
+          "name" : "Lilienfeld, Armin, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "1c33d2ed-fb09-4678-a583-86579e2926f0",
+          "name" : "Owens, Lisa Michelle, MD",
+          "destinationTypeString" : "PHYSICIAN",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a634d07b-c16d-4f56-b6a2-228440b43fab",
+          "name" : "Doherty Conference Room",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "711db093-1132-4767-a032-b32938278636",
+          "name" : "Interpreter Services",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "0d293e56-ad72-45fb-ab81-d6b9bc708c45",
+          "name" : "Mary Ann Tynan Conference Rooms",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "e6dd0f88-de9b-494b-a498-19893fb07c7e",
+          "name" : "Medical Library",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "d578b1fc-db8c-496d-8481-5a6401b0d00f",
+          "name" : "Medical Records",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "fa16e140-df93-4402-8c62-7fc56f26636d",
+          "name" : "Sadowsky Conference Room",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "eeaef344-eba6-40b4-85ae-59df1f098de2",
+          "name" : "Saslow Conference Room",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "97d4716b-48cf-4e7d-8fea-f1244e74104a",
+          "name" : "Social Work",
+          "destinationTypeString" : "SERVICE",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "c10b724b-ada8-4a9d-bf4d-3f72de27525b",
+          "name" : "Floor 4 Bathroom",
+          "destinationTypeString" : "BATHROOM",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "6b8e56d1-b4e2-4fbf-a955-8b2baca83aea",
+          "name" : "Hillside Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        }, {
+          "uniqueID" : "a04520b7-c1c8-4699-b7fd-84b562a972d4",
+          "name" : "Atrium Elevator",
+          "destinationTypeString" : "ELEVATOR",
+          "currentLocationNodeID" : "ecffa399-a7ed-43d9-a53c-6d52dde889c6"
+        } ]
+      } ]
+    } ],
+    "currentMapID" : "c874737b-b012-4deb-856c-75a7fd4c0575"
+  } ]
+}
