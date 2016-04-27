@@ -71,12 +71,6 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 break;
 
-            case SETSTARTNODE:
-
-                currentMap.setStartLocationNode(this.locationNode);
-
-                break;
-
             case ADDADJACENTNODE:
 
                 currentMap.setCurrentLocationNode(this.locationNode);

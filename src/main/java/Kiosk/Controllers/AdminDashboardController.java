@@ -579,12 +579,28 @@ public class AdminDashboardController {
 
 
         this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
+        selectStartKioskComboBox.setPromptText("Select Current Kiosk");
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
-                LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+
+                    LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+                    faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                }
+
+            }
+
+        });
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
 
 
             }
@@ -728,7 +744,7 @@ public class AdminDashboardController {
     private void setLocationTabListeners() {
 
 
-        // Setup Building Accordion
+        // Setup Location Accordion
         this.locationAccordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
 
             @Override
@@ -755,7 +771,7 @@ public class AdminDashboardController {
 
                 if (newValue) {
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
+                    LOGGER.info("Location ConnectedLocations Titled Pane Opened");
 
 //                    building.getCurrentNodes().addAdjacentsToListView(locationConnectedLocationListView);
 
@@ -787,7 +803,7 @@ public class AdminDashboardController {
 
                 if (newValue) {
 
-                    LOGGER.info("Building Floors Titled Pane Opened");
+                    LOGGER.info("Location Destinations Titled Pane Opened");
 
 //                    if (building.getCurrentNodes() != null) {
 //
@@ -833,18 +849,6 @@ public class AdminDashboardController {
 //            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
         });
 
-
-
-        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                faulknerHospitalMap.setStartLocationNode(faulknerHospitalMap.getCurrentLocationNode());
-
-            }
-
-        });
 
     }
 

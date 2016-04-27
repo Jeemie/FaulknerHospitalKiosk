@@ -78,7 +78,7 @@
                                                         <Button fx:id="setStartNode" layoutX="59.6" layoutY="59.6" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="OK" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0" />
                                           <Button fx:id="dijkstrasButton" layoutX="119.0" layoutY="455.0" mnemonicParsing="false" text="Use Dijkstras" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                                           <Button fx:id="astarButton" layoutX="119.0" layoutY="390.0" mnemonicParsing="false" text="Use AStar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-                                          <ComboBox fx:id="selectStartKioskComboBox" layoutX="87.0" layoutY="40.0" prefWidth="150.0" promptText="Set Starting Kiosk" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+                                          <ComboBox fx:id="selectStartKioskComboBox" layoutX="87.0" layoutY="40.0" prefWidth="150.0" promptText="Set Starting Kiosk" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
                                                     </children></AnchorPane>
                                             </content>
                                         </TitledPane>
