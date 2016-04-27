@@ -580,10 +580,10 @@ public class AdminDashboardController {
         });
 
 
-
-        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
         startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
         selectStartKioskComboBox.setPromptText("Select Kiosk");
+        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
+
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
