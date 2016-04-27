@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -407,6 +409,25 @@ public class Map implements Observer {
         this.currentPath.setup();
 
     }
+
+    public void setupDirections(ListView textualDirections) {
+
+        //TODO help
+        ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
+        textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+
+        LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
+        textualDirections.setItems(textualDirectionStrings);
+
+    }
+
+
+    public void setupDirectionsListView () {
+
+        this.currentPath.getDirections().getTextualDirections();
+
+    }
+
 
 
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {

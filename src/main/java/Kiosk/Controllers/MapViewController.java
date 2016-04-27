@@ -82,7 +82,7 @@ public class MapViewController{
     private Button changeFloorButtonDown;
 
     @FXML
-    private ListView Direction;
+    private ListView directionsList;
 
     @FXML
     private Button backButton;
@@ -330,6 +330,7 @@ public class MapViewController{
     public void setListeners() {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+        this.faulknerHospitalMap.setupDirections(directionsList);
 
 
     }
