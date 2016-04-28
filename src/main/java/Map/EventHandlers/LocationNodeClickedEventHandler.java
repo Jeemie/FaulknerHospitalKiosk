@@ -69,11 +69,15 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 currentMap.setCurrentLocationNode(this.locationNode);
 
+                currentMap.setCurrentMapState(MapState.ADMIN);
+
                 break;
 
             case SETSTARTNODE:
 
                 currentMap.setStartLocationNode(this.locationNode);
+
+                currentMap.setCurrentMapState(MapState.ADMIN);
 
                 break;
 
@@ -83,6 +87,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 if (previousActions.isEmpty()) {
 
+                    currentMap.setCurrentMapState(MapState.ADMIN);
                     break;
                 }
 
@@ -93,9 +98,14 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                     LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
                             lastAction.getKey().toString());
 
+                    currentMap.setCurrentAdjacentNode(lastAction.getKey());
+
+
                     try {
 
-                        this.locationNode.addEdge(lastAction.getKey());
+                        currentMap.addLocationNodeEdge();
+
+                        //this.locationNode.addEdge(lastAction.getKey());
 
                     } catch (NodeDoesNotExistException e) {
 
@@ -111,6 +121,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
 
             default:
+                currentMap.setCurrentMapState(MapState.ADMIN);
 
                 break;
 
@@ -121,7 +132,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         previousActions.push(entry);
 
-        currentMap.setCurrentMapState(MapState.ADMIN);
+       // currentMap.setCurrentMapState(MapState.ADMIN);
 
     }
 

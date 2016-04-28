@@ -220,15 +220,31 @@ public class Map implements Observer {
 
     }
 
-    public void addLocationNodeEdge(LocationNode locationNode) throws NodeDoesNotExistException {
+    public void addLocationNodeEdge() throws NodeDoesNotExistException {
 
         if(this.currentLocationNode == null) {
 
-            LOGGER.debug("Edge could not be added because the currentLocationNdoe was null");
+            LOGGER.debug("Edge could not be added because the currentLocationNode was null");
 
         }
 
-        this.currentLocationNode.addEdge(locationNode);
+        if(this.currentAdjacentNode == null) {
+
+            LOGGER.debug("Edge could not be added because the currentAdjacentNode was null");
+
+        }
+
+        this.currentLocationNode.addEdge(currentAdjacentNode);
+
+        // Redraw Edge
+        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+        // Update Observers
+        this.currentAdjacentLocationNodes.add(currentAdjacentNode);
+
+        // "Reset" current adjacent node
+        // this.currentAdjacentNode = null;
 
     }
 
@@ -533,16 +549,16 @@ public class Map implements Observer {
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
-                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
-                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
 
 //                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
-                this.currentLocationNodeDestinations.clear();
-                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+//                this.currentLocationNodeDestinations.clear();
+//                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
 
 //                // Add current location node destinations from current floor and building destinations
-                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
-                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
 
                 break;
@@ -594,7 +610,15 @@ public class Map implements Observer {
                 break;
 
             case LOCATIONNODEEDGE:
-                this.locationNodeUpdater(this.currentLocationNode);
+
+                if (this.currentLocationNode != null) {
+
+                    this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+                    this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+                }
+
+                //this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
 

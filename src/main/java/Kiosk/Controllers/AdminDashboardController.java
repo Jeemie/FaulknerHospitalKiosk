@@ -829,7 +829,12 @@ public class AdminDashboardController {
 
         });
 
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.SETSTARTNODE,
+                        "Set Start Node", this.selectedButtonLabel));
+
     }
+
 
     private void setAddFloorTabListeners() {
 
