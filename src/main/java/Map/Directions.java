@@ -180,11 +180,11 @@ public class Directions {
 
                 //Check cardinalDirection relations, and output the right direction
                 if (pastCDirection.right() == currentCDirection) {
-                    currentTextDirection += "Right.";
+                    currentTextDirection += "Right";
                 } else if (pastCDirection.left() == currentCDirection) {
-                    currentTextDirection += "Left.";
+                    currentTextDirection += "Left";
                 } else if (pastCDirection.opposite() == currentCDirection) {
-                    currentTextDirection += "Back."; //Should actually not happen
+                    currentTextDirection += "Back"; //Should actually not happen
                 }
 
                 //Add to textualDirections

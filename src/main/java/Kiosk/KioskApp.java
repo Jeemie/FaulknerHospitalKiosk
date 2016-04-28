@@ -103,7 +103,8 @@ public class KioskApp extends Application {
             //primaryStage.setFullScreen(true);
 //
 //          System.out.println(getClass().getResource("Styles.css"));
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+//            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+            scene.getStylesheets().add((new URL("file:///" + System.getProperty("user.dir") + "/src/main/java/Kiosk/" + "Style.css")).toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -278,7 +279,6 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
             AnchorPane scene = loader.load();
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             primaryStage.setTitle("Directory");
             primaryStage.getScene().setRoot(scene);
@@ -316,7 +316,6 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
             AnchorPane scene = loader.load();
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
 
             // Replaces previous screen with userUI4.
