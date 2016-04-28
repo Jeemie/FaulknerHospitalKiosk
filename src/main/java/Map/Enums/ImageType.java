@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ImageType {
 
+    HALLWAYS("/icons/hall.png"),
     POINT("/icons/gift.png"),
     BATHROOM("/icons/bathroom.png"),
     STAIRS("/icons/stair.png"),
