@@ -295,6 +295,15 @@ public class Map implements Observer {
             return;
         }
 
+        LOGGER.info("Removing Location Node: " + this.currentLocationNode.toString());
+
+        this.currentLocationNodeDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentAdjacentLocationNodes.removeAll(this.currentLocationNode.getAdjacentLocationNodes());
+        this.currentFloorLocationNodes.remove(this.currentLocationNode);
+        this.currentFloorDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
+        this.currentDestination = null;
+
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
     }
