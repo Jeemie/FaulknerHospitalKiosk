@@ -119,6 +119,7 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
             AnchorPane kioskOverview = loader.load();
+            kioskOverview.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             // Set kiosk overview into the center of root layout.
             rootLayout.setCenter(kioskOverview);
@@ -157,6 +158,7 @@ public class KioskApp extends Application {
 //            FXMLLoader loader = new FXMLLoader();
 //            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
 //            AnchorPane page = loader.load();
+//            page.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 //
 //            // Replace KioskOverview with AdminLogin
 //            primaryStage.setTitle("Admin Login");
@@ -197,6 +199,7 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AdminDashboard.fxml"));
             SplitPane page = loader.load();
+            page.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Administrator Dashboard");
@@ -235,6 +238,7 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
             AnchorPane page = loader.load();
+            page.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             // Replace KioskOverview with userUI3.
             primaryStage.setTitle("Search Results");
@@ -356,6 +360,7 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AboutPage.fxml"));
             AnchorPane page = loader.load();
+            page.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             // Set kiosk overview into the center of root layout.
             primaryStage.setTitle("About the Developers");
@@ -380,6 +385,7 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
             AnchorPane page = loader.load();
+            page.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");

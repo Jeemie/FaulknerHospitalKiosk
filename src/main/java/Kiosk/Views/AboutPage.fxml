@@ -5,139 +5,139 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AboutPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.AboutPageController">
     <children>
         <Button fx:id="backButton" layoutX="1131.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="40.0" prefWidth="97.0" text="Back" AnchorPane.leftAnchor="1131.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="734.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label layoutX="455.0" layoutY="47.0" text="About the Developers">
+        <Label layoutX="455.0" layoutY="47.0" text="About the Developers" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="47.0">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
         </Label>
-        <Label layoutX="345.0" layoutY="148.0" text="WPI Computer Science Department:  ">
+        <Label layoutX="345.0" layoutY="148.0" text="WPI Computer Science Department:  " AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="148.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="640.0" layoutY="148.0" text="http://www.wpi.edu/academics/cs/">
+        <Label layoutX="640.0" layoutY="148.0" text="http://www.wpi.edu/academics/cs/" AnchorPane.leftAnchor="640.0" AnchorPane.rightAnchor="364.0" AnchorPane.topAnchor="148.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="521.0" layoutY="192.0" text="CS 3733 Software Engineering">
+        <Label layoutX="521.0" layoutY="192.0" text="CS 3733 Software Engineering" AnchorPane.leftAnchor="521.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="192.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="552.0" layoutY="243.0" text="Professor:  ">
+        <Label layoutX="552.0" layoutY="243.0" text="Professor:  " AnchorPane.leftAnchor="552.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="243.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="640.0" layoutY="243.0" text="Wilson Wong">
+        <Label layoutX="640.0" layoutY="243.0" text="Wilson Wong" AnchorPane.leftAnchor="640.0" AnchorPane.rightAnchor="533.0" AnchorPane.topAnchor="243.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="529.0" layoutY="280.0" text="Team Coach:  ">
+        <Label layoutX="529.0" layoutY="280.0" text="Team Coach:  " AnchorPane.leftAnchor="529.0" AnchorPane.rightAnchor="639.0" AnchorPane.topAnchor="280.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="641.0" layoutY="280.0" text="Nick McMahon">
+        <Label layoutX="641.0" layoutY="280.0" text="Nick McMahon" AnchorPane.leftAnchor="641.0" AnchorPane.rightAnchor="518.0" AnchorPane.topAnchor="280.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="439.0" layoutY="321.0" text="Lead Software Engineer:  ">
+        <Label layoutX="439.0" layoutY="321.0" text="Lead Software Engineer:  " AnchorPane.leftAnchor="439.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="321.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="641.0" layoutY="321.0" text="Matthew LeMay">
+        <Label layoutX="641.0" layoutY="321.0" text="Matthew LeMay" AnchorPane.leftAnchor="641.0" AnchorPane.rightAnchor="512.0" AnchorPane.topAnchor="321.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="364.0" layoutY="360.0" text="Assistant Lead Software Engineer:  ">
+        <Label layoutX="364.0" layoutY="360.0" text="Assistant Lead Software Engineer:  " AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="360.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="641.0" layoutY="360.0" text="Triet Pham">
+        <Label layoutX="641.0" layoutY="360.0" text="Triet Pham" AnchorPane.leftAnchor="641.0" AnchorPane.rightAnchor="553.0" AnchorPane.topAnchor="360.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="344.0" layoutY="400.0" text="Project Manager and Scrum Master:  ">
+        <Label layoutX="344.0" layoutY="400.0" text="Project Manager and Scrum Master:  " AnchorPane.leftAnchor="344.0" AnchorPane.rightAnchor="642.0" AnchorPane.topAnchor="400.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="641.0" layoutY="400.0" text="Binam Kayastha">
+        <Label layoutX="641.0" layoutY="400.0" text="Binam Kayastha" AnchorPane.leftAnchor="641.0" AnchorPane.rightAnchor="513.0" AnchorPane.topAnchor="400.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="507.0" layoutY="438.0" text="Product Owner:  ">
+        <Label layoutX="507.0" layoutY="438.0" text="Product Owner:  " AnchorPane.leftAnchor="507.0" AnchorPane.rightAnchor="639.0" AnchorPane.topAnchor="438.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="638.0" layoutY="438.0" text="Forrest Welty">
+        <Label layoutX="638.0" layoutY="438.0" text="Forrest Welty" AnchorPane.leftAnchor="638.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="438.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="514.0" layoutY="477.0" text="Test Engineer:  ">
+        <Label layoutX="514.0" layoutY="477.0" text="Test Engineer:  " AnchorPane.leftAnchor="514.0" AnchorPane.rightAnchor="645.0" AnchorPane.topAnchor="477.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="638.0" layoutY="477.0" text="Maryann O'Connell">
+        <Label layoutX="638.0" layoutY="477.0" text="Maryann O'Connell" AnchorPane.leftAnchor="638.0" AnchorPane.rightAnchor="489.0" AnchorPane.topAnchor="477.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="480.0" layoutY="516.0" text="Document Analyst:  ">
+        <Label layoutX="480.0" layoutY="516.0" text="Document Analyst:  " AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="516.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="635.0" layoutY="516.0" text="Jimmy Tran">
+        <Label layoutX="635.0" layoutY="516.0" text="Jimmy Tran" AnchorPane.leftAnchor="635.0" AnchorPane.rightAnchor="554.0" AnchorPane.topAnchor="516.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="481.0" layoutY="553.0" text="Software Engineer:  ">
+        <Label layoutX="481.0" layoutY="553.0" text="Software Engineer:  " AnchorPane.leftAnchor="481.0" AnchorPane.rightAnchor="641.0" AnchorPane.topAnchor="553.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="637.0" layoutY="553.0" text="Rebecca Cooper">
+        <Label layoutX="637.0" layoutY="553.0" text="Rebecca Cooper" AnchorPane.leftAnchor="637.0" AnchorPane.rightAnchor="513.0" AnchorPane.topAnchor="553.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="481.0" layoutY="592.0" text="Software Engineer:  ">
+        <Label layoutX="481.0" layoutY="592.0" text="Software Engineer:  " AnchorPane.leftAnchor="481.0" AnchorPane.rightAnchor="641.0" AnchorPane.topAnchor="592.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="639.0" layoutY="592.0" text="Adam Moran">
+        <Label layoutX="639.0" layoutY="592.0" text="Adam Moran" AnchorPane.leftAnchor="639.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="592.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="504.0" layoutY="652.0" prefHeight="40.0" prefWidth="268.0" text="Special Thanks to Andrew Shinn, ">
+        <Label layoutX="504.0" layoutY="652.0" prefHeight="40.0" prefWidth="268.0" text="Special Thanks to Andrew Shinn, " AnchorPane.leftAnchor="504.0" AnchorPane.rightAnchor="508.0" AnchorPane.topAnchor="652.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="373.0" layoutY="692.0" text="The representative of Brigham and Women's Hospital for our team">
+        <Label layoutX="373.0" layoutY="692.0" text="The representative of Brigham and Women's Hospital for our team" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="378.0" AnchorPane.topAnchor="692.0">
             <font>
                 <Font size="18.0" />
             </font>
