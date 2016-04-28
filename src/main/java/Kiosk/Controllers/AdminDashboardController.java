@@ -755,8 +755,10 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                // TODO
-
+                LocationNode selectedAdjacentLocationNode = ((LocationNode) locationConnectedLocationListView.getSelectionModel().getSelectedItem());
+                faulknerHospitalMap.setCurrentAdjacentNode(selectedAdjacentLocationNode);
+                // Set current edge by passing the adjacent node (then calling getEdgeBetween() )
+                faulknerHospitalMap.setCurrentLocationNodeEdge(selectedAdjacentLocationNode);
             }
 
         });
