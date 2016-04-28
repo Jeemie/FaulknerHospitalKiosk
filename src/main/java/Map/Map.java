@@ -504,15 +504,12 @@ public class Map implements Observer {
                 currentFloorEdgePane.setPrefHeight(newValue.getHeight());
 
                 LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
-
-
             }
 
         });
 
         this.currentFloorLocationNodePane.getChildren().clear();
         this.currentFloorEdgePane.getChildren().clear();
-
     }
 
     public void setupPathStackPane(StackPane stackPane) {
