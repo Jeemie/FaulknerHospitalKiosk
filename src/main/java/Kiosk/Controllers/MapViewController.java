@@ -107,8 +107,8 @@ public class MapViewController{
     private Group zoomGroup;
 
 
-    public Timer timer;
-    public Timer atimer;
+    public Timer timer = new Timer();
+    public Timer atimer = new Timer();
 
     int counter = 0;
     int getCounterFloor=1;
@@ -156,7 +156,7 @@ public class MapViewController{
         }
     };
 
-    Thread timerThread;
+    Thread timerThread = new Thread();
 
     Runnable resetKiosk = new Runnable() {
 
@@ -282,36 +282,7 @@ public class MapViewController{
 
             }
         });
-
-
-
-
-
-
-        zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                if(numThreads == 0) {
-                    numThreads +=1;
-                    running = true;
-                    timer = new Timer("A Timer");
-                    atimer = new Timer("A Timer2");
-                    timerThread = new Thread(runnable);
-                    timer.scheduleAtFixedRate(timerTask, 30, 1000);
-                    timerThread.start();
-                }
-                counter = 0;
-            }
-        });
-
-
-
-
-
-        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
-
-        //timerThread.start();
+        
 
         changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -324,6 +295,9 @@ public class MapViewController{
 
         });
 
+
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
     }
 
 
