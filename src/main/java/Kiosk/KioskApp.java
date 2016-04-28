@@ -7,6 +7,7 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.FaulknerHospitalData;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -14,6 +15,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class KioskApp extends Application {
 
             this.faulknerHospitalMap = Map.loadFromFile(this.filePath);
 
-        }  catch (FloorDoesNotExistException e) {
+        } catch (FloorDoesNotExistException e) {
 
             e.printStackTrace();
 
@@ -100,8 +102,8 @@ public class KioskApp extends Application {
             primaryStage.setFullScreen(false);
             //primaryStage.setFullScreen(true);
 //
-//          System.out.println(getClass().getResource("stylesheet.css"));
-//            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
+//          System.out.println(getClass().getResource("Styles.css"));
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,6 +135,7 @@ public class KioskApp extends Application {
 
     /**
      * Returns the main stage.
+     *
      * @return
      */
     public Stage getPrimaryStage() {
@@ -145,7 +148,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes scene to allow admins to log in
-     *
      */
     public boolean showAdminLogin() {
         showAdminControls();
@@ -163,12 +165,18 @@ public class KioskApp extends Application {
 //            primaryStage.setScene(scene);
 //            primaryStage.setFullScreen(true);
 //            primaryStage.show();*/
+//            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 //
 //            // Give controller access to Main App
 //            AdminLoginController controller = loader.getController();
 //            controller.setKioskApp(this);
 //            controller.setListeners();
 //
+        //      primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        //          public void handle(WindowEvent we) {
+//                controller.shutOff();
+        //           }
+        //       });
 //            return controller.isOkClicked();
 //
 //        } catch (IOException e) {
@@ -181,7 +189,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow admins to edit the map
-     *
      */
     public boolean showAdminControls() {
 
@@ -194,18 +201,19 @@ public class KioskApp extends Application {
             // Replace KioskOverview with AdminLogin
             primaryStage.setTitle("Administrator Dashboard");
             primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
 
             // Give controller access to Main App
             AdminDashboardController controller = loader.getController();
             controller.setKioskApp(this);
             controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
-//            controller.setBuilding(this.hospitalBuilding);
             controller.setListeners();
 
+
+/*            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });*/
 //            return controller.isOkClicked();
             return false;
 
@@ -219,7 +227,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to see results of search
-     *
      */
     // TODO: showSearch should have parameter for input
     public boolean showSearch(String searchText) {
@@ -246,6 +253,12 @@ public class KioskApp extends Application {
 //            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
+
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -256,7 +269,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to select by directory
-     *
      */
     public boolean showDirectory(DestinationType destinationType) {
 
@@ -265,10 +277,11 @@ public class KioskApp extends Application {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane scene = loader.load();
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             primaryStage.setTitle("Directory");
-            primaryStage.getScene().setRoot(page);
+            primaryStage.getScene().setRoot(scene);
 
             // Give controller access to Main App.
             DirectoryController controller = loader.getController();
@@ -277,6 +290,11 @@ public class KioskApp extends Application {
             controller.setupListeners();
             controller.setStartSelection(destinationType);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -289,7 +307,6 @@ public class KioskApp extends Application {
 
     /**
      * Changes screen to allow users to view the map
-     *
      */
     // TODO: showMap should have parameter for chosen destination from previous screen
     public boolean showMap() {
@@ -298,15 +315,13 @@ public class KioskApp extends Application {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane scene = loader.load();
+            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+
 
             // Replaces previous screen with userUI4.
             primaryStage.setTitle("Map");
-            primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
+            primaryStage.getScene().setRoot(scene);
 
             // Give controller access to Main App.
             MapViewController controller = loader.getController();
@@ -317,7 +332,11 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 //            controller.setDestinationNode(destinationNode);
 
-
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.shutOff();
+                }
+            });
 
             return controller.isOkClicked();
 
@@ -354,7 +373,6 @@ public class KioskApp extends Application {
 
     /**
      * Resets the screen to the KioskOverview
-     *
      */
     public void reset() {
         try {
@@ -366,10 +384,6 @@ public class KioskApp extends Application {
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
             primaryStage.getScene().setRoot(page);
-/*            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();*/
 
             // Give controller access to Main App.
             KioskOverviewController controller = loader.getController();

@@ -1,10 +1,8 @@
 package Map;
 
 import Map.Enums.DestinationType;
-
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
-import com.fasterxml.jackson.annotation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -133,29 +131,6 @@ public class Floor extends Observable implements Observer {
         return floorDestinations;
     }
 
-    //
-    //
-
-    //
-    //
-    public ArrayList<Destination> getAllFloorDestinations() {
-
-        ArrayList<Destination> floorDestinations = new ArrayList<>();
-
-        for (LocationNode locationNode : this.locationNodes) {
-
-
-            floorDestinations.addAll(locationNode.getAllDestinations(DestinationType.BATHROOM));
-
-        }
-
-
-        return floorDestinations;
-    }
-    //
-    //
-    //
-    //
     /**
      * Get's all the floor destinations
      * @param destinationType
@@ -175,6 +150,26 @@ public class Floor extends Observable implements Observer {
         return floorDestinations;
     }
 
+    /**
+     * Get's all the floor LocationNodes
+     * @param associatedImage
+    * @return an ArrayList of LocationNode objects
+    */
+    public ArrayList<LocationNode> getFloorLocationNodes(ImageType associatedImage) {
+
+        ArrayList<LocationNode> floorLocationNodes = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+            if(locationNode.getAssociatedImage() == ImageType.KIOSK){
+                    floorLocationNodes.add(locationNode);
+            }
+
+        }
+
+
+        return floorLocationNodes;
+    }
+
     public void removeLocationNode(LocationNode locationNode) {
 
         this.locationNodes.remove(locationNode);
@@ -184,7 +179,6 @@ public class Floor extends Observable implements Observer {
         notifyObservers(UpdateType.LOCATIONNODEREMOVED);
     }
 
-    /* STUFF I ADDED PLZ REVIEW */
     /**
      * Draws the floor on the admin screen by
      * @param imageView

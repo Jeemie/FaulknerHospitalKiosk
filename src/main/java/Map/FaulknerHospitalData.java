@@ -116,7 +116,7 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");
 
                 // TODO change to Kiosk - starting at a waiting room currently
-                map.setStartLocationNode(f1.getLocationNodes().get(1));
+                map.setStartLocationNode(f1.getLocationNodes().get(13));
 
 
 // FLOOR 2
@@ -266,13 +266,13 @@ public class FaulknerHospitalData {
                 addDestinationOld(DestinationType.BATHROOM, "Bathroom");
 
                 map.addLocationNode("Floor 3 Hillside Elevator",new Location(20, 140), ImageType.ELEVATOR);    //get(15)
-                addDestinationOld(DestinationType.ELEVATOR, " Hillside Elevator");
+                addDestinationOld(DestinationType.ELEVATOR, "Hillside Elevator");
 
                 map.addLocationNode("Floor 3 Atrium Elevator",new Location(20, 150), ImageType.ELEVATOR);     //get(16)
                 addDestinationOld(DestinationType.ELEVATOR, "Atrium Elevator");
 
                 map.addLocationNode("Floor 3 Hillside Stairs",new Location(20, 160), ImageType.STAIRS);    //get(17)
-                addDestinationOld(DestinationType.STAIR, " Hillside Stair");
+                addDestinationOld(DestinationType.STAIR, "Hillside Stair");
 
                 map.addLocationNode("Floor 3 Atrium Stairs",new Location(20, 170), ImageType.STAIRS);     //get(18)
                 addDestinationOld(DestinationType.STAIR, "Atrium Stair");

@@ -3,7 +3,10 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.*;
 import Map.Enums.DestinationType;
+import Map.Map;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,12 +16,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class DirectoryController {
@@ -38,6 +42,9 @@ public class DirectoryController {
     private TextField searchTextField;
 
     @FXML
+    private AnchorPane stage;
+
+    @FXML
     private Button okButton;
 
     @FXML
@@ -54,6 +61,11 @@ public class DirectoryController {
 
     @FXML
     private ListView directoryListView;
+
+    List<Destination> allDestinations = new ArrayList<Destination>();
+    List<Destination> filteredDestinations = new ArrayList<Destination>();
+    ObservableList<Destination> searchResults = FXCollections.observableArrayList();
+    private String inValue;
 
 
     Timer timer = new Timer("A Timer");
@@ -146,8 +158,18 @@ public class DirectoryController {
 
                     kioskApp.showSearch(searchTextField.getText());
 
-                } else {
+                } else if (event.getCode().equals(KeyCode.BACK_SPACE)) {
 
+                    String backSpaced = searchTextField.getText();
+
+                    if(backSpaced.length() != 0) {
+                        backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
+                    }
+                    displayResult(backSpaced);
+                    counter = 0;
+
+                } else {
+                    displayResult(searchTextField.getText() + event.getText());
                     counter = 0;
 
                 }
@@ -206,7 +228,8 @@ public class DirectoryController {
 
                 LOGGER.info("Showing the Physician Directory");
 
-                faulknerHospitalMap.physicianDirectory();
+                //faulknerHospitalMap.physicianDirectory();
+                sortResult(DestinationType.PHYSICIAN);
 
             }
 
@@ -221,8 +244,8 @@ public class DirectoryController {
 
                 LOGGER.info("Showing the Department Directory");
 
-                faulknerHospitalMap.departmentDirectory();
-
+                //faulknerHospitalMap.departmentDirectory();
+                sortResult(DestinationType.DEPARTMENT);
             }
 
         });
@@ -236,8 +259,8 @@ public class DirectoryController {
 
                 LOGGER.info("Showing the Services Directory");
 
-                faulknerHospitalMap.serviceDirectory();
-
+                //faulknerHospitalMap.serviceDirectory();
+                sortResult(DestinationType.SERVICE);
             }
 
         });
@@ -260,7 +283,9 @@ public class DirectoryController {
         timerThread.start();
 
 
+
     }
+
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -295,19 +320,139 @@ public class DirectoryController {
         switch (destinationType) {
 
             case PHYSICIAN:
-                this.faulknerHospitalMap.physicianDirectory();
+                filteredDestinations = this.faulknerHospitalMap.getPhysicianDirectory();
+                inValue = "";
+                Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                    public int compare(Destination o1, Destination o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 break;
 
             case DEPARTMENT:
-                this.faulknerHospitalMap.departmentDirectory();
+                filteredDestinations = this.faulknerHospitalMap.getDepartmentDirectory();
+                inValue = "";
+                Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                    public int compare(Destination o1, Destination o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 break;
 
             default:
-                this.faulknerHospitalMap.serviceDirectory();
+                filteredDestinations = this.faulknerHospitalMap.getServiceDirectory();
+                inValue = "";
+                Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                    public int compare(Destination o1, Destination o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 break;
 
         }
 
     }
 
+    @FXML
+    public void displayResult(String value) {
+
+        allDestinations = this.faulknerHospitalMap.allDirectory();
+
+        for (Destination d : allDestinations) {
+            filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+        inValue = value;
+
+        Collections.sort(filteredDestinations, new Comparator<Destination>() {
+            public int compare(Destination o1, Destination o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        searchResults.setAll(filteredDestinations);
+
+
+        directoryListView.setItems(searchResults);
+
+    }
+
+    @FXML
+    public void sortResult(DestinationType destinationType) {
+
+
+        if (destinationType == DestinationType.PHYSICIAN) {
+
+            counter = 0;
+
+            allDestinations = this.faulknerHospitalMap.getPhysicianDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
+            searchResults.sorted();
+            directoryListView.setItems(searchResults);
+
+        }
+
+        if (destinationType == DestinationType.DEPARTMENT) {
+
+            counter = 0;
+
+            allDestinations = this.faulknerHospitalMap.getDepartmentDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
+            directoryListView.setItems(searchResults);
+
+
+        }
+
+        if (destinationType == DestinationType.SERVICE) {
+
+            counter = 0;
+
+            allDestinations = this.faulknerHospitalMap.getServiceDirectory();
+
+            for (Destination d : allDestinations) {
+                filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(inValue.toLowerCase())).collect(Collectors.toList());
+            }
+            Collections.sort(filteredDestinations, new Comparator<Destination>() {
+                public int compare(Destination o1, Destination o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+
+            searchResults.setAll(filteredDestinations);
+
+            directoryListView.setItems(searchResults);
+
+        }
+
+    }
+
+    public void shutOff(){
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
+    }
 }
