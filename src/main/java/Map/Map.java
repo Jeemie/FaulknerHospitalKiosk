@@ -69,10 +69,16 @@ public class Map implements Observer {
     //
     private LocationNode currentLocationNode;
 
+    //||\\ Current adjacent LocationNode //||\\
+
+    private LocationNode currentAdjacentNode;
+
+    //||\\ Current LocationNodeEdge //||\\
+
+    LocationNodeEdge currentLocationNodeEdge;
 
     //
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
-
 
     //
     private ObservableList<Destination> currentLocationNodeDestinations;
@@ -120,6 +126,7 @@ public class Map implements Observer {
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
+
 
 
     /*
@@ -585,6 +592,8 @@ public class Map implements Observer {
             default:
 
                 break;
+        }
+    }
 
     @Override
     public String toString() {
@@ -1066,5 +1075,16 @@ public class Map implements Observer {
     public ArrayList<UUID> getBuildingIdList() {
         return buildingIdList;
     }
+
+
+        public void setCurrentAdjacentNode(LocationNode currentAdjacentNode) {
+
+            this.currentAdjacentNode = currentAdjacentNode;
+        }
+
+        public void setCurrentLocationNodeEdge(LocationNode currentAdjacentNode) {
+
+            this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
+        }
 
 }
