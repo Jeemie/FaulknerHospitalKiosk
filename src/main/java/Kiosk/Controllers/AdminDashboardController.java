@@ -61,7 +61,7 @@ public class AdminDashboardController {
     private Location clickedLocation;
 
 
-    private boolean addFlag = false;
+    private int addFlag = 0;
     private boolean clickFlag = false;
 
 
@@ -328,11 +328,11 @@ public class AdminDashboardController {
             @Override
             public void handle(KeyEvent event) {
 
-                if(event.getCode().equals(KeyCode.ESCAPE)) {
+                if (event.getCode().equals(KeyCode.ESCAPE)) {
                     mapStackPane.setCursor(Cursor.DEFAULT);
                     mapStackPane.setOnMouseClicked(null);
                     faulknerHospitalMap.setCurrentMapState(MapState.ADMIN);
-
+                    addFlag = 0;
                 }
             }
         });
@@ -548,12 +548,18 @@ public class AdminDashboardController {
                 clickedLocation = new Location(event.getX(), event.getY());
                 LOGGER.info("The current clicked location is " + clickedLocation.getX() + ", " + clickedLocation.getY());
 
-                if (addFlag) {
+                if (addFlag == 1) {
 
 
                     mapStackPane.setOnMouseClicked(handler);
 
-                    addFlag = false;
+                    addFlag = 2;
+                } else {
+                    if (addFlag == 2) {
+                        mapTabPane.getTabs().remove(addLocationTab);
+
+                        mapTabPane.getSelectionModel().select(floorTab);
+                    }
                 }
 
             }
@@ -903,7 +909,7 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                addFlag = true;
+                addFlag = 1;
                 mapStackPane.setCursor(Cursor.CROSSHAIR);
             }
         });
@@ -1069,8 +1075,8 @@ public class AdminDashboardController {
             selectedButtonLabel.setText("Delete Destination Button");
 
 
-         //   this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-         //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
+            //   this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
         });
 
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -1175,10 +1181,6 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                EventHandler handler = new AddTabEventHandler(MapState.ADDNODE,
-                        faulknerHospitalMap, "Add Location", selectedButtonLabel, mapTabPane,
-                        addLocationTab);
-
                 lockTabPane = false;
 
                 mapTabPane.getTabs().remove(addLocationTab);
@@ -1191,6 +1193,7 @@ public class AdminDashboardController {
                 faulknerHospitalMap.setCurrentMapState(MapState.ADMIN);
 
                 mapStackPane.setOnMouseClicked(null);
+                addFlag = 0;
                 mapStackPane.getScene().setCursor(Cursor.DEFAULT);
             }
 
