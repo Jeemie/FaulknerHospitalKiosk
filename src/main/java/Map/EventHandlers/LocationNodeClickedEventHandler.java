@@ -119,7 +119,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         previousActions.push(entry);
 
-        currentMap.setCurrentMapState(MapState.ADMIN);
+        //currentMap.setCurrentMapState(MapState.ADMIN);
 
     }
 

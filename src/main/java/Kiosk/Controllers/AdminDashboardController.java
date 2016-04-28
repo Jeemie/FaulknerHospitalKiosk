@@ -16,11 +16,15 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
@@ -50,11 +54,15 @@ public class AdminDashboardController {
 
     private ObservableList icons = FXCollections.observableArrayList();
 
- //   private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
+    //   private ObservableList<String> selectKiosk = FXCollections.observableArrayList();
 
     private boolean lockTabPane;
 
     private Location clickedLocation;
+
+
+    private boolean addFlag = false;
+    private boolean clickFlag = false;
 
 
     // TODO possibly rethink
@@ -70,6 +78,8 @@ public class AdminDashboardController {
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminDashboardController.class);
 
+    @FXML
+    private SplitPane scene;
     @FXML
     private ScrollPane mapScrollPane;
 
@@ -249,7 +259,6 @@ public class AdminDashboardController {
     private Button addLocationDiscardButton;
 
 
-
     @FXML
     private Tab addElevatorTab;
 
@@ -269,8 +278,6 @@ public class AdminDashboardController {
 
     @FXML
     private Button addElevatorDiscardButton;
-
-
 
 
     @FXML
@@ -315,6 +322,20 @@ public class AdminDashboardController {
 
         final Group scrollContent = new Group(mapStackPane);
         mapScrollPane.setContent(scrollContent);
+
+
+        scene.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode().equals(KeyCode.ESCAPE)) {
+                    mapStackPane.setCursor(Cursor.DEFAULT);
+                    mapStackPane.setOnMouseClicked(null);
+                    faulknerHospitalMap.setCurrentMapState(MapState.ADMIN);
+
+                }
+            }
+        });
 
         // Setup Logout Button
         this.logoutButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -515,14 +536,25 @@ public class AdminDashboardController {
 
         });
 
-        this.mapStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        mapStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
 
-                clickedLocation = new Location(event.getX(), event.getY());
+                EventHandler handler = new AddTabEventHandler(MapState.ADDNODE,
+                        faulknerHospitalMap, "Add Location", selectedButtonLabel, mapTabPane,
+                        addLocationTab);
 
+                clickedLocation = new Location(event.getX(), event.getY());
                 LOGGER.info("The current clicked location is " + clickedLocation.getX() + ", " + clickedLocation.getY());
+
+                if (addFlag) {
+
+
+                    mapStackPane.setOnMouseClicked(handler);
+
+                    addFlag = false;
+                }
 
             }
 
@@ -669,6 +701,7 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
+                mapStackPane.setOnMouseClicked(null);
 //                AdminSubControllerLoader loader = new AdminSubControllerLoader();
 //
 //                loader.setStackPane(mapStackPane);
@@ -734,11 +767,11 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
 
-                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null) {
 
                     LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
                     faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
-                    startNodeLabel.setText("Current Kiosk: " +faulknerHospitalMap.getStartLocationNode().toString());
+                    startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
                 }
 
             }
@@ -749,7 +782,6 @@ public class AdminDashboardController {
 
             @Override
             public void handle(MouseEvent event) {
-
 
 
             }
@@ -866,9 +898,16 @@ public class AdminDashboardController {
 
         });
 
-        this.floorLocationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDNODE,
-                this.faulknerHospitalMap, "Add Location", this.selectedButtonLabel, this.mapTabPane,
-                this.addLocationTab));
+
+        floorLocationsAddButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                addFlag = true;
+                mapStackPane.setCursor(Cursor.CROSSHAIR);
+            }
+        });
+
 
         this.floorLocationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.MOVENODE, "Modify Button",
@@ -1117,6 +1156,10 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
+                EventHandler handler = new AddTabEventHandler(MapState.ADDNODE,
+                        faulknerHospitalMap, "Add Location", selectedButtonLabel, mapTabPane,
+                        addLocationTab);
+
                 lockTabPane = false;
 
                 mapTabPane.getTabs().remove(addLocationTab);
@@ -1125,6 +1168,11 @@ public class AdminDashboardController {
 
                 addLocationNameTextField.setText("");
 
+
+                faulknerHospitalMap.setCurrentMapState(MapState.ADMIN);
+
+                mapStackPane.setOnMouseClicked(null);
+                mapStackPane.getScene().setCursor(Cursor.DEFAULT);
             }
 
         });
@@ -1173,11 +1221,11 @@ public class AdminDashboardController {
 
                 while (floorIterator.hasNext()) {
 
-                    selectedFloors.add(((Floor)floorIterator.next()));
+                    selectedFloors.add(((Floor) floorIterator.next()));
                 }
 
-                faulknerHospitalMap.addMultiLevelLocationNode(((ImageType)addElevatorToggleGroup.getSelectedToggle().getUserData()).toString(), clickedLocation,
-                        ((ImageType)addElevatorToggleGroup.getSelectedToggle().getUserData()), selectedFloors);
+                faulknerHospitalMap.addMultiLevelLocationNode(((ImageType) addElevatorToggleGroup.getSelectedToggle().getUserData()).toString(), clickedLocation,
+                        ((ImageType) addElevatorToggleGroup.getSelectedToggle().getUserData()), selectedFloors);
 
             }
 
