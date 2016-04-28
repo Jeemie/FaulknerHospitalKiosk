@@ -505,23 +505,26 @@ public class Map implements Observer {
             case DESTINATIONCHANGE:
 
                 // TODO cleanup by only modifying one destination
-                this.currentBuildingDestinations.clear();
+                /*this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
-//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
-//
+                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+
 //                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
-//                this.currentLocationNodeDestinations.clear();
-//                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
-//
+                this.currentLocationNodeDestinations.clear();
+                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+
 //                // Add current location node destinations from current floor and building destinations
-//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
-
+*/
                 break;
 
             case LOCATIONNODEPOSITION:
@@ -554,7 +557,8 @@ public class Map implements Observer {
             case LOCATIONNODEREMOVED:
 
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
-                this.currentLocationNode = null;
+                this.currentLocationNode.getEdges().clear();
+                this.setCurrentLocationNode(null);
 
                 break;
 
@@ -563,23 +567,24 @@ public class Map implements Observer {
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+
                 break;
 
             case LOCATIONNODEEDGE:
-
                 this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
 
+            case EDGEREMOVED:
+                this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+
+                break;
 
             default:
 
                 break;
-
-
-        }
-
-    }
 
     @Override
     public String toString() {
