@@ -108,9 +108,6 @@ public class KioskOverviewController {
     private void handlePhysicians() {
 
 
-
-
-
         kioskApp.showDirectory(DestinationType.PHYSICIAN);
     }
 
