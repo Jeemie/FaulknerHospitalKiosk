@@ -71,6 +71,13 @@ public class Map implements Observer {
     //
     private LocationNode currentLocationNode;
 
+    //||\\ Current Adjacent Node //||\\
+
+    private LocationNode currentAdjacentNode;
+
+    //||\\ Current LocationNodeEdge //||\\
+
+    private LocationNodeEdge currentLocationNodeEdge;
 
     //
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
@@ -288,32 +295,59 @@ public class Map implements Observer {
 
     public void removeDestination() {
 
-        // TODO fill in
-        // TODO create debug message
+        if (this.currentFloor == null) {
 
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentDestination == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentBuildingDestinations().remove(currentDestination);
+        this.getCurrentFloorDestinations().remove(currentDestination);
+        this.getCurrentLocationNodeDestinations().remove(currentDestination);
+        this.getCurrentLocationNode().removeDestination(currentDestination);
+
+        this.currentDestination = null;
+
+        return;
     }
 
 
-    //No currentLocationNodeEdge
-//    public void removeLocationNodeEdge() {
-//        //TODO create debug message
-//
-//        if (this.currentFloor == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        if (this.currentLocationNodeEdge == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        return;
-//    }
+    /**
+     *
+     */
+
+    public void removeLocationNodeEdge() {
+
+        if (this.currentFloor == null) {
+
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentLocationNodeEdge == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentLocationNode().removeEdgeConnection(this.currentLocationNodeEdge);
+
+        this.currentAdjacentLocationNodes.remove(this.currentAdjacentNode);
+        this.currentLocationNodeEdge = null;
+        this.currentAdjacentNode = null;
+
+        return;
+    }
 
     public void removeLocationNode() {
 
@@ -470,15 +504,12 @@ public class Map implements Observer {
                 currentFloorEdgePane.setPrefHeight(newValue.getHeight());
 
                 LOGGER.info("" + currentFloorEdgePane.getPrefWidth());
-
-
             }
 
         });
 
         this.currentFloorLocationNodePane.getChildren().clear();
         this.currentFloorEdgePane.getChildren().clear();
-
     }
 
     public void setupPathStackPane(StackPane stackPane) {
@@ -578,7 +609,7 @@ public class Map implements Observer {
             case DESTINATIONCHANGE:
 
                 // TODO cleanup by only modifying one destination
-                this.currentBuildingDestinations.clear();
+                /*this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
                 this.currentKioskLocationNodes.clear();
@@ -586,18 +617,18 @@ public class Map implements Observer {
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
-//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
-//
+                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+
 //                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
-//                this.currentLocationNodeDestinations.clear();
-//                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
-//
+                this.currentLocationNodeDestinations.clear();
+                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+
 //                // Add current location node destinations from current floor and building destinations
-//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
-
+*/
                 break;
 
             case LOCATIONNODEPOSITION:
@@ -646,11 +677,14 @@ public class Map implements Observer {
                 break;
 
             case LOCATIONNODEEDGE:
-
                 this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
 
+            case EDGEREMOVED:
+                this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+
+                break;
 
             default:
 
@@ -1089,6 +1123,11 @@ public class Map implements Observer {
 
     }
 
+    private void locationNodeEdgeUpdater(LocationNodeEdge edge) {
+
+
+    }
+
     public void setCurrentFloor(Floor floor) {
 
         // TODO possibly refresh the observable lists
@@ -1158,4 +1197,13 @@ public class Map implements Observer {
         return buildingIdList;
     }
 
+    public void setCurrentAdjacentNode(LocationNode currentAdjacentNode) {
+
+        this.currentAdjacentNode = currentAdjacentNode;
+    }
+
+    public void setCurrentLocationNodeEdge(LocationNode currentAdjacentNode) {
+
+        this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
+    }
 }

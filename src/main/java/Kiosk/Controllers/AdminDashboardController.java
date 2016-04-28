@@ -994,8 +994,10 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                // TODO
-
+                LocationNode selectedAdjacentLocationNode = ((LocationNode) locationConnectedLocationListView.getSelectionModel().getSelectedItem());
+                faulknerHospitalMap.setCurrentAdjacentNode(selectedAdjacentLocationNode);
+                // Set current edge by passing the adjacent node (then calling getEdgeBetween() )
+                faulknerHospitalMap.setCurrentLocationNodeEdge(selectedAdjacentLocationNode);
             }
 
         });
@@ -1032,7 +1034,6 @@ public class AdminDashboardController {
                 Destination currentDestination = ((Destination) locationDestinationsListView.getSelectionModel().getSelectedItem());
 
                 faulknerHospitalMap.setCurrentDestination(currentDestination);
-
             }
 
         });
@@ -1047,12 +1048,30 @@ public class AdminDashboardController {
 //            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
         });
 
+        locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.removeLocationNodeEdge();
+            }
+        });
+
+        locationDestinationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.removeDestination();
+            }
+        });
+
         locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
             selectedButtonLabel.setText("Delete Destination Button");
-//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
-        });
 
+
+         //   this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+         //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
+        });
 
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
