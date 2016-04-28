@@ -376,20 +376,27 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+
+     //Note: iterators returned by this class's iterator will throw ConcurrentModificationException
+     // if this is modified any time after the iterator is created
+
     /**
-     * TODO - please fix; fails testDeleteLocationNodeEdgeConnections(); The edge list is not empty after this runs
+     * Remove all edges from this location node
      */
     public void deleteLocationNodeEdgeConnections() {
 
-        for (LocationNodeEdge edge : this.edges) {
+        ArrayList<LocationNodeEdge> tempEdges = this.edges;
+        int numEdges = tempEdges.size();
 
-            edge.getOtherNode(this).removeEdgeConnection(edge);
+        for(int i = numEdges - 1; i >= 0; i--) {
 
-           // this.removeEdgeConnection(edge);
+            tempEdges.get(i).getOtherNode(this).removeEdgeConnection(tempEdges.get(i));
+
+            this.removeEdgeConnection(tempEdges.get(i));
 
         }
 
-
+        this.edges = tempEdges;
     }
 
     /**
@@ -406,7 +413,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    // TODO Fix
     public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
 
         if (adjacentNode == null) {
@@ -526,8 +532,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         return this.currentFloor.equals(otherLocationNode.getCurrentFloor());
     }
-
-
 
 
 
