@@ -69,6 +69,13 @@ public class Map implements Observer {
     //
     private LocationNode currentLocationNode;
 
+    //||\\ Current Adjacent Node //||\\
+
+    private LocationNode currentAdjacentNode;
+
+    //||\\ Current LocationNodeEdge //||\\
+
+    private LocationNodeEdge currentLocationNodeEdge;
 
     //
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
@@ -246,32 +253,55 @@ public class Map implements Observer {
 
     public void removeDestination() {
 
-        // TODO fill in
-        // TODO create debug message
+        if (this.currentFloor == null) {
 
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentDestination == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentLocationNode().removeDestination(currentDestination);
+        this.currentDestination = null;
+
+        return;
     }
 
 
-    //No currentLocationNodeEdge
-//    public void removeLocationNodeEdge() {
-//        //TODO create debug message
-//
-//        if (this.currentFloor == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        if (this.currentLocationNodeEdge == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        return;
-//    }
+    /**
+     *
+     */
+
+    public void removeLocationNodeEdge() {
+
+        if (this.currentFloor == null) {
+
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentLocationNodeEdge == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentLocationNode().removeEdgeConnection(this.currentLocationNodeEdge);
+
+        this.currentAdjacentLocationNodes.remove(this.currentAdjacentNode);
+        this.currentLocationNodeEdge = null;
+        this.currentAdjacentNode = null;
+
+        return;
+    }
 
     public void removeLocationNode() {
 
@@ -587,11 +617,14 @@ public class Map implements Observer {
                 break;
 
             case LOCATIONNODEEDGE:
-
                 this.locationNodeUpdater(this.currentLocationNode);
 
                 break;
 
+            case EDGEREMOVED:
+                this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+
+                break;
 
             default:
 
@@ -1030,6 +1063,11 @@ public class Map implements Observer {
 
     }
 
+    private void locationNodeEdgeUpdater(LocationNodeEdge edge) {
+
+
+    }
+
     public void setCurrentFloor(Floor floor) {
 
         // TODO possibly refresh the observable lists
@@ -1099,4 +1137,13 @@ public class Map implements Observer {
         return buildingIdList;
     }
 
+    public void setCurrentAdjacentNode(LocationNode currentAdjacentNode) {
+
+        this.currentAdjacentNode = currentAdjacentNode;
+    }
+
+    public void setCurrentLocationNodeEdge(LocationNode currentAdjacentNode) {
+
+        this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
+    }
 }

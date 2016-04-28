@@ -45,7 +45,6 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event) {
 
-
         Map currentMap = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
 
 
@@ -105,7 +104,6 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 Map map = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
                 map.removeLocationNode();
-
                 break;
 
             default:

@@ -103,7 +103,7 @@ public class KioskApp extends Application {
             //primaryStage.setFullScreen(true);
 //
 //          System.out.println(getClass().getResource("Styles.css"));
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+//            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
