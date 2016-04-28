@@ -810,13 +810,13 @@ public class AdminDashboardController {
 //            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
         });
 
-        locationConnectedLocationsDeleteButton.setOnAction(event -> {
+        locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
 
-            selectedButtonLabel.setText("Delete Destination Button");
-//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
+                faulknerHospitalMap.removeLocationNodeEdge();
+            }
         });
-
-
 
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
