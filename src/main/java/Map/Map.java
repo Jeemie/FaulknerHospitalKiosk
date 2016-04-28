@@ -218,6 +218,46 @@ public class Map implements Observer {
 
     }
 
+    public void addMultiLevelLocationNode(String name, Location location, ImageType imageType, ArrayList<Floor> floors) {
+
+
+        LocationNode current = floors.get(0).addLocationNode(name, location, imageType);
+        LocationNode next;
+
+        if (this.currentFloor.equals(floors.get(0))) {
+
+            setCurrentLocationNode(current);
+
+        }
+
+        for (int i = 0; i < floors.size() - 1; i++) {
+
+            next = floors.get(i+1).addLocationNode(name, location, imageType);
+
+            try {
+
+                current.addEdge(next);
+
+            } catch (NodeDoesNotExistException e) {
+
+                LOGGER.debug("Unable to add all off the Location Nodes to the multi level path.", e);
+
+                break;
+
+            }
+
+            current = next;
+
+            if (this.currentFloor.equals(floors.get(i+1))) {
+
+                setCurrentLocationNode(current);
+
+            }
+
+        }
+
+    }
+
     public void addLocationNodeEdge(LocationNode locationNode) throws NodeDoesNotExistException {
 
         if(this.currentLocationNode == null) {
