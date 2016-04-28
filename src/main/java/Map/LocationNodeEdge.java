@@ -222,4 +222,13 @@ public class LocationNodeEdge extends Observable {
 
         return uniqueID;
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+
+        System.out.println("Deleting Edge: " + this.toString());
+
+        super.finalize();
+
+    }
 }
