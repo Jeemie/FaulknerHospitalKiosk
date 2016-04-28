@@ -259,10 +259,12 @@ public class MapViewController{
 
                 if (event.getCode().equals(KeyCode.ENTER)) {
 
+                    atimer.cancel();
+                    atimer.purge();
                     timer.cancel();
+                    timer.purge();
                     running = false;
                     timerThread.interrupt();
-                    LOGGER.info("Blah " + searchTextField.getText());
                     kioskApp.showSearch(searchTextField.getText());
 
                 } else {
