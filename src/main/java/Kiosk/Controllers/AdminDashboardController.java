@@ -659,6 +659,24 @@ public class AdminDashboardController {
 
                 faulknerHospitalMap.setCurrentLocationNode(currentLocationNode);
 
+                switch (faulknerHospitalMap.getCurrentMapState()) {
+
+                    case REMOVENODE:
+
+                        faulknerHospitalMap.removeLocationNode();
+
+                        break;
+
+                    case MOVENODE:
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
             }
 
         });
