@@ -254,26 +254,30 @@ public class Map implements Observer {
     }
 
 
-    //No currentLocationNodeEdge
-//    public void removeLocationNodeEdge() {
-//        //TODO create debug message
-//
-//        if (this.currentFloor == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        if (this.currentLocationNodeEdge == null) {
-//
-//            // TODO create debug message
-//
-//            return;
-//        }
-//
-//        return;
-//    }
+    public void removeLocationNodeEdge() {
+
+        if (this.currentFloor == null) {
+
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentLocationNodeEdge == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentLocationNode().removeEdgeConnection(this.currentLocationNodeEdge);
+
+        this.currentAdjacentLocationNodes.remove(this.currentAdjacentNode);
+        this.currentLocationNodeEdge = null;
+        this.currentAdjacentNode = null;
+
+        return;
+    }
 
     public void removeLocationNode() {
 
