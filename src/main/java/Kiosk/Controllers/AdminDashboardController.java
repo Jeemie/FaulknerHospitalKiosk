@@ -956,7 +956,6 @@ public class AdminDashboardController {
                 Destination currentDestination = ((Destination) locationDestinationsListView.getSelectionModel().getSelectedItem());
 
                 faulknerHospitalMap.setCurrentDestination(currentDestination);
-
             }
 
         });
@@ -979,7 +978,7 @@ public class AdminDashboardController {
             }
         });
 
-        locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        locationDestinationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
