@@ -101,9 +101,8 @@ public class KioskApp extends Application {
             // Debugger works better when full screen is off
             primaryStage.setFullScreen(false);
             //primaryStage.setFullScreen(true);
-//
-//          System.out.println(getClass().getResource("Styles.css"));
-//            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+
+            scene.getStylesheets().add((new URL("file:///" + System.getProperty("user.dir") + "/src/main/java/Kiosk/" + "Style.css")).toExternalForm());
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,6 +125,7 @@ public class KioskApp extends Application {
             // Give the controller access to the main app.
             KioskOverviewController controller = loader.getController();
             controller.setKioskApp(this);
+
 //            controller.setListeners();
 
         } catch (IOException e) {
@@ -250,7 +250,6 @@ public class KioskApp extends Application {
             SearchController controller = loader.getController();
             controller.setKioskApp(this);
             controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
-//            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -278,7 +277,6 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
             AnchorPane scene = loader.load();
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
             primaryStage.setTitle("Directory");
             primaryStage.getScene().setRoot(scene);
@@ -316,7 +314,6 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
             AnchorPane scene = loader.load();
-            scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
 
 
             // Replaces previous screen with userUI4.

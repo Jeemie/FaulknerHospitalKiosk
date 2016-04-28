@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -222,6 +224,46 @@ public class Map implements Observer {
         this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
 
         this.currentFloorLocationNodes.add(this.currentLocationNode);
+
+    }
+
+    public void addMultiLevelLocationNode(String name, Location location, ImageType imageType, ArrayList<Floor> floors) {
+
+
+        LocationNode current = floors.get(0).addLocationNode(name, location, imageType);
+        LocationNode next;
+
+        if (this.currentFloor.equals(floors.get(0))) {
+
+            setCurrentLocationNode(current);
+
+        }
+
+        for (int i = 0; i < floors.size() - 1; i++) {
+
+            next = floors.get(i+1).addLocationNode(name, location, imageType);
+
+            try {
+
+                current.addEdge(next);
+
+            } catch (NodeDoesNotExistException e) {
+
+                LOGGER.debug("Unable to add all off the Location Nodes to the multi level path.", e);
+
+                break;
+
+            }
+
+            current = next;
+
+            if (this.currentFloor.equals(floors.get(i+1))) {
+
+                setCurrentLocationNode(current);
+
+            }
+
+        }
 
     }
 
@@ -497,6 +539,23 @@ public class Map implements Observer {
                 path);
 
         this.currentPath.setup();
+
+    }
+
+    public void setupDirections(ListView textualDirections) {
+
+        try {
+            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
+            if(this.currentPath  == null) {
+                LOGGER.debug("No path");
+            } else {
+                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
+                textualDirections.setItems(textualDirectionStrings);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 

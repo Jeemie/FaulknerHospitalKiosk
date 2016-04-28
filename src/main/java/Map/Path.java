@@ -30,6 +30,8 @@ public class Path {
 
     private ArrayList<ArrayList<LocationNode>> splitPath;
 
+    private Directions directions;
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Path.class);
 
@@ -78,6 +80,9 @@ public class Path {
 
         }
 
+        //Set the directions
+        directions = new Directions(originalPath);
+
         drawNextFloor();
     }
 
@@ -104,7 +109,6 @@ public class Path {
         drawFloorPath();
 
     }
-
 
     private void drawFloorPath() {
 
@@ -173,5 +177,7 @@ public class Path {
 
     }
 
-
+    public Directions getDirections() {
+        return directions;
+    }
 }

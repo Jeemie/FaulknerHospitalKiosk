@@ -115,10 +115,10 @@ public class Directions {
      *
      * @return List of Strings which shows directions in the form of GPS directions
      */
-    public List<String> getTextualDirections () {
+    public ArrayList<String> getTextualDirections () {
 
         //A String array which may or may not be used
-        List<String> textualDirections = new ArrayList<String>();
+        ArrayList<String> textualDirections = new ArrayList<String>();
 
         //Create three LocationNodes to create two CardinalDirections
         LocationNode firstLNode, secondLNode, thirdLNode;
@@ -180,11 +180,11 @@ public class Directions {
 
                 //Check cardinalDirection relations, and output the right direction
                 if (pastCDirection.right() == currentCDirection) {
-                    currentTextDirection += "Right.";
+                    currentTextDirection += "Right";
                 } else if (pastCDirection.left() == currentCDirection) {
-                    currentTextDirection += "Left.";
+                    currentTextDirection += "Left";
                 } else if (pastCDirection.opposite() == currentCDirection) {
-                    currentTextDirection += "Back."; //Should actually not happen
+                    currentTextDirection += "Back"; //Should actually not happen
                 }
 
                 //Add to textualDirections
