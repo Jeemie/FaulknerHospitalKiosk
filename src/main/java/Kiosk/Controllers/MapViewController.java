@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.slf4j.Logger;
@@ -50,6 +51,9 @@ public class MapViewController{
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
+
+    @FXML
+    private AnchorPane scene;
 
     @FXML
     private Label currentFloorLabel;
@@ -251,6 +255,15 @@ public class MapViewController{
 //        });
 
 
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode().equals(KeyCode.ESCAPE)){
+                    handleCancel();
+                }
+            }
+        });
 
 
         searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -274,6 +287,7 @@ public class MapViewController{
                 }
             }
         });
+
 
 
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
