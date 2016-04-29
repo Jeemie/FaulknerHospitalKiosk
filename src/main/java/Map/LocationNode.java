@@ -407,6 +407,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public void removeEdgeConnection(LocationNodeEdge edge) {
 
         this.edges.remove(edge);
+
+        setChanged();
+        notifyObservers(UpdateType.EDGEREMOVED);
     }
 
     /**
@@ -444,6 +447,24 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         notifyObservers(UpdateType.LOCATIONNODEEDGE);
 
     }
+
+    /**
+     * Given an adjacent node, get find the connecting edge if it exists
+     */
+    public LocationNodeEdge getEdgeBetween(LocationNode adjacentNode) {
+        for (LocationNodeEdge edge : edges) {
+
+            if (edge.isEdgeBetweenNodes(this, adjacentNode)) {
+
+                return edge;
+
+            }
+        }
+        //TODO error message/ exception
+        // Edge does not exist
+        return null;
+    }
+
 
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
 

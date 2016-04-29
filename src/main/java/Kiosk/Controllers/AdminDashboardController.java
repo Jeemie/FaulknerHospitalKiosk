@@ -214,8 +214,12 @@ public class AdminDashboardController {
     private TitledPane locationInformationTitledPane;
 
 
+    // Starting Kiosk fields
+    @FXML
+    private ComboBox selectStartKioskComboBox;
 
-
+    @FXML
+    private Label startNodeLabel;
 
 
 
@@ -659,6 +663,24 @@ public class AdminDashboardController {
 
                 faulknerHospitalMap.setCurrentLocationNode(currentLocationNode);
 
+                switch (faulknerHospitalMap.getCurrentMapState()) {
+
+                    case REMOVENODE:
+
+                        faulknerHospitalMap.removeLocationNode();
+
+                        break;
+
+                    case MOVENODE:
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
             }
 
         });
@@ -755,8 +777,10 @@ public class AdminDashboardController {
             @Override
             public void handle(MouseEvent event) {
 
-                // TODO
-
+                LocationNode selectedAdjacentLocationNode = ((LocationNode) locationConnectedLocationListView.getSelectionModel().getSelectedItem());
+                faulknerHospitalMap.setCurrentAdjacentNode(selectedAdjacentLocationNode);
+                // Set current edge by passing the adjacent node (then calling getEdgeBetween() )
+                faulknerHospitalMap.setCurrentLocationNodeEdge(selectedAdjacentLocationNode);
             }
 
         });
@@ -808,13 +832,30 @@ public class AdminDashboardController {
 //            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
         });
 
+        locationDestinationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.removeDestination();
+            }
+        });
+
         locationConnectedLocationsDeleteButton.setOnAction(event -> {
 
             selectedButtonLabel.setText("Delete Destination Button");
-//            this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.REMOVENODE));
+
+
+            //   this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
         });
 
+        locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
 
+                faulknerHospitalMap.removeLocationNodeEdge();
+            }
+        });
 
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
@@ -827,7 +868,31 @@ public class AdminDashboardController {
 
         });
 
+        selectStartKioskComboBox.setPromptText("Select Kiosk");
+        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+
+                    LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+                    faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                    startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
+                }
+
+            }
+
+        });
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.SETSTARTNODE,
+                        "Set Start Node", this.selectedButtonLabel));
+
     }
+
 
     private void setAddFloorTabListeners() {
 

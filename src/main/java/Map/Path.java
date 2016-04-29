@@ -30,6 +30,8 @@ public class Path {
 
     private ArrayList<ArrayList<LocationNode>> splitPath;
 
+    private Directions directions;
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Path.class);
 
@@ -63,7 +65,12 @@ public class Path {
 
                 tempPath.add(this.originalPath.get(i));
 
-                this.splitPath.add(tempPath);
+                if (tempPath.size() > 1) {
+
+                    this.splitPath.add(tempPath);
+
+                }
+
                 tempPath = new ArrayList<>();
 
             }
@@ -77,6 +84,9 @@ public class Path {
             this.splitPath.add(tempPath);
 
         }
+
+        //Set the directions
+        directions = new Directions(originalPath);
 
         drawNextFloor();
     }
@@ -105,11 +115,10 @@ public class Path {
 
     }
 
-
     private void drawFloorPath() {
 
         LOGGER.info(this.splitPath.toString());
-        LOGGER.info("Drawing floor " + this.currentIndex);
+        LOGGER.info("Path part: " + this.currentIndex);
 
         ArrayList<LocationNode> temp = this.splitPath.get(this.currentIndex);
         Floor tempFloor = temp.get(0).getCurrentFloor();
@@ -173,5 +182,7 @@ public class Path {
 
     }
 
-
+    public Directions getDirections() {
+        return directions;
+    }
 }

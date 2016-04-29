@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapViewController{
+public class MapViewController {
 
     // Reference to the main application.
 
@@ -39,11 +39,10 @@ public class MapViewController{
     private KioskApp kioskApp;
 
     @FXML
-    private  Label clock ;
+    private Label clock;
 
 
     private final DateFormat date = DateFormat.getInstance();
-
 
 
     private int numThreads = 0;
@@ -82,7 +81,7 @@ public class MapViewController{
     private Button changeFloorButtonDown;
 
     @FXML
-    private ListView Direction;
+    private ListView directionsList;
 
     @FXML
     private Button backButton;
@@ -97,7 +96,7 @@ public class MapViewController{
     private Button physiciansButton;
 
     @FXML
-    private  Button departmentsButton;
+    private Button departmentsButton;
 
     @FXML
     private Button servicesButton;
@@ -111,7 +110,7 @@ public class MapViewController{
     public Timer atimer;
 
     int counter = 0;
-    int getCounterFloor=1;
+    int getCounterFloor = 1;
     private volatile boolean running = true;
 
     TimerTask timerTask = new TimerTask() {
@@ -121,7 +120,6 @@ public class MapViewController{
             counter++;
         }
     };
-
 
 
     Runnable runnable = new Runnable() {
@@ -170,9 +168,6 @@ public class MapViewController{
     };
 
 
-
-
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -181,14 +176,12 @@ public class MapViewController{
     private void initialize() {
 
 
-
-
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                clock.setText("Current Time: "+ sdf.format(cal.getTime()));
+                clock.setText("Current Time: " + sdf.format(cal.getTime()));
             }
         }));
 
@@ -211,47 +204,6 @@ public class MapViewController{
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(zoomScrollPane.getContent());
         zoomScrollPane.setContent(contentGroup);
-
-
-
-
-
-
-
-
-        //destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-//        System.out.println(destinationNode.getLocation().getX());
-//
-//        System.out.println(destinationNode.getLocation().getY());
-
-//        confirmButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-//
-//            @Override
-//            public void handle(MouseEvent event) {
-//
-//                counter = 0;
-//
-////                destinationNode.getCurrentFloor().drawFloorAdmin(imageStackPane);
-////                zoomScrollPane.setHvalue(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-////                zoomScrollPane.setVvalue(destinationNode.getLocation().getY()/imageStackPane.getHeight());
-////                //mMainHost.drawShortestPath(startNode, destinationNode);
-////                System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-//
-////                mMainHost.drawShortestPath(startNode, destinationNode);
-////                imageStackPane.setMaxHeight(mMainHost.getyMax());
-////                imageStackPane.setMinHeight(mMainHost.getyMin());
-////                imageStackPane.setMaxWidth(mMainHost.getxMax());
-////                imageStackPane.setMinWidth(mMainHost.getyMin());
-//                //System.out.println(destinationNode.getLocation().getX()/imageStackPane.getWidth());
-////                currentFloorLabel.setText(String.valueOf(destinationNode.getCurrentFloor()));
-//
-//            }
-//
-//        });
-
-
-
 
         searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -284,16 +236,12 @@ public class MapViewController{
         });
 
 
-
-
-
-
         zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                if(numThreads == 0) {
-                    numThreads +=1;
+                if (numThreads == 0) {
+                    numThreads += 1;
                     running = true;
                     timer = new Timer("A Timer");
                     atimer = new Timer("A Timer2");
@@ -304,9 +252,6 @@ public class MapViewController{
                 counter = 0;
             }
         });
-
-
-
 
 
         //timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -324,12 +269,26 @@ public class MapViewController{
 
         });
 
+        // Return to KioskOverview
+        // Return to home menu
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                kioskApp.reset();
+
+            }
+
+        });
+
     }
 
 
     public void setListeners() {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+        this.faulknerHospitalMap.setupDirections(directionsList);
 
 
     }
@@ -356,8 +315,6 @@ public class MapViewController{
         zoomScrollPane.setHvalue(scrollH);
         zoomScrollPane.setVvalue(scrollV);
     }
-
-
 
 
     /**
@@ -412,24 +369,14 @@ public class MapViewController{
 
     }
 
-
-//    public void setStartSelection(DestinationType destinationType) {
-//
-//        switch (destinationType) {
-//
-//            case PHYSICIAN:
-//                this.faulknerHospitalMap.physicianDirectory();
-//                break;
-//
-//            case DEPARTMENT:
-//                this.faulknerHospitalMap.departmentDirectory();
-//                break;
-//
-//            default:
-//                this.faulknerHospitalMap.serviceDirectory();
-//                break;
-//
-//        }
-
+    public void shutOff() {
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
+    }
 
 }

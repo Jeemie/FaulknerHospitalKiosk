@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -30,7 +31,7 @@ public class SearchController {
     private Map faulknerHospitalMap;
     private String inValue;
     List searchResult;
-
+    private Destination currentDestination;
 
     ToggleButton departments;
     ToggleButton physicians;
@@ -100,6 +101,8 @@ public class SearchController {
     @FXML
     private TextField searchTextBox;
 
+    @FXML
+    private Button okButton;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -158,8 +161,9 @@ public class SearchController {
 
                     String backSpaced = searchTextBox.getText();
 
-                    backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
-
+                    if (backSpaced.length() != 0) {
+                        backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
+                    }
                     displayResult(backSpaced);
                     counter = 0;
 
@@ -170,8 +174,43 @@ public class SearchController {
                 }
 
             }
+
+
         });
 
+        this.listDirectory.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                counter = 0;
+
+                currentDestination = ((Destination) listDirectory.getSelectionModel().getSelectedItem());
+
+            }
+
+        });
+
+        this.okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentDestination != null) {
+
+                    timer.cancel();
+                    running = false;
+                    timerThread.interrupt();
+
+                    faulknerHospitalMap.setCurrentDestination(currentDestination);
+
+                    kioskApp.showMap();
+
+                }
+
+            }
+
+        });
 
         listDirectory.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
@@ -391,5 +430,15 @@ public class SearchController {
 
         this.faulknerHospitalMap = map;
 
+    }
+
+    public void shutOff() {
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
     }
 }

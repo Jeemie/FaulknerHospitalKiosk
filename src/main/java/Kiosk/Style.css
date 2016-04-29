@@ -1,0 +1,95 @@
+/* Button/Tab Style Guide
+    Button bg color:  #6486E6 (Deep blue)
+    Hover bg color:   #6070FF (Dark-medium blue)
+    Active bg color:  #4C47fD (Medium blue)
+    Background:       #E8F1FB (Light-blue gray)
+
+   Colors:
+    Deep blue:        #4C47fD
+    Dark-medium blue: #6070FF
+    Medium blue:      #6486E6
+    Light blue:       #94B6E6
+    Dark gray:        #3E3E3E
+    Light-blue gray:  #E8F1FB
+    Dark-blue gray:   #7F9DB9
+*/
+
+.root {
+    -fx-background-color: #E8F1FB;
+}
+
+/* TextField */
+.text-field {
+    -fx-background-radius: 10px;
+}
+
+/*BUTTONS*/
+.button {
+    -fx-background-radius: 10px;
+    -fx-border: none;
+    -fx-background-color: #6486E6;
+    -fx-effect: dropshadow(gaussian, #0C479D, 0, 1.0, 2.5, 2.5);
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #6070FF;
+}
+
+.button:focused {
+    -fx-background-color: #4C47fD;
+}
+
+.image-button {
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: stretch;
+}
+
+/*ACCORDION*/
+.accordion, .titled-pane {
+    -fx-base: #E8F1FB;
+    /*-fx-background-color: #E8F1FB #C8D1FB;*/
+}
+
+.titled-pane:selected {
+    -fx-background-color: #6486E6;
+}
+
+/*TABS*/
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #E8F1FB;
+}
+
+.tab, .tab:focused {
+    -fx-border: none;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-background-color: #6486E6;
+}
+
+.tab:hover {
+    -fx-background-color: #6070FF;
+}
+
+.tab:selected {
+    -fx-background-color: #4C47fD;
+}
+
+.tab-label {
+    -fx-text-fill: #FFFFFF;
+}
+
+/*Fixes weird tab alignment issue*/
+.tab-pane:top *.tab-header-area {
+    /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; !* 5 2 0 10 */
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overriden as 5 2 0 0 */
+}
+
+/*LISTVIEW*/
+.list-cell {
+    -fx-background-color: #C8D1FB;;
+}
+
+.list-cell:selected {
+    -fx-background-color: #6486E6;
+}

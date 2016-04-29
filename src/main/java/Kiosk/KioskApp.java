@@ -14,6 +14,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,8 @@ public class KioskApp extends Application {
 
 
     private ListView<String> listDirectory;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
 
     @Override
     public void start(Stage primaryStage) throws MalformedURLException {
@@ -99,9 +103,11 @@ public class KioskApp extends Application {
             // Debugger works better when full screen is off
             primaryStage.setFullScreen(false);
             //primaryStage.setFullScreen(true);
-//
-//          System.out.println(getClass().getResource("stylesheet.css"));
-//            scene.getStylesheets().add(getClass().getResource("Controllers/stylesheet.css").toExternalForm());
+
+            // TODO Maryann gets error on Windows - error: com.sun.javafx.css.StyleManager loadStylesheetUnPrivileged
+            // note, it still styles ... maybe the error is coming from somewhere elseo
+            scene.getStylesheets().add((new URL("file:///" + System.getProperty("user.dir") + "/src/main/java/Kiosk/" + "Style.css")).toExternalForm());
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +118,9 @@ public class KioskApp extends Application {
      * Shows the kiosk overview inside the root layout.
      */
     public void showKioskOverview() {
+
+        LOGGER.info("Attempting to loading Kiosk Overview");
+
         try {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
@@ -184,6 +193,8 @@ public class KioskApp extends Application {
      *
      */
     public boolean showAdminControls() {
+
+        LOGGER.info("Attempting to loading Admin Dashboard View");
 
         try {
             // Load AdminDashboard
@@ -259,6 +270,8 @@ public class KioskApp extends Application {
      *
      */
     public boolean showDirectory(DestinationType destinationType) {
+
+        LOGGER.info("Attempting to loading Directory View");
 
         try {
 
