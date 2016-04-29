@@ -566,8 +566,8 @@ public class Map implements Observer {
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
-   //             this.currentKioskLocationNodes.clear();
-   //             this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
@@ -625,9 +625,9 @@ public class Map implements Observer {
                 this.currentBuildingDestinations.clear();
                 this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
-// TODO figure this out
-//                this.currentKioskLocationNodes.clear();
-//                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+
+                this.currentKioskLocationNodes.clear();
+                this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
 
                 break;
 
