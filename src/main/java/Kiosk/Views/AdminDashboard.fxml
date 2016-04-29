@@ -125,7 +125,7 @@
                                 </Accordion>
                             </content>
                         </Tab>
-                        <Tab fx:id="LocationTab" text="Location">
+                        <Tab fx:id="locationTab" text="Location">
                             <content>
                                 <Accordion fx:id="locationAccordion">
                                     <panes>

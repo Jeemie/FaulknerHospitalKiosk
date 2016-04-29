@@ -127,6 +127,9 @@ public class AdminDashboardController {
     private Button setStartNode;
 
     @FXML
+    private Button buildingMiscAddElevatorButton;
+
+    @FXML
     private Button astarButton;
 
     @FXML
@@ -249,6 +252,32 @@ public class AdminDashboardController {
 
 
 
+
+    @FXML
+    private Tab addElevatorTab;
+
+    @FXML
+    private RadioButton addElevatorElevatorRadioButton;
+
+    @FXML
+    private RadioButton addElevatorStairsRadioButton;
+
+    private ToggleGroup addElevatorToggleGroup;
+
+    @FXML
+    private ListView addElevatorFloorsListView;
+
+    @FXML
+    private Button addElevatorAddButton;
+
+    @FXML
+    private Button addElevatorDiscardButton;
+
+
+
+
+
+
     @FXML
     private Button discardChangesButton;
 
@@ -276,6 +305,7 @@ public class AdminDashboardController {
         setLocationTabListeners();
         setAddFloorTabListeners();
         setAddLocationTabListeners();
+        setAddElevatorTabListeners();
 
     }
 
@@ -428,14 +458,14 @@ public class AdminDashboardController {
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
 
-                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab))) {
+                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab) || oldValue.equals(addElevatorTab))) {
 
                     mapTabPane.getSelectionModel().select(oldValue);
 
                     return;
                 }
 
-                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab)) {
+                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab) || newValue.equals(addElevatorTab)) {
 
                     lockTabPane = true;
 
@@ -998,6 +1028,11 @@ public class AdminDashboardController {
 
     }
 
+    private void setAddElevatorTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addElevatorTab);
+
+    }
 
 
     public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
