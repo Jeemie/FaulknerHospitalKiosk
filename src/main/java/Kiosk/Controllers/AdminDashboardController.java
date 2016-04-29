@@ -847,6 +847,23 @@ public class AdminDashboardController {
 
         });
 
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+
+                    LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+                    faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                    startNodeLabel.setText("Current Kiosk: " +faulknerHospitalMap.getStartLocationNode().toString());
+                }
+
+            }
+
+        });
+
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.SETSTARTNODE,
                         "Set Start Node", this.selectedButtonLabel));
