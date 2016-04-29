@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -485,6 +486,23 @@ public class Map implements Observer {
                 path);
 
         this.currentPath.setup();
+
+    }
+
+    public void setupDirections(ListView textualDirections) {
+
+        try {
+            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
+            if(this.currentPath  == null) {
+                LOGGER.debug("No path");
+            } else {
+                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
+                textualDirections.setItems(textualDirectionStrings);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
