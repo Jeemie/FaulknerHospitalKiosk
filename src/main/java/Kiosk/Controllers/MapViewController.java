@@ -332,9 +332,6 @@ public class MapViewController{
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
 
-        }
-
-
     }
 
     //    @FXML
