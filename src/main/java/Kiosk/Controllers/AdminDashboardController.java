@@ -214,10 +214,12 @@ public class AdminDashboardController {
     private TitledPane locationInformationTitledPane;
 
 
+    // Starting Kiosk fields
     @FXML
     private ComboBox selectStartKioskComboBox;
 
-
+    @FXML
+    private Label startNodeLabel;
 
 
 
