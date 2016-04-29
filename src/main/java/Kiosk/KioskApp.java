@@ -99,7 +99,9 @@ public class KioskApp extends Application {
             // Debugger works better when full screen is off
             primaryStage.setFullScreen(false);
             //primaryStage.setFullScreen(true);
-//
+
+            // TODO Maryann gets error on Windows - error: com.sun.javafx.css.StyleManager loadStylesheetUnPrivileged
+            // note, it still styles ... maybe the error is coming from somewhere elseo
             scene.getStylesheets().add((new URL("file:///" + System.getProperty("user.dir") + "/src/main/java/Kiosk/" + "Style.css")).toExternalForm());
 
             primaryStage.show();

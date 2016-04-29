@@ -269,6 +269,19 @@ public class MapViewController {
 
         });
 
+        // Return to KioskOverview
+        // Return to home menu
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                kioskApp.reset();
+
+            }
+
+        });
+
     }
 
 
@@ -365,4 +378,5 @@ public class MapViewController {
         timerThread.interrupt();
         kioskApp.reset();
     }
+
 }

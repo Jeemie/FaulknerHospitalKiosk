@@ -77,7 +77,8 @@ public class DirectoryController {
 
                 try {
 
-                    if (counter == 60) {
+                    // Time out after 30 minutes
+                    if (counter == 30000) {
 
                         LOGGER.info("Timed Out");
 
