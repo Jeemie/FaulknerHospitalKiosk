@@ -139,62 +139,66 @@ public class Directions {
             secondLNode = path.get(i);
             thirdLNode  = path.get(i+1);
 
-            //Create CardinalDirections
-            pastCDirection = firstLNode.getDirectionsTo(secondLNode);
-            currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
+            if(secondLNode.onSameFloor(thirdLNode)) {
 
-            //Create a string to put into the textualDirections arraylist
-            String currentTextDirection = "";
+                //Create CardinalDirections
+                pastCDirection = firstLNode.getDirectionsTo(secondLNode);
+                currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
 
-            //If the directions are the same, go forward
-            if (pastCDirection == currentCDirection) {
-                junctionCount++; //Increment junctionCount to know the number of junctions
-                if (i == path.size()-2) { //If it's the last part of the path
-                    if (junctionCount > 0) {
-                        currentTextDirection = "Keep going forward, and you'll reach your destination!";
+                //Create a string to put into the textualDirections arraylist
+                String currentTextDirection = "";
+
+                //If the directions are the same, go forward
+                if (pastCDirection == currentCDirection) {
+                    junctionCount++; //Increment junctionCount to know the number of junctions
+                    if (i == path.size() - 2) { //If it's the last part of the path
+                        if (junctionCount > 0) {
+                            currentTextDirection = "Keep going forward, and you'll reach your destination!";
+                        }
+
+                        //Add to textualDirections
+                        textualDirections.add(currentTextDirection);
+                    }
+
+                } else {
+
+                    //Change how sentence junction is structured depending on junctionCount number
+                    currentTextDirection = "Take the ";
+                    switch (junctionCount) {
+                        case 0:
+                            currentTextDirection += "next ";
+                            break;
+                        case 1:
+                            currentTextDirection += (junctionCount + 1) + "nd "; //2nd
+                            break;
+                        case 2:
+                            currentTextDirection += (junctionCount + 1) + "rd "; //3rd
+                            break;
+                        default:
+                            currentTextDirection += (junctionCount + 1) + "th "; //nth
+                            break;
+                    }
+
+
+                    //Check cardinalDirection relations, and output the right direction
+                    if (pastCDirection.right() == currentCDirection) {
+                        currentTextDirection += "Right.";
+                    } else if (pastCDirection.left() == currentCDirection) {
+                        currentTextDirection += "Left.";
+                    } else if (pastCDirection.opposite() == currentCDirection) {
+                        currentTextDirection += "Back."; //Should actually not happen
                     }
 
                     //Add to textualDirections
                     textualDirections.add(currentTextDirection);
+                    //Reset junctionCount
+                    junctionCount = 0;
+
                 }
+            } else { // Multi-level edge
 
-            } else {
-
-                //Change how sentence junction is structured depending on junctionCount number
-                currentTextDirection = "Take the ";
-                switch(junctionCount) {
-                    case 0:
-                        currentTextDirection += "next ";
-                        break;
-                    case 1:
-                        currentTextDirection += (junctionCount + 1) + "nd "; //2nd
-                        break;
-                    case 2:
-                        currentTextDirection += (junctionCount + 1) + "rd "; //3rd
-                        break;
-                    default:
-                        currentTextDirection += (junctionCount + 1) + "th "; //nth
-                        break;
-                }
-
-
-                //Check cardinalDirection relations, and output the right direction
-                if (pastCDirection.right() == currentCDirection) {
-                    currentTextDirection += "Right.";
-                } else if (pastCDirection.left() == currentCDirection) {
-                    currentTextDirection += "Left.";
-                } else if (pastCDirection.opposite() == currentCDirection) {
-                    currentTextDirection += "Back."; //Should actually not happen
-                }
-
-                //Add to textualDirections
-                textualDirections.add(currentTextDirection);
-                //Reset junctionCount
-                junctionCount = 0;
-
+                textualDirections.add("Take the elevator to " + thirdLNode.getCurrentFloor().getFloorName() + ".");
             }
-
-
         }
 
         return textualDirections;
