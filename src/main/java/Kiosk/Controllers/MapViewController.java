@@ -330,6 +330,9 @@ public class MapViewController{
     public void setListeners() {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+        this.faulknerHospitalMap.setupDirections(directionsList);
+
+        }
 
 
     }
