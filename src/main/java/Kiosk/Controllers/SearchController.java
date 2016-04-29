@@ -321,12 +321,12 @@ public class SearchController {
             filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
         }
         inValue = value;
-
         Collections.sort(filteredDestinations, new Comparator<Destination>() {
             public int compare(Destination o1, Destination o2) {
                 return o1.getName().compareTo(o2.getName());
             }
         });
+
         searchResults.setAll(filteredDestinations);
 
 
@@ -377,6 +377,7 @@ public class SearchController {
 
             searchResults.setAll(filteredDestinations);
 
+            searchResults.sorted();
             listDirectory.setItems(searchResults);
 
 
@@ -399,6 +400,7 @@ public class SearchController {
 
             searchResults.setAll(filteredDestinations);
 
+            searchResults.sorted();
             listDirectory.setItems(searchResults);
 
         }

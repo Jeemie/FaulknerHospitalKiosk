@@ -77,7 +77,7 @@ public class KioskOverviewController {
 
                 if (counter == 10){
 
-                    dontTouchMe.setText("Fuck youuu");
+                    dontTouchMe.setText("With Love from Team Faulkner");
                 }
             }
         });

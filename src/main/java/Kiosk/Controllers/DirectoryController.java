@@ -4,6 +4,8 @@ import Kiosk.KioskApp;
 import Map.*;
 import Map.Enums.DestinationType;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,8 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 
 public class DirectoryController {
@@ -55,6 +59,11 @@ public class DirectoryController {
     @FXML
     private ListView directoryListView;
 
+    private String inValue;
+
+    List<Destination> allDestinations = new ArrayList<Destination>();
+    List<Destination> filteredDestinations = new ArrayList<Destination>();
+    ObservableList<Destination> searchResults = FXCollections.observableArrayList();
 
     Timer timer = new Timer("A Timer");
     Timer atimer = new Timer();
@@ -147,8 +156,18 @@ public class DirectoryController {
 
                     kioskApp.showSearch(searchTextField.getText());
 
-                } else {
+                } else if (event.getCode().equals(KeyCode.BACK_SPACE)) {
 
+                    String backSpaced = searchTextField.getText();
+
+                    if (backSpaced.length() != 0) {
+                        backSpaced = backSpaced.substring(0, backSpaced.length() - 1);
+                    }
+                    displayResult(backSpaced);
+                    counter = 0;
+
+                } else {
+                    displayResult(searchTextField.getText() + event.getText());
                     counter = 0;
 
                 }
@@ -309,6 +328,34 @@ public class DirectoryController {
 
         }
 
+    }
+
+    @FXML
+    public void displayResult(String value) {
+
+        allDestinations = this.faulknerHospitalMap.allDirectory();
+
+        for (Destination d : allDestinations) {
+            filteredDestinations = allDestinations.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+        inValue = value;
+
+
+        searchResults.setAll(filteredDestinations);
+
+
+        directoryListView.setItems(searchResults);
+
+    }
+
+    public void shutOff() {
+        atimer.cancel();
+        atimer.purge();
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
+        kioskApp.reset();
     }
 
 }

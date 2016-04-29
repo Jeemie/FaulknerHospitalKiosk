@@ -6,10 +6,7 @@ import Map.Enums.UpdateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A class that represents a building.
@@ -92,7 +89,11 @@ public class Building extends Observable implements Observer {
             buildingDestinations.addAll(floor.getFloorDestinations());
 
         }
-
+        Collections.sort(buildingDestinations, new Comparator<Destination>() {
+            public int compare(Destination o1, Destination o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         return buildingDestinations;
     }
 
@@ -106,6 +107,11 @@ public class Building extends Observable implements Observer {
 
         }
 
+        Collections.sort(buildingDestinations, new Comparator<Destination>() {
+            public int compare(Destination o1, Destination o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         return buildingDestinations;
     }
 
