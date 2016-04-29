@@ -407,6 +407,9 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public void removeEdgeConnection(LocationNodeEdge edge) {
 
         this.edges.remove(edge);
+
+        setChanged();
+        notifyObservers(UpdateType.EDGEREMOVED);
     }
 
     /**
