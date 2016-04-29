@@ -65,7 +65,12 @@ public class Path {
 
                 tempPath.add(this.originalPath.get(i));
 
-                this.splitPath.add(tempPath);
+                if (tempPath.size() > 1) {
+
+                    this.splitPath.add(tempPath);
+
+                }
+
                 tempPath = new ArrayList<>();
 
             }
@@ -113,7 +118,7 @@ public class Path {
     private void drawFloorPath() {
 
         LOGGER.info(this.splitPath.toString());
-        LOGGER.info("Drawing floor " + this.currentIndex);
+        LOGGER.info("Path part: " + this.currentIndex);
 
         ArrayList<LocationNode> temp = this.splitPath.get(this.currentIndex);
         Floor tempFloor = temp.get(0).getCurrentFloor();
