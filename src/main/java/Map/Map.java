@@ -1143,4 +1143,10 @@ public class Map implements Observer {
             this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
         }
 
+    public LocationNode getStartLocationNode() {
+
+        return this.startLocationNode;
+
+    }
+
 }
