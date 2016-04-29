@@ -14,6 +14,7 @@ public enum DestinationType {
     BATHROOM,
     ELEVATOR,
     STAIR,
-    SERVICE
+    SERVICE,
+    HALLWAY
 
 }
