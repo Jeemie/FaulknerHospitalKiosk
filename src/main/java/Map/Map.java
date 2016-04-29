@@ -1153,4 +1153,8 @@ public class Map implements Observer {
 
     }
 
+    public ObservableList<LocationNode> getCurrentKioskLocationNodes() {
+
+        return currentKioskLocationNodes;
+    }
 }
