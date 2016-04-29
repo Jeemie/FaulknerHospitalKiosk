@@ -32,6 +32,8 @@ public class Path {
 
     private Directions directions;
 
+    private double xMin, xMax,yMin,yMax,xAverage, yAverage;
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Path.class);
 
@@ -83,6 +85,9 @@ public class Path {
         //Set the directions
         directions = new Directions(originalPath);
 
+
+
+
         drawNextFloor();
     }
 
@@ -95,6 +100,7 @@ public class Path {
         }
 
         drawFloorPath();
+
 
     }
 
@@ -145,6 +151,31 @@ public class Path {
         }
 
         drawEdgesNormal(this.edgePane, temp);
+        yMin = temp.get(0).getLocation().getY();
+        xMin = temp.get(0).getLocation().getX();
+        yMax = temp.get(0).getLocation().getY();
+        xMax = temp.get(0).getLocation().getX();
+
+        for( int i =0 ; i <= temp.size()-1;i++){
+                double xnum =  temp.get(i).getLocation().getX();
+                double ynum =  temp.get(i).getLocation().getY();
+                if(xnum<xMin){
+                    xMin=xnum;
+                }
+                if(xnum>xMax){
+                    xMax=xnum;
+                }
+                if(ynum<yMin){
+                    yMin =ynum;
+                }
+                if(ynum>yMax){
+                    yMax =ynum;
+                }
+
+
+        }
+        xAverage = (xMax +xMin)/2.0;
+        yAverage = (yMax +yMin)/2.0;
 
     }
 
@@ -177,7 +208,71 @@ public class Path {
 
     }
 
+    public double getxMin() {
+        System.out.println("xMin" + xMin);
+        return xMin;
+
+    }
+
+    public double getxMax() {
+        System.out.println("xMax"+xMax);
+        return xMax;
+    }
+
+    public double getyMin() {
+        System.out.println("Ymin "+yMin);
+        return yMin;
+    }
+
+    public double getyMax() {
+        System.out.println("Ymax "+yMin);
+        return yMax;
+    }
+
+    public double getYAverage() {
+        System.out.println("YAverage "+yAverage);
+        return xAverage;
+    }
+
+    public double getxAverage() {
+        System.out.println("xAverage "+xAverage);
+        return yAverage;
+    }
+
     public Directions getDirections() {
         return directions;
     }
-}
+
+//    public void getPathLocation(ArrayList<LocationNode>path){
+//        yMin = path.get(0).getLocation().getY();
+//        xMin = path.get(0).getLocation().getX();
+//        yMax = path.get(0).getLocation().getY();
+//        xMax = path.get(0).getLocation().getX();
+//
+//        for( int i =0 ; i <= path.size();i++){
+//            if (path.get(i-1).getCurrentFloor().equals(path.get(i).getCurrentFloor())){
+//                double xnum =  path.get(i).getLocation().getX();
+//                double ynum =  path.get(i).getLocation().getY();
+//                if(xnum<xMin){
+//                    xMin=xnum;
+//                }
+//                if(xnum>xMax){
+//                    xMax=xnum;
+//                }
+//                if(ynum<yMin){
+//                    yMin =ynum;
+//                }
+//                if(ynum>yMax){
+//                    yMax =ynum;
+//                }
+//            }
+//            else{
+//                break;
+//            }
+//        }
+//        System.out.println(xMax);
+//        System.out.println(yMax);
+//    }
+
+    }
+

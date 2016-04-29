@@ -3,6 +3,7 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.Enums.DestinationType;
 import Map.Map;
+import Map.Path;
 import Map.Destination;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
@@ -104,6 +105,7 @@ public class MapViewController {
     private Destination currentDestination;
 
     private Group zoomGroup;
+    private Path nodeLocation;
 
 
     public Timer timer;
@@ -176,6 +178,7 @@ public class MapViewController {
     private void initialize() {
 
 
+
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -190,12 +193,11 @@ public class MapViewController {
 
 //        setListeners();
 
-        zoomScrollPane.setHvalue(0.5);
-        zoomScrollPane.setVvalue(0.5);
+
 
         slider.setMin(0.5);
         slider.setMax(1.5);
-        slider.setValue(1.0);
+        slider.setValue(0.5);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -231,6 +233,8 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathPreviousFloor();
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
 
             }
         });
@@ -263,7 +267,12 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+
                 faulknerHospitalMap.pathNextFloor();
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
+
+
 
             }
 
@@ -282,6 +291,26 @@ public class MapViewController {
 
         });
 
+        zoomIn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal += 0.1);
+
+            }
+        });
+
+        zoomOut.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal + -0.1);
+
+            }
+        });
+
+
     }
 
 
@@ -289,22 +318,14 @@ public class MapViewController {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
+
+
 
 
     }
 
-    //    @FXML
-    void zoomIn(ActionEvent event) {
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal += 0.1);
-    }
-
-    //    @FXML
-    void zoomOut(ActionEvent event) {
-
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal + -0.1);
-    }
 
     private void zoom(double scaleValue) {
 

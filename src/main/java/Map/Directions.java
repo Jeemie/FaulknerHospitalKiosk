@@ -153,7 +153,7 @@ public class Directions {
                     junctionCount++; //Increment junctionCount to know the number of junctions
                     if (i == path.size() - 2) { //If it's the last part of the path
                         if (junctionCount > 0) {
-                            currentTextDirection = "Keep going forward, and you'll reach your destination!";
+                            currentTextDirection ="↑ | " + currentTextDirection+ "Keep going forward, and you'll reach your destination!";
                         }
 
                         //Add to textualDirections
@@ -182,11 +182,12 @@ public class Directions {
 
                     //Check cardinalDirection relations, and output the right direction
                     if (pastCDirection.right() == currentCDirection) {
-                        currentTextDirection += "Right.";
+                        currentTextDirection = "↱ | " + currentTextDirection + "Right";
                     } else if (pastCDirection.left() == currentCDirection) {
-                        currentTextDirection += "Left.";
+                        currentTextDirection = "↰ | " + currentTextDirection + "Left";
                     } else if (pastCDirection.opposite() == currentCDirection) {
-                        currentTextDirection += "Back."; //Should actually not happen
+                        currentTextDirection = "↓ | " + currentTextDirection + "Back";
+
                     }
 
                     //Add to textualDirections
@@ -197,7 +198,7 @@ public class Directions {
                 }
             } else { // Multi-level edge
 
-                textualDirections.add("Take the elevator to " + thirdLNode.getCurrentFloor().getFloorName() + ".");
+                textualDirections.add("⇅ | Take the elevator to " + thirdLNode.getCurrentFloor().getFloorName() + ".");
             }
         }
 

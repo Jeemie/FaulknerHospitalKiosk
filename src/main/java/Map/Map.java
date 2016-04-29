@@ -1099,6 +1099,27 @@ public class Map implements Observer {
 
     }
 
+    public void getXmax(){
+        currentPath.getxMax();
+    }
+    public void getXmin(){
+        currentPath.getxMin();
+    }
+    public void getYmax(){
+        currentPath.getyMax();
+    }
+    public void getYmin(){
+        currentPath.getyMin();
+    }
+    public double getXAverage(){
+
+       return  currentPath.getxAverage();
+    }
+    public double getYAverage(){
+
+       return  currentPath.getYAverage();
+    }
+
     public void setCurrentBuilding(Building building) {
 
         // TODO possibly refresh the observable lists
