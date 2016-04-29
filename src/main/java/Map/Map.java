@@ -60,24 +60,22 @@ public class Map implements Observer {
 
     private Path currentPath;
 
-
     //||\\ Current Destination //||\\
 
     private Destination currentDestination;
 
-
     //||\\ Current LocationNode //||\\
 
-    //
     private LocationNode currentLocationNode;
 
     //||\\ Current adjacent LocationNode //||\\
 
     private LocationNode currentAdjacentNode;
 
+
     //||\\ Current LocationNodeEdge //||\\
 
-    LocationNodeEdge currentLocationNodeEdge;
+    private LocationNodeEdge currentLocationNodeEdge;
 
     //
     private ObservableList<LocationNode> currentAdjacentLocationNodes;
@@ -88,53 +86,43 @@ public class Map implements Observer {
 
     //||\\ Current Floor //||\\
 
-    //
     private Floor currentFloor;
-
 
     //
     private ObservableList<LocationNode> currentFloorLocationNodes;
 
-
     //
     private ObservableList<Destination> currentFloorDestinations;
-
-
-    private ObservableList<LocationNode> currentKioskLocationNodes;
 
     //
     private Pane currentFloorLocationNodePane;
 
-
     //
     private Pane currentFloorEdgePane;
-
 
     //
     private ImageView currentFloorImage;
 
-
     //||\\ Current Building //||\\
 
-    //
     private Building currentBuilding;
-
 
     //
     private ObservableList<Floor> currentBuildingFloors;
 
-
     //
     private ObservableList<Destination> currentBuildingDestinations;
+
+    //
+    private ObservableList<LocationNode> currentKioskLocationNodes;
 
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
-
-
     /*
-    TODO create exception to throw when adding something to the map when something of the sametype already has that name
+    TODO create exception to throw when adding something to the map when something of the sametype already
+     ... has that name for all types except hallway, elevator, and stairs
     */
     public Map(String name) {
 
@@ -163,14 +151,6 @@ public class Map implements Observer {
     }
 
 
-//    private void setCurrentChangeListeners() {
-//
-//        this.currentBuilding.
-//
-//
-//    }
-
-
     public void addBuilding(String name) {
 
         for (Building building : this.mapBuildings) {
@@ -183,7 +163,6 @@ public class Map implements Observer {
             }
 
         }
-
 
         Building newBuilding = new Building(name, this);
 
@@ -207,6 +186,7 @@ public class Map implements Observer {
 
     }
 
+
     public void addLocationNode(String name, Location location, ImageType imageType) {
 
         if (this.currentFloor == null) {
@@ -224,6 +204,7 @@ public class Map implements Observer {
         this.currentFloorLocationNodes.add(this.currentLocationNode);
 
     }
+
 
     public void addLocationNodeEdge() throws NodeDoesNotExistException {
 
@@ -248,9 +229,6 @@ public class Map implements Observer {
         // Update Observers
         this.currentAdjacentLocationNodes.add(currentAdjacentNode);
 
-        // "Reset" current adjacent node
-        // this.currentAdjacentNode = null;
-
     }
 
 
@@ -271,14 +249,14 @@ public class Map implements Observer {
 
         if (this.currentFloor == null) {
 
-            // TODO create debug message
+            LOGGER.debug("Current floor is null. Can't remove destination.");
 
             return;
         }
 
         if(currentDestination == null){
 
-            //TODO create debug message
+            LOGGER.debug("Current destination is null. Can't remove destination.");
 
             return;
         }
@@ -297,14 +275,14 @@ public class Map implements Observer {
 
         if (this.currentFloor == null) {
 
-            // TODO create debug message
+            LOGGER.debug("Current floor is null. Can't remove edge.");
 
             return;
         }
 
         if(currentLocationNodeEdge == null){
 
-            //TODO create debug message
+            LOGGER.debug("currentLocationNodeEdge is null. Can't remove edge.");
 
             return;
         }
@@ -322,14 +300,14 @@ public class Map implements Observer {
 
         if (this.currentFloor == null) {
 
-            // TODO create debug message
+            LOGGER.debug("Current floor is null. Can't remove location node.");
 
             return;
         }
 
         if (this.currentLocationNode == null) {
 
-            // TODO create debug message
+            LOGGER.debug("currentLocationNode is null. Can't remove location node.");
 
             return;
         }
@@ -366,6 +344,7 @@ public class Map implements Observer {
 
     }
 
+
     public List<Destination> getPhysicianDirectory() {
 
         this.directoryList.clear();
@@ -377,6 +356,7 @@ public class Map implements Observer {
         }
         return directoryList;
     }
+
 
     public List<Destination> allDirectory() {
 
@@ -390,6 +370,7 @@ public class Map implements Observer {
         return this.directoryList;
     }
 
+
     public void departmentDirectory() {
 
         this.directoryList.clear();
@@ -402,6 +383,7 @@ public class Map implements Observer {
 
     }
 
+
     public List<Destination> getDepartmentDirectory() {
 
         this.directoryList.clear();
@@ -413,6 +395,8 @@ public class Map implements Observer {
         }
         return directoryList;
     }
+
+    // TODO do we need this method and the getServiceDirectory() method? If not, refactor
     public void serviceDirectory() {
 
         this.directoryList.clear();
@@ -484,6 +468,7 @@ public class Map implements Observer {
 
     }
 
+    // TODO enable and test searchAlgorithm.getPath() - commented because it has not been tested
     public void setupPathStackPane(StackPane stackPane) {
 
         ArrayList<LocationNode> path;
@@ -658,11 +643,10 @@ public class Map implements Observer {
 
                 }
 
-                //this.locationNodeUpdater(this.currentLocationNode);
-
                 break;
 
             case EDGEREMOVED:
+
                 this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
 
                 break;
@@ -897,19 +881,12 @@ public class Map implements Observer {
                             }
 
                         } catch (NodeDoesNotExistException e) {
-                                e.printStackTrace();
+                            e.printStackTrace();
                         }
-
                     }
                 }
             }
-
         }
-
-
-
-
-
 
         return map;
 
@@ -919,11 +896,10 @@ public class Map implements Observer {
     //||\\ Getters And Setters //||\\
 
 
-    //TODO
-
     /**
      * Reinitialize null fields in Map object and subclass objects after loading from file
      */
+    //TODO do we still need this? If not, refactor
     public Map initMapComponents() {
 
         return this;
@@ -1155,15 +1131,15 @@ public class Map implements Observer {
     }
 
 
-        public void setCurrentAdjacentNode(LocationNode currentAdjacentNode) {
+    public void setCurrentAdjacentNode(LocationNode currentAdjacentNode) {
 
-            this.currentAdjacentNode = currentAdjacentNode;
-        }
+        this.currentAdjacentNode = currentAdjacentNode;
+    }
 
-        public void setCurrentLocationNodeEdge(LocationNode currentAdjacentNode) {
+    public void setCurrentLocationNodeEdge(LocationNode currentAdjacentNode) {
 
-            this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
-        }
+        this.currentLocationNodeEdge = this.currentLocationNode.getEdgeBetween(currentAdjacentNode);
+    }
 
     public LocationNode getStartLocationNode() {
 
