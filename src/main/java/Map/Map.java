@@ -13,6 +13,7 @@ import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.istack.internal.NotNull;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -378,7 +379,7 @@ public class Map implements Observer {
         for (Building building : this.mapBuildings) {
 
             this.directoryList.addAll(building.getBuildingDestinations(DestinationType.DEPARTMENT));
-
+            // TODO ascending order by name (create comparator that uses Destination.toString())
         }
 
     }

@@ -22,7 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class KioskApp extends Application {
-//
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     protected Map faulknerHospitalMap;
