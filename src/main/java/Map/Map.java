@@ -36,6 +36,7 @@ import java.util.*;
 
 public class Map implements Observer {
 
+
     private String name;
 
     // Unique ID for this Map
@@ -99,6 +100,8 @@ public class Map implements Observer {
     private ObservableList<Destination> currentFloorDestinations;
 
 
+    private ObservableList<LocationNode> currentKioskLocationNodes;
+
     //
     private Pane currentFloorLocationNodePane;
 
@@ -155,6 +158,7 @@ public class Map implements Observer {
         this.currentBuilding = null;
         this.currentBuildingFloors = FXCollections.observableArrayList();
         this.currentBuildingDestinations = FXCollections.observableArrayList();
+        this.currentKioskLocationNodes = FXCollections.observableArrayList();
 
     }
 
