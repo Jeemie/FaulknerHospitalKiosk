@@ -214,6 +214,8 @@ public class AdminDashboardController {
     private TitledPane locationInformationTitledPane;
 
 
+    @FXML
+    private ComboBox selectStartKioskComboBox;
 
 
 
@@ -857,7 +859,7 @@ public class AdminDashboardController {
 
                     LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
                     faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
-                    startNodeLabel.setText("Current Kiosk: " +faulknerHospitalMap.getStartLocationNode().toString());
+                    startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
                 }
 
             }
