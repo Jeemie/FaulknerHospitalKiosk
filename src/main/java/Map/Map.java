@@ -269,11 +269,29 @@ public class Map implements Observer {
 
     public void removeDestination() {
 
-        // TODO fill in
-        // TODO create debug message
+        if (this.currentFloor == null) {
 
+            // TODO create debug message
+
+            return;
+        }
+
+        if(currentDestination == null){
+
+            //TODO create debug message
+
+            return;
+        }
+
+        this.getCurrentBuildingDestinations().remove(currentDestination);
+        this.getCurrentFloorDestinations().remove(currentDestination);
+        this.getCurrentLocationNodeDestinations().remove(currentDestination);
+        this.getCurrentLocationNode().removeDestination(currentDestination);
+
+        this.currentDestination = null;
+
+        return;
     }
-
 
     public void removeLocationNodeEdge() {
 
