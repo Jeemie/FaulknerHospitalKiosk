@@ -503,7 +503,11 @@ public class Map implements Observer {
             if(this.currentPath  == null) {
                 LOGGER.debug("No path");
             } else {
-                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+                for (Direction direction : this.currentPath.getDirections()) {
+
+                    textualDirectionStrings.add(direction.getDirectionString());
+
+                }
                 LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
                 textualDirections.setItems(textualDirectionStrings);
             }

@@ -10,6 +10,7 @@ public enum RelativeDirection {
     STRAIGHT,
     RIGHT,
     BACK,
-    LEFT;
+    LEFT,
+    ELEVATOR;
 
 }
