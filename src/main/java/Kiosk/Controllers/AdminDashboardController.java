@@ -6,6 +6,8 @@ import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
 import Map.Enums.ImageType;
 import Map.Enums.MapState;
+import Map.Exceptions.DefaultFileDoesNotExistException;
+import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.Floor;
 import Map.Destination;
@@ -311,6 +313,30 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 // TODO Reload building from file
+
+                URL filePath = kioskApp.getFilePath();
+
+                try {
+
+                    faulknerHospitalMap = Map.loadFromFile(filePath);
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                } catch (FloorDoesNotExistException e) {
+
+                    e.printStackTrace();
+
+                } catch (DefaultFileDoesNotExistException e) {
+
+                    e.printStackTrace();
+
+                }
+
+
+
+                faulknerHospitalMap.setupAdminStackPane(mapStackPane);
 
                 LOGGER.info("Discarding changes to the map");
 
