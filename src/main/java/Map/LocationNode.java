@@ -118,13 +118,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * @param destinationType
      * @param name
      */
-    public void addDestination(String name, DestinationType destinationType) {
+    public Destination addDestination(String name, DestinationType destinationType) {
 
-        this.destinations.add(new Destination(name, destinationType, this));
+        Destination newDestination = new Destination(name, destinationType, this);
+
+        this.destinations.add(newDestination);
 
         setChanged();
         notifyObservers(UpdateType.DESTINATIONCHANGE);
 
+        return newDestination;
     }
 
     /**
