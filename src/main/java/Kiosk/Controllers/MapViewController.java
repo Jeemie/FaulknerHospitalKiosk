@@ -2,6 +2,7 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Enums.DestinationType;
+import Map.Enums.DirectionIcons;
 import Map.Map;
 import Map.Path;
 import Map.Destination;
@@ -15,6 +16,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +26,8 @@ import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -105,7 +110,6 @@ public class MapViewController {
     private Destination currentDestination;
 
     private Group zoomGroup;
-    private Path nodeLocation;
 
 
     public Timer timer;
@@ -197,7 +201,7 @@ public class MapViewController {
 
         slider.setMin(0.5);
         slider.setMax(1.5);
-        slider.setValue(0.5);
+        slider.setValue(1.0);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -307,6 +311,47 @@ public class MapViewController {
                 double sliderVal = slider.getValue();
                 slider.setValue(sliderVal + -0.1);
 
+            }
+        });
+
+
+        directionsList.setCellFactory(listView -> new ListCell<String>() {
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                imageView.setPreserveRatio(true);
+            }
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item);
+
+
+
+                    try {
+
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                                DirectionIcons.RIGH.getResourceFileName()).toString(), true);
+
+                        imageView.setImage(icon);
+
+                    } catch (MalformedURLException e) {
+
+                        LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
+
+                    }
+                    // true makes this load in background
+                    // see other constructors if you want to control the size, etc
+//                    Image image = new Image(DirectionIcons.BACK.getResourceFileName(), true) ;
+//                    imageView.setImage(image);
+                    setGraphic(imageView);
+                }
             }
         });
 
