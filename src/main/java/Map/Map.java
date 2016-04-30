@@ -10,7 +10,6 @@ import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.istack.internal.NotNull;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -505,7 +504,11 @@ public class Map implements Observer {
             if(this.currentPath  == null) {
                 LOGGER.debug("No path");
             } else {
-                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
+                for (Direction direction : this.currentPath.getDirections()) {
+
+                    textualDirectionStrings.add(direction.getDirectionString());
+
+                }
                 LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
                 textualDirections.setItems(textualDirectionStrings);
             }
