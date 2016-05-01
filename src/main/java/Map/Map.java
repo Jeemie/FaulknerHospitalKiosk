@@ -18,10 +18,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -200,6 +201,7 @@ public class Map implements Observer {
 
         this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
         this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+        this.currentLocationNode.adminDrawCurrent();
 
         this.currentFloorLocationNodes.add(this.currentLocationNode);
 
@@ -1047,6 +1049,16 @@ public class Map implements Observer {
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
 
             LOGGER.info("Rebuilding current location node destinations and connected location nodes");
+
+            newLocationNode.adminDrawCurrent();
+
+            if (this.currentLocationNode != null) {
+
+                this.currentLocationNode.adminUndrawCurrent();
+
+            }
+
+
 
             this.currentLocationNodeDestinations.clear();
             this.currentLocationNodeDestinations.addAll(newLocationNode.getDestinations());
