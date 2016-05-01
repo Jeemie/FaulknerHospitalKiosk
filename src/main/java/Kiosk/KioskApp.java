@@ -394,4 +394,10 @@ public class KioskApp extends Application {
 
     }
 
+    public URL getFilePath() {
+
+        return this.filePath;
+
+    }
+
 }
