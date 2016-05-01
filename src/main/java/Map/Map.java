@@ -17,9 +17,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
@@ -465,6 +468,28 @@ public class Map implements Observer {
 
         this.currentFloorLocationNodePane.getChildren().clear();
         this.currentFloorEdgePane.getChildren().clear();
+
+        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentMapState != MapState.MOVENODE) {
+
+                    return;
+                }
+
+                if (event.getTarget().equals(currentLocationNode.getIconLabel())) {
+
+                    currentLocationNode.getLocation().setX(event.getX());
+                    currentLocationNode.getLocation().setY(event.getY());
+
+                    LOGGER.info("Moving location node to x: " + event.getX() + " y: " + event.getY());
+                }
+
+            }
+
+        });
 
     }
 
