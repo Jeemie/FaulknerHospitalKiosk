@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class KioskApp extends Application {
 
@@ -30,6 +32,17 @@ public class KioskApp extends Application {
     protected Map faulknerHospitalMap;
     private URL filePath;
 
+    // Identifies language and country
+    protected Locale currentLocale;
+
+    // Contain translatable labels
+    protected ResourceBundle labels;
+
+    // Language for text display
+    private String language;
+
+    // Country corresponding to language dialect
+    private String country;
 
     private ListView<String> listDirectory;
 
@@ -41,6 +54,7 @@ public class KioskApp extends Application {
         this.primaryStage = primaryStage;
 
         this.filePath = new URL("file:///" + System.getProperty("user.dir") + "/resources/" + "default.json");
+
         try {
 
             this.faulknerHospitalMap = Map.loadFromFile(this.filePath);
@@ -74,10 +88,17 @@ public class KioskApp extends Application {
 
         }
 
-        this.faulknerHospitalMap.initMapComponents();
-
-
         this.primaryStage.setTitle("Pathfinding Application");
+
+        // English language, United States
+        language = "en";
+        country = "US";
+
+        // Create new locale for the specified language and country
+        currentLocale = new Locale(language, country);
+
+        // Create ResourceBundle containing locale-specific translatable text
+        labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
 
         initRootLayout();
 

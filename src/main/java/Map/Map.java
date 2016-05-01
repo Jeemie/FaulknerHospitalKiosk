@@ -908,7 +908,7 @@ public class Map implements Observer {
                                 try {
 
                                     // Prevent EdgeAlreadyExistsException from being thrown on load
-                                    if (associatedLocationNode.getEdgeBetween(locationNode1) == null) {
+                                    if (associatedLocationNode.getEdgeBetween(locationNode2) == null) {
 
                                         associatedLocationNode.addEdge(locationNode2);
 
