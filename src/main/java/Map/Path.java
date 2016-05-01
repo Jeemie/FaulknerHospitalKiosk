@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by matt on 4/22/16.
@@ -127,6 +126,14 @@ public class Path {
 
         this.edgePane.getChildren().clear();
         this.nodePane.getChildren().clear();
+
+        for (LocationNode n: tempFloor.getFloorLocationNodes(ImageType.BATHROOM)){
+            n.drawNormal(this.nodePane, ImageType.BATHROOM, -10, 0);
+        }
+
+        for (LocationNode n: tempFloor.getFloorLocationNodes(ImageType.STORE)){
+            n.drawNormal(this.nodePane, ImageType.STORE, -10, 0);
+        }
 
         if (this.startLocationNode.equals(temp.get(0))) {
 
