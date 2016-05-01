@@ -98,6 +98,13 @@ public class KioskApp extends Application {
         // Create new locale for the specified language and country
         currentLocale = new Locale(language, country);
 
+        // Check if departments and services should be translated
+        if(!language.equals("en")) {
+
+            faulknerHospitalMap.translateDirectory(DestinationType.SERVICE, currentLocale);
+            faulknerHospitalMap.translateDirectory(DestinationType.DEPARTMENT, currentLocale);
+        }
+
         // Create ResourceBundle containing locale-specific translatable text
         labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
 

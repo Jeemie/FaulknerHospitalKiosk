@@ -64,6 +64,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
 
+    private ArrayList<Destination> translatedDestinations;
+
     public LocationNode(String name, Location location, Floor currentFloor, ImageType associatedImage) {
 
         this.name = name;
@@ -76,6 +78,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         this.destinations = new ArrayList<>();
         this.fScore = Double.POSITIVE_INFINITY;
         this.gScore = Double.POSITIVE_INFINITY;
+        this.translatedDestinations = new ArrayList<>();
 
         this.addObserver(this.currentFloor);
 
@@ -649,5 +652,15 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public boolean isSameFloor(LocationNode locationNode) {
 
         return this.currentFloor.equals(locationNode.getCurrentFloor());
+    }
+
+    public ArrayList<Destination> getTranslatedDestinations() {
+
+        return translatedDestinations;
+    }
+
+    public void setTranslatedDestinations(ArrayList<Destination> translatedDestinations) {
+
+        this.translatedDestinations = translatedDestinations;
     }
 }
