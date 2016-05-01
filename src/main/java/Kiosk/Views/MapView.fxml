@@ -70,13 +70,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                      <Button fx:id="zoomIn" mnemonicParsing="false" opacity="0.53" prefHeight="40.0" prefWidth="40.0" text="+">
+                      <Button fx:id="zoomOut" mnemonicParsing="false" opacity="0.53" prefHeight="40.0" prefWidth="40.0" text="-">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
                       <Slider fx:id="slider" minHeight="100.0" opacity="0.26" orientation="VERTICAL" prefWidth="10.0" rotate="-90.0" translateX="90.0" />
-                      <Button fx:id="zoomOut" mnemonicParsing="false" opacity="0.53" prefHeight="40.0" prefWidth="40.0" text="-" translateX="160.0">
+                      <Button fx:id="zoomIn" mnemonicParsing="false" opacity="0.53" prefHeight="40.0" prefWidth="40.0" text="+" translateX="160.0">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
