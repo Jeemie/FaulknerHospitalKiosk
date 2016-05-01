@@ -778,9 +778,16 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 LocationNode selectedAdjacentLocationNode = ((LocationNode) locationConnectedLocationListView.getSelectionModel().getSelectedItem());
-                faulknerHospitalMap.setCurrentAdjacentNode(selectedAdjacentLocationNode);
-                // Set current edge by passing the adjacent node (then calling getEdgeBetween() )
-                faulknerHospitalMap.setCurrentLocationNodeEdge(selectedAdjacentLocationNode);
+
+                // Check if a connected node was selected (vs. empty space in the list view)
+                if(selectedAdjacentLocationNode != null) {
+
+                    faulknerHospitalMap.setCurrentAdjacentNode(selectedAdjacentLocationNode);
+
+                    // Set current edge by passing the adjacent node (then calling getEdgeBetween() )
+
+                    faulknerHospitalMap.setCurrentLocationNodeEdge(selectedAdjacentLocationNode);
+                }
             }
 
         });

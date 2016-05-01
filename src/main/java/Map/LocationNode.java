@@ -431,7 +431,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             if (edge.edgeExists(this, adjacentNode)) {
 
                 // Edge has already been added
-                throw new EdgeAlreadyExistsException(this, adjacentNode);
+               throw new EdgeAlreadyExistsException(this, adjacentNode);
 
             }
         }
@@ -460,7 +460,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             }
         }
-        //TODO error message/ exception
+
         // Edge does not exist
         return null;
     }

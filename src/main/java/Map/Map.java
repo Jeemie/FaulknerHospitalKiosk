@@ -879,7 +879,7 @@ public class Map implements Observer {
                         LocationNode locationNode2 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode2ID());
 
 
-                        try{
+                        try {
 
                             //If the assiocatedLocationNode does not equal locationNode1
                             if(!associatedLocationNode.equals(locationNode1)) {
@@ -887,7 +887,12 @@ public class Map implements Observer {
                                 // Add the edge to locationNode 1
                                 try {
 
-                                    associatedLocationNode.addEdge(locationNode1);
+                                    // Prevent EdgeAlreadyExistsException from being thrown on load
+                                    if (associatedLocationNode.getEdgeBetween(locationNode1) == null) {
+
+                                        associatedLocationNode.addEdge(locationNode1);
+
+                                    }
 
                                 } catch (EdgeAlreadyExistsException e) {
 
@@ -902,7 +907,13 @@ public class Map implements Observer {
                                 // Add the edge to locationNode 2
                                 try {
 
-                                    associatedLocationNode.addEdge(locationNode2);
+                                    // Prevent EdgeAlreadyExistsException from being thrown on load
+                                    if (associatedLocationNode.getEdgeBetween(locationNode1) == null) {
+
+                                        associatedLocationNode.addEdge(locationNode2);
+
+                                    }
+
 
                                 } catch (EdgeAlreadyExistsException e) {
 
