@@ -231,6 +231,7 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathPreviousFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
         });
@@ -264,6 +265,7 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathNextFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
 
@@ -366,6 +368,7 @@ public class MapViewController {
     public void setFaulknerHospitalMap(Map faulknerHospitalMap) {
 
         this.faulknerHospitalMap = faulknerHospitalMap;
+        currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
 
     }
 
