@@ -193,9 +193,9 @@ public class MapViewController {
         zoomScrollPane.setHvalue(0.5);
         zoomScrollPane.setVvalue(0.5);
 
-        slider.setMin(0.5);
+        slider.setMin(0.75);
         slider.setMax(1.5);
-        slider.setValue(1.0);
+        slider.setValue(0.85);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -296,7 +296,8 @@ public class MapViewController {
     //    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = slider.getValue();
-        slider.setValue(sliderVal += 0.1);
+        sliderVal += 0.1;
+        slider.setValue(sliderVal);
     }
 
     //    @FXML
