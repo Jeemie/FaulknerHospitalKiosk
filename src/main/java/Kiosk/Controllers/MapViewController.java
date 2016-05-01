@@ -282,6 +282,27 @@ public class MapViewController {
 
         });
 
+        zoomIn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                double sliderVal = slider.getValue();
+                sliderVal += 0.1;
+                slider.setValue(sliderVal);
+
+            }
+        });
+
+        zoomOut.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double sliderVal = slider.getValue();
+                sliderVal -= 0.1;
+                slider.setValue(sliderVal);
+
+            }
+        });
+
     }
 
 
@@ -293,19 +314,7 @@ public class MapViewController {
 
     }
 
-    //    @FXML
-    void zoomIn(ActionEvent event) {
-        double sliderVal = slider.getValue();
-        sliderVal += 0.1;
-        slider.setValue(sliderVal);
-    }
 
-    //    @FXML
-    void zoomOut(ActionEvent event) {
-
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal + -0.1);
-    }
 
     private void zoom(double scaleValue) {
 
