@@ -4,10 +4,7 @@ import Map.Enums.MapState;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
-import Map.Exceptions.DefaultFileDoesNotExistException;
-import Map.Exceptions.FloorDoesNotExistException;
-import Map.Exceptions.NoPathException;
-import Map.Exceptions.NodeDoesNotExistException;
+import Map.Exceptions.*;
 import Map.Memento.*;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
@@ -212,22 +209,41 @@ public class Map implements Observer {
 
             LOGGER.debug("Edge could not be added because the currentLocationNode was null");
 
+            return;
+
         }
 
         if(this.currentAdjacentNode == null) {
 
             LOGGER.debug("Edge could not be added because the currentAdjacentNode was null");
 
+            return;
+
         }
 
-        this.currentLocationNode.addEdge(currentAdjacentNode);
+        if(this.currentLocationNode.equals(currentAdjacentNode)) {
 
-        // Redraw Edge
-        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+            LOGGER.debug("Edge could not be added because the currentAdjacentNode and the currentLocationNode are the same");
 
-        // Update Observers
-        this.currentAdjacentLocationNodes.add(currentAdjacentNode);
+            return;
+
+        }
+
+        try {
+
+            this.currentLocationNode.addEdge(currentAdjacentNode);
+
+            // Redraw Edge
+            this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+            this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+            // Update Observers
+            this.currentAdjacentLocationNodes.add(currentAdjacentNode);
+
+        } catch(EdgeAlreadyExistsException e) {
+
+            e.printStackTrace();
+        }
 
     }
 
@@ -869,14 +885,29 @@ public class Map implements Observer {
                             if(!associatedLocationNode.equals(locationNode1)) {
 
                                 // Add the edge to locationNode 1
-                                associatedLocationNode.addEdge(locationNode1);
+                                try {
+
+                                    associatedLocationNode.addEdge(locationNode1);
+
+                                } catch (EdgeAlreadyExistsException e) {
+
+                                    e.printStackTrace();
+
+                                }
 
                             }
                             //If the assiciatedLocationNode does not equal locationNode2
                             else if (!associatedLocationNode.equals(locationNode2)) {
 
                                 // Add the edge to locationNode 2
-                                associatedLocationNode.addEdge(locationNode2);
+                                try {
+
+                                    associatedLocationNode.addEdge(locationNode2);
+
+                                } catch (EdgeAlreadyExistsException e) {
+
+                                    e.printStackTrace();
+                                }
 
                             }
 

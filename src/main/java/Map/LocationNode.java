@@ -7,6 +7,7 @@ import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
 import Map.EventHandlers.LocationNodeDraggedEventHandler;
+import Map.Exceptions.EdgeAlreadyExistsException;
 import Map.Exceptions.NodeDoesNotExistException;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -416,7 +417,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
+    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException, EdgeAlreadyExistsException {
 
         if (adjacentNode == null) {
 
@@ -430,9 +431,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             if (edge.edgeExists(this, adjacentNode)) {
 
                 // Edge has already been added
-                LOGGER.error("Cannot add new edge. Edge already exists.");
+                throw new EdgeAlreadyExistsException(this, adjacentNode);
 
-                return;
             }
         }
 
