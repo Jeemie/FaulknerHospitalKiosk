@@ -25,10 +25,6 @@ public class KioskOverviewController {
     @FXML
     private TextField searchTextBox;
 
-    private int counter;
-
-    @FXML
-    private Label dontTouchMe;
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -70,17 +66,6 @@ public class KioskOverviewController {
 
         });
 
-        searchTextBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                counter +=1 ;
-
-                if (counter == 10){
-
-                    dontTouchMe.setText("Fuck youuu");
-                }
-            }
-        });
     }
 
     /**
