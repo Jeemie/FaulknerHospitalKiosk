@@ -28,13 +28,13 @@
                     </children></StackPane>
             </content>
         </ScrollPane>
-        <TextField fx:id="searchTextField" layoutX="21.0" layoutY="58.0" prefHeight="40.0" prefWidth="210.0" promptText="Search..." AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="42.0">
+        <TextField fx:id="searchTextField" layoutX="21.0" layoutY="58.0" prefHeight="40.0" prefWidth="210.0" promptText="%search" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="42.0">
             <font>
                 <Font size="18.0" />
             </font>
         </TextField>
         <AnchorPane layoutX="697.0" layoutY="759.0" />
-        <TitledPane animated="false" layoutX="14.0" layoutY="155.0" prefWidth="210.0" text="Textual Direction" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="155.0">
+        <TitledPane animated="false" layoutX="14.0" layoutY="155.0" prefWidth="210.0" text="%textualDirections" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="155.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
@@ -46,7 +46,7 @@
                 <Font size="18.0" />
             </font>
         </TitledPane>
-        <Label fx:id="clock" layoutX="25.0" layoutY="110.0" prefHeight="22.0" prefWidth="161.0" text="clock" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="105.0">
+        <Label fx:id="clock" layoutX="25.0" layoutY="110.0" prefHeight="22.0" prefWidth="161.0" text="" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="105.0">
             <font>
                 <Font size="18.0" />
             </font></Label>
@@ -81,17 +81,17 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" text="Back to Home Screen" GridPane.columnIndex="1">
+                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" text="%backToHome" GridPane.columnIndex="1">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Floor Up" GridPane.columnIndex="3">
+                        <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorUp" GridPane.columnIndex="3">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Floor Down" GridPane.columnIndex="4">
+                        <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorDown" GridPane.columnIndex="4">
                             <font>
                                 <Font size="18.0" />
                             </font>

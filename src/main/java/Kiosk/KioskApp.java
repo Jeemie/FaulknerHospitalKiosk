@@ -90,9 +90,10 @@ public class KioskApp extends Application {
 
         this.primaryStage.setTitle("Pathfinding Application");
 
+        // TODO change after debugging and drop-down menu is added
         // English language, United States
-        language = "en";
-        country = "US";
+        language = "sp";
+        country = "VE";
 
         // Create new locale for the specified language and country
         currentLocale = new Locale(language, country);
@@ -146,6 +147,7 @@ public class KioskApp extends Application {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
+            loader.setResources(labels);
             AnchorPane kioskOverview = loader.load();
 
             // Set kiosk overview into the center of root layout.
@@ -259,6 +261,7 @@ public class KioskApp extends Application {
             // Load SearchScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
+            loader.setResources(labels);
             AnchorPane page = loader.load();
 
             // Replace KioskOverview with userUI3.
@@ -299,6 +302,7 @@ public class KioskApp extends Application {
             // Load DirectoryScreen
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/DirectoryScreen.fxml"));
+            loader.setResources(labels);
             AnchorPane page = loader.load();
 
             primaryStage.setTitle("Directory");
@@ -332,6 +336,7 @@ public class KioskApp extends Application {
             // Load MapView
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/MapView.fxml"));
+            loader.setResources(labels);
             AnchorPane page = loader.load();
 
             // Replaces previous screen with userUI4.
@@ -370,6 +375,7 @@ public class KioskApp extends Application {
             // Load About Page.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/AboutPage.fxml"));
+            loader.setResources(labels);
             AnchorPane page = loader.load();
 
             // Set kiosk overview into the center of root layout.
@@ -395,6 +401,7 @@ public class KioskApp extends Application {
             // Load KioskOverview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
+            loader.setResources(labels);
             AnchorPane page = loader.load();
 
             // Replace previous screen with KioskOverview.

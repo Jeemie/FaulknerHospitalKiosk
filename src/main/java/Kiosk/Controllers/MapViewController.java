@@ -180,8 +180,8 @@ public class MapViewController {
             @Override
             public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                clock.setText("Current Time: " + sdf.format(cal.getTime()));
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mma");
+                clock.setText(sdf.format(cal.getTime()));
             }
         }));
 

@@ -12,12 +12,12 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label layoutX="455.0" layoutY="47.0" text="About the Developers">
+        <Label layoutX="455.0" layoutY="47.0" text="%about">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
         </Label>
-        <Label layoutX="345.0" layoutY="148.0" text="WPI Computer Science Department:  ">
+        <Label layoutX="345.0" layoutY="148.0" text="%csDepartment">
             <font>
                 <Font size="18.0" />
             </font>
