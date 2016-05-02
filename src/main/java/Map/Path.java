@@ -311,6 +311,7 @@ public class Path {
 
                 elevator = secondLNode;
 
+                currentRelativeDirection = RelativeDirection.ELEVATOR;
                 currentTextualDirection = "Take the elevator to " + elevator.getCurrentFloor().getFloorName();
 
                 endElevator = false;

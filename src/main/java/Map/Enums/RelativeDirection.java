@@ -7,7 +7,7 @@ import Map.Map;
  */
 public enum RelativeDirection {
 
-    STRAIGHT("/icons/left.png"),
+    STRAIGHT("/icons/forward.png"),
     RIGHT("/icons/right.png"),
     BACK("/icons/backward.png"),
     LEFT("/icons/left.png"),
