@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1323.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.MapViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1323.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.MapViewController">
     <children>
         <ScrollPane fx:id="zoomScrollPane" fitToHeight="true" fitToWidth="true" layoutX="199.0" layoutY="23.0" prefHeight="712.0" prefWidth="1073.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="238.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
             <content>
@@ -86,12 +86,12 @@
                             <Font size="18.0" />
                         </font>
                     </Button>
-                    <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Floor Up" GridPane.columnIndex="3">
+                    <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Next" GridPane.columnIndex="4">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Button>
-                    <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Floor Down" GridPane.columnIndex="4">
+                    <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="Previous" GridPane.columnIndex="3">
                         <font>
                             <Font size="18.0" />
                         </font>
