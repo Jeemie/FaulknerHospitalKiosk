@@ -316,6 +316,8 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal =3);
                 double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
                 double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
                 double scrollH =  node.getLocation().getX() / mapWidth;
