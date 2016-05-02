@@ -337,7 +337,7 @@ public class KioskApp extends Application {
             return controller.isOkClicked();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();    
             return false;
         }
 
