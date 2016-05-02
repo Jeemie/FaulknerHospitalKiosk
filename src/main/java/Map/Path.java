@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import Map.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class Path {
 
     private ArrayList<ArrayList<LocationNode>> splitPath;
 
-    private ArrayList<Directions> directions;
+    private ArrayList<Direction> directions;
 
     private double xMin, xMax,yMin,yMax,xAverage, yAverage;
 
