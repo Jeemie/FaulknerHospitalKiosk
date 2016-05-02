@@ -646,20 +646,13 @@ public class Map implements Observer {
 
     public void setupDirections(ListView textualDirections) {
 
-        try {
-            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
-            if(this.currentPath  == null) {
-                LOGGER.debug("No path");
-            } else {
-                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
-                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
-                textualDirections.setItems(textualDirectionStrings);
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        ObservableList<Direction> destinations = FXCollections.observableArrayList();
+        destinations.addAll(this.currentPath.getDirections());
+
+        textualDirections.setItems(destinations);
 
     }
+
 
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
