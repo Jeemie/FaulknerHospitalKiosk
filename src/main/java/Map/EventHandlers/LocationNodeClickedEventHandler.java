@@ -118,6 +118,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
             case REMOVENODE:
 
                 Map map = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
+                map.setCurrentLocationNode(this.locationNode);
                 map.removeLocationNode();
                 currentMap.setCurrentMapState(MapState.ADMIN);
 

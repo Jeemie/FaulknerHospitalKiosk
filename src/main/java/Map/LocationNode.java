@@ -363,7 +363,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 
@@ -649,5 +649,10 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public boolean isSameFloor(LocationNode locationNode) {
 
         return this.currentFloor.equals(locationNode.getCurrentFloor());
+    }
+
+    public Label getIconLabel() {
+
+        return iconLabel;
     }
 }
