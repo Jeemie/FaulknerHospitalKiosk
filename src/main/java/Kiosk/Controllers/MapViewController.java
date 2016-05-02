@@ -27,6 +27,8 @@ import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import Map.LocationNode;
+import Map.Enums.DirectionIcons;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
