@@ -4,6 +4,7 @@ import Map.Enums.MapState;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
+import Map.EventHandlers.EditDestinationEventHandler;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
@@ -117,6 +118,7 @@ public class Map implements Observer {
     private ObservableList<LocationNode> currentKioskLocationNodes;
 
 
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Map.class);
 
@@ -166,7 +168,7 @@ public class Map implements Observer {
 
         Building newBuilding = new Building(name, this);
 
-        this.currentBuilding = newBuilding;
+        this.setCurrentBuilding(newBuilding);
         this.mapBuildings.add(newBuilding);
         this.buildingIdList.add(newBuilding.getUniqueID());
 
@@ -202,6 +204,46 @@ public class Map implements Observer {
         this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
 
         this.currentFloorLocationNodes.add(this.currentLocationNode);
+
+    }
+
+    public void addMultiLevelLocationNode(String name, Location location, ImageType imageType, ArrayList<Floor> floors) {
+
+
+        LocationNode current = floors.get(0).addLocationNode(name, location, imageType);
+        LocationNode next;
+
+        if (this.currentFloor.equals(floors.get(0))) {
+
+            setCurrentLocationNode(current);
+
+        }
+
+        for (int i = 0; i < floors.size() - 1; i++) {
+
+            next = floors.get(i+1).addLocationNode(name, location, imageType);
+
+            try {
+
+                current.addEdge(next);
+
+            } catch (NodeDoesNotExistException e) {
+
+                LOGGER.debug("Unable to add all off the Location Nodes to the multi level path.", e);
+
+                break;
+
+            }
+
+            current = next;
+
+            if (this.currentFloor.equals(floors.get(i+1))) {
+
+                setCurrentLocationNode(current);
+
+            }
+
+        }
 
     }
 
@@ -241,7 +283,7 @@ public class Map implements Observer {
             return;
         }
 
-        this.currentLocationNode.addDestination(name, destinationType);
+        this.setCurrentDestination(this.currentLocationNode.addDestination(name, destinationType));
 
     }
 
@@ -354,6 +396,7 @@ public class Map implements Observer {
             this.directoryList.setAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
 
         }
+
         return directoryList;
     }
 
@@ -418,6 +461,7 @@ public class Map implements Observer {
             this.directoryList.setAll(building.getBuildingDestinations(DestinationType.SERVICE));
 
         }
+
         return directoryList;
     }
 
@@ -465,6 +509,7 @@ public class Map implements Observer {
 
         this.currentFloorLocationNodePane.getChildren().clear();
         this.currentFloorEdgePane.getChildren().clear();
+        this.currentBuildingDestinations.setAll(this.currentBuilding.getBuildingDestinations());
 
     }
 
@@ -561,16 +606,22 @@ public class Map implements Observer {
 
         UpdateType updateType = ((UpdateType) arg);
 
+        LOGGER.info(updateType.toString());
+
         switch (updateType) {
 
             case DESTINATIONCHANGE:
 
                 // TODO cleanup by only modifying one destination
-                this.currentBuildingDestinations.clear();
-                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
 
                 this.currentKioskLocationNodes.clear();
                 this.currentKioskLocationNodes.addAll(this.currentBuilding.getBuildingLocationNodes(ImageType.KIOSK));
+                if (this.currentLocationNode != null) {
+
+                    this.currentLocationNodeDestinations.clear();
+                    this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
+
+                }
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
@@ -625,8 +676,7 @@ public class Map implements Observer {
 
             case BUILDINGADDED:
 
-                this.currentBuildingDestinations.clear();
-                this.currentBuildingDestinations.addAll(this.currentBuilding.getBuildingDestinations());
+                this.buildingChangeUpdater(this.currentBuilding);
 
 
                 this.currentKioskLocationNodes.clear();
@@ -844,7 +894,7 @@ public class Map implements Observer {
         for(BuildingMemento buildingMemento : mapMemento.getBuildingMementos()) {
 
             // TODO check if the currentBuilding is actually changing or not, since map already has all it's buildings.
-            map.currentBuilding = map.getMapBuildings().get(map.getMapBuildings().size() - 1);
+            map.setCurrentBuilding(map.getMapBuildings().get(map.getMapBuildings().size() - 1));
 
             for(FloorMemento floorMemento : buildingMemento.getFloorMomentos()) {
 
@@ -991,37 +1041,47 @@ public class Map implements Observer {
         // TODO possibly refresh the observable lists
         // TODO possible highlight the current LocationNode
 
-        LOGGER.info("set current destination:" + destination.toString());
-
+//        LOGGER.info("set current destination:" + destination.toString());
+        this.destinationChangeUpdater(destination);
         this.currentDestination = destination;
-
         this.locationNodeUpdater(currentDestination.getCurrentLocationNode());
         this.currentLocationNode = currentDestination.getCurrentLocationNode();
 
         this.floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.buildingChangeUpdater(currentFloor.getCurrentBuilding());
         this.currentBuilding = currentFloor.getCurrentBuilding();
+
+        this.destinationChangeUpdater(destination);
 
     }
 
-//    private void destinationChangeUpdater(Destination newDestination) {
+    private void destinationChangeUpdater(Destination newDestination) {
+
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
+
+        if (newDestination == null) {
+
+            return;
+        }
+
+//        if (f) {
 //
-//        if ((this.currentDestination == null) || (!this.currentDestination.equals(newDestination))) {
+//            this.currentBuildingDestinations.remove(newDestination);
+//            this.currentLocationNodeDestinations.add(newDestination);
 //
-//            this.currentFloorDestinations.clear();
-//            this.currentFloorDestinations.addAll(newDestination.getFloorDestinations());
+//            this.currentFloorDestinations.remove(newDestination);
+//            this.currentFloorDestinations.add(newDestination);
 //
-//            LOGGER.info("Updating current floor destinations: " + currentFloorDestinations.size());
-//
-//            this.currentFloorLocationNodes.clear();
-//            this.currentFloorLocationNodes.addAll(newFloor.getLocationNodes());
-//
-//
-//            LOGGER.info("Updating current floor location nodes: " +  currentFloorLocationNodes.size());
+//            this.currentLocationNodeDestinations.remove(newDestination);
+//            this.currentLocationNodeDestinations.add(newDestination);
 //
 //        }
-//
-//    }
+
+    }
 
     public void setCurrentLocationNode(LocationNode locationNode) {
 
@@ -1033,6 +1093,7 @@ public class Map implements Observer {
         this.currentLocationNode = locationNode;
         floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
+        this.buildingChangeUpdater(currentFloor.getCurrentBuilding());
         this.currentBuilding = currentFloor.getCurrentBuilding();
 
     }
@@ -1071,6 +1132,7 @@ public class Map implements Observer {
         this.currentDestination = null;
         this.currentLocationNode = null;
         this.currentFloor = floor;
+        this.buildingChangeUpdater(currentFloor.getCurrentBuilding());
         this.currentBuilding = currentFloor.getCurrentBuilding();
 
     }
@@ -1106,7 +1168,29 @@ public class Map implements Observer {
         this.currentDestination = null;
         this.currentLocationNode = null;
         this.currentFloor = null;
+        this.buildingChangeUpdater(building);
         this.currentBuilding = building;
+
+    }
+
+    private void buildingChangeUpdater(Building newBuilding) {
+
+        if (currentMapState.equals(MapState.NORMAL)) {
+
+            return;
+        }
+
+        if ((this.currentBuilding == null) || (!this.currentBuilding.equals(newBuilding))) {
+
+
+            this.currentBuildingDestinations.clear();
+            this.currentBuildingDestinations.addAll(newBuilding.getBuildingDestinations());
+
+            this.currentBuildingFloors.clear();
+            this.currentBuildingFloors.addAll(newBuilding.getFloors());
+
+        }
+
 
     }
 
@@ -1150,5 +1234,10 @@ public class Map implements Observer {
     public ObservableList<LocationNode> getCurrentKioskLocationNodes() {
 
         return currentKioskLocationNodes;
+    }
+
+    public Destination getCurrentDestination() {
+
+        return currentDestination;
     }
 }
