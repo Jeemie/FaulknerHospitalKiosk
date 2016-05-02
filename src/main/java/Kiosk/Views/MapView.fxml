@@ -96,9 +96,9 @@
                                 <Font size="18.0" />
                             </font>
                         </Button>
-                        <Label fx:id="currentFloorLabel" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2">
+                        <Label fx:id="currentFloorLabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
                     </children>
