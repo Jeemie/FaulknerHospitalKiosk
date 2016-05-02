@@ -488,6 +488,8 @@ public class Map implements Observer {
         // English, United States locale
         Locale enLocale = new Locale("en", "US");
 
+
+
         // Create ResourceBundle containing locale-specific translatable text
         labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
 

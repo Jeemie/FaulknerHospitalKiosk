@@ -341,8 +341,6 @@ public class MapViewController {
 
         });
 
-
-
         directionsList.setCellFactory(listView -> new ListCell<Direction>() {
 
             private final ImageView imageView = new ImageView();
@@ -461,6 +459,7 @@ public class MapViewController {
     }
 
     public void shutOff() {
+
         atimer.cancel();
         atimer.purge();
         timer.cancel();
@@ -468,6 +467,7 @@ public class MapViewController {
         running = false;
         timerThread.interrupt();
         kioskApp.reset();
+
     }
 
 }

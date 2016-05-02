@@ -93,8 +93,8 @@ public class KioskApp extends Application {
 
         // TODO change after debugging and drop-down menu is added
         // English language, United States
-        language = "sp";
-        country = "VE";
+        language = "en";
+        country = "US";
 
         // Create new locale for the specified language and country
 
@@ -474,7 +474,8 @@ public class KioskApp extends Application {
 /*            Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
-            primaryStage.show();*/
+            primaryStage.show();
+            */
 
             // Give controller access to Main App.
             KioskOverviewController controller = loader.getController();

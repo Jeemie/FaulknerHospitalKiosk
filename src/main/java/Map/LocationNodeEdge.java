@@ -2,6 +2,9 @@ package Map;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +97,13 @@ public class LocationNodeEdge extends Observable {
             this.edgeLine = new Line(this.locationNode1.getLocation().getX(), this.locationNode1.getLocation().getY(),
                     this.locationNode2.getLocation().getX(), this.locationNode2.getLocation().getY());
 
-            this.edgeLine.setStrokeWidth(2);
+            this.edgeLine.setStrokeWidth(5);
+            this.edgeLine.getStrokeDashArray().addAll(2d,15d);
+            this.edgeLine.setStyle("-fx-stroke: red;");
+            this.edgeLine.setStrokeLineJoin(StrokeLineJoin.MITER);
+            this.edgeLine.setStrokeLineCap(StrokeLineCap.ROUND);
+            this.edgeLine.setStrokeType(StrokeType.CENTERED);
+            this.edgeLine.smoothProperty();
 
             pane.getChildren().add(this.edgeLine);
 
