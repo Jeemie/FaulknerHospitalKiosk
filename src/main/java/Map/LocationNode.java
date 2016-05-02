@@ -369,8 +369,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         if (this.iconLabel != null) {
 
             iconLabel.setBorder(
-                    new Border(new BorderStroke(Color.CYAN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-                            new BorderWidths(2))));
+                    new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+                            new BorderWidths(4))));
 
             this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2) + 1);
             this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2) + 1);
@@ -397,7 +397,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 

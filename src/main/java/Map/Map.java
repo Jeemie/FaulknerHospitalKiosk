@@ -397,6 +397,8 @@ public class Map implements Observer {
         this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
         this.currentDestination = null;
 
+        this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
     }
@@ -856,6 +858,7 @@ public class Map implements Observer {
 
             case LOCATIONNODEREMOVED:
 
+//                this.currentFloorLocationNodePane.getChildren().remove(this.currentLocationNode.;
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
                 this.currentLocationNode.getEdges().clear();
                 this.setCurrentLocationNode(null);
@@ -885,7 +888,11 @@ public class Map implements Observer {
 
             case EDGEREMOVED:
 
-                this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+                if (this.currentLocationNodeEdge != null) {
+
+                    this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+
+                }
 
                 break;
 
@@ -1305,6 +1312,12 @@ public class Map implements Observer {
         this.currentDestination = null;
         locationNodeUpdater(locationNode);
         this.currentLocationNode = locationNode;
+
+        if (currentLocationNode == null) {
+
+            return;
+        }
+
         floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
         this.buildingChangeUpdater(currentFloor.getCurrentBuilding());
@@ -1318,6 +1331,11 @@ public class Map implements Observer {
 
             return;
 
+        }
+
+        if (newLocationNode == null) {
+
+            return;
         }
 
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
