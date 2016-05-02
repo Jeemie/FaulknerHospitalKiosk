@@ -1,19 +1,21 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.Enums.DestinationType;
-import Map.Map;
+import Map.*;
 import Map.Destination;
-import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +24,8 @@ import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -127,7 +131,7 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    if (counter == 60) {
+                    if (counter == 60000) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -180,8 +184,8 @@ public class MapViewController {
             @Override
             public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                clock.setText("Current Time: " + sdf.format(cal.getTime()));
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mma");
+                clock.setText(sdf.format(cal.getTime()));
             }
         }));
 
@@ -190,12 +194,11 @@ public class MapViewController {
 
 //        setListeners();
 
-        zoomScrollPane.setHvalue(0.5);
-        zoomScrollPane.setVvalue(0.5);
+
 
         slider.setMin(0.5);
-        slider.setMax(1.5);
-        slider.setValue(1.0);
+        slider.setMax(5.0);
+        slider.setValue(2.5);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -230,6 +233,8 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathPreviousFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
+
 
             }
         });
@@ -262,7 +267,9 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+                counter = 0;
                 faulknerHospitalMap.pathNextFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
 
@@ -281,29 +288,121 @@ public class MapViewController {
 
         });
 
+
+        zoomIn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal += 0.1);
+
+            }
+        });
+
+        zoomOut.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal -= 0.1);
+
+            }
+        });
+
+
+        directionsList.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+        @Override
+            public void handle(MouseEvent event) {
+
+                LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal =3);
+                double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
+                double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
+                double scrollH =  node.getLocation().getX() / mapWidth;
+                double scrollV = node.getLocation().getY() / mapHeight;
+                final Timeline timeline = new Timeline();
+                final KeyValue kv1 = new KeyValue(zoomScrollPane.hvalueProperty(), scrollH);
+                final KeyValue kv2 = new KeyValue(zoomScrollPane.vvalueProperty(), scrollV);
+                final KeyFrame kf = new KeyFrame(Duration.millis(500), kv1, kv2);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+
+
+
+            }
+
+        });
+
+
+
+        directionsList.setCellFactory(listView -> new ListCell<Direction>() {
+
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(25);
+                imageView.setFitWidth(25);
+                imageView.setPreserveRatio(true);
+            }
+
+            @Override
+            public void updateItem(Direction item, boolean empty) {
+
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+
+                    setText(item.getDirectionString());
+
+                    try {
+
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources" +
+                                item.getRelativeDirection().getResourceFileName()).toString(), true);
+
+                        imageView.setImage(icon);
+
+                    } catch (MalformedURLException e) {
+
+                        LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
+
+                    }
+
+                    setGraphic(imageView);
+                }
+            }
+        });
     }
 
-
     public void setListeners() {
+
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
 
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
+
+        if(this.faulknerHospitalMap.getCurrentPath().getSplitPath().size()!=1){
+
+            this.changeFloorButtonDown.setVisible(true);
+            this.changeFloorButtonUp.setVisible(true);
+        }
+        else{
+
+            this.changeFloorButtonDown.setVisible(false);
+            this.changeFloorButtonUp.setVisible(false);
+        }
+
+        currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
+
+        this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+        this.faulknerHospitalMap.setupDirections(directionsList);
 
     }
 
-    //    @FXML
-    void zoomIn(ActionEvent event) {
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal += 0.1);
-    }
-
-    //    @FXML
-    void zoomOut(ActionEvent event) {
-
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal + -0.1);
-    }
 
     private void zoom(double scaleValue) {
 
@@ -369,6 +468,7 @@ public class MapViewController {
     }
 
     public void shutOff() {
+
         atimer.cancel();
         atimer.purge();
         timer.cancel();
@@ -376,6 +476,7 @@ public class MapViewController {
         running = false;
         timerThread.interrupt();
         kioskApp.reset();
+
     }
 
 }

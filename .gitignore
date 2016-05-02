@@ -5,6 +5,7 @@
 filePath
 src/main/main1.iml
 src/test/test.iml
+resources/default.json
 
 ### OSX ###
 .DS_Store
