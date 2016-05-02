@@ -34,6 +34,7 @@ public class KioskApp extends Application {
 
     // Identifies language and country
     protected Locale currentLocale;
+    protected Locale currentLocale1;
 
     // Contain translatable labels
     protected ResourceBundle labels;
@@ -96,7 +97,8 @@ public class KioskApp extends Application {
         country = "VE";
 
         // Create new locale for the specified language and country
-        currentLocale = new Locale(language, country);
+
+        currentLocale=  new Locale(language,country);
 
         // Check if departments and services should be translated
         if(!language.equals("en")) {
@@ -399,9 +401,33 @@ public class KioskApp extends Application {
         }
     }
 
+    public void showAboutPageanotherLanguage(Locale locale) {
+        try {
+            // Load About Page.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AboutPage.fxml"));
+            loader.setResources(ResourceBundle.getBundle("LabelsBundle", locale));
+            loader.setResources(labels);
+            AnchorPane page = loader.load();
+
+            // Set kiosk overview into the center of root layout.
+            primaryStage.setTitle("About the Developers");
+            primaryStage.getScene().setRoot(page);
+
+            // Give the controller access to the main app.
+            AboutPageController controller = loader.getController();
+            controller.setKioskApp(this);
+//            controller.setListeners();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Resets the screen to the KioskOverview
      *
+     * @param
      */
     public void reset() {
         try {
@@ -409,7 +435,9 @@ public class KioskApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
             loader.setResources(labels);
+
             AnchorPane page = loader.load();
+
 
             // Replace previous screen with KioskOverview.
             primaryStage.setTitle("Pathfinding Application");
@@ -428,5 +456,74 @@ public class KioskApp extends Application {
         }
 
     }
+    public void changeLanguage(Locale currentLocale) {
+        try {
+            // Load KioskOverview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/KioskOverview.fxml"));
+            loader.setResources(labels);
+            loader.setResources(ResourceBundle.getBundle("LabelsBundle", currentLocale));
+            labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
+
+            AnchorPane page = loader.load();
+
+
+            // Replace previous screen with KioskOverview.
+            primaryStage.setTitle("Pathfinding Application");
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();*/
+
+            // Give controller access to Main App.
+            KioskOverviewController controller = loader.getController();
+            controller.setKioskApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void  setSpanish(){
+        System.out.println("Language: Spanish");
+         language = "sp";
+         country  = "VE";
+        currentLocale = new Locale(language,country);
+        System.out.println(language);
+        System.out.println(country);
+
+
+    }
+    public void setEnglish(){
+        language = "en";
+        country  = "US";
+        System.out.println(language);
+        System.out.println(country);
+
+
+
+    }
+
+    public void setVietnamese(){
+        language = "vi";
+        country  = "VN";
+        System.out.println(language);
+        System.out.println(country);
+
+
+
+    }
+    public void setChinese(){
+        language = "zh";
+        country  = "CHT";
+        System.out.println(language);
+        System.out.println(country);
+
+
+
+    }
+
 
 }
