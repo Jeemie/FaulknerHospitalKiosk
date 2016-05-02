@@ -962,6 +962,8 @@ public class AdminDashboardController {
                 FileOutputStream fos;
                 byte[] fileData;
 
+                String filename = addFloorNameTextField.getText() + ".png";
+
                 try {
 
                     url = new URL(addFloorURLTextField.getText()); //File Location goes here
@@ -974,8 +976,7 @@ public class AdminDashboardController {
                     }
                     dis.close(); // close the data input stream
 
-                    File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" +
-                            addFloorNameTextField.getText() + ".jpg");
+                    File newFloorImage = new File(System.getProperty("user.dir") + "/resources/floors/" + filename);
 
                     newFloorImage.createNewFile();
 
@@ -993,7 +994,7 @@ public class AdminDashboardController {
 
                 }
 
-                faulknerHospitalMap.addFloor(addFloorNameTextField.getText(), addFloorURLTextField.getText());
+                faulknerHospitalMap.addFloor(addFloorNameTextField.getText(), filename);
 
                 lockTabPane = false;
 
