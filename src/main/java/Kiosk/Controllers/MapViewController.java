@@ -224,11 +224,12 @@ public class MapViewController {
                 }
             }
         });
-
-
+        
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+
+                counter = 0;
 
                 faulknerHospitalMap.pathPreviousFloor();
 
@@ -263,6 +264,8 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+                counter = 0;
+
                 faulknerHospitalMap.pathNextFloor();
 
             }
@@ -295,15 +298,22 @@ public class MapViewController {
 
     //    @FXML
     void zoomIn(ActionEvent event) {
+
+        counter = 0;
+
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal += 0.1);
+
     }
 
     //    @FXML
     void zoomOut(ActionEvent event) {
 
+        counter = 0;
+
         double sliderVal = slider.getValue();
         slider.setValue(sliderVal + -0.1);
+
     }
 
     private void zoom(double scaleValue) {

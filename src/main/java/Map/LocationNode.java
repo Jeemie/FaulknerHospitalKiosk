@@ -11,7 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,13 +118,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * @param destinationType
      * @param name
      */
-    public void addDestination(String name, DestinationType destinationType) {
+    public Destination addDestination(String name, DestinationType destinationType) {
 
-        this.destinations.add(new Destination(name, destinationType, this));
+        Destination newDestination = new Destination(name, destinationType, this);
+
+        this.destinations.add(newDestination);
 
         setChanged();
         notifyObservers(UpdateType.DESTINATIONCHANGE);
 
+        return newDestination;
     }
 
     /**
@@ -356,6 +360,34 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+    public void adminDrawCurrent() {
+
+        if (this.iconLabel != null) {
+
+            iconLabel.setBorder(
+                    new Border(new BorderStroke(Color.CYAN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+                            new BorderWidths(2))));
+
+            this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2) + 1);
+            this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2) + 1);
+
+        }
+
+
+    }
+
+    public void adminUndrawCurrent() {
+
+        if (this.iconLabel != null) {
+
+            iconLabel.setBorder(null);
+
+            this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2));
+            this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2));
+
+        }
+
+    }
 
 
 
@@ -653,4 +685,5 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         return iconLabel;
     }
+
 }
