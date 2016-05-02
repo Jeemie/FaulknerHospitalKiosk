@@ -6,7 +6,6 @@ import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
-import Map.EventHandlers.LocationNodeDraggedEventHandler;
 import Map.Exceptions.NodeDoesNotExistException;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -256,7 +255,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         pane.getChildren().add(this.iconLabel);
 
         this.iconLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
-        this.iconLabel.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
 
     }
 

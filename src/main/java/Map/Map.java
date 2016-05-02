@@ -1,8 +1,8 @@
 package Map;
 
-import Map.Enums.MapState;
 import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
+import Map.Enums.MapState;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.EditDestinationEventHandler;
 import Map.Exceptions.DefaultFileDoesNotExistException;
@@ -13,20 +13,24 @@ import Map.Memento.*;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
 import Map.SearchAlgorithms.ISearchAlgorithm;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.File;
 import java.io.IOException;
@@ -512,6 +516,32 @@ public class Map implements Observer {
         this.currentFloorLocationNodePane.getChildren().clear();
         this.currentFloorEdgePane.getChildren().clear();
         this.currentBuildingDestinations.setAll(this.currentBuilding.getBuildingDestinations());
+
+        this.currentFloorLocationNodePane.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (currentMapState != MapState.MOVENODE) {
+
+                    return;
+                }
+                if(currentLocationNode == null){
+
+                    return;
+                }
+
+                if (event.getTarget().equals(currentLocationNode.getIconLabel())) {
+
+                    currentLocationNode.getLocation().setX(event.getX());
+                    currentLocationNode.getLocation().setY(event.getY());
+
+                    LOGGER.info("Moving location node to x: " + event.getX() + " y: " + event.getY());
+                }
+
+            }
+
+        });
 
     }
 
