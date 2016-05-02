@@ -397,7 +397,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 
