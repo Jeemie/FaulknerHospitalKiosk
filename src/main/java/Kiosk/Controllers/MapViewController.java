@@ -12,8 +12,10 @@ import Map.Destination;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -326,6 +328,30 @@ public class MapViewController {
 
             }
         });
+
+        directionsList.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                LocationNode node = ((LocationNode) directionsList.getSelectionModel().getSelectedItem());
+                double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
+                double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
+                double scrollH =  node.getLocation().getX() / mapWidth;
+                double scrollV = node.getLocation().getY() / mapHeight;
+                final Timeline timeline = new Timeline();
+                final KeyValue kv1 = new KeyValue(zoomScrollPane.hvalueProperty(), scrollH);
+                final KeyValue kv2 = new KeyValue(zoomScrollPane.vvalueProperty(), scrollV);
+                final KeyFrame kf = new KeyFrame(Duration.millis(500), kv1, kv2);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+
+
+
+            }
+
+        });
+
 
 
         directionsList.setCellFactory(listView -> new ListCell<Direction>() {
