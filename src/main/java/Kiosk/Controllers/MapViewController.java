@@ -5,6 +5,7 @@ import Map.Enums.DestinationType;
 import Map.Map;
 import Map.Destination;
 import Map.Direction;
+import Map.*;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -318,7 +319,7 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                Map.LocationNode node = ((Map.Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
+                LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
                 double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
                 double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
                 double scrollH =  node.getLocation().getX() / mapWidth;
@@ -338,7 +339,7 @@ public class MapViewController {
 
 
 
-        directionsList.setCellFactory(listView -> new ListCell<Map.Direction>() {
+        directionsList.setCellFactory(listView -> new ListCell<Direction>() {
 
             private final ImageView imageView = new ImageView();
             {
