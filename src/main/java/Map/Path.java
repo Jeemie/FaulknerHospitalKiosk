@@ -510,7 +510,14 @@ public class Path {
 
     }
 
-//    public void getPathLocation(ArrayList<LocationNode>path){
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public ArrayList<ArrayList<LocationNode>> getSplitPath() {
+        return splitPath;
+    }
+    //    public void getPathLocation(ArrayList<LocationNode>path){
 //        yMin = path.get(0).getLocation().getY();
 //        xMin = path.get(0).getLocation().getX();
 //        yMax = path.get(0).getLocation().getY();

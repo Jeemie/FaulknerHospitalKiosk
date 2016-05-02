@@ -1,9 +1,11 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
+import Map.LocationNode;
 import Map.Direction;
 import Map.Enums.DestinationType;
 import Map.Enums.DirectionIcons;
+import Map.Floor;
 import Map.Map;
 import Map.Path;
 import Map.Destination;
@@ -42,6 +44,7 @@ public class MapViewController {
     private boolean okClicked = false;
 
     private Map faulknerHospitalMap;
+    private LocationNode currentNode;
 
     private KioskApp kioskApp;
 
@@ -53,6 +56,8 @@ public class MapViewController {
 
 
     private int numThreads = 0;
+
+    private Floor previousFLoor;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
@@ -111,6 +116,8 @@ public class MapViewController {
     private Destination currentDestination;
 
     private Group zoomGroup;
+
+    private LocationNode  repriousFloor;
 
 
     public Timer timer;
@@ -184,6 +191,9 @@ public class MapViewController {
 
 
 
+
+
+
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -237,6 +247,7 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+
                 faulknerHospitalMap.pathPreviousFloor();
                 zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
                 zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
@@ -271,6 +282,7 @@ public class MapViewController {
 
             @Override
             public void handle(MouseEvent event) {
+
 
 
                 faulknerHospitalMap.pathNextFloor();
@@ -361,12 +373,23 @@ public class MapViewController {
 
     public void setListeners() {
 
+
+
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
         zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/700-0.5);
         zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/1700-0.1);
 
+        if(this.faulknerHospitalMap.getCurrentPath().getSplitPath().size()!=1){
 
+            this.changeFloorButtonDown.setVisible(true);
+            this.changeFloorButtonUp.setVisible(true);
+        }
+        else{
+            
+            this.changeFloorButtonDown.setVisible(false);
+            this.changeFloorButtonUp.setVisible(false);
+        }
 
 
     }

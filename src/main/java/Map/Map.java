@@ -1167,4 +1167,8 @@ public class Map implements Observer {
 
         return currentKioskLocationNodes;
     }
+
+    public Path getCurrentPath() {
+        return currentPath;
+    }
 }
