@@ -110,6 +110,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                         LOGGER.error("Unable to create an edge ", e);
 
                     }
+                    currentMap.setCurrentMapState(MapState.ADMIN);
 
                 }
 

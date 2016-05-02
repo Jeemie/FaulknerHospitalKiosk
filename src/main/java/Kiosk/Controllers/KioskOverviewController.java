@@ -3,15 +3,18 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.Destination;
 import Map.Enums.DestinationType;
+import Map.Map;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.util.Locale;
 
 
 public class KioskOverviewController {
@@ -22,8 +25,14 @@ public class KioskOverviewController {
 
     private KeyCombination adminHotkey = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
 
+    private Map FauknerhospitalMap;
+
+
     @FXML
     private TextField searchTextBox;
+
+    @FXML
+    private MenuButton language;
 
     /**
      * The constructor.
@@ -38,6 +47,10 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
+
+
+
+
 
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -74,6 +87,43 @@ public class KioskOverviewController {
      */
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
+    }
+
+    @FXML
+    private void changeToSpanish(){
+        Locale spanish = new Locale("sp","VE");
+
+        kioskApp.changeLanguage(spanish);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, spanish);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, spanish);
+
+    }
+
+    @FXML
+    private void changeToEnglish(){
+        Locale english = new Locale("en","US");
+
+        kioskApp.changeLanguage(english);
+    }
+
+
+    @FXML
+    private void changetoVietnamese(){
+        Locale vietnamese = new Locale("vi","VN");
+
+        kioskApp.changeLanguage(vietnamese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, vietnamese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, vietnamese);
+    }
+
+    @FXML
+    private void changetoChinese(){
+        Locale chinese = new Locale("zh","CN");
+
+        kioskApp.changeLanguage(chinese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, chinese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, chinese);
+
     }
 
     /**

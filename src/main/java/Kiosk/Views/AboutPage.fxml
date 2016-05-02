@@ -15,7 +15,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label alignment="CENTER" layoutX="455.0" layoutY="47.0" text="About the Developers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+        <Label alignment="CENTER" layoutX="455.0" layoutY="47.0" text="%about" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
@@ -49,6 +49,7 @@
                </rowConstraints>
                <children>
                     <Label minWidth="300.0" text="WPI Computer Science Department:  ">
+                    <Label minWidth="300.0" text="%csDepartment">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -58,7 +59,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Professor:  " GridPane.rowIndex="2">
+                    <Label text="%professor" GridPane.rowIndex="2">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -68,7 +69,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Team Coach:  " GridPane.rowIndex="3">
+                    <Label text="%teamCoach" GridPane.rowIndex="3">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -78,7 +79,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Lead Software Engineer:  " GridPane.rowIndex="4">
+                    <Label text="%leadSoftwareEngineer " GridPane.rowIndex="4">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -93,7 +94,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Assistant Lead Software Engineer:  " GridPane.rowIndex="5">
+                    <Label text="%assistSoft" GridPane.rowIndex="5">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -103,12 +104,12 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Project Manager and Scrum Master:  " GridPane.rowIndex="6">
+                    <Label text="%pm" GridPane.rowIndex="6">
                         <font>
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Product Owner:  " GridPane.rowIndex="7">
+                    <Label text="%po" GridPane.rowIndex="7">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -118,7 +119,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Test Engineer:  " GridPane.rowIndex="8">
+                    <Label text="%te" GridPane.rowIndex="8">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -128,7 +129,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Document Analyst:  " GridPane.rowIndex="9">
+                    <Label text="%docAnaly" GridPane.rowIndex="9">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -138,7 +139,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Software Engineer:  " GridPane.rowIndex="10">
+                    <Label text="%softEng1" GridPane.rowIndex="10">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -148,7 +149,7 @@
                             <Font size="18.0" />
                         </font>
                     </Label>
-                    <Label text="Software Engineer:  " GridPane.rowIndex="11">
+                    <Label text="%softEng2" GridPane.rowIndex="11">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -167,12 +168,12 @@
             </GridPane>
          </children>
       </GridPane>
-        <Label alignment="CENTER" layoutX="504.0" layoutY="652.0" minWidth="600.0" text="Special Thanks to Andrew Shinn, " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Label alignment="CENTER" layoutX="504.0" layoutY="652.0" minWidth="600.0" text="%specialThanksTo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="373.0" layoutY="692.0" minWidth="600.0" text="The representative of Brigham and Women's Hospital for our team" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Label alignment="CENTER" layoutX="373.0" layoutY="692.0" minWidth="600.0" text="%representative" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                 <Font size="18.0" />
             </font>

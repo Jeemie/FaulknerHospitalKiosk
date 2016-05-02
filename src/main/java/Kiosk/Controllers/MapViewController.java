@@ -1,15 +1,8 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
-import Map.LocationNode;
-import Map.Direction;
-import Map.Enums.DestinationType;
-import Map.Enums.DirectionIcons;
-import Map.Floor;
-import Map.Map;
-import Map.Path;
+import Map.*;
 import Map.Destination;
-import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -46,7 +39,6 @@ public class MapViewController {
     private boolean okClicked = false;
 
     private Map faulknerHospitalMap;
-    private LocationNode currentNode;
 
     private KioskApp kioskApp;
 
@@ -58,8 +50,6 @@ public class MapViewController {
 
 
     private int numThreads = 0;
-
-    private Floor previousFLoor;
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapViewController.class);
@@ -119,8 +109,6 @@ public class MapViewController {
 
     private Group zoomGroup;
 
-    private LocationNode  repriousFloor;
-
 
     public Timer timer;
     public Timer atimer;
@@ -143,7 +131,7 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    if (counter == 60) {
+                    if (counter == 60000) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -192,16 +180,12 @@ public class MapViewController {
     private void initialize() {
 
 
-
-
-
-
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                clock.setText("Current Time: " + sdf.format(cal.getTime()));
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mma");
+                clock.setText(sdf.format(cal.getTime()));
             }
         }));
 
@@ -213,8 +197,8 @@ public class MapViewController {
 
 
         slider.setMin(0.5);
-        slider.setMax(1.5);
-        slider.setValue(1.0);
+        slider.setMax(5.0);
+        slider.setValue(2.5);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -243,19 +227,15 @@ public class MapViewController {
                 }
             }
         });
-        
+
+
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                counter = 0;
-
                 faulknerHospitalMap.pathPreviousFloor();
-
-                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
-                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
-
                 currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
+
 
             }
         });
@@ -288,13 +268,8 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                faulknerHospitalMap.pathNextFloor();
-
                 counter = 0;
-
-                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
-                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
-
+                faulknerHospitalMap.pathNextFloor();
                 currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
@@ -314,6 +289,7 @@ public class MapViewController {
 
         });
 
+
         zoomIn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -328,14 +304,15 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
                 double sliderVal = slider.getValue();
-                slider.setValue(sliderVal + -0.1);
+                slider.setValue(sliderVal -= 0.1);
 
             }
         });
 
+
         directionsList.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-            @Override
+        @Override
             public void handle(MouseEvent event) {
 
                 LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
@@ -396,17 +373,16 @@ public class MapViewController {
                 }
             }
         });
-
-
     }
-
 
     public void setListeners() {
 
+
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
-        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/700-0.5);
-        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/1700-0.1);
+
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
 
         if(this.faulknerHospitalMap.getCurrentPath().getSplitPath().size()!=1){
 
@@ -491,6 +467,7 @@ public class MapViewController {
     }
 
     public void shutOff() {
+
         atimer.cancel();
         atimer.purge();
         timer.cancel();
@@ -498,6 +475,7 @@ public class MapViewController {
         running = false;
         timerThread.interrupt();
         kioskApp.reset();
+
     }
 
 }

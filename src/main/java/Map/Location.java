@@ -99,7 +99,6 @@ public class Location extends Observable {
         this.addObserver(locationNode);
     }
 
-
     /**
      * Gets the distance between two locations in terms of feet
      *
@@ -118,7 +117,5 @@ public class Location extends Observable {
         return (int) floatFeet;
 
     }
-
-
 
 }

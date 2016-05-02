@@ -1,7 +1,10 @@
 package Map;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
