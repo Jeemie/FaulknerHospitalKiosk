@@ -1,9 +1,6 @@
 package Map;
 
-import Map.Enums.MapState;
-import Map.Enums.DestinationType;
-import Map.Enums.ImageType;
-import Map.Enums.UpdateType;
+import Map.Enums.*;
 import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
@@ -18,7 +15,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -35,6 +34,8 @@ import java.util.*;
 
 
 public class Map implements Observer {
+
+    private ObservableList icons = FXCollections.observableArrayList();
 
 
     private String name;
@@ -516,6 +517,8 @@ public class Map implements Observer {
         }
 
     }
+
+
 
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
@@ -1101,6 +1104,27 @@ public class Map implements Observer {
 
         }
 
+    }
+
+    public void getXmax(){
+        currentPath.getxMax();
+    }
+    public void getXmin(){
+        currentPath.getxMin();
+    }
+    public void getYmax(){
+        currentPath.getyMax();
+    }
+    public void getYmin(){
+        currentPath.getyMin();
+    }
+    public double getXAverage(){
+
+       return  currentPath.getxAverage();
+    }
+    public double getYAverage(){
+
+       return  currentPath.getYAverage();
     }
 
     public void setCurrentBuilding(Building building) {

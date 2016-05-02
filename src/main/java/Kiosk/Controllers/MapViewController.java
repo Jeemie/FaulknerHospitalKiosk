@@ -2,7 +2,9 @@ package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
 import Map.Enums.DestinationType;
+import Map.Enums.DirectionIcons;
 import Map.Map;
+import Map.Path;
 import Map.Destination;
 import Map.Exceptions.FloorDoesNotExistException;
 import javafx.animation.Animation;
@@ -14,6 +16,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +26,8 @@ import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -176,6 +182,7 @@ public class MapViewController {
     private void initialize() {
 
 
+
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -190,8 +197,7 @@ public class MapViewController {
 
 //        setListeners();
 
-        zoomScrollPane.setHvalue(0.5);
-        zoomScrollPane.setVvalue(0.5);
+
 
         slider.setMin(0.5);
         slider.setMax(1.5);
@@ -231,6 +237,8 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathPreviousFloor();
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
 
             }
         });
@@ -263,7 +271,12 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+
                 faulknerHospitalMap.pathNextFloor();
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
+
+
 
             }
 
@@ -282,6 +295,67 @@ public class MapViewController {
 
         });
 
+        zoomIn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal += 0.1);
+
+            }
+        });
+
+        zoomOut.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double sliderVal = slider.getValue();
+                slider.setValue(sliderVal + -0.1);
+
+            }
+        });
+
+
+        directionsList.setCellFactory(listView -> new ListCell<String>() {
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                imageView.setPreserveRatio(true);
+            }
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item);
+
+
+
+                    try {
+
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
+                                DirectionIcons.RIGH.getResourceFileName()).toString(), true);
+
+                        imageView.setImage(icon);
+
+                    } catch (MalformedURLException e) {
+
+                        LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
+
+                    }
+                    // true makes this load in background
+                    // see other constructors if you want to control the size, etc
+//                    Image image = new Image(DirectionIcons.BACK.getResourceFileName(), true) ;
+//                    imageView.setImage(image);
+                    setGraphic(imageView);
+                }
+            }
+        });
+
+
     }
 
 
@@ -289,22 +363,14 @@ public class MapViewController {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
+
+
 
 
     }
 
-    //    @FXML
-    void zoomIn(ActionEvent event) {
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal += 0.1);
-    }
-
-    //    @FXML
-    void zoomOut(ActionEvent event) {
-
-        double sliderVal = slider.getValue();
-        slider.setValue(sliderVal + -0.1);
-    }
 
     private void zoom(double scaleValue) {
 
