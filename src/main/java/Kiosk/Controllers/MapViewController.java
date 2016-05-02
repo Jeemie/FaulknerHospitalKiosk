@@ -238,8 +238,8 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 faulknerHospitalMap.pathPreviousFloor();
-                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
-                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
 
             }
         });
@@ -274,8 +274,8 @@ public class MapViewController {
 
 
                 faulknerHospitalMap.pathNextFloor();
-                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/1300+0.2);
-                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/2250-0.1);
+                zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
+                zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
 
 
 
@@ -363,8 +363,8 @@ public class MapViewController {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
-        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
-        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/700-0.5);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/1700-0.1);
 
 
 
