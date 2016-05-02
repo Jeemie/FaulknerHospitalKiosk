@@ -202,9 +202,9 @@ public class MapViewController {
         zoomScrollPane.setHvalue(0.5);
         zoomScrollPane.setVvalue(0.5);
 
-        slider.setMin(0.75);
-        slider.setMax(1.5);
-        slider.setValue(0.85);
+        slider.setMin(0.5);
+        slider.setMax(5.0);
+        slider.setValue(2.5);
         slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
 
         // Wrap scroll content in a Group so zoomScrollPane re-computes scroll bars
@@ -324,6 +324,9 @@ public class MapViewController {
             public void handle(MouseEvent event) {
 
                 LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
+                double sliderVal = slider.getValue();
+                sliderVal =4.0;
+                slider.setValue(sliderVal);
                 double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
                 double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
                 double scrollH =  node.getLocation().getX() / mapWidth;

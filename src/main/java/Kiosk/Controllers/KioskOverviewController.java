@@ -114,7 +114,7 @@ public class KioskOverviewController {
 
     @FXML
     private void changetoChinese(){
-        Locale chinese = new Locale("zh","CH");
+        Locale chinese = new Locale("zh","CN");
 
         kioskApp.changeLanguage(chinese);
     }

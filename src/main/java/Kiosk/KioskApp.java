@@ -518,7 +518,7 @@ public class KioskApp extends Application {
     }
     public void setChinese(){
         language = "zh";
-        country  = "CHT";
+        country  = "CN";
         System.out.println(language);
         System.out.println(country);
 
