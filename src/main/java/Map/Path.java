@@ -359,7 +359,8 @@ public class Path {
 
                 currentDirection = new Direction (  currentRelativeDirection,
                                                     currentTextualDirection,
-                                                    currentDistanceBetweenLocations );
+                                                    currentDistanceBetweenLocations,
+                                                    thirdLNode);
                 directions.add(currentDirection);
 
                 startTurnLoc =  thirdLNode.getLocation();

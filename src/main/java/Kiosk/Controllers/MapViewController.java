@@ -334,7 +334,7 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                LocationNode node = ((LocationNode) directionsList.getSelectionModel().getSelectedItem());
+                LocationNode node = ((Direction) directionsList.getSelectionModel().getSelectedItem()).getTurningPoint();
                 double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
                 double mapHeight = zoomGroup.getBoundsInLocal().getHeight();
                 double scrollH =  node.getLocation().getX() / mapWidth;
