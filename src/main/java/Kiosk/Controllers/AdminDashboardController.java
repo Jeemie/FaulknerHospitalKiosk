@@ -353,9 +353,9 @@ public class AdminDashboardController {
         });
 
         // Setup Zoom Slider
-        this.zoomSlider.setMax(1.5);
-        this.zoomSlider.setMin(0.5);
-        this.zoomSlider.setValue(0.5);
+        this.zoomSlider.setMax(15);
+        this.zoomSlider.setMin(5);
+        this.zoomSlider.setValue(5);
         this.zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -363,17 +363,53 @@ public class AdminDashboardController {
 
                 LOGGER.info("Zoom slider has been moved from " + oldValue + " to " + newValue);
 
-                // TODO fix zooming
+                int newInt = newValue.intValue();
+                int oldInt = oldValue.intValue();
+                int zoomCounter = 0;
 
-//                double scrollH = mapScrollPane.getHvalue();
-//                double scrollV = mapScrollPane.getVvalue();
-//
-//                LOGGER.info("" + scrollH);
-//                LOGGER.info("" + scrollV);
-//                zoomSlider.setScaleX(newValue.doubleValue());
-//                zoomSlider.setScaleY(newValue.doubleValue());
-//                mapScrollPane.setHvalue(scrollH);
-//                mapScrollPane.setVvalue(scrollV);
+                if (newInt > oldInt){
+
+                    zoomCounter = newInt - oldInt;
+                        while(zoomCounter > 0){
+                            double scaleFactor = 1.1;
+
+                            scaleFactor = SCALE_DELTA;
+
+                            Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
+
+                            mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
+                            mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
+
+                            // move viewport so that old center remains in the center after the
+                            // scaling
+                            repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
+
+                            zoomCounter--;
+
+                        }
+
+                }else if(oldInt > newInt){
+                    zoomCounter = oldInt - newInt;
+                    while(zoomCounter > 0){
+                        double scaleFactor = 1.1;
+
+                        scaleFactor = 1 / SCALE_DELTA;
+
+                        Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
+
+                        mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
+                        mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
+
+                        // move viewport so that old center remains in the center after the
+                        // scaling
+                        repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
+
+                        zoomCounter--;
+                        counter --;
+
+                    }
+                }
+
 
             }
 
@@ -387,25 +423,11 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 LOGGER.info("Zooming In");
+                
+                if (zoomSlider.getValue() < 15) {
 
-                zoomSlider.setValue(zoomSlider.getValue() + 0.1);
+                    zoomSlider.setValue(zoomSlider.getValue() + 1);
 
-                double scaleFactor = 1.1;
-
-                scaleFactor = SCALE_DELTA;
-                if (counter < 10) {
-                    counter += 1;
-                }
-
-                if (counter > 0 && counter < 10) {
-                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
-
-                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
-                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
-
-                    // move viewport so that old center remains in the center after the
-                    // scaling
-                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
                 } else {
                     return;
                 }
@@ -421,24 +443,9 @@ public class AdminDashboardController {
 
                 LOGGER.info("Zooming out");
 
-                zoomSlider.setValue(zoomSlider.getValue() - 0.1);
+                if (zoomSlider.getValue() > 5) {
+                    zoomSlider.setValue(zoomSlider.getValue() - 1);
 
-                double scaleFactor = 1.1;
-
-                scaleFactor = 1 / SCALE_DELTA;
-                if (counter > 0) {
-                    counter -= 1;
-                }
-
-                if (counter > 0 && counter < 10) {
-                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
-
-                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
-                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
-
-                    // move viewport so that old center remains in the center after the
-                    // scaling
-                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
                 } else {
                     return;
                 }
