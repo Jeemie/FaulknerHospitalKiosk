@@ -310,11 +310,9 @@ public class MapViewController {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
-
+        currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
 
     }
-
-
 
     private void zoom(double scaleValue) {
 
