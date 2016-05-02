@@ -459,9 +459,6 @@ public class Map implements Observer {
             return;
         }
 
-        // Size of directory list
-        int size = directoryList.size();
-
         // English value string
         String enValue;
 
@@ -553,7 +550,7 @@ public class Map implements Observer {
             }
         }
 
-        getServiceDirectory();
+        //getServiceDirectory();
 
     }
 
