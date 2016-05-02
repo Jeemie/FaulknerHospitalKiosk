@@ -6,12 +6,14 @@ import Map.Enums.DestinationType;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.util.Locale;
 
 
 public class KioskOverviewController {
@@ -22,8 +24,12 @@ public class KioskOverviewController {
 
     private KeyCombination adminHotkey = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
 
+
     @FXML
     private TextField searchTextBox;
+
+    @FXML
+    private MenuButton language;
 
     /**
      * The constructor.
@@ -38,6 +44,10 @@ public class KioskOverviewController {
      */
     @FXML
     private void initialize() {
+
+
+
+
 
         this.searchTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -68,6 +78,8 @@ public class KioskOverviewController {
 
     }
 
+
+
     /**
      * Is called by the main application to give a reference back to itself.
      *
@@ -75,6 +87,36 @@ public class KioskOverviewController {
      */
     public void setKioskApp(KioskApp kioskApp) {
         this.kioskApp = kioskApp;
+    }
+
+    @FXML
+    private void changeToSpanish(){
+        Locale spanish = new Locale("sp","VE");
+
+        kioskApp.changeLanguage(spanish);
+
+    }
+
+    @FXML
+    private void changeToEnglish(){
+        Locale english = new Locale("en","US");
+
+        kioskApp.changeLanguage(english);
+    }
+
+
+    @FXML
+    private void changetoVietnamese(){
+        Locale vietnamese = new Locale("vi","VN");
+
+        kioskApp.changeLanguage(vietnamese);
+    }
+
+    @FXML
+    private void changetoChinese(){
+        Locale chinese = new Locale("zh","CH");
+
+        kioskApp.changeLanguage(chinese);
     }
 
     /**
