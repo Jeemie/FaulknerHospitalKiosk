@@ -46,7 +46,7 @@ public class AdminLoginController {
 
                 LOGGER.info("Attempting to login");
 
-                if (adminPasswordField.getText().equals("password") && adminUsernameTextField.getText().equals("Admin")) {
+                if (adminPasswordField.getText().equals("teamfaulkner") && adminUsernameTextField.getText().equals("Admin")) {
 
                     LOGGER.info("Logging in");
 
@@ -70,7 +70,7 @@ public class AdminLoginController {
                 if (event.getCode().equals(KeyCode.ENTER)) {
                     LOGGER.info("Attempting to login");
 
-                    if (adminPasswordField.getText().equals("password") && adminUsernameTextField.getText().equals("Admin")) {
+                    if (adminPasswordField.getText().equals("teamfaulkner") && adminUsernameTextField.getText().equals("Admin")) {
 
                         LOGGER.info("Logging in");
 
@@ -93,7 +93,7 @@ public class AdminLoginController {
                 if (event.getCode().equals(KeyCode.ENTER)) {
                     LOGGER.info("Attempting to login");
 
-                    if (adminPasswordField.getText().equals("password") && adminUsernameTextField.getText().equals("Admin")) {
+                    if (adminPasswordField.getText().equals("teamfaulkner") && adminUsernameTextField.getText().equals("Admin")) {
 
                         LOGGER.info("Logging in");
 
