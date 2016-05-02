@@ -32,6 +32,9 @@ public class Path {
 
     private Directions directions;
 
+    private double xMin, xMax,yMin,yMax,xAverage, yAverage;
+
+
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Path.class);
 
