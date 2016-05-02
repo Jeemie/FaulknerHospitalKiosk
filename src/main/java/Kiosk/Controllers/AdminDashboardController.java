@@ -4,6 +4,7 @@ package Kiosk.Controllers;
 import Kiosk.Controllers.EventHandlers.AddTabEventHandler;
 import Kiosk.Controllers.EventHandlers.ChangeMapStateEventHandler;
 import Kiosk.KioskApp;
+import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.MapState;
 import Map.Exceptions.DefaultFileDoesNotExistException;
@@ -34,6 +35,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Controller for the admin dashboard view
@@ -223,11 +226,8 @@ public class AdminDashboardController {
     @FXML
     private Label startNodeLabel;
 
-
-
     @FXML
     private Tab addFloorTab;
-
 
 
 
@@ -247,6 +247,52 @@ public class AdminDashboardController {
 
     @FXML
     private Button addLocationDiscardButton;
+
+
+
+
+
+    @FXML
+    private Tab addElevatorTab;
+
+    @FXML
+    private ListView addElevatorFloorsListView;
+
+    @FXML
+    private RadioButton addElevatorStairsRadioButton;
+
+    @FXML
+    private RadioButton addElevatorElevatorRadioButton;
+
+    private ToggleGroup addElevatorToggleGroup;
+
+    @FXML
+    private Button addElevatorAddButton;
+
+    @FXML
+    private Button addElevatorDiscardButton;
+
+
+
+
+
+    @FXML
+    private Tab editDestinationTab;
+
+    @FXML
+    private ChoiceBox editDestinationTypeChoiceBox;
+
+    @FXML
+    private Button editDestinationSaveDestinationButton;
+
+    @FXML
+    private Button editDestinationDiscardDestinationButton;
+
+    @FXML
+    private TextField editDestinationNameTextField;
+
+//    @FXML
+//    private
 
 
 
@@ -278,6 +324,8 @@ public class AdminDashboardController {
         setLocationTabListeners();
         setAddFloorTabListeners();
         setAddLocationTabListeners();
+        setAddElevatorTabListeners();
+        setEditDestinationTabListeners();
 
     }
 
@@ -454,14 +502,16 @@ public class AdminDashboardController {
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 
 
-                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab))) {
+                if (lockTabPane && (oldValue.equals(addFloorTab) || oldValue.equals(addLocationTab) ||
+                        oldValue.equals(addElevatorTab) || oldValue.equals(editDestinationTab))) {
 
                     mapTabPane.getSelectionModel().select(oldValue);
 
                     return;
                 }
 
-                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab)) {
+                if (newValue.equals(addFloorTab) || newValue.equals(addLocationTab) || newValue.equals(addElevatorTab)
+                        || newValue.equals(editDestinationTab)) {
 
                     lockTabPane = true;
 
@@ -853,9 +903,48 @@ public class AdminDashboardController {
                 new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.ADDADJACENTNODE, "Add Connected " +
                         "Button", this.selectedButtonLabel));
 
-        locationDestinationsAddButton.setOnAction(event -> {
-            selectedButtonLabel.setText("Add Destination Button");
-//            this.locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ChangeMapStateEventHandler(building, MapState.MODIFYDESTINATIONS));
+        locationDestinationsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.setCurrentMapState(MapState.MODIFYDESTINATIONS);
+
+                selectedButtonLabel.setText("Add Destination");
+
+                LOGGER.info("Building " + faulknerHospitalMap.toString() + " State changed to " +  MapState.MODIFYDESTINATIONS.toString());
+
+                mapTabPane.getTabs().add(editDestinationTab);
+
+                mapTabPane.getSelectionModel().select(editDestinationTab);
+
+                faulknerHospitalMap.setCurrentDestination(null);
+
+            }
+
+        });
+
+        this.locationDestinationsModifyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                faulknerHospitalMap.setCurrentMapState(MapState.MODIFYDESTINATIONS);
+
+                selectedButtonLabel.setText("Add Destination");
+
+                LOGGER.info("Building " + faulknerHospitalMap.toString() + " State changed to " +  MapState.MODIFYDESTINATIONS.toString());
+
+                mapTabPane.getTabs().add(editDestinationTab);
+
+                mapTabPane.getSelectionModel().select(editDestinationTab);
+
+                editDestinationTypeChoiceBox.getSelectionModel().select(faulknerHospitalMap.getCurrentDestination().getDestinationType());
+
+                editDestinationNameTextField.setText(faulknerHospitalMap.getCurrentDestination().getName());
+
+            }
+
         });
 
         locationDestinationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -1017,6 +1106,153 @@ public class AdminDashboardController {
                 mapTabPane.getSelectionModel().select(floorTab);
 
                 addLocationNameTextField.setText("");
+
+            }
+
+        });
+
+    }
+
+    private void setAddElevatorTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.addElevatorTab);
+
+        this.addElevatorToggleGroup = new ToggleGroup();
+
+        this.addElevatorElevatorRadioButton.setToggleGroup(this.addElevatorToggleGroup);
+        this.addElevatorElevatorRadioButton.setUserData(ImageType.ELEVATOR);
+
+        this.addElevatorStairsRadioButton.setToggleGroup(this.addElevatorToggleGroup);
+        this.addElevatorStairsRadioButton.setUserData(ImageType.STAIRS);
+
+        this.addElevatorFloorsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.addElevatorFloorsListView.setItems(faulknerHospitalMap.getCurrentBuildingFloors());
+
+        this.addElevatorAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (addElevatorFloorsListView.getSelectionModel().getSelectedItems() == null) {
+
+                    return;
+                }
+
+                if (addElevatorToggleGroup.getSelectedToggle() == null) {
+
+                    return;
+                }
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addElevatorTab);
+
+                mapTabPane.getSelectionModel().select(buildingTab);
+
+                Iterator floorIterator = addElevatorFloorsListView.getSelectionModel().getSelectedItems().iterator();
+
+                ArrayList<Floor> selectedFloors = new ArrayList<>();
+
+                while (floorIterator.hasNext()) {
+
+                    selectedFloors.add(((Floor) floorIterator.next()));
+                }
+
+                faulknerHospitalMap.addMultiLevelLocationNode(((ImageType) addElevatorToggleGroup.getSelectedToggle().getUserData()).toString(), clickedLocation,
+                        ((ImageType) addElevatorToggleGroup.getSelectedToggle().getUserData()), selectedFloors);
+
+            }
+
+        });
+
+        this.addElevatorDiscardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addElevatorTab);
+
+                mapTabPane.getSelectionModel().select(buildingTab);
+
+            }
+
+        });
+
+
+
+    }
+
+    private void setEditDestinationTabListeners() {
+
+        this.mapTabPane.getTabs().remove(this.editDestinationTab);
+
+        this.editDestinationTypeChoiceBox.setItems(FXCollections.observableArrayList(DestinationType.values()));
+
+        this.editDestinationNameTextField.setText("");
+
+        this.editDestinationSaveDestinationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (editDestinationTypeChoiceBox.getSelectionModel().getSelectedItem() == null) {
+
+                    return;
+                }
+
+                if (editDestinationNameTextField.getText().length() == 0) {
+
+                    return;
+                }
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(editDestinationTab);
+
+                mapTabPane.getSelectionModel().select(locationTab);
+
+                if (faulknerHospitalMap.getCurrentDestination() == null) {
+
+                    faulknerHospitalMap.addDestination(editDestinationNameTextField.getText(), (DestinationType)editDestinationTypeChoiceBox.getSelectionModel().getSelectedItem());
+
+
+                } else {
+
+                    Destination currentDestination = faulknerHospitalMap.getCurrentDestination();
+
+                    currentDestination.setName(editDestinationNameTextField.getText());
+                    currentDestination.setDestinationType((DestinationType)editDestinationTypeChoiceBox.getSelectionModel().getSelectedItem());
+
+                }
+
+                editDestinationTypeChoiceBox.getSelectionModel().clearSelection();
+//                editDestinationTypeChoiceBox.setItems(FXCollections.observableArrayList(DestinationType.values()));
+
+                editDestinationNameTextField.setText("");
+
+
+            }
+
+        });
+
+        this.editDestinationDiscardDestinationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(editDestinationTab);
+
+                mapTabPane.getSelectionModel().select(locationTab);
+
+                editDestinationTypeChoiceBox.getSelectionModel().clearSelection();
+//                editDestinationTypeChoiceBox.setItems(FXCollections.observableArrayList(DestinationType.values()));
+
+                editDestinationNameTextField.setText("");
+
 
             }
 

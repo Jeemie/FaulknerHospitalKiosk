@@ -243,16 +243,19 @@ public class MapViewController {
                 }
             }
         });
-
-
+        
         changeFloorButtonDown.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
+                counter = 0;
 
                 faulknerHospitalMap.pathPreviousFloor();
+
                 zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
                 zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
+
+                currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
 
             }
         });
@@ -285,13 +288,14 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
-
-
                 faulknerHospitalMap.pathNextFloor();
+
+                counter = 0;
+
                 zoomScrollPane.setVvalue(faulknerHospitalMap.getXAverage()/700-0.5);
                 zoomScrollPane.setHvalue(faulknerHospitalMap.getYAverage()/1700-0.1);
 
-
+                currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
 
@@ -399,8 +403,6 @@ public class MapViewController {
 
     public void setListeners() {
 
-
-
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
         zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/700-0.5);
@@ -412,11 +414,15 @@ public class MapViewController {
             this.changeFloorButtonUp.setVisible(true);
         }
         else{
-            
+
             this.changeFloorButtonDown.setVisible(false);
             this.changeFloorButtonUp.setVisible(false);
         }
 
+        currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
+
+        this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
+        this.faulknerHospitalMap.setupDirections(directionsList);
 
     }
 

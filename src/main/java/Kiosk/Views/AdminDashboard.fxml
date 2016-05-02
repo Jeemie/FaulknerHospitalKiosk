@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -55,9 +56,9 @@
                                                         <ListView fx:id="buildingFloorsListView" layoutX="21.4" layoutY="20.4" prefHeight="402.0" prefWidth="268.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                         <ButtonBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
                                                             <buttons>
-                                                                <Button fx:id="buildingFloorsAddButton" mnemonicParsing="false" text="Add" />
-                                                                <Button fx:id="buildingFloorsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                                <Button fx:id="buildingFloorsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                                <Button fx:id="buildingFloorsAddButton" mnemonicParsing="false" text="Add Floor" />
+                                                                <Button fx:id="buildingFloorsModifyButton" mnemonicParsing="false" text="Modify Floor" />
+                                                                <Button fx:id="buildingFloorsDeleteButton" mnemonicParsing="false" text="Delete Floor" />
                                                             </buttons>
                                                         </ButtonBar>
                                                     </children>
@@ -100,9 +101,9 @@
                                                         <ListView fx:id="floorLocationsListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                         <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
                                                             <buttons>
-                                                                <Button fx:id="floorLocationsAddButton" mnemonicParsing="false" text="Add" />
-                                                                <Button fx:id="floorLocationsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                                <Button fx:id="floorLocationsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                                <Button fx:id="floorLocationsAddButton" mnemonicParsing="false" text="Add Location" />
+                                                                <Button fx:id="floorLocationsModifyButton" mnemonicParsing="false" text="Modify Location" />
+                                                                <Button fx:id="floorLocationsDeleteButton" mnemonicParsing="false" text="Delete Location" />
                                                             </buttons>
                                                         </ButtonBar>
                                                     </children></AnchorPane>
@@ -125,7 +126,7 @@
                                 </Accordion>
                             </content>
                         </Tab>
-                        <Tab fx:id="LocationTab" text="Location">
+                        <Tab fx:id="locationTab" text="Location">
                             <content>
                                 <Accordion fx:id="locationAccordion">
                                     <panes>
@@ -136,8 +137,8 @@
                                                         <ListView fx:id="locationConnectedLocationListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                         <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
                                                             <buttons>
-                                                                <Button fx:id="locationConnectedLocationsAddButton" mnemonicParsing="false" text="Add" ButtonBar.buttonData="LEFT" />
-                                                                <Button fx:id="locationConnectedLocationsDeleteButton" mnemonicParsing="false" text="Delete" ButtonBar.buttonData="RIGHT" />
+                                                                <Button fx:id="locationConnectedLocationsAddButton" mnemonicParsing="false" text="Add Connection" ButtonBar.buttonData="LEFT" />
+                                                                <Button fx:id="locationConnectedLocationsDeleteButton" mnemonicParsing="false" text="Delete Connection" ButtonBar.buttonData="RIGHT" />
                                                             </buttons>
                                                         </ButtonBar>
                                                     </children></AnchorPane>
@@ -150,9 +151,9 @@
                                                         <ListView fx:id="locationDestinationsListView" layoutX="37.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                         <ButtonBar layoutX="20.0" layoutY="20.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
                                                             <buttons>
-                                                                <Button fx:id="locationDestinationsAddButton" mnemonicParsing="false" text="Add" />
-                                                                <Button fx:id="locationDestinationsModifyButton" mnemonicParsing="false" text="Modify" />
-                                                                <Button fx:id="locationDestinationsDeleteButton" mnemonicParsing="false" text="Delete" />
+                                                                <Button fx:id="locationDestinationsAddButton" mnemonicParsing="false" text="Add Destination" />
+                                                                <Button fx:id="locationDestinationsModifyButton" mnemonicParsing="false" text="Modify Destination" />
+                                                                <Button fx:id="locationDestinationsDeleteButton" mnemonicParsing="false" text="Delete Destination" />
                                                             </buttons>
                                                         </ButtonBar>
                                                     </children></AnchorPane>
@@ -209,6 +210,22 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
+                  <Tab fx:id="editDestinationTab" text="Edit Destination">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ChoiceBox fx:id="editDestinationTypeChoiceBox" layoutX="89.0" layoutY="14.0" prefWidth="150.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                              <ButtonBar layoutX="64.0" layoutY="494.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                <buttons>
+                                  <Button fx:id="editDestinationSaveDestinationButton" mnemonicParsing="false" text="Save Destination" />
+                                    <Button fx:id="editDestinationDiscardDestinationButton" mnemonicParsing="false" text="Discard Destination" />
+                                </buttons>
+                              </ButtonBar>
+                              <TextField fx:id="editDestinationNameTextField" layoutX="81.0" layoutY="204.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                     </tabs>
                 </TabPane>
                 <AnchorPane translateY="10.0">
