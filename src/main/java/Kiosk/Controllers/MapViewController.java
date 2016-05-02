@@ -241,6 +241,7 @@ public class MapViewController {
 
                 counter = 0;
                 faulknerHospitalMap.pathPreviousFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
 
             }
         });
@@ -276,6 +277,7 @@ public class MapViewController {
 
                 counter = 0;
                 faulknerHospitalMap.pathNextFloor();
+                currentFloorLabel.setText(faulknerHospitalMap.getCurrentFloor().getFloorName());
 
             }
 
