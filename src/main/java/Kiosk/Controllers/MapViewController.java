@@ -310,8 +310,11 @@ public class MapViewController {
 
         this.faulknerHospitalMap.setupPathStackPane(imageStackPane);
         this.faulknerHospitalMap.setupDirections(directionsList);
+
         currentFloorLabel.setText(faulknerHospitalMap.getStartLocationNode().getCurrentFloor().getFloorName());
 
+        zoomScrollPane.setVvalue(this.faulknerHospitalMap.getXAverage()/1300+0.2);
+        zoomScrollPane.setHvalue(this.faulknerHospitalMap.getYAverage()/2250-0.1);
     }
 
     private void zoom(double scaleValue) {
