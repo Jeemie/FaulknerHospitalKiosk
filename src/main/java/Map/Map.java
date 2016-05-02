@@ -657,6 +657,7 @@ public class Map implements Observer {
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
+
     }
 
 
