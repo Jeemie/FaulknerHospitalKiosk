@@ -92,8 +92,8 @@ public class KioskApp extends Application {
 
         // TODO change after debugging and drop-down menu is added
         // English language, United States
-        language = "sp";
-        country = "VE";
+        language = "vi";
+        country = "VN";
 
         // Create new locale for the specified language and country
         currentLocale = new Locale(language, country);
