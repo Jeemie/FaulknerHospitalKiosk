@@ -169,7 +169,17 @@
                         </Tab>
                         <Tab fx:id="addFloorTab" text="Add Floor">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ButtonBar layoutX="64.0" layoutY="494.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                <buttons>
+                                  <Button fx:id="addFloorAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="addFloorDiscardButton" mnemonicParsing="false" text="Discard" />
+                                </buttons>
+                              </ButtonBar>
+                              <TextField fx:id="addFloorNameTextField" layoutX="81.0" layoutY="14.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                              <TextField fx:id="addFloorURLTextField" layoutX="81.0" layoutY="82.0" text="Image url" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="47.0" />
+                           </children></AnchorPane>
                             </content>
                         </Tab>
                         <Tab fx:id="addLocationTab" text="Add Location">

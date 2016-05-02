@@ -29,11 +29,14 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Controller for the admin dashboard view
@@ -247,6 +250,23 @@ public class AdminDashboardController {
 
     @FXML
     private Button addLocationDiscardButton;
+
+
+
+
+
+    @FXML
+    private TextField addFloorNameTextField;
+
+    @FXML
+    private TextField addFloorURLTextField;
+
+    @FXML
+    private Button addFloorAddButton;
+
+    @FXML
+    private Button addFloorDiscardButton;
+
 
 
 
@@ -543,31 +563,8 @@ public class AdminDashboardController {
 
         });
 
-        this.buildingFloorsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-//                AdminSubControllerLoader loader = new AdminSubControllerLoader();
-//
-//                loader.setStackPane(mapStackPane);
-//                loader.setCurrentBuilding(building);
-//                loader.loadAddFloor();
-//
-//
-//                SubViewLoader<AdminDashboardAddFloorController> subViewLoader =
-//                        new SubViewLoader<>("Views/AdminDashboardSubViews/AdminDashboardAddFloor.fxml", mapStackPane);
-//
-//                AdminDashboardAddFloorController adminDashboardAddFloorController = subViewLoader.loadView();
-//
-//
-//                adminDashboardAddFloorController.setCurrentBuilding(building);
-//                adminDashboardAddFloorController.setSubViewLoader(subViewLoader);
-//                adminDashboardAddFloorController.setListeners();
-
-            }
-
-        });
+        this.buildingFloorsAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new AddTabEventHandler(MapState.ADDFLOOR,
+                this.faulknerHospitalMap, "add Floor", this.selectedButtonLabel, this.mapTabPane, this.addFloorTab));
 
 
         this.buildingDestinationsTitledPane.expandedProperty().addListener(new ChangeListener<Boolean>() {
@@ -924,7 +921,93 @@ public class AdminDashboardController {
 
         this.mapTabPane.getTabs().remove(this.addFloorTab);
 
+        this.addFloorDiscardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+            @Override
+            public void handle(MouseEvent event) {
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addFloorTab);
+
+                mapTabPane.getSelectionModel().select(buildingTab);
+
+                addFloorNameTextField.setText("");
+
+                addFloorURLTextField.setText("");
+
+
+            }
+
+        });
+
+        this.addFloorAddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (addFloorURLTextField.getText().length() < 1) {
+
+                    return;
+                }
+
+                if (addFloorURLTextField.getText().length() < 1) {
+
+                    return;
+                }
+
+                URL url;
+                URLConnection con;
+                DataInputStream dis;
+                FileOutputStream fos;
+                byte[] fileData;
+
+                try {
+
+                    url = new URL(addFloorURLTextField.getText()); //File Location goes here
+                    con = url.openConnection(); // open the url connection.
+                    dis = new DataInputStream(con.getInputStream());
+                    fileData = new byte[con.getContentLength()];
+
+                    for (int q = 0; q < fileData.length; q++) {
+                        fileData[q] = dis.readByte();
+                    }
+                    dis.close(); // close the data input stream
+
+                    File newFloorImage = new File(System.getProperty("user.dir") + "/resources/" +
+                            addFloorNameTextField.getText() + ".jpg");
+
+                    newFloorImage.createNewFile();
+
+                    LOGGER.info(newFloorImage.getAbsolutePath());
+
+                    fos = new FileOutputStream(newFloorImage); //FILE Save Location goes here
+                    fos.write(fileData);  // write out the file we want to save.
+                    fos.close(); // close the output stream writer
+
+                } catch (Exception exception) {
+
+                    LOGGER.info("a", exception);
+
+                    return;
+
+                }
+
+                faulknerHospitalMap.addFloor(addFloorNameTextField.getText(), addFloorURLTextField.getText());
+
+                lockTabPane = false;
+
+                mapTabPane.getTabs().remove(addFloorTab);
+
+                mapTabPane.getSelectionModel().select(buildingTab);
+
+                addFloorNameTextField.setText("Name");
+
+                addFloorURLTextField.setText("Image URL");
+
+            }
+
+        });
 
 
     }
