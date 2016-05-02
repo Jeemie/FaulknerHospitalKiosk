@@ -323,7 +323,7 @@ public class Path {
                 if (i == path.size() - 2) { // Reach the end of the path
 
                     currentRelativeDirection = RelativeDirection.STRAIGHT;
-                    currentTextualDirection = "You will reach " + thirdLNode.getName();
+                    currentTextualDirection = "Go Straight";
 
                     endDirection = true;
 
@@ -357,6 +357,14 @@ public class Path {
 
                 currentDistanceBetweenLocations = startTurnLoc.getFeetDistanceBetween(thirdLNode.getLocation());
                 currentTextualDirection = "After " + currentDistanceBetweenLocations + " feet,\n" + currentTextualDirection;
+
+                if (i == path.size() - 2) { // Reach the end of the path
+
+                    currentTextualDirection += " and,\nYou will reach " + thirdLNode.getName();
+
+                    endDirection = true;
+
+                }
 
                 currentDirection = new Direction (  currentRelativeDirection,
                                                     currentTextualDirection,
