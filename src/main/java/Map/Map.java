@@ -355,6 +355,8 @@ public class Map implements Observer {
 
         for (Building building : this.mapBuildings) {
 
+
+
             this.directoryList.setAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
 
         }

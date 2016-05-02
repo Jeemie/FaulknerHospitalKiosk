@@ -101,11 +101,7 @@ public class KioskApp extends Application {
         currentLocale=  new Locale(language,country);
 
         // Check if departments and services should be translated
-        if(!language.equals("en")) {
 
-            faulknerHospitalMap.translateDirectory(DestinationType.SERVICE, currentLocale);
-            faulknerHospitalMap.translateDirectory(DestinationType.DEPARTMENT, currentLocale);
-        }
 
         // Create ResourceBundle containing locale-specific translatable text
         labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
@@ -465,6 +461,13 @@ public class KioskApp extends Application {
             loader.setResources(ResourceBundle.getBundle("LabelsBundle", currentLocale));
             labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
 
+           
+            if(!currentLocale.getCountry().equals("en")) {
+
+                faulknerHospitalMap.translateDirectory(DestinationType.SERVICE, currentLocale);
+                faulknerHospitalMap.translateDirectory(DestinationType.DEPARTMENT, currentLocale);
+            }
+
             AnchorPane page = loader.load();
 
 
@@ -526,5 +529,11 @@ public class KioskApp extends Application {
 
     }
 
+    public ResourceBundle getLabels() {
+        return labels;
+    }
 
+    public Locale getCurrentLocale() {
+        return currentLocale;
+    }
 }

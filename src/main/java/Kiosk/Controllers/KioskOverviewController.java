@@ -3,6 +3,7 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.Destination;
 import Map.Enums.DestinationType;
+import Map.Map;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,6 +24,8 @@ public class KioskOverviewController {
     private KioskApp kioskApp;
 
     private KeyCombination adminHotkey = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+    private Map FauknerhospitalMap;
 
 
     @FXML
@@ -94,6 +97,8 @@ public class KioskOverviewController {
         Locale spanish = new Locale("sp","VE");
 
         kioskApp.changeLanguage(spanish);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, spanish);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, spanish);
 
     }
 
@@ -110,6 +115,8 @@ public class KioskOverviewController {
         Locale vietnamese = new Locale("vi","VN");
 
         kioskApp.changeLanguage(vietnamese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, vietnamese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, vietnamese);
     }
 
     @FXML
@@ -117,6 +124,9 @@ public class KioskOverviewController {
         Locale chinese = new Locale("zh","CN");
 
         kioskApp.changeLanguage(chinese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.SERVICE, chinese);
+        this.FauknerhospitalMap.translateDirectory(DestinationType.DEPARTMENT, chinese);
+
     }
 
     /**
