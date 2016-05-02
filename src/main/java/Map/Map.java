@@ -21,8 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -42,6 +44,7 @@ import java.util.*;
 
 public class Map implements Observer {
 
+    private ObservableList icons = FXCollections.observableArrayList();
 
     private String name;
 
@@ -121,7 +124,6 @@ public class Map implements Observer {
 
     //
     private ObservableList<LocationNode> currentKioskLocationNodes;
-
 
 
     // Logger for this class
@@ -575,29 +577,23 @@ public class Map implements Observer {
 
     public void setupDirections(ListView textualDirections) {
 
-        try {
-            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
-            if(this.currentPath  == null) {
-                LOGGER.debug("No path");
-            } else {
-                textualDirectionStrings.addAll(this.currentPath.getDirections().getTextualDirections());
-                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
-                textualDirections.setItems(textualDirectionStrings);
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        ObservableList<Direction> destinations = FXCollections.observableArrayList();
+        destinations.addAll(this.currentPath.getDirections());
+
+        textualDirections.setItems(destinations);
 
     }
+
+
 
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
+
     }
 
 
     public void useAStar() {
-
 
         this.searchAlgorithm = new AStar();
 
@@ -1135,6 +1131,7 @@ public class Map implements Observer {
         if (currentMapState.equals(MapState.NORMAL)) {
 
             return;
+
         }
 
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
@@ -1200,6 +1197,27 @@ public class Map implements Observer {
 
         }
 
+    }
+
+    public void getXmax(){
+        currentPath.getxMax();
+    }
+    public void getXmin(){
+        currentPath.getxMin();
+    }
+    public void getYmax(){
+        currentPath.getyMax();
+    }
+    public void getYmin(){
+        currentPath.getyMin();
+    }
+    public double getXAverage(){
+
+       return  currentPath.getxAverage();
+    }
+    public double getYAverage(){
+
+       return  currentPath.getYAverage();
     }
 
     public void setCurrentBuilding(Building building) {
@@ -1276,6 +1294,10 @@ public class Map implements Observer {
     public ObservableList<LocationNode> getCurrentKioskLocationNodes() {
 
         return currentKioskLocationNodes;
+    }
+
+    public Path getCurrentPath() {
+        return currentPath;
     }
 
     public Destination getCurrentDestination() {

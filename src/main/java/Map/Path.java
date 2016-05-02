@@ -1,6 +1,9 @@
 package Map;
 
+import Map.Enums.CardinalDirection;
 import Map.Enums.ImageType;
+import Map.Enums.RelativeDirection;
+import com.sun.corba.se.spi.protocol.RequestDispatcherRegistry;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -29,7 +32,9 @@ public class Path {
 
     private ArrayList<ArrayList<LocationNode>> splitPath;
 
-    private Directions directions;
+    private ArrayList<Direction> directions;
+
+    private double xMin, xMax,yMin,yMax,xAverage, yAverage;
 
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(Path.class);
@@ -45,6 +50,7 @@ public class Path {
         this.startLocationNode = locationNodes.get(0);
         this.destinationLocationNode = locationNodes.get(locationNodes.size() - 1);
         this.splitPath = new ArrayList<>();
+        this.directions = new ArrayList<>();
 
     }
 
@@ -84,8 +90,11 @@ public class Path {
 
         }
 
-        //Set the directions
-        directions = new Directions(originalPath);
+        // Set the directions object according to the path given
+        setupDirections(originalPath);
+
+
+
 
         drawNextFloor();
     }
@@ -99,6 +108,7 @@ public class Path {
         }
 
         drawFloorPath();
+
 
     }
 
@@ -157,6 +167,31 @@ public class Path {
         }
 
         drawEdgesNormal(this.edgePane, temp);
+        yMin = temp.get(0).getLocation().getY();
+        xMin = temp.get(0).getLocation().getX();
+        yMax = temp.get(0).getLocation().getY();
+        xMax = temp.get(0).getLocation().getX();
+
+        for( int i =0 ; i <= temp.size()-1;i++){
+                double xnum =  temp.get(i).getLocation().getX();
+                double ynum =  temp.get(i).getLocation().getY();
+                if(xnum<xMin){
+                    xMin=xnum;
+                }
+                if(xnum>xMax){
+                    xMax=xnum;
+                }
+                if(ynum<yMin){
+                    yMin =ynum;
+                }
+                if(ynum>yMax){
+                    yMax =ynum;
+                }
+
+
+        }
+        xAverage = (xMax +xMin)/2.0;
+        yAverage = (yMax +yMin)/2.0;
 
     }
 
@@ -189,7 +224,183 @@ public class Path {
 
     }
 
-    public Directions getDirections() {
-        return directions;
+    public double getxMin() {
+        System.out.println("xMin" + xMin);
+        return xMin;
+
     }
+
+    public double getxMax() {
+        System.out.println("xMax"+xMax);
+        return xMax;
+    }
+
+    public double getyMin() {
+        System.out.println("Ymin "+yMin);
+        return yMin;
+    }
+
+    public double getyMax() {
+        System.out.println("Ymax "+yMin);
+        return yMax;
+    }
+
+    public double getYAverage() {
+        System.out.println("YAverage "+yAverage);
+        return xAverage;
+    }
+
+    public double getxAverage() {
+        System.out.println("xAverage "+xAverage);
+        return yAverage;
+    }
+
+    private void setupDirections(ArrayList<LocationNode> path) {
+
+        // Create three LocationNodes to create two CardinalDirections
+        LocationNode firstLNode, secondLNode, thirdLNode;
+
+        // Create two CardinalDirections to create one RelativeDirection
+        CardinalDirection pastCDirection, currentCDirection;
+
+        // Two locations used to display distance between two nodes
+        Location startTurnLoc, endTurnLocation;
+
+        // Two locations used to determine the end elevator
+        LocationNode elevator;
+
+        // The three values to add to the directions list at the end of each loop
+        RelativeDirection   currentRelativeDirection = null;
+        String              currentTextualDirection = "";
+        int                 currentDistanceBetweenLocations = 0;
+        Direction           currentDirection;
+
+        // Boolean endDirection
+        boolean endDirection = false;
+
+        // Boolean endElevetor
+        boolean endElevator = false;
+
+        // Boolean for endOfHall
+        boolean  endOfHall;
+
+        // Todo edge case if path includes only one nodes
+        // Todo edge case if path includes only two nodes
+
+        startTurnLoc = path.get(0).getLocation();
+
+        for(int i = 1; i < (path.size() - 1); i++) {
+
+            // Declare first three nodes
+            firstLNode = path.get(i - 1);
+            secondLNode = path.get(i);
+            thirdLNode = path.get(i + 1);
+
+            // Create CardinalDirections
+            pastCDirection = firstLNode.getDirectionsTo(secondLNode);
+            currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
+
+//            endOfHall = true;
+//            for (LocationNode neighbor : secondLNode.getAdjacentLocationNodes())
+//                if(secondLNode.getDirectionsTo(neighbor) == firstLNode.getDirectionsTo(secondLNode)) {
+//                    endOfHall = false;
+//                }
+//            }
+
+
+            if (!secondLNode.onSameFloor(thirdLNode)) {
+
+                if (!endElevator) {
+                    endElevator = true;
+                }
+
+            } else if (endElevator) { // Only reaches here if secondLNode and thirdLNode are on the same floor
+
+                elevator = secondLNode;
+
+                currentRelativeDirection = RelativeDirection.ELEVATOR;
+                currentTextualDirection = "Take the elevator to " + elevator.getCurrentFloor().getFloorName();
+
+                endElevator = false;
+                endDirection = true;
+
+            }
+            else if (pastCDirection == currentCDirection) { // Next nodes is straight
+
+                if (i == path.size() - 2) { // Reach the end of the path
+
+                    currentRelativeDirection = RelativeDirection.STRAIGHT;
+                    currentTextualDirection = "Go Straight";
+
+                    endDirection = true;
+
+                }
+
+            } else { // There is a turn
+
+                endDirection = true;
+
+                // Check cardinalDirection relations, and out the right direction
+                if (pastCDirection.right() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.RIGHT;
+                    currentTextualDirection = "Turn Right";
+
+                } else if (pastCDirection.left() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.LEFT;
+                    currentTextualDirection = "Turn Left";
+
+                } else if (pastCDirection.opposite() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.BACK;
+                    currentTextualDirection = "Turn around"; //Should actually not happen
+
+                }
+            }
+
+
+            if (endDirection) { //Save the destination and reset
+
+                currentDistanceBetweenLocations = startTurnLoc.getFeetDistanceBetween(thirdLNode.getLocation());
+                currentTextualDirection = "After " + currentDistanceBetweenLocations + " feet,\n" + currentTextualDirection;
+
+                if (i == path.size() - 2) { // Reach the end of the path
+
+                    currentTextualDirection += " and,\nYou will reach " + thirdLNode.getName();
+
+                    endDirection = true;
+
+                }
+
+                currentDirection = new Direction (  currentRelativeDirection,
+                                                    currentTextualDirection,
+                                                    currentDistanceBetweenLocations,
+                                                    thirdLNode);
+                directions.add(currentDirection);
+
+                startTurnLoc =  thirdLNode.getLocation();
+
+                endDirection = false;
+            }
+
+        }
+
+    }
+
+    public ArrayList<Direction> getDirections() {
+
+        return directions;
+
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public ArrayList<ArrayList<LocationNode>> getSplitPath() {
+        return splitPath;
+    }
+
 }
+
