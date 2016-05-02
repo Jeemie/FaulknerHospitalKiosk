@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -125,7 +126,7 @@
                                 </Accordion>
                             </content>
                         </Tab>
-                        <Tab fx:id="LocationTab" text="Location">
+                        <Tab fx:id="locationTab" text="Location">
                             <content>
                                 <Accordion fx:id="locationAccordion">
                                     <panes>
@@ -209,6 +210,22 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
+                  <Tab fx:id="editDestinationTab" text="Edit Destination">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ChoiceBox fx:id="editDestinationTypeChoiceBox" layoutX="89.0" layoutY="14.0" prefWidth="150.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                              <ButtonBar layoutX="64.0" layoutY="494.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                <buttons>
+                                  <Button fx:id="editDestinationSaveDestinationButton" mnemonicParsing="false" text="Save Destination" />
+                                    <Button fx:id="editDestinationDiscardDestinationButton" mnemonicParsing="false" text="Discard Destination" />
+                                </buttons>
+                              </ButtonBar>
+                              <TextField fx:id="editDestinationNameTextField" layoutX="81.0" layoutY="204.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
                     </tabs>
                 </TabPane>
                 <AnchorPane translateY="10.0">
