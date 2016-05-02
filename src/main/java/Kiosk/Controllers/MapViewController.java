@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MapViewController{
+public class MapViewController {
 
     // Reference to the main application.
 
@@ -40,11 +40,10 @@ public class MapViewController{
     private KioskApp kioskApp;
 
     @FXML
-    private  Label clock ;
+    private Label clock;
 
 
     private final DateFormat date = DateFormat.getInstance();
-
 
 
     private int numThreads = 0;
@@ -101,7 +100,7 @@ public class MapViewController{
     private Button physiciansButton;
 
     @FXML
-    private  Button departmentsButton;
+    private Button departmentsButton;
 
     @FXML
     private Button servicesButton;
@@ -115,7 +114,7 @@ public class MapViewController{
     public Timer atimer = new Timer();
 
     int counter = 0;
-    int getCounterFloor=1;
+    int getCounterFloor = 1;
     private volatile boolean running = true;
 
     TimerTask timerTask = new TimerTask() {
@@ -125,7 +124,6 @@ public class MapViewController{
             counter++;
         }
     };
-
 
 
     Runnable runnable = new Runnable() {
@@ -174,9 +172,6 @@ public class MapViewController{
     };
 
 
-
-
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -185,14 +180,12 @@ public class MapViewController{
     private void initialize() {
 
 
-
-
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                clock.setText("Current Time: "+ sdf.format(cal.getTime()));
+                clock.setText("Current Time: " + sdf.format(cal.getTime()));
             }
         }));
 
@@ -300,6 +293,29 @@ public class MapViewController{
         });
         
 
+
+        zoomScrollPane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (numThreads == 0) {
+                    numThreads += 1;
+                    running = true;
+                    timer = new Timer("A Timer");
+                    atimer = new Timer("A Timer2");
+                    timerThread = new Thread(runnable);
+                    timer.scheduleAtFixedRate(timerTask, 30, 1000);
+                    timerThread.start();
+                }
+                counter = 0;
+            }
+        });
+
+
+        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
+
+        //timerThread.start();
+
         changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -314,6 +330,19 @@ public class MapViewController{
 
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
+        // Return to KioskOverview
+        // Return to home menu
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                kioskApp.reset();
+
+            }
+
+        });
+
     }
 
 
@@ -347,8 +376,6 @@ public class MapViewController{
         zoomScrollPane.setHvalue(scrollH);
         zoomScrollPane.setVvalue(scrollV);
     }
-
-
 
 
     /**

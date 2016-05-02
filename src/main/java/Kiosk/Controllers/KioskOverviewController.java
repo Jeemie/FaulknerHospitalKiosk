@@ -25,10 +25,6 @@ public class KioskOverviewController {
     @FXML
     private TextField searchTextBox;
 
-    private int counter;
-
-    @FXML
-    private Label dontTouchMe;
     /**
      * The constructor.
      * The constructor is called before the initialize() method.

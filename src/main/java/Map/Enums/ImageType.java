@@ -17,7 +17,8 @@ public enum ImageType {
     SERVICE("/icons/gift.png"),
     STARTLOCATION("/icons/startlocation.png"),
     DESTINATION("/icons/destination.png"),
-    KIOSK("/icons/kiosk.png");
+    KIOSK("/icons/kiosk.png"),
+    HALLWAYS("/icons/hall.png");
 
     private String resourceFileName;
 

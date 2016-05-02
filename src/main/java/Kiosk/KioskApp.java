@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class KioskApp extends Application {
 
 
     private ListView<String> listDirectory;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(KioskApp.class);
 
     @Override
     public void start(Stage primaryStage) throws MalformedURLException {
@@ -103,6 +107,9 @@ public class KioskApp extends Application {
             //primaryStage.setFullScreen(true);
 
             scene.getStylesheets().add((new URL("file:///" + System.getProperty("user.dir") + "/src/main/java/Kiosk/" + "Style.css")).toExternalForm());
+            // TODO Maryann gets error on Windows - error: com.sun.javafx.css.StyleManager loadStylesheetUnPrivileged
+            // note, it still styles ... maybe the error is coming from somewhere elseo
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,6 +120,9 @@ public class KioskApp extends Application {
      * Shows the kiosk overview inside the root layout.
      */
     public void showKioskOverview() {
+
+        LOGGER.info("Attempting to loading Kiosk Overview");
+
         try {
             // Load kiosk overview.
             FXMLLoader loader = new FXMLLoader();
@@ -192,6 +202,8 @@ public class KioskApp extends Application {
      */
     public boolean showAdminControls() {
 
+        LOGGER.info("Attempting to loading Admin Dashboard View");
+
         try {
             // Load AdminDashboard
             FXMLLoader loader = new FXMLLoader();
@@ -270,6 +282,8 @@ public class KioskApp extends Application {
      * Changes screen to allow users to select by directory
      */
     public boolean showDirectory(DestinationType destinationType) {
+
+        LOGGER.info("Attempting to loading Directory View");
 
         try {
 
@@ -389,6 +403,12 @@ public class KioskApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public URL getFilePath() {
+
+        return this.filePath;
 
     }
 

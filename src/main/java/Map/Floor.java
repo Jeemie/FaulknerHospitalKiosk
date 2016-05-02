@@ -170,6 +170,25 @@ public class Floor extends Observable implements Observer {
         return floorLocationNodes;
     }
 
+    /**
+     * Get's all the floor LocationNodes
+     * @param associatedImage
+     * @return an ArrayList of LocationNode objects
+     */
+    public ArrayList<LocationNode> getFloorLocationNodes(ImageType associatedImage) {
+
+        ArrayList<LocationNode> floorLocationNodes = new ArrayList<>();
+
+        for (LocationNode locationNode : this.locationNodes) {
+            if(locationNode.getAssociatedImage() == ImageType.KIOSK){
+                floorLocationNodes.add(locationNode);
+            }
+
+        }
+
+        return floorLocationNodes;
+    }
+
     public void removeLocationNode(LocationNode locationNode) {
 
         this.locationNodes.remove(locationNode);

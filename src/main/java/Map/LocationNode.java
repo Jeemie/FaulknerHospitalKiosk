@@ -376,19 +376,34 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+
+     //Note: iterators returned by this class's iterator will throw ConcurrentModificationException
+     // if this is modified any time after the iterator is created
+
     /**
-     * TODO - please fix; fails testDeleteLocationNodeEdgeConnections(); The edge list is not empty after this runs
+     * Remove all edges from this location node
      */
     public void deleteLocationNodeEdgeConnections() {
 
-        for (LocationNodeEdge edge : this.edges) {
+        ArrayList<LocationNodeEdge> tempEdges = this.edges;
+        int numEdges = tempEdges.size();
 
-            edge.getOtherNode(this).removeEdgeConnection(edge);
+        for(int i = numEdges - 1; i >= 0; i--) {
 
+<<<<<<< HEAD
             edge.removeLocationNodes();
+=======
+            tempEdges.get(i).getOtherNode(this).removeEdgeConnection(tempEdges.get(i));
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
 
+            this.removeEdgeConnection(tempEdges.get(i));
+
+<<<<<<< HEAD
+=======
         }
 
+        this.edges = tempEdges;
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
     }
 
     /**
@@ -402,6 +417,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         setChanged();
         notifyObservers(UpdateType.EDGEREMOVED);
+<<<<<<< HEAD
 
     }
 
@@ -420,6 +436,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         //TODO error message/ exception
         // Edge does not exist
         return null;
+=======
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
     }
 
 
@@ -427,7 +445,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    // TODO Fix
     public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
 
         if (adjacentNode == null) {
@@ -459,6 +476,24 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         notifyObservers(UpdateType.LOCATIONNODEEDGE);
 
     }
+
+    /**
+     * Given an adjacent node, get find the connecting edge if it exists
+     */
+    public LocationNodeEdge getEdgeBetween(LocationNode adjacentNode) {
+        for (LocationNodeEdge edge : edges) {
+
+            if (edge.isEdgeBetweenNodes(this, adjacentNode)) {
+
+                return edge;
+
+            }
+        }
+        //TODO error message/ exception
+        // Edge does not exist
+        return null;
+    }
+
 
     public ArrayList<LocationNode> getAdjacentLocationNodes() {
 
@@ -547,8 +582,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         return this.currentFloor.equals(otherLocationNode.getCurrentFloor());
     }
-
-
 
 
 

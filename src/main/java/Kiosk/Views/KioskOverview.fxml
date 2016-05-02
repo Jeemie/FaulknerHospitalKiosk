@@ -5,22 +5,37 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<<<<<<< HEAD
 <?import javafx.scene.layout.HBox?>
+=======
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.KioskOverviewController">
    <children>
+<<<<<<< HEAD
       <Label alignment="CENTER" layoutX="201.0" layoutY="296.0" minWidth="878.0" prefHeight="70.0" prefWidth="878.0" text="Select a directory below" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="296.0">
+=======
+      <Label fx:id="dontTouchMe" alignment="CENTER" layoutY="140.0" minWidth="1280.0" prefHeight="120.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
          <font>
             <Font size="36.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <Label fx:id="dontTouchMe" alignment="CENTER" layoutX="93.0" layoutY="171.0" minWidth="1094.0" prefHeight="107.0" prefWidth="1094.0" text="Welcome to Faulkner Hospital" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="171.0">
+=======
+      <Label alignment="CENTER" layoutX="201.0" layoutY="296.0" minWidth="400.0" prefHeight="120.0" text="Select an option below" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="360.0">
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
          <font>
             <Font name="Apple Braille" size="60.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <StackPane alignment="BOTTOM_CENTER" layoutY="518.0" prefHeight="282.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="518.0">
          <children>
             <AnchorPane fx:id="textFieldAncho" maxHeight="70.0">
@@ -67,6 +82,56 @@
                   <Font size="14.0" />
                </font>
             </Button>
+=======
+      <GridPane layoutX="170.0" layoutY="520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="520.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ButtonBar buttonMinWidth="300.0" maxWidth="940.0" snapToPixel="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <buttons>
+                  <Button mnemonicParsing="false" onAction="#handleServices" prefHeight="70.0" text="Services" translateX="-20.0">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleDepartments" prefHeight="70.0" text="Departments" translateX="-10.0">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handlePhysicians" prefHeight="70.0" text="Care Providers">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+               </buttons>
+            </ButtonBar>
+         </children>
+      </GridPane>
+      <Button layoutX="1059.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleAbout" text="About the Developers" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="32.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <StackPane alignment="BOTTOM_CENTER" layoutY="650.0" prefHeight="150.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="650.0">
+         <children>
+            <AnchorPane fx:id="textFieldAncho" maxHeight="70.0" maxWidth="640.0" StackPane.alignment="TOP_CENTER">
+               <children>
+                  <TextField fx:id="searchTextBox" prefHeight="70.0" promptText="Search..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </AnchorPane>
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
          </children>
       </StackPane>
    </children>

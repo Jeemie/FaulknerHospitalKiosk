@@ -70,12 +70,24 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 break;
 
+<<<<<<< HEAD
+=======
+            case SETSTARTNODE:
+
+                currentMap.setStartLocationNode(this.locationNode);
+
+                currentMap.setCurrentMapState(MapState.ADMIN);
+
+                break;
+
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
             case ADDADJACENTNODE:
 
                 currentMap.setCurrentLocationNode(this.locationNode);
 
                 if (previousActions.isEmpty()) {
 
+                    currentMap.setCurrentMapState(MapState.ADMIN);
                     break;
                 }
 
@@ -86,9 +98,14 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                     LOGGER.info("Adding a connection between " + this.locationNode.toString() + " and " +
                             lastAction.getKey().toString());
 
+                    currentMap.setCurrentAdjacentNode(lastAction.getKey());
+
+
                     try {
 
-                        this.locationNode.addEdge(lastAction.getKey());
+                        currentMap.addLocationNodeEdge();
+
+                        //this.locationNode.addEdge(lastAction.getKey());
 
                     } catch (NodeDoesNotExistException e) {
 
@@ -104,9 +121,15 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
                 Map map = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
                 map.removeLocationNode();
+<<<<<<< HEAD
+=======
+                currentMap.setCurrentMapState(MapState.ADMIN);
+
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
                 break;
 
             default:
+                currentMap.setCurrentMapState(MapState.ADMIN);
 
                 break;
 
@@ -117,7 +140,11 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
 
         previousActions.push(entry);
 
+<<<<<<< HEAD
         //currentMap.setCurrentMapState(MapState.ADMIN);
+=======
+       // currentMap.setCurrentMapState(MapState.ADMIN);
+>>>>>>> a88a270d183bf191f423176baec6b249abd101a5
 
     }
 

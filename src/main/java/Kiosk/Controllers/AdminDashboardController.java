@@ -8,6 +8,14 @@ import Kiosk.KioskApp;
 import Map.*;
 import Map.Enums.ImageType;
 import Map.Enums.MapState;
+import Map.Exceptions.DefaultFileDoesNotExistException;
+import Map.Exceptions.FloorDoesNotExistException;
+import Map.Map;
+import Map.Floor;
+import Map.Destination;
+import Map.LocationNode;
+import Map.Location;
+import Map.LocationNodeEdge;
 import Utils.FixedSizedStack;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -239,6 +247,15 @@ public class AdminDashboardController {
     private TitledPane locationInformationTitledPane;
 
 
+    // Starting Kiosk fields
+    @FXML
+    private ComboBox selectStartKioskComboBox;
+
+    @FXML
+    private Label startNodeLabel;
+
+
+
     @FXML
     private Tab addFloorTab;
 
@@ -362,6 +379,30 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 // TODO Reload building from file
+
+                URL filePath = kioskApp.getFilePath();
+
+                try {
+
+                    faulknerHospitalMap = Map.loadFromFile(filePath);
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                } catch (FloorDoesNotExistException e) {
+
+                    e.printStackTrace();
+
+                } catch (DefaultFileDoesNotExistException e) {
+
+                    e.printStackTrace();
+
+                }
+
+
+
+                faulknerHospitalMap.setupAdminStackPane(mapStackPane);
 
                 LOGGER.info("Discarding changes to the map");
 
@@ -1079,6 +1120,16 @@ public class AdminDashboardController {
             //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
         });
 
+        locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            //   this.locationConnectedLocationsDeleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            //           new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.REMOVEEDGE, "TODO", this.selectedButtonLabel));
+                faulknerHospitalMap.removeLocationNodeEdge();
+            }
+        });
+
         this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -1090,7 +1141,31 @@ public class AdminDashboardController {
 
         });
 
+        selectStartKioskComboBox.setPromptText("Select Kiosk");
+        this.selectStartKioskComboBox.setItems(this.faulknerHospitalMap.getCurrentKioskLocationNodes());
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+
+                if (selectStartKioskComboBox.getSelectionModel().getSelectedItem() != null){
+
+                    LOGGER.info("Set Start Location to " + selectStartKioskComboBox.getValue());
+                    faulknerHospitalMap.setStartLocationNode((LocationNode) selectStartKioskComboBox.getSelectionModel().getSelectedItem());
+                    startNodeLabel.setText("Current Kiosk: " + faulknerHospitalMap.getStartLocationNode().toString());
+                }
+
+            }
+
+        });
+
+        this.setStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new ChangeMapStateEventHandler(this.faulknerHospitalMap, MapState.SETSTARTNODE,
+                        "Set Start Node", this.selectedButtonLabel));
+
     }
+
 
     private void setAddFloorTabListeners() {
 
