@@ -7,6 +7,7 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.FaulknerHospitalData;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -14,6 +15,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -257,6 +259,12 @@ public class KioskApp extends Application {
 //            controller.setBuilding(this.hospitalBuilding);
             controller.displayResult(searchText);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    controller.shutOff();
+                }
+            });
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -290,6 +298,12 @@ public class KioskApp extends Application {
             controller.setupListeners();
             controller.setStartSelection(destinationType);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    controller.shutOff();
+                }
+            });
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -330,7 +344,12 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 //            controller.setDestinationNode(destinationNode);
 
-
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    controller.shutOff();
+                }
+            });
 
             return controller.isOkClicked();
 

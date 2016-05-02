@@ -214,7 +214,6 @@ public class MapViewController {
                     timer.cancel();
                     running = false;
                     timerThread.interrupt();
-                    LOGGER.info("Blah " + searchTextField.getText());
                     kioskApp.showSearch(searchTextField.getText());
 
                 } else {
