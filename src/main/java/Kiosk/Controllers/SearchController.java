@@ -57,7 +57,7 @@ public class SearchController {
             while (running) {
                 try {
 
-                    if (counter == 60) {
+                    if (counter == 60000) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();

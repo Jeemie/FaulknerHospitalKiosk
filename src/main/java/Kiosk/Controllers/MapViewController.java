@@ -127,7 +127,7 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    if (counter == 60) {
+                    if (counter == 60000) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -230,6 +230,7 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+                counter = 0;
                 faulknerHospitalMap.pathPreviousFloor();
 
             }
@@ -254,6 +255,7 @@ public class MapViewController {
         });
 
 
+
         //timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
         //timerThread.start();
@@ -263,6 +265,7 @@ public class MapViewController {
             @Override
             public void handle(MouseEvent event) {
 
+                counter = 0;
                 faulknerHospitalMap.pathNextFloor();
 
             }
@@ -296,6 +299,7 @@ public class MapViewController {
         zoomOut.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+
                 double sliderVal = slider.getValue();
                 sliderVal -= 0.1;
                 slider.setValue(sliderVal);
