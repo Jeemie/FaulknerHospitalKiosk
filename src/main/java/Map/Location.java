@@ -99,6 +99,23 @@ public class Location extends Observable {
         this.addObserver(locationNode);
     }
 
+    /**
+     * Gets the distance between two locations in terms of feet
+     *
+     * @param secondLocation The location you want to get the distance to.
+     * @return The distance between two locations in feet.
+     */
+    public int getFeetDistanceBetween(Location secondLocation) {
 
+        // Get the pixel distance between locationNodes
+        double pixelDistance = this.getDistanceBetween(secondLocation);
+
+        // Convert it to double float for accuracy
+        double floatFeet = pixelDistance * 70 / 300;
+
+        // Cast to int and return for readability
+        return (int) floatFeet;
+
+    }
 
 }
