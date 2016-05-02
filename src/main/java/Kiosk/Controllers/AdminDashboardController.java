@@ -423,8 +423,8 @@ public class AdminDashboardController {
             public void handle(MouseEvent event) {
 
                 LOGGER.info("Zooming In");
-                
-                if (zoomSlider.getValue() < 15) {
+
+                if (zoomSlider.getValue() < zoomSlider.getMax()) {
 
                     zoomSlider.setValue(zoomSlider.getValue() + 1);
 
@@ -443,7 +443,7 @@ public class AdminDashboardController {
 
                 LOGGER.info("Zooming out");
 
-                if (zoomSlider.getValue() > 5) {
+                if (zoomSlider.getValue() > zoomSlider.getMin()) {
                     zoomSlider.setValue(zoomSlider.getValue() - 1);
 
                 } else {
@@ -509,33 +509,14 @@ public class AdminDashboardController {
                 double scaleFactor = 1.1;
                 if (event.getDeltaY() > 0) {
                     scaleFactor = SCALE_DELTA;
-                    if (counter < 10) {
-                        zoomSlider.setValue(zoomSlider.getValue() + 0.1);
-                        counter += 1;
+                    if (zoomSlider.getValue() < zoomSlider.getMax()) {
+                        zoomSlider.setValue(zoomSlider.getValue() + 1);
                     }
                 } else {
                     scaleFactor = 1 / SCALE_DELTA;
-                    if (counter > 0) {
+                    if (zoomSlider.getValue() > zoomSlider.getMin()) {
                         zoomSlider.setValue(zoomSlider.getValue() - 0.1);
-                        counter -= 1;
                     }
-                }
-
-
-                // amount of scrolling in each direction in scrollContent coordinate
-                // units
-
-                if (counter > 0 && counter < 10) {
-                    Point2D scrollOffset = figureScrollOffset(scrollContent, mapScrollPane);
-
-                    mapStackPane.setScaleX(mapStackPane.getScaleX() * scaleFactor);
-                    mapStackPane.setScaleY(mapStackPane.getScaleY() * scaleFactor);
-
-                    // move viewport so that old center remains in the center after the
-                    // scaling
-                    repositionScroller(scrollContent, mapScrollPane, scaleFactor, scrollOffset);
-                } else {
-                    return;
                 }
             }
 
