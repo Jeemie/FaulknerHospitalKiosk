@@ -1,6 +1,7 @@
 package Kiosk.Controllers;
 
 import Kiosk.KioskApp;
+import Map.Direction;
 import Map.Enums.DestinationType;
 import Map.Enums.DirectionIcons;
 import Map.Map;
@@ -315,29 +316,31 @@ public class MapViewController {
         });
 
 
-        directionsList.setCellFactory(listView -> new ListCell<String>() {
+        directionsList.setCellFactory(listView -> new ListCell<Direction>() {
+
             private final ImageView imageView = new ImageView();
             {
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(100);
+                imageView.setFitHeight(25);
+                imageView.setFitWidth(25);
                 imageView.setPreserveRatio(true);
             }
 
             @Override
-            public void updateItem(String item, boolean empty) {
+            public void updateItem(Direction item, boolean empty) {
+
                 super.updateItem(item, empty);
+
                 if (empty) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    setText(item);
 
-
+                    setText(item.getDirectionString());
 
                     try {
 
-                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources/" +
-                                DirectionIcons.RIGH.getResourceFileName()).toString(), true);
+                        Image icon = new Image(new URL("file:///" + System.getProperty("user.dir") + "/resources" +
+                                item.getRelativeDirection().getResourceFileName()).toString(), true);
 
                         imageView.setImage(icon);
 
@@ -346,10 +349,7 @@ public class MapViewController {
                         LOGGER.error("Unable to show the icon  in the addLocationIconsListView", e);
 
                     }
-                    // true makes this load in background
-                    // see other constructors if you want to control the size, etc
-//                    Image image = new Image(DirectionIcons.BACK.getResourceFileName(), true) ;
-//                    imageView.setImage(image);
+
                     setGraphic(imageView);
                 }
             }

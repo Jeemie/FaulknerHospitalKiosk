@@ -37,7 +37,6 @@ public class Map implements Observer {
 
     private ObservableList icons = FXCollections.observableArrayList();
 
-
     private String name;
 
     // Unique ID for this Map
@@ -499,22 +498,10 @@ public class Map implements Observer {
 
     public void setupDirections(ListView textualDirections) {
 
-        try {
-            ObservableList<String> textualDirectionStrings = FXCollections.observableArrayList();
-            if(this.currentPath  == null) {
-                LOGGER.debug("No path");
-            } else {
-                for (Direction direction : this.currentPath.getDirections()) {
+        ObservableList<Direction> destinations = FXCollections.observableArrayList();
+        destinations.addAll(this.currentPath.getDirections());
 
-                    textualDirectionStrings.add(direction.getDirectionString());
-
-                }
-                LOGGER.debug("TextualDirecitons " + textualDirectionStrings);
-                textualDirections.setItems(textualDirectionStrings);
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        textualDirections.setItems(destinations);
 
     }
 
