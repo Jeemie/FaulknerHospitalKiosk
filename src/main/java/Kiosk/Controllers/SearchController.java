@@ -56,9 +56,8 @@ public class SearchController {
         public void run() {
             while (running) {
                 try {
-
-                    if (counter == 60000) {
-                        System.out.println("Timed Out.");
+                    //These are in seconds, people. Not milliseconds.
+                    if (counter == 3600) {
                         running = false;
                         timer.cancel();
                         atimer.cancel();
@@ -119,7 +118,6 @@ public class SearchController {
 
             @Override
             public void handle(MouseEvent event) {
-                kioskApp.changeLanguage(kioskApp.getCurrentLocale());
 
                 if (event.getClickCount() == 2) {
                     ArrayList<Floor> floors = building.getFloors();

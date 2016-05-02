@@ -131,7 +131,8 @@ public class MapViewController {
         public void run() {
             while (running) {
                 try {
-                    if (counter == 60000) {
+                    //These are in seconds, people. Not milliseconds.
+                    if (counter == 3600) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -256,11 +257,6 @@ public class MapViewController {
                 counter = 0;
             }
         });
-
-
-        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
-
-        //timerThread.start();
 
         changeFloorButtonUp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

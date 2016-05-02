@@ -83,8 +83,8 @@ public class DirectoryController {
             while (running) {
 
                 try {
-
-                    if (counter == 60000) {
+                    //These are in seconds, people. Not milliseconds.
+                    if (counter == 3600) {
 
                         LOGGER.info("Timed Out");
 
