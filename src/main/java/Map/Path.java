@@ -89,7 +89,7 @@ public class Path {
 
         }
 
-        //Set the directions object according to the path given
+        // Set the directions object according to the path given
         setupDirections(originalPath);
 
         drawNextFloor();
@@ -187,6 +187,127 @@ public class Path {
     }
 
     private void setupDirections(ArrayList<LocationNode> path) {
+
+        // Create three LocationNodes to create two CardinalDirections
+        LocationNode firstLNode, secondLNode, thirdLNode;
+
+        // Create two CardinalDirections to create one RelativeDirection
+        CardinalDirection pastCDirection, currentCDirection;
+
+        // Two locations used to display distance between two nodes
+        Location startTurnLoc, endTurnLocation;
+
+        // Two locations used to determine the end elevator
+        LocationNode elevator;
+
+        // The three values to add to the directions list at the end of each loop
+        RelativeDirection   currentRelativeDirection = null;
+        String              currentTextualDirection = "";
+        int                 currentDistanceBetweenLocations = 0;
+        Direction           currentDirection;
+
+        // Boolean endDirection
+        boolean endDirection = false;
+
+        // Boolean endElevetor
+        boolean endElevator = false;
+
+        // Boolean for endOfHall
+        boolean  endOfHall;
+
+        // Todo edge case if path includes only one nodes
+        // Todo edge case if path includes only two nodes
+
+        startTurnLoc = path.get(0).getLocation();
+
+        for(int i = 1; i < (path.size() - 1); i++) {
+
+            // Declare first three nodes
+            firstLNode = path.get(i - 1);
+            secondLNode = path.get(i);
+            thirdLNode = path.get(i + 1);
+
+            // Create CardinalDirections
+            pastCDirection = firstLNode.getDirectionsTo(secondLNode);
+            currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
+
+//            endOfHall = true;
+//            for (LocationNode neighbor : secondLNode.getAdjacentLocationNodes())
+//                if(secondLNode.getDirectionsTo(neighbor) == firstLNode.getDirectionsTo(secondLNode)) {
+//                    endOfHall = false;
+//                }
+//            }
+
+
+            if (!secondLNode.onSameFloor(thirdLNode)) {
+
+                if (!endElevator) {
+                    endElevator = true;
+                }
+
+            } else if (endElevator) { // Only reaches here if secondLNode and thirdLNode are on the same floor
+
+                elevator = secondLNode;
+
+                currentTextualDirection = "Take the elevator to " + elevator.getCurrentFloor().getFloorName();
+
+                endElevator = false;
+                endDirection = true;
+
+            }
+            else if (pastCDirection == currentCDirection) { // Next nodes is straight
+
+                if (i == path.size() - 2) { // Reach the end of the path
+
+                    currentRelativeDirection = RelativeDirection.STRAIGHT;
+                    currentTextualDirection = "Go straight till you reach: " + thirdLNode.getName();
+
+                    endDirection = true;
+
+                }
+
+            } else { // There is a turn
+
+                endDirection = true;
+
+                // Check cardinalDirection relations, and out the right direction
+                if (pastCDirection.right() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.RIGHT;
+                    currentTextualDirection = "Take the next Right";
+
+                } else if (pastCDirection.left() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.LEFT;
+                    currentTextualDirection = "Take the next Left";
+
+                } else if (pastCDirection.opposite() == currentCDirection) {
+
+                    currentRelativeDirection = RelativeDirection.BACK;
+                    currentTextualDirection = "Turn around"; //Should actually not happen
+
+                }
+            }
+
+
+            if (endDirection) { //Save the destination and reset
+
+                currentDistanceBetweenLocations = startTurnLoc.getFeetDistanceBetween(thirdLNode.getLocation());
+
+                currentDirection = new Direction (  currentRelativeDirection,
+                                                    currentTextualDirection,
+                                                    currentDistanceBetweenLocations );
+                directions.add(currentDirection);
+
+                startTurnLoc =  thirdLNode.getLocation();
+
+                endDirection = false;
+            }
+
+        }
+
+       /*
+
         // Set's the direction objects
 
         // Create three LocationNodes to create two CardinalDirections
@@ -197,6 +318,9 @@ public class Path {
 
         // A count to help calculate junctions
         int junctionCount = 0;
+
+        // A two locations used to display distance between two nodes
+        Location startTurnLoc, endDirectionLocation;
 
         // If there is only one node in the path or less, then return nothing.
         if (path.size() < 2) {
@@ -219,88 +343,102 @@ public class Path {
             secondLNode = path.get(i);
             thirdLNode = path.get(i + 1);
 
-            if (secondLNode.onSameFloor(thirdLNode)) {
+            // Set the startTurnLoc
+            startTurnLoc = secondLNode.getLocation();
 
-                //Create CardinalDirections
-                pastCDirection = firstLNode.getDirectionsTo(secondLNode);
-                currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
 
-                //Create a string to put into the textualDirections arraylist
-                String currentTextDirection = "";
+            //Create CardinalDirections
+            pastCDirection = firstLNode.getDirectionsTo(secondLNode);
+            currentCDirection = secondLNode.getDirectionsTo(thirdLNode);
 
-                //Create RelationalDirection based on the two cardinal direction
-                //If the directions are the same, go forward
-                LOGGER.info("pastCDirection: ", pastCDirection.toString());
-                LOGGER.info("currentCDirection: ", currentCDirection.toString());
-                if (pastCDirection == currentCDirection) {
+            //Create a string to put into the textualDirections arraylist
+            String currentTextDirection = "";
 
-                    LOGGER.info("Junction count added");
-                    junctionCount++; //Increment junctionCount to know the number of junctions
-                    if (i == path.size() - 2) { //If it's the last part of the path
+            //Create RelationalDirection based on the two cardinal direction
+            //If the directions are the same, go forward
+            if (pastCDirection == currentCDirection) {
 
-                        directions.add(new Direction(   RelativeDirection.STRAIGHT,
-                                                        "Go straight, you've reached destination",
-                                                        0));
+                junctionCount++; //Increment junctionCount to know the number of junctions
+                if (i == path.size() - 2) { //If it's the last part of the path
 
-                    }
+                    endDirectionLocation = thirdLNode.getLocation();
 
-                } else {
+                    int currentFeetDistance = startTurnLoc.getFeetDistanceBetween(endDirectionLocation);
 
-                    //Change how sentence junction is structured depending on junctionCount number
-                    currentTextDirection += "Take the ";
-                    switch (junctionCount) {
-                        case 0:
-                            currentTextDirection += "next ";
-                            break;
-                        case 1:
-                            currentTextDirection += (junctionCount + 1) + "nd "; //2nd
-                            break;
-                        case 2:
-                            currentTextDirection += (junctionCount + 1) + "rd "; //3rd
-                            break;
-                        default:
-                            currentTextDirection += (junctionCount + 1) + "th "; //nth
-                            break;
-                    }
-
-                    //Check cardinalDirection relations, and output the right direction
-                    if (pastCDirection.right() == currentCDirection) {
-
-                        currentTextDirection += "Right";
-
-                        directions.add(new Direction(   RelativeDirection.RIGHT,
-                                                        currentTextDirection,
-                                                        0));
-
-                    } else if (pastCDirection.left() == currentCDirection) {
-                        currentTextDirection += "Left";
-
-                        directions.add(new Direction(   RelativeDirection.LEFT,
-                                                        currentTextDirection,
-                                                        0));
-
-                    } else if (pastCDirection.opposite() == currentCDirection) {
-                        currentTextDirection += "Back"; //Should actually not happen
-
-                        directions.add(new Direction(   RelativeDirection.BACK,
-                                                        currentTextDirection,
-                                                        0));
-
-                    }
-
-                    //Reset junctionCount
-                    junctionCount = 0;
+                    directions.add(new Direction(RelativeDirection.STRAIGHT,
+                            "After " + currentFeetDistance + " feet,\n" +
+                                    "Go straight, you've reached destination",
+                            0));
 
                 }
 
-            } else { // Multi-level edge
+            } else {
 
-                directions.add( new Direction(  RelativeDirection.ELEVATOR,
-                                                "Take the elevator to " + thirdLNode.getCurrentFloor().getFloorName() + ".",
-                                                0));
+                endDirectionLocation = thirdLNode.getLocation();
+
+                int currentFeetDistance = startTurnLoc.getFeetDistanceBetween(endDirectionLocation);
+
+                currentTextDirection = "After " + currentFeetDistance + " feet,\n";
+
+                //Change how sentence junction is structured depending on junctionCount number
+                currentTextDirection += "take the ";
+                switch (junctionCount) {
+                    case 0:
+                        currentTextDirection += "next ";
+                        break;
+                    case 1:
+                        currentTextDirection += (junctionCount + 1) + "nd "; //2nd
+                        break;
+                    case 2:
+                        currentTextDirection += (junctionCount + 1) + "rd "; //3rd
+                        break;
+                    default:
+                        currentTextDirection += (junctionCount + 1) + "th "; //nth
+                        break;
+                }
+
+                //Check cardinalDirection relations, and output the right direction
+                if (pastCDirection.right() == currentCDirection) {
+
+                    currentTextDirection += "Right";
+
+                    directions.add(new Direction(RelativeDirection.RIGHT,
+                            currentTextDirection,
+                            currentFeetDistance));
+
+                } else if (pastCDirection.left() == currentCDirection) {
+                    currentTextDirection += "Left";
+
+                    directions.add(new Direction(RelativeDirection.LEFT,
+                            currentTextDirection,
+                            currentFeetDistance));
+
+                } else if (pastCDirection.opposite() == currentCDirection) {
+                    currentTextDirection += "Back"; //Should actually not happen
+
+                    directions.add(new Direction(RelativeDirection.BACK,
+                            currentTextDirection,
+                            currentFeetDistance));
+
+                }
+
+                //Reset junctionCount
+                junctionCount = 0;
 
             }
+            if (!secondLNode.onSameFloor(thirdLNode)) { // Multi-level edge
+
+                endDirectionLocation = thirdLNode.getLocation();
+
+                int currentFeetDistance = startTurnLoc.getFeetDistanceBetween(thirdLNode.getLocation());
+
+                directions.add(new Direction(RelativeDirection.ELEVATOR,
+                        "After " + currentFeetDistance + " feet, \n" +
+                                " take the elevator to " + thirdLNode.getCurrentFloor().getFloorName() + ".",
+                        0));
+            }
         }
+        */
     }
 
     public ArrayList<Direction> getDirections() {

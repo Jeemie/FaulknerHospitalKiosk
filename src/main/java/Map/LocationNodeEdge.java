@@ -64,6 +64,7 @@ public class LocationNodeEdge extends Observable {
                     this.locationNode2.getLocation().getX(), this.locationNode2.getLocation().getY());
             this.edgeLine.setStrokeWidth(3);
 
+
             locationNodeEdgePane.getChildren().add(this.edgeLine);
 
         }

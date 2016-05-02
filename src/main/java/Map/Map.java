@@ -520,11 +520,11 @@ public class Map implements Observer {
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
+
     }
 
 
     public void useAStar() {
-
 
         this.searchAlgorithm = new AStar();
 
@@ -1046,6 +1046,7 @@ public class Map implements Observer {
         if (currentMapState.equals(MapState.NORMAL)) {
 
             return;
+
         }
 
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {
