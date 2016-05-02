@@ -10,11 +10,13 @@ public class Direction {
     RelativeDirection relativeDirection;
     String directionString;
     int distance;
+    LocationNode turningPoint;
 
-    public Direction(RelativeDirection relativeDirection, String directionString, int distance) {
+    public Direction(RelativeDirection relativeDirection, String directionString, int distance, LocationNode turningPoint) {
         this.relativeDirection = relativeDirection;
         this.directionString = directionString;
         this.distance = distance;
+        this.turningPoint = turningPoint;
     }
 
     public RelativeDirection getRelativeDirection() {
@@ -27,5 +29,9 @@ public class Direction {
 
     public int getDistance() {
         return distance;
+    }
+
+    public LocationNode getTurningPoint() {
+        return turningPoint;
     }
 }
