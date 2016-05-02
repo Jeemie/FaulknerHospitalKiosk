@@ -57,7 +57,7 @@ public class SearchController {
             while (running) {
                 try {
 
-                    if (counter == 60) {
+                    if (counter == 60000) {
                         System.out.println("Timed Out.");
                         running = false;
                         timer.cancel();
@@ -112,10 +112,14 @@ public class SearchController {
     private void initialize() {
 
 
+
+
+
         listDirectory.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
+                kioskApp.changeLanguage(kioskApp.getCurrentLocale());
 
                 if (event.getClickCount() == 2) {
                     ArrayList<Floor> floors = building.getFloors();

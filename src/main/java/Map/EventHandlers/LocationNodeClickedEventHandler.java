@@ -110,6 +110,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
                         LOGGER.error("Unable to create an edge ", e);
 
                     }
+                    currentMap.setCurrentMapState(MapState.ADMIN);
 
                 }
 
@@ -118,6 +119,7 @@ public class LocationNodeClickedEventHandler implements EventHandler<MouseEvent>
             case REMOVENODE:
 
                 Map map = this.locationNode.getCurrentFloor().getCurrentBuilding().getCurrentMap();
+                map.setCurrentLocationNode(this.locationNode);
                 map.removeLocationNode();
                 currentMap.setCurrentMapState(MapState.ADMIN);
 

@@ -173,20 +173,20 @@ public class Path {
         xMax = temp.get(0).getLocation().getX();
 
         for( int i =0 ; i <= temp.size()-1;i++){
-                double xnum =  temp.get(i).getLocation().getX();
-                double ynum =  temp.get(i).getLocation().getY();
-                if(xnum<xMin){
-                    xMin=xnum;
-                }
-                if(xnum>xMax){
-                    xMax=xnum;
-                }
-                if(ynum<yMin){
-                    yMin =ynum;
-                }
-                if(ynum>yMax){
-                    yMax =ynum;
-                }
+            double xnum =  temp.get(i).getLocation().getX();
+            double ynum =  temp.get(i).getLocation().getY();
+            if(xnum<xMin){
+                xMin=xnum;
+            }
+            if(xnum>xMax){
+                xMax=xnum;
+            }
+            if(ynum<yMin){
+                yMin =ynum;
+            }
+            if(ynum>yMax){
+                yMax =ynum;
+            }
 
 
         }
@@ -374,9 +374,9 @@ public class Path {
                 }
 
                 currentDirection = new Direction (  currentRelativeDirection,
-                                                    currentTextualDirection,
-                                                    currentDistanceBetweenLocations,
-                                                    thirdLNode);
+                        currentTextualDirection,
+                        currentDistanceBetweenLocations,
+                        secondLNode);
                 directions.add(currentDirection);
 
                 startTurnLoc =  thirdLNode.getLocation();
@@ -403,4 +403,3 @@ public class Path {
     }
 
 }
-

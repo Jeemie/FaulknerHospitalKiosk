@@ -9,6 +9,7 @@ import Map.Exceptions.DefaultFileDoesNotExistException;
 import Map.Exceptions.FloorDoesNotExistException;
 import Map.Exceptions.NoPathException;
 import Map.Exceptions.NodeDoesNotExistException;
+import Map.Exceptions.*;
 import Map.Memento.*;
 import Map.SearchAlgorithms.AStar;
 import Map.SearchAlgorithms.Dijkstras;
@@ -31,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.apache.log4j.lf5.util.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -241,6 +243,11 @@ public class Map implements Observer {
 
                 break;
 
+            } catch (EdgeAlreadyExistsException e) {
+
+                LOGGER.debug("Edge already exists.");
+
+                break;
             }
 
             current = next;
@@ -262,22 +269,41 @@ public class Map implements Observer {
 
             LOGGER.debug("Edge could not be added because the currentLocationNode was null");
 
+            return;
+
         }
 
         if(this.currentAdjacentNode == null) {
 
             LOGGER.debug("Edge could not be added because the currentAdjacentNode was null");
 
+            return;
+
         }
 
-        this.currentLocationNode.addEdge(currentAdjacentNode);
+        if(this.currentLocationNode.equals(currentAdjacentNode)) {
 
-        // Redraw Edge
-        this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
-        this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+            LOGGER.debug("Edge could not be added because the currentAdjacentNode and the currentLocationNode are the same");
 
-        // Update Observers
-        this.currentAdjacentLocationNodes.add(currentAdjacentNode);
+            return;
+
+        }
+
+        try {
+
+            this.currentLocationNode.addEdge(currentAdjacentNode);
+
+            // Redraw Edge
+            this.currentLocationNode.drawAdmin(this.currentFloorLocationNodePane);
+            this.currentLocationNode.drawEdgesAdmin(this.currentFloorEdgePane);
+
+            // Update Observers
+            this.currentAdjacentLocationNodes.add(currentAdjacentNode);
+
+        } catch(EdgeAlreadyExistsException e) {
+
+            e.printStackTrace();
+        }
 
     }
 
@@ -371,6 +397,8 @@ public class Map implements Observer {
         this.currentBuildingDestinations.removeAll(this.currentLocationNode.getDestinations());
         this.currentDestination = null;
 
+        this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
+
         this.currentFloor.removeLocationNode(this.currentLocationNode);
 
     }
@@ -387,6 +415,8 @@ public class Map implements Observer {
         this.directoryList.clear();
 
         for (Building building : this.mapBuildings) {
+
+
 
             this.directoryList.setAll(building.getBuildingDestinations(DestinationType.PHYSICIAN));
 
@@ -454,15 +484,148 @@ public class Map implements Observer {
 
         for (Building building : this.mapBuildings) {
 
-            this.directoryList.addAll(building.getBuildingDestinations());
+            this.directoryList.addAll(building.getBuildingDestinations(DestinationType.SERVICE));
 
         }
 
     }
 
+    /**
+     * Translate services and departments
+     * @param destType DestinationType enum
+     * @param currentLocale Locale to translate to
+     * @return
+     */
+    public void translateDirectory(DestinationType destType, Locale currentLocale) {
+
+        List<Destination> directoryList;
+
+        if(DestinationType.SERVICE.equals(destType)) {
+
+            // Get the directory of services for all buildings
+            directoryList = getServiceDirectory();
+
+        } else if(DestinationType.DEPARTMENT.equals(destType)) {
+
+            // Get the directory of services for all buildings
+            directoryList = getDepartmentDirectory();
+
+        } else {
+
+            // Only service and department translation is supported
+            return;
+        }
+
+        // Check if locale specified default language
+        if(currentLocale.getDisplayLanguage() == "en") {
+
+            // Directory does not require translation
+            return;
+        }
+
+        // English value string
+        String enValue;
+
+        // Locale specific string value
+        String translation;
+
+        // Resource Bundle with translatable text
+        ResourceBundle labels;
+
+        // Resource Bundle with English text
+        ResourceBundle enLabels;
+
+        // English Resource Bundle keys
+        Set<String> enKeys;
+
+        Destination aDestination;
+
+        // Keys with values associated with Service destination names
+        ArrayList<String> destKeys = new ArrayList<>();
+
+        // HashMap key is value associated with bundle key; bundle key is HashMap value
+        HashMap<String, String> enHashMap = new HashMap<>();
+
+        // HashMap key is a bundle key; HashMap value is a Destination with associated name
+        HashMap<String, Destination> keyDestHashMap = new HashMap<>();
+
+        // English, United States locale
+        Locale enLocale = new Locale("en", "US");
+
+
+
+        // Create ResourceBundle containing locale-specific translatable text
+        labels = ResourceBundle.getBundle("LabelsBundle", currentLocale);
+
+        // Create ResourceBundle containing English-locale specific text
+        enLabels = ResourceBundle.getBundle("LabelsBundle", enLocale);
+
+        // Get English resource bundle keys
+        enKeys = enLabels.keySet();
+
+        // For each English key in key set
+        for(String enKey : enKeys) {
+
+            // get value associated with key
+            enValue = enLabels.getString(enKey);
+
+            // add enValue as key and enKey as value in HashMap
+            enHashMap.put(enValue, enKey);
+
+        }
+
+        // For each destination in the directory list
+        for(Destination dest : directoryList) {
+
+            String destName = dest.getName();
+
+            // Check if destination name is a key in the enHashMap
+            if(enHashMap.containsKey(destName)) {
+
+                // This service destination as an available translation
+                // Get value from enHashMap
+                String val = enHashMap.get(destName);
+
+                // Add value from enHashMap corresponding to key and associated Destination to HashMap
+                keyDestHashMap.put(val, dest);
+
+                // Add val to array of service keys
+                destKeys.add(val);
+
+            }
+        }
+
+        // For each key in the key in the keyDestHashMap
+        for(String key: destKeys) {
+
+            // Destination associated with key
+            aDestination = keyDestHashMap.get(key);
+
+            // Get translation associated with key
+            translation = labels.getString(key);
+
+            if(translation != null) {
+
+                // Set destination name translation
+                aDestination.setTranslation(translation);
+
+            } else {
+
+                // No translation available; using existing name
+                aDestination.setTranslation(aDestination.getName());
+            }
+        }
+
+        //getServiceDirectory();
+
+    }
+
+
     public List<Destination> getServiceDirectory() {
 
         this.directoryList.clear();
+
+
 
         for (Building building : this.mapBuildings) {
 
@@ -585,7 +748,6 @@ public class Map implements Observer {
     }
 
 
-
     public ArrayList<LocationNode> getPathFromKiosk(LocationNode destination) throws NoPathException {
 
         return this.searchAlgorithm.getPath(this.startLocationNode, destination);
@@ -653,16 +815,16 @@ public class Map implements Observer {
 
 //
 //                // remove current location node destinations from current floor destinations and building destinations
-//                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
+                this.currentFloorDestinations.removeAll(this.currentLocationNodeDestinations);
+               this.currentBuildingDestinations.removeAll(this.currentLocationNodeDestinations);
 
 //                // Update currentLocationNodeDestinations by clearing the list, and replacing it with the getDestinations function
 //                this.currentLocationNodeDestinations.clear();
 //                this.currentLocationNodeDestinations.addAll(this.currentLocationNode.getDestinations());
 
 //                // Add current location node destinations from current floor and building destinations
-//                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
-//                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentFloorDestinations.addAll(this.currentLocationNodeDestinations);
+                this.currentBuildingDestinations.addAll(this.currentLocationNodeDestinations);
 
 
                 break;
@@ -696,6 +858,7 @@ public class Map implements Observer {
 
             case LOCATIONNODEREMOVED:
 
+//                this.currentFloorLocationNodePane.getChildren().remove(this.currentLocationNode.;
                 this.currentLocationNode.undrawLocationNode(this.currentFloorLocationNodePane, this.currentFloorEdgePane);
                 this.currentLocationNode.getEdges().clear();
                 this.setCurrentLocationNode(null);
@@ -725,7 +888,11 @@ public class Map implements Observer {
 
             case EDGEREMOVED:
 
-                this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+                if (this.currentLocationNodeEdge != null) {
+
+                    this.currentLocationNodeEdge.undrawEdge(this.currentFloorEdgePane);
+
+                }
 
                 break;
 
@@ -941,20 +1108,46 @@ public class Map implements Observer {
                         LocationNode locationNode2 = locationNodeHashMap.get(locationNodeEdgeMemento.getLocationNode2ID());
 
 
-                        try{
+                        try {
 
                             //If the assiocatedLocationNode does not equal locationNode1
                             if(!associatedLocationNode.equals(locationNode1)) {
 
                                 // Add the edge to locationNode 1
-                                associatedLocationNode.addEdge(locationNode1);
+                                try {
+
+                                    // Prevent EdgeAlreadyExistsException from being thrown on load
+                                    if (associatedLocationNode.getEdgeBetween(locationNode1) == null) {
+
+                                        associatedLocationNode.addEdge(locationNode1);
+
+                                    }
+
+                                } catch (EdgeAlreadyExistsException e) {
+
+                                    e.printStackTrace();
+
+                                }
 
                             }
                             //If the assiciatedLocationNode does not equal locationNode2
                             else if (!associatedLocationNode.equals(locationNode2)) {
 
                                 // Add the edge to locationNode 2
-                                associatedLocationNode.addEdge(locationNode2);
+                                try {
+
+                                    // Prevent EdgeAlreadyExistsException from being thrown on load
+                                    if (associatedLocationNode.getEdgeBetween(locationNode2) == null) {
+
+                                        associatedLocationNode.addEdge(locationNode2);
+
+                                    }
+
+
+                                } catch (EdgeAlreadyExistsException e) {
+
+                                    e.printStackTrace();
+                                }
 
                             }
 
@@ -1119,6 +1312,12 @@ public class Map implements Observer {
         this.currentDestination = null;
         locationNodeUpdater(locationNode);
         this.currentLocationNode = locationNode;
+
+        if (currentLocationNode == null) {
+
+            return;
+        }
+
         floorChangeUpdater(currentLocationNode.getCurrentFloor());
         this.currentFloor = currentLocationNode.getCurrentFloor();
         this.buildingChangeUpdater(currentFloor.getCurrentBuilding());
@@ -1132,6 +1331,11 @@ public class Map implements Observer {
 
             return;
 
+        }
+
+        if (newLocationNode == null) {
+
+            return;
         }
 
         if ((this.currentLocationNode == null) || (!this.currentLocationNode.equals(newLocationNode))) {

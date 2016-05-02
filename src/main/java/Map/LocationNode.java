@@ -6,6 +6,7 @@ import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
+import Map.Exceptions.EdgeAlreadyExistsException;
 import Map.Exceptions.NodeDoesNotExistException;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -63,6 +64,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
 
+    private ArrayList<Destination> translatedDestinations;
+
     public LocationNode(String name, Location location, Floor currentFloor, ImageType associatedImage) {
 
         this.name = name;
@@ -75,6 +78,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         this.destinations = new ArrayList<>();
         this.fScore = Double.POSITIVE_INFINITY;
         this.gScore = Double.POSITIVE_INFINITY;
+        this.translatedDestinations = new ArrayList<>();
 
         this.addObserver(this.currentFloor);
 
@@ -393,7 +397,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 
@@ -446,7 +450,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
+    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException, EdgeAlreadyExistsException {
 
         if (adjacentNode == null) {
 
@@ -460,9 +464,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             if (edge.edgeExists(this, adjacentNode)) {
 
                 // Edge has already been added
-                LOGGER.error("Cannot add new edge. Edge already exists.");
+               throw new EdgeAlreadyExistsException(this, adjacentNode);
 
-                return;
             }
         }
 
@@ -490,7 +493,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             }
         }
-        //TODO error message/ exception
+
         // Edge does not exist
         return null;
     }
@@ -684,6 +687,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     public Label getIconLabel() {
 
         return iconLabel;
+    }
+
+    public ArrayList<Destination> getTranslatedDestinations() {
+
+        return translatedDestinations;
+    }
+
+    public void setTranslatedDestinations(ArrayList<Destination> translatedDestinations) {
+
+        this.translatedDestinations = translatedDestinations;
     }
 
 }

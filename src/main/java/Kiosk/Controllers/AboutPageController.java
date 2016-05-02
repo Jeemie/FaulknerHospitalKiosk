@@ -55,7 +55,7 @@ public class AboutPageController {
 
                 try {
 
-                    if (counter == 60) {
+                    if (counter == 60000) {
 
                         LOGGER.info("Timed Out");
 

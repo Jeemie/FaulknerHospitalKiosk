@@ -3,6 +3,7 @@ package Kiosk.Controllers;
 import Kiosk.KioskApp;
 import Map.*;
 import Map.Enums.DestinationType;
+import Map.Map;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,9 +17,7 @@ import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class DirectoryController {
@@ -77,8 +76,7 @@ public class DirectoryController {
 
                 try {
 
-                    // Time out after 30 minutes
-                    if (counter == 30000) {
+                    if (counter == 60000) {
 
                         LOGGER.info("Timed Out");
 
@@ -238,7 +236,6 @@ public class DirectoryController {
                 LOGGER.info("Showing the Services Directory");
 
                 faulknerHospitalMap.serviceDirectory();
-
             }
 
         });
