@@ -17,21 +17,16 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.SearchController">
     <children>
-        <TextField fx:id="searchTextBox" layoutX="73.0" layoutY="50.0" prefHeight="51.0" prefWidth="1134.0" promptText="%search" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="50.0">
-         <font>
-            <Font size="24.0" />
-         </font></TextField>
         <TableView layoutX="-132.0" layoutY="-206.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.leftAnchor="-132.0" AnchorPane.rightAnchor="278.0" AnchorPane.topAnchor="-206.0">
             <columns>
                 <TableColumn prefWidth="453.0" text="%searchResults" />
             </columns>
         </TableView>
-        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="371.0" prefHeight="340.0" prefWidth="1134.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="300.0" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="226.0" prefHeight="51.0" prefWidth="1134.0" text="%searchResults" textAlignment="CENTER" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="226.0">
+        <TextField fx:id="searchTextBox" layoutX="73.0" layoutY="50.0" prefHeight="51.0" prefWidth="1134.0" promptText="%search" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="32.0">
          <font>
             <Font size="24.0" />
-         </font></Label>
-      <GridPane layoutX="284.0" layoutY="696.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         </font></TextField>
+      <GridPane layoutX="276.0" layoutY="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="115.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
          </columnConstraints>
@@ -39,33 +34,9 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ButtonBar buttonMinWidth="231.0" maxWidth="492.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <buttons>
-                      <Button fx:id="okButton" mnemonicParsing="false" prefHeight="51.0" prefWidth="190.0" text="OK" translateX="-10.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                      <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="51.0" prefWidth="190.0" text="Cancel" translateX="-10.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-               </buttons>
-            </ButtonBar>
-         </children>
-      </GridPane>
-      <GridPane layoutX="276.0" layoutY="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <ButtonBar buttonMinWidth="231.0" maxWidth="733.0" prefHeight="51.0" prefWidth="733.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ButtonBar buttonMinWidth="312.0" maxWidth="976.0" prefHeight="51.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
               <buttons>
-                  <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" prefHeight="40.0" text="%careProviders" translateX="-10.0">
+                  <ToggleButton fx:id="physicians" mnemonicParsing="false" onAction="#sortPhysicians" text="%careProviders" translateX="-20.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -73,17 +44,46 @@
                         <ToggleGroup fx:id="Sorting" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" prefHeight="40.0" text="%departments" toggleGroup="$Sorting" translateX="-10.0">
+                  <ToggleButton fx:id="departments" mnemonicParsing="false" onAction="#sortDepartments" text="%departments" toggleGroup="$Sorting" translateX="-10.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" prefHeight="40.0" prefWidth="273.0" text="%services" toggleGroup="$Sorting" translateX="-10.0">
+                  <ToggleButton fx:id="services" mnemonicParsing="false" onAction="#sortServices" text="%services" toggleGroup="$Sorting">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </ToggleButton>
               </buttons>
+            </ButtonBar>
+         </children>
+      </GridPane>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="226.0" prefHeight="51.0" prefWidth="1134.0" text="%searchResults" textAlignment="CENTER" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="180.0">
+         <font>
+            <Font size="36.0" />
+         </font></Label>
+        <ListView fx:id="listDirectory" layoutX="73.0" layoutY="371.0" prefHeight="435.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="250.0" />
+      <GridPane layoutX="284.0" layoutY="696.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="717.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ButtonBar buttonMinWidth="312.0" maxWidth="654.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <buttons>
+                      <Button fx:id="okButton" mnemonicParsing="false" prefHeight="51.0" prefWidth="190.0" text="OK" translateX="-15.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                      <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="51.0" prefWidth="190.0" text="Cancel" translateX="-5.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </buttons>
             </ButtonBar>
          </children>
       </GridPane>
