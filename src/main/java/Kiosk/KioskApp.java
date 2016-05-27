@@ -7,6 +7,7 @@ import Map.Exceptions.FloorDoesNotExistException;
 import Map.Map;
 import Map.FaulknerHospitalData;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -14,6 +15,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,35 +187,33 @@ public class KioskApp extends Application {
      *
      */
     public boolean showAdminLogin() {
-        showAdminControls();
 
-//        try {
-//            // Load AdminLogin
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
-//            AnchorPane page = loader.load();
-//
-//            // Replace KioskOverview with AdminLogin
-//            primaryStage.setTitle("Admin Login");
-//            primaryStage.getScene().setRoot(page);
-///*            Scene scene = new Scene(page);
-//            primaryStage.setScene(scene);
-//            primaryStage.setFullScreen(true);
-//            primaryStage.show();*/
-//
-//            // Give controller access to Main App
-//            AdminLoginController controller = loader.getController();
-//            controller.setKioskApp(this);
-//            controller.setListeners();
-//
-//            return controller.isOkClicked();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
+        try {
+            // Load AdminLogin
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(KioskApp.class.getResource("Views/AdminLogin.fxml"));
+            AnchorPane page = loader.load();
 
-        return true;
+            // Replace KioskOverview with AdminLogin
+            primaryStage.setTitle("Admin Login");
+            primaryStage.getScene().setRoot(page);
+/*            Scene scene = new Scene(page);
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            primaryStage.show();*/
+
+            // Give controller access to Main App
+            AdminLoginController controller = loader.getController();
+            controller.setKioskApp(this);
+            controller.setListeners();
+
+            return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     /**
@@ -262,36 +262,45 @@ public class KioskApp extends Application {
      */
     // TODO: showSearch should have parameter for input
     public boolean showSearch(String searchText) {
-        try {
-            // Load SearchScreen
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
-            loader.setResources(labels);
-            AnchorPane page = loader.load();
+//        try {
+//            // Load SearchScreen
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(KioskApp.class.getResource("Views/SearchScreen.fxml"));
+//            loader.setResources(labels);
+//            AnchorPane page = loader.load();
+//
+//            // Replace KioskOverview with userUI3.
+//            primaryStage.setTitle("Search Results");
+//            primaryStage.getScene().setRoot(page);
+///*
+//            Scene scene = new Scene(page);
+//            primaryStage.setScene(scene);
+//            primaryStage.setFullScreen(true);
+//            primaryStage.show();
+//*/
+//
+//            // Give controller access to Main App.
+//            SearchController controller = loader.getController();
+//            controller.setKioskApp(this);
+//            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
+////            controller.setBuilding(this.hospitalBuilding);
+//            controller.displayResult(searchText);
+//
+//            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//                @Override
+//                public void handle(WindowEvent event) {
+//                    controller.shutOff();
+//                }
+//            });
+//            return controller.isOkClicked();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
-            // Replace KioskOverview with userUI3.
-            primaryStage.setTitle("Search Results");
-            primaryStage.getScene().setRoot(page);
-/*
-            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
-            primaryStage.show();
-*/
 
-            // Give controller access to Main App.
-            SearchController controller = loader.getController();
-            controller.setKioskApp(this);
-            controller.setFaulknerHospitalMap(this.faulknerHospitalMap);
-//            controller.setBuilding(this.hospitalBuilding);
-            controller.displayResult(searchText);
-
-            return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return showDirectory(DestinationType.SERVICE);
     }
 
     /**
@@ -320,6 +329,12 @@ public class KioskApp extends Application {
             controller.setupListeners();
             controller.setStartSelection(destinationType);
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    controller.shutOff();
+                }
+            });
             return controller.isOkClicked();
 
         } catch (IOException e) {
@@ -361,7 +376,12 @@ public class KioskApp extends Application {
 //            controller.setStartNode(startNode);
 //            controller.setDestinationNode(destinationNode);
 
-
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    controller.shutOff();
+                }
+            });
 
             return controller.isOkClicked();
 

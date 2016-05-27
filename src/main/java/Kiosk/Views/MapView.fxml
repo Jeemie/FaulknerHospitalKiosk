@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1323.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.MapViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1323.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kiosk.Controllers.MapViewController">
     <children>
-        <ScrollPane fx:id="zoomScrollPane" fitToHeight="true" fitToWidth="true" layoutX="199.0" layoutY="23.0" prefHeight="712.0" prefWidth="1073.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="238.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+        <ScrollPane fx:id="zoomScrollPane" fitToHeight="true" fitToWidth="true" layoutX="310.0" layoutY="23.0" prefHeight="722.0" prefWidth="999.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
             <content>
                 <StackPane fx:id="imageStackPane" prefHeight="710.0" prefWidth="1096.0">
                     <children>
@@ -28,17 +28,17 @@
                     </children></StackPane>
             </content>
         </ScrollPane>
-        <TextField fx:id="searchTextField" layoutX="21.0" layoutY="58.0" prefHeight="40.0" prefWidth="210.0" promptText="%search" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="42.0">
+        <TextField fx:id="searchTextField" layoutX="21.0" layoutY="58.0" prefHeight="40.0" prefWidth="282.0" promptText="%search" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="42.0">
             <font>
                 <Font size="18.0" />
             </font>
         </TextField>
         <AnchorPane layoutX="697.0" layoutY="759.0" />
-        <TitledPane animated="false" layoutX="14.0" layoutY="155.0" prefWidth="210.0" text="%textualDirections" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="155.0">
+        <TitledPane animated="false" layoutX="14.0" layoutY="155.0" prefHeight="581.0" prefWidth="282.0" text="%textualDirections" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="155.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
-                        <ListView fx:id="directionsList" prefHeight="541.0" prefWidth="208.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.topAnchor="-14.399999999999977" />
+                        <ListView fx:id="directionsList" layoutY="14.4" prefHeight="547.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </content>
@@ -81,17 +81,12 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="%backToHome" GridPane.columnIndex="1">
+                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="336.0" text="%backToHome" GridPane.columnIndex="1">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorUp" GridPane.columnIndex="3">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorDown" GridPane.columnIndex="4">
+                        <Button fx:id="changeFloorButtonDown" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorDown" GridPane.columnIndex="3">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -101,6 +96,11 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
+                        <Button fx:id="changeFloorButtonUp" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="%floorUp" GridPane.columnIndex="4">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Button>
                     </children>
                 </GridPane>
             </children>
