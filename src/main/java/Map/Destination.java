@@ -18,6 +18,8 @@ public class Destination extends Observable {
 
     private String name;
 
+    private String translation;
+
     private DestinationType destinationType;
 
     // LocationNode where this destination is located
@@ -39,6 +41,7 @@ public class Destination extends Observable {
         this.name = name;
         this.destinationType = destinationType;
         this.currentLocationNode = currentLocationNode;
+        this.translation = null;
 
         this.addObserver(this.currentLocationNode);
 
@@ -114,10 +117,30 @@ public class Destination extends Observable {
         return uniqueID;
     }
 
+    public String getTranslation() {
+
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+
+        this.translation = translation;
+
+        setChanged();
+        notifyObservers(UpdateType.DESTINATIONCHANGE);
+
+    }
+
     //||\\ Overrides //||\\
 
     @Override
     public String toString() {
+
+        // Return translated name if available
+        if (this.translation != null) {
+
+            return this.translation;
+        }
 
         return this.name;
     }

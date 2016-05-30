@@ -15,164 +15,164 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label alignment="CENTER" layoutX="455.0" layoutY="47.0" text="About the Developers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+        <Label alignment="CENTER" layoutX="455.0" layoutY="47.0" text="%about" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
         </Label>
-      <GridPane layoutX="340.0" layoutY="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <GridPane maxWidth="800.0" minHeight="480.0" GridPane.halignment="CENTER">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                    <Label minWidth="300.0" text="WPI Computer Science Department:  ">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label minWidth="300.0" text="http://www.wpi.edu/academics/cs/" GridPane.columnIndex="1">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Professor:  " GridPane.rowIndex="2">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Wilson Wong" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Team Coach:  " GridPane.rowIndex="3">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Nick McMahon" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Lead Software Engineer:  " GridPane.rowIndex="4">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Matthew LeMay" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Triet Pham" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Assistant Lead Software Engineer:  " GridPane.rowIndex="5">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Binam Kayastha" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Project Manager and Scrum Master:  " GridPane.rowIndex="6">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Product Owner:  " GridPane.rowIndex="7">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Forrest Welty" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Test Engineer:  " GridPane.rowIndex="8">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Maryann O'Connell" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Document Analyst:  " GridPane.rowIndex="9">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Jimmy Tran" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Software Engineer:  " GridPane.rowIndex="10">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Rebecca Cooper" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Software Engineer:  " GridPane.rowIndex="11">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label text="Adam Moran" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-                    <Label alignment="CENTER" text="CS 3733 Software Engineering" GridPane.rowIndex="1">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                    </Label>
-               </children>
-            </GridPane>
-         </children>
-      </GridPane>
-        <Label alignment="CENTER" layoutX="504.0" layoutY="652.0" minWidth="600.0" text="Special Thanks to Andrew Shinn, " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <GridPane layoutX="340.0" layoutY="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane maxWidth="800.0" minHeight="480.0" GridPane.halignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label minWidth="300.0" text="%csDepartment">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label minWidth="300.0" text="http://www.wpi.edu/academics/cs/" GridPane.columnIndex="1">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%professor" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Wilson Wong" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%teamCoach" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Nick McMahon" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%leadSoftwareEngineer" GridPane.rowIndex="4">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Matthew LeMay" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Triet Pham" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%assistSoft" GridPane.rowIndex="5">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Binam Kayastha" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%pm" GridPane.rowIndex="6">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%po" GridPane.rowIndex="7">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Forrest Welty" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%te" GridPane.rowIndex="8">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Maryann O'Connell" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%docAnaly" GridPane.rowIndex="9">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Jimmy Tran" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%softEng1" GridPane.rowIndex="10">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Rebecca Cooper" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="%softEng2" GridPane.rowIndex="11">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label text="Adam Moran" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label alignment="CENTER" text="CS 3733 Software Engineering" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+        <Label alignment="CENTER" layoutX="504.0" layoutY="652.0" minWidth="600.0" text="%specialThanksTo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="373.0" layoutY="692.0" minWidth="600.0" text="The representative of Brigham and Women's Hospital for our team" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Label alignment="CENTER" layoutX="373.0" layoutY="692.0" minWidth="600.0" text="%representative" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                 <Font size="18.0" />
             </font>

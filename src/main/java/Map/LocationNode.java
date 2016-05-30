@@ -6,13 +6,14 @@ import Map.Enums.DestinationType;
 import Map.Enums.ImageType;
 import Map.Enums.UpdateType;
 import Map.EventHandlers.LocationNodeClickedEventHandler;
-import Map.EventHandlers.LocationNodeDraggedEventHandler;
+import Map.Exceptions.EdgeAlreadyExistsException;
 import Map.Exceptions.NodeDoesNotExistException;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
     // Logger for this class
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationNode.class);
 
+    private ArrayList<Destination> translatedDestinations;
+
     public LocationNode(String name, Location location, Floor currentFloor, ImageType associatedImage) {
 
         this.name = name;
@@ -75,6 +78,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         this.destinations = new ArrayList<>();
         this.fScore = Double.POSITIVE_INFINITY;
         this.gScore = Double.POSITIVE_INFINITY;
+        this.translatedDestinations = new ArrayList<>();
 
         this.addObserver(this.currentFloor);
 
@@ -118,13 +122,16 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * @param destinationType
      * @param name
      */
-    public void addDestination(String name, DestinationType destinationType) {
+    public Destination addDestination(String name, DestinationType destinationType) {
 
-        this.destinations.add(new Destination(name, destinationType, this));
+        Destination newDestination = new Destination(name, destinationType, this);
+
+        this.destinations.add(newDestination);
 
         setChanged();
         notifyObservers(UpdateType.DESTINATIONCHANGE);
 
+        return newDestination;
     }
 
     /**
@@ -252,7 +259,6 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
         pane.getChildren().add(this.iconLabel);
 
         this.iconLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, new LocationNodeClickedEventHandler(this));
-        this.iconLabel.addEventHandler(MouseEvent.MOUSE_DRAGGED, new LocationNodeDraggedEventHandler(this));
 
     }
 
@@ -358,12 +364,40 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
     }
 
+    public void adminDrawCurrent() {
+
+        if (this.iconLabel != null) {
+
+            iconLabel.setBorder(
+                    new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+                            new BorderWidths(4))));
+
+            this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2) + 1);
+            this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2) + 1);
+
+        }
+
+
+    }
+
+    public void adminUndrawCurrent() {
+
+        if (this.iconLabel != null) {
+
+            iconLabel.setBorder(null);
+
+            this.iconLabel.setLayoutX(this.location.getX() - (this.iconLabel.getPrefWidth() / 2));
+            this.iconLabel.setLayoutY(this.location.getY() - (this.iconLabel.getPrefHeight() / 2));
+
+        }
+
+    }
 
 
 
     public void undrawLocationNode(Pane locationNodePane, Pane locationNodeEdgePane) {
 
-        locationNodePane.getChildren().remove(this.iconImageView);
+        locationNodePane.getChildren().remove(this.iconLabel);
 
         for (LocationNodeEdge edge : this.edges) {
 
@@ -416,7 +450,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
      * Add edge between this node and a neighboring node
      * @param adjacentNode
      */
-    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException {
+    public void addEdge(LocationNode adjacentNode) throws NodeDoesNotExistException, EdgeAlreadyExistsException {
 
         if (adjacentNode == null) {
 
@@ -430,9 +464,8 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
             if (edge.edgeExists(this, adjacentNode)) {
 
                 // Edge has already been added
-                LOGGER.error("Cannot add new edge. Edge already exists.");
+               throw new EdgeAlreadyExistsException(this, adjacentNode);
 
-                return;
             }
         }
 
@@ -460,7 +493,7 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
             }
         }
-        //TODO error message/ exception
+
         // Edge does not exist
         return null;
     }
@@ -650,4 +683,20 @@ public class LocationNode extends Observable implements Observer, Comparable<Loc
 
         return this.currentFloor.equals(locationNode.getCurrentFloor());
     }
+
+    public Label getIconLabel() {
+
+        return iconLabel;
+    }
+
+    public ArrayList<Destination> getTranslatedDestinations() {
+
+        return translatedDestinations;
+    }
+
+    public void setTranslatedDestinations(ArrayList<Destination> translatedDestinations) {
+
+        this.translatedDestinations = translatedDestinations;
+    }
+
 }
