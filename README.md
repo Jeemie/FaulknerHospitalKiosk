@@ -2,7 +2,11 @@
 [![Build Status](https://travis-ci.org/mplemay/FaulknerHospitalKiosk.svg?branch=master)](https://travis-ci.org/mplemay/FaulknerHospitalKiosk)
 [![Code Coverage](https://codecov.io/github/mplemay/FaulknerHospitalKiosk/coverage.svg?branch=master)](https://codecov.io/github/mplemay/FaulknerHospitalKiosk?branch=master)
 
+
+
 ## Kiosk Project for Faulkner Hospital
+
+Kiosk Wayfinder Project for Software Engineering course at WPI.
 
 This is a program for the Faulkner Hospital located in Boston MA. It's to be incorporated in a kiosk for visitors to use in order to aid them in commuting to their destination as finding your way through a hospital may be difficult for some people. <br>
 This program will incorporate the following (but not limited to) features:<br>
