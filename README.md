@@ -25,4 +25,14 @@ Admin Feature List:<br>
 -A beautiful interface to ensure proper management<br>
 -A log to store login attempts<br>
 
+Startup Instructions
+---
+1) Download ZIP
+2) Extract files to location.
+3) Make sure the folder is named FaulknerHospitalKiosk
+4) Open project in IntelliJ
+5) Update Gradle Wrapper if required.
+6) Traverse to src -> main -> java -> kiosk -> KioskApp.java
+7) Run the start() function inside.
 
+![Example of Movement](resources/screenshots/map.PNG)
